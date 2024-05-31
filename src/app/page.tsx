@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -7,12 +8,6 @@ import Hero from "../../components/Hero";
 import Button from "../../components/Button";
 
 export default function Home() {
-  if (typeof window === "undefined") {
-    return null;
-  } else if (typeof window !== "undefined") {
-    gsap.registerPlugin(useGSAP);
-  }
-
   const container = useRef<HTMLElement | any>();
   const text = useRef<HTMLElement | any>();
   const navbar = useRef<HTMLElement | any>();
@@ -43,10 +38,10 @@ export default function Home() {
         className="h-screen bg-home-bg bg-center bg-cover"
         ref={container}
       >
-        <div className="navbar" ref={navbar}>
+        <div className="" ref={navbar}>
           <Navbar />
         </div>
-        <div className="text" ref={text}>
+        <div className="" ref={text}>
           <Hero />
         </div>
         <div
