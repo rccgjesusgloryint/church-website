@@ -1,15 +1,19 @@
 "use client";
 
 import { useRef } from "react";
+
+import Image from "next/image";
+
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+
 import Navbar from "../../components/Navbar";
 import Hero from "../../components/Hero";
 import Button from "../../components/Button";
-import { ScrollTrigger } from "gsap/all";
+import AboutUsPreview from "../../components/AboutUsPreview";
 
 export default function Home() {
-  const container = useRef<HTMLElement | any>();
   const text = useRef<HTMLElement | any>();
   const navbar = useRef<HTMLElement | any>();
   const btn = useRef<HTMLElement | any>();
@@ -53,10 +57,7 @@ export default function Home() {
 
   return (
     <main>
-      <section
-        className="h-screen bg-home-bg bg-center bg-cover text-white"
-        ref={container}
-      >
+      <section className="h-screen bg-home-bg bg-center bg-cover text-white">
         <div className="" ref={navbar}>
           <Navbar />
         </div>
@@ -71,39 +72,78 @@ export default function Home() {
         </div>
       </section>
       <section className="flex flex-col sm:flex-row justify-center items-center bg-white h-[70vh] sm:h-[50vh]">
-        <div
-          className="p-0 m-0 flex flex-col sm:w-[567px] min-h-[222px] px-[10px] pb-[10px]"
-          ref={AboutTxtL}
-        >
-          <div className="mb-5 flex flex-col ">
-            <h1 className="font-bold text-lg text-light-gr tracking-widest">
-              ABOUT US
-            </h1>
-            <div className="bg-gray-400 h-[2px] w-[100px]"></div>
+        <AboutUsPreview AboutTxtL={AboutTxtL} AboutTxtR={AboutTxtR} />
+      </section>
+      <section className="h-[125vh] 2xl:h-screen  bg-our-ministries bg-center bg-cover">
+        <div className="flex flex-col justify-center items-center pt-[127px] mb-20">
+          <div className="mb-8">
+            <h3 className="text-light-gr">OUR MINISTRIES</h3>
+            <div className="bg-light-gr opacity-50 h-[2px] w-[7.5rem]"></div>
           </div>
-          <div className="">
-            <h1 className="text-4xl	font-bold text-left text-dark-gr">
-              Jesus Glory is a church that believes in Jesus, a church that
-              loves God and people.
-            </h1>
-          </div>
+          <h1 className="font-bold text-4xl w-[32rem] text-center">
+            Keeping Our Church Running Smoothly
+          </h1>
         </div>
-        <div
-          className="flex flex-col dark-gr sm:w-[567px] h-[220px] px-2.5 pt-2.5"
-          ref={AboutTxtR}
-        >
-          <div>
-            <h3 className="font-bold text-xl text-dark-gr mb-5">
-              Lifes is a contemporary Christian church. Overwhelmed by the gift
-              of salvation we have found in Jesus.
-            </h3>
-            <h4 className="w-full font-sans font-normal text-sm text-light-gr">
-              We have a heart for authentic worship, are passionate about the
-              local church, and are on mission to see Gods kingdom established
-              across the earth. Lifes Church was founded by Dylan and Stacy
-              Johnes in 1994 in the western suburbs of New York, USA. Now, Lifes
-              has churches in city centres in 23 cities around the country.
-            </h4>
+        <div className="flex flex-row justify-center items-center">
+          <div className="w-96 h-[523px] px-4">
+            <div className="bg-white h-full shadow-md">
+              <Image
+                src="/images/our-ministries-pic1.jpg"
+                alt="our-ministries-pic1"
+                width={391}
+                height={261}
+              />
+              <div className="p-4 text-center mt-14">
+                <h2 className="font-bold text-2xl mb-4">
+                  Microloans for Rural Women in East Africa
+                </h2>
+                <p className="font-normal">
+                  Mission is to establish village-level loan hubs to provide
+                  capital and support to rural women in the lowest income
+                  brackets in East Africa
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="w-96 lg:h-[523px] px-4">
+            <div className="bg-white h-full shadow-md">
+              <Image
+                src="/images/our-ministries-pic1.jpg"
+                alt="our-ministries-pic1"
+                width={391}
+                height={261}
+              />
+              <div className="p-4 text-center mt-14">
+                <h2 className="font-bold text-2xl mb-4">
+                  Microloans for Rural Women in East Africa
+                </h2>
+                <p className="font-normal">
+                  Mission is to establish village-level loan hubs to provide
+                  capital and support to rural women in the lowest income
+                  brackets in East Africa
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="w-96 lg:h-[523px] px-4">
+            <div className="bg-white h-full shadow-md">
+              <Image
+                src="/images/our-ministries-pic1.jpg"
+                alt="our-ministries-pic1"
+                width={391}
+                height={261}
+              />
+              <div className="p-4 text-center mt-14">
+                <h2 className="font-bold text-2xl mb-4">
+                  Microloans for Rural Women in East Africa
+                </h2>
+                <p className="font-normal">
+                  Mission is to establish village-level loan hubs to provide
+                  capital and support to rural women in the lowest income
+                  brackets in East Africa
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
