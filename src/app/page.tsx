@@ -99,7 +99,7 @@ export default function Home() {
             </h3>
             <h4 className="w-full font-sans font-normal text-sm text-light-gr">
               We have a heart for authentic worship, are passionate about the
-              local church, and are on mission to see God’s kingdom established
+              local church, and are on mission to see Gods kingdom established
               across the earth. Lifes Church was founded by Dylan and Stacy
               Johnes in 1994 in the western suburbs of New York, USA. Now, Lifes
               has churches in city centres in 23 cities around the country.

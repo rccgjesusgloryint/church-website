@@ -14,7 +14,7 @@ const Hero = (props: Props) => {
         <p className="text-center mt-5 sm:mt-10 mb-10 leading-5 w-[330px] sm:w-[496px]">
           We believe every born again child of God is a mobile altar, divinely
           enabled to offer sacrifices to God from a pure heart. A mobile altar
-          doesn't visit God's presence, he carries it.
+          does not visit Gods presence, he carries it.
         </p>
       </div>
     </>
