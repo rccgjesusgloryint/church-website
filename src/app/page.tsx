@@ -2,8 +2,6 @@
 
 import { useRef } from "react";
 
-import Image from "next/image";
-
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
@@ -12,6 +10,7 @@ import Navbar from "../../components/Navbar";
 import Hero from "../../components/Hero";
 import Button from "../../components/Button";
 import AboutUsPreview from "../../components/AboutUsPreview";
+import OurMinistries from "../../components/OurMinistries";
 
 export default function Home() {
   const text = useRef<HTMLElement | any>();
@@ -19,6 +18,8 @@ export default function Home() {
   const btn = useRef<HTMLElement | any>();
   const AboutTxtL = useRef<HTMLElement | any>();
   const AboutTxtR = useRef<HTMLElement | any>();
+  const ourMinistriesSubHeading = useRef<HTMLElement | any>();
+  const ourMinistriesHeading = useRef<HTMLElement | any>();
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -53,6 +54,20 @@ export default function Home() {
       opacity: 0,
       ease: "back",
     });
+    gsap.from(ourMinistriesSubHeading.current, {
+      scrollTrigger: ourMinistriesSubHeading.current,
+      x: -80,
+      duration: 1.5,
+      opacity: 0,
+      ease: "back",
+    });
+    gsap.from(ourMinistriesHeading.current, {
+      scrollTrigger: ourMinistriesHeading.current,
+      x: 80,
+      duration: 1.5,
+      opacity: 0,
+      ease: "back",
+    });
   });
 
   return (
@@ -74,78 +89,11 @@ export default function Home() {
       <section className="flex flex-col sm:flex-row justify-center items-center bg-white h-[70vh] sm:h-[50vh]">
         <AboutUsPreview AboutTxtL={AboutTxtL} AboutTxtR={AboutTxtR} />
       </section>
-      <section className="h-[125vh] 2xl:h-screen  bg-our-ministries bg-center bg-cover">
-        <div className="flex flex-col justify-center items-center pt-[127px] mb-20">
-          <div className="mb-8">
-            <h3 className="text-light-gr">OUR MINISTRIES</h3>
-            <div className="bg-light-gr opacity-50 h-[2px] w-[7.5rem]"></div>
-          </div>
-          <h1 className="font-bold text-4xl w-[32rem] text-center">
-            Keeping Our Church Running Smoothly
-          </h1>
-        </div>
-        <div className="flex flex-row justify-center items-center">
-          <div className="w-96 h-[523px] px-4">
-            <div className="bg-white h-full shadow-md">
-              <Image
-                src="/images/our-ministries-pic1.jpg"
-                alt="our-ministries-pic1"
-                width={391}
-                height={261}
-              />
-              <div className="p-4 text-center mt-14">
-                <h2 className="font-bold text-2xl mb-4">
-                  Microloans for Rural Women in East Africa
-                </h2>
-                <p className="font-normal">
-                  Mission is to establish village-level loan hubs to provide
-                  capital and support to rural women in the lowest income
-                  brackets in East Africa
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="w-96 lg:h-[523px] px-4">
-            <div className="bg-white h-full shadow-md">
-              <Image
-                src="/images/our-ministries-pic1.jpg"
-                alt="our-ministries-pic1"
-                width={391}
-                height={261}
-              />
-              <div className="p-4 text-center mt-14">
-                <h2 className="font-bold text-2xl mb-4">
-                  Microloans for Rural Women in East Africa
-                </h2>
-                <p className="font-normal">
-                  Mission is to establish village-level loan hubs to provide
-                  capital and support to rural women in the lowest income
-                  brackets in East Africa
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="w-96 lg:h-[523px] px-4">
-            <div className="bg-white h-full shadow-md">
-              <Image
-                src="/images/our-ministries-pic1.jpg"
-                alt="our-ministries-pic1"
-                width={391}
-                height={261}
-              />
-              <div className="p-4 text-center mt-14">
-                <h2 className="font-bold text-2xl mb-4">
-                  Microloans for Rural Women in East Africa
-                </h2>
-                <p className="font-normal">
-                  Mission is to establish village-level loan hubs to provide
-                  capital and support to rural women in the lowest income
-                  brackets in East Africa
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <section className="h-[230vh] sm:h-[125vh] 2xl:h-screen bg-our-ministries bg-center bg-cover">
+        <OurMinistries
+          ourMinistriesSubHeading={ourMinistriesSubHeading}
+          ourMinistriesHeading={ourMinistriesHeading}
+        />
       </section>
     </main>
   );
