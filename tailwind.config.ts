@@ -1,3 +1,4 @@
+import { transform } from "next/dist/build/swc";
 import type { Config } from "tailwindcss";
 
 const config = {
@@ -96,6 +97,12 @@ const config = {
       backgroundImage: {
         "home-bg": "url('/images/prayer_pic.jpg')",
         "our-ministries": "url('/images/our_ministries-bg.jpeg')",
+        "carousel-img1": "url('/images/carousel_img1.jpg')",
+        "carousel-img2": "url('/images/carousel_img2.jpg')",
+        "carousel-img3": "url('/images/carousel_img3.jpg')",
+        "carousel-img4": "url('/images/carousel_img4.jpg')",
+        "carousel-img5": "url('/images/carousel_img5.jpg')",
+        "carousel-img6": "url('/images/carousel_img6.jpg')",
       },
     },
   },
