@@ -139,7 +139,7 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="sm:hidden mt-20">
+        <div className="sm:hidden mt-20 relative">
           <Carousel
             plugins={[plugin.current]}
             onMouseEnter={plugin.current.stop}
@@ -161,6 +161,15 @@ export default function Home() {
               })}
             </CarouselContent>
           </Carousel>
+          <div className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute sm:bottom-32 right-1 bottom-0.2 mt-1">
+            <h2>VIEW ALL</h2>
+            <Image
+              src={"/images/arrow-icon.png"}
+              alt="arrow-icon"
+              width={24}
+              height={24}
+            />
+          </div>
         </div>
       </section>
     </main>
