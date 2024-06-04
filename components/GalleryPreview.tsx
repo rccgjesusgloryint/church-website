@@ -3,6 +3,10 @@ import { Key, useRef } from "react";
 
 import Image from "next/image";
 
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+
 import {
   Carousel,
   CarouselContent,
@@ -21,6 +25,20 @@ const GalleryPreview = () => {
   ];
 
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
+
+  const viewAllBtn = React.useRef<HTMLElement | any>();
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  useGSAP(() => {
+    gsap.from(viewAllBtn.current, {
+      scrollTrigger: viewAllBtn.current,
+      x: -50,
+      duration: 1,
+      opacity: 0,
+      ease: "none",
+    });
+  });
   return (
     <section className="sm:h-screen h-[60vh]">
       <div className="py-[10%] p-0 m-0 relative sm:block hidden">
@@ -34,7 +52,10 @@ const GalleryPreview = () => {
           <div className="bg-carousel-img4 w-1/4 h-full bg-cover bg-center cursor-pointer"></div>
           <div className="bg-carousel-img6 w-1/4 h-full bg-cover bg-center cursor-pointer"></div>
         </div>
-        <div className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute 2xl:bottom-32 right-3 bottom-20">
+        <div
+          className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute 2xl:bottom-32 right-3 bottom-20"
+          ref={viewAllBtn}
+        >
           <h2>VIEW ALL</h2>
           <Image
             src={"/images/arrow-icon.png"}
