@@ -2,6 +2,10 @@ import React from "react";
 import Image from "next/image";
 import menu_icon from "../public/menu-icon.svg";
 
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
+
 import {
   Sheet,
   SheetContent,
@@ -11,29 +15,21 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-type Props = {};
+const Navbar = () => {
+  const navbar = React.useRef<HTMLElement | any>();
 
-const Navbar = (props: Props) => {
-  const [active, setActive] = React.useState<boolean>(false);
-  const [activateLink, setActivateLink] = React.useState<boolean>(true);
-
-  const handleOpenMenu = () => {
-    setActive(!active);
-  };
-
-  const handleLinkClick = () => {
-    setActivateLink(false);
-  };
+  useGSAP(() => {
+    gsap.from(navbar.current, {
+      y: -30,
+      duration: 1,
+      opacity: 1,
+    });
+  });
   return (
     <>
       <Sheet>
         <SheetTrigger>
-          <Image
-            src={menu_icon}
-            alt="menu"
-            className="pt-5 pl-5 sm:hidden"
-            onClick={handleOpenMenu}
-          />
+          <Image src={menu_icon} alt="menu" className="pt-5 pl-5 sm:hidden" />
         </SheetTrigger>
         <SheetContent>
           <SheetHeader>
@@ -62,8 +58,10 @@ const Navbar = (props: Props) => {
           </SheetHeader>
         </SheetContent>
       </Sheet>
-
-      <ul className="hidden sm:flex flex-row font-normal gap-7 justify-end m-0  pr-11 cursor-pointer">
+      <ul
+        className="hidden sm:flex flex-row font-normal gap-7 justify-end m-0 pr-11 cursor-pointer"
+        ref={navbar}
+      >
         <li className="hover:text-gray-700 duration-200">Home</li>
         <li className="hover:text-gray-700 duration-200">About</li>
         <li className="hover:text-gray-700 duration-200">Blog</li>

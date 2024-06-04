@@ -1,17 +1,34 @@
 import Image from "next/image";
 import React from "react";
 
-type Props = {
-  ourMinistriesSubHeading: HTMLElement | any;
-  ourMinistriesHeading: HTMLElement | any;
-};
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
 
-const OurMinistries = ({
-  ourMinistriesSubHeading,
-  ourMinistriesHeading,
-}: Props) => {
+const OurMinistries = () => {
+  const ourMinistriesSubHeading = React.useRef<HTMLElement | any>();
+  const ourMinistriesHeading = React.useRef<HTMLElement | any>();
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  useGSAP(() => {
+    gsap.from(ourMinistriesSubHeading.current, {
+      scrollTrigger: ourMinistriesSubHeading.current,
+      x: -80,
+      duration: 1.5,
+      opacity: 0,
+      ease: "back",
+    });
+    gsap.from(ourMinistriesHeading.current, {
+      scrollTrigger: ourMinistriesHeading.current,
+      x: 80,
+      duration: 1.5,
+      opacity: 0,
+      ease: "back",
+    });
+  });
   return (
-    <>
+    <section className="h-[230vh] sm:h-[125vh] 2xl:h-screen bg-our-ministries bg-center bg-cover">
       <div className="flex flex-col justify-center items-center sm:pt-[127px] pt-9 sm:mb-20 mb-8">
         <div className="mb-8" ref={ourMinistriesSubHeading}>
           <h3 className="text-light-gr">OUR MINISTRIES</h3>
@@ -87,7 +104,7 @@ const OurMinistries = ({
           </div>
         </div>
       </div>
-    </>
+    </section>
   );
 };
 
