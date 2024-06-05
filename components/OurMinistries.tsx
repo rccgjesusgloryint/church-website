@@ -28,7 +28,7 @@ const OurMinistries = () => {
     });
   });
   return (
-    <section className="h-[230vh] sm:h-[125vh] 2xl:h-screen bg-our-ministries bg-center bg-cover">
+    <section className="h-[230vh] sm:h-[125vh] 2xl:h-screen bg-our-ministries bg-center bg-cover overflow-clip">
       <div className="flex flex-col justify-center items-center sm:pt-[127px] pt-9 sm:mb-20 mb-8">
         <div className="mb-8" ref={ourMinistriesSubHeading}>
           <h3 className="text-light-gr">OUR MINISTRIES</h3>
