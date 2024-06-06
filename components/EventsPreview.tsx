@@ -1,4 +1,5 @@
 import React from "react";
+import GridLayout from "./GridLayout";
 
 const EventsPreview = () => {
   const month = "november";
