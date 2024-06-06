@@ -6,6 +6,8 @@ import OurMinistries from "../../components/OurMinistries";
 import GalleryPreview from "../../components/GalleryPreview";
 import EventsPreview from "../../components/EventsPreview";
 import Footer from "../../components/Footer";
+import GridLayout from "../../components/GridLayout";
+import Newsletter from "../../components/Newsletter";
 
 export default function Home() {
   return (
@@ -15,7 +17,8 @@ export default function Home() {
       <OurMinistries />
       <GalleryPreview />
       <EventsPreview />
-      {/* <Footer /> */}
+      <Newsletter />
+      <Footer />
     </main>
   );
 }
