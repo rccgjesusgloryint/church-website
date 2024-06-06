@@ -44,6 +44,7 @@ const config = {
       colors: {
         "light-gr": "#5e5e5e",
         "dark-gr": "#222222",
+        "med-gr": "#333333",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -99,6 +100,7 @@ const config = {
       },
       backgroundImage: {
         "home-bg": "url('/images/prayer_pic.jpg')",
+        "footer-bg": "url('/images/news-letter.jpg')",
         "our-ministries": "url('/images/our_ministries-bg.jpeg')",
         "carousel-img1": "url('/images/carousel_img1.jpg')",
         "carousel-img2": "url('/images/carousel_img2.jpg')",
