@@ -1,13 +1,33 @@
 import React from "react";
 
-type Props = {
-  AboutTxtL: HTMLElement | any;
-  AboutTxtR: HTMLElement | any;
-};
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/all";
 
-const AboutUsPreview = ({ AboutTxtL, AboutTxtR }: HTMLElement | any) => {
+const AboutUsPreview = () => {
+  const AboutTxtL = React.useRef<HTMLElement | any>();
+  const AboutTxtR = React.useRef<HTMLElement | any>();
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  useGSAP(() => {
+    gsap.from(AboutTxtL.current, {
+      scrollTrigger: AboutTxtL.current,
+      x: -80,
+      duration: 1.5,
+      opacity: 0,
+      ease: "back",
+    });
+    gsap.from(AboutTxtR.current, {
+      scrollTrigger: AboutTxtL.current,
+      x: 80,
+      duration: 1.5,
+      opacity: 0,
+      ease: "back",
+    });
+  });
   return (
-    <>
+    <section className="flex flex-col sm:flex-row justify-center items-center bg-white h-[70vh] sm:h-[50vh]">
       <div
         className="p-0 m-0 flex flex-col sm:w-[567px] min-h-[222px] px-[10px] pb-[10px]"
         ref={AboutTxtL}
@@ -43,7 +63,7 @@ const AboutUsPreview = ({ AboutTxtL, AboutTxtR }: HTMLElement | any) => {
           </h4>
         </div>
       </div>
-    </>
+    </section>
   );
 };
 
