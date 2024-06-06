@@ -16,28 +16,28 @@ const Newsletter = () => {
     gsap.from(SubHeading.current, {
       scrollTrigger: Heading.current,
       x: -100,
-      duration: 0.8,
+      duration: 1.5,
       opacity: 0,
       ease: "power2.out",
     });
     gsap.from(Heading.current, {
       scrollTrigger: Heading.current,
       x: 100,
-      duration: 0.8,
+      duration: 1.5,
       opacity: 0,
       ease: "power2.out",
     });
     gsap.from(btn.current, {
       scrollTrigger: btn.current,
       y: 100,
-      duration: 0.8,
+      duration: 1.5,
       opacity: 0,
       ease: "power2.out",
     });
     gsap.from(chuchIcon.current, {
       scrollTrigger: chuchIcon.current,
       y: -100,
-      duration: 0.8,
+      duration: 1.5,
       opacity: 0,
       ease: "power2.out",
     });
