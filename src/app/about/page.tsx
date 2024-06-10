@@ -86,10 +86,10 @@ const About = () => {
                 Meet Our Wonderful Church Leaders
               </h1>
               <div
-                className="flex items-center gap-3 font-bold hover:opacity-55 transition-opacity ease-in-out duration-500 cursor-pointer absolute right-0 bottom-0"
+                className="flex items-center gap-3 font-bold hover:opacity-55 transition-opacity ease-in-out cursor-pointer absolute right-0 bottom-0"
                 ref={viewLink}
               >
-                <Link href="/">VIEW ALL PASTORS</Link>
+                <Link href="">VIEW ALL PASTORS</Link>
                 <Arrow />
               </div>
             </div>

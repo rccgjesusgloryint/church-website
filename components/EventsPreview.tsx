@@ -1,5 +1,6 @@
 import React from "react";
-import GridLayout from "./GridLayout";
+import { FaRegMap } from "react-icons/fa";
+import { LuClock3 } from "react-icons/lu";
 
 const EventsPreview = () => {
   const month = "november";
@@ -51,7 +52,7 @@ const EventsPreview = () => {
           {eventCards.map((event, index) => {
             return (
               <div
-                className="sm:w-[290px] 2xl:w-[390px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative"
+                className="sm:w-[290px] 2xl:w-[390px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl"
                 key={index}
               >
                 <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
@@ -70,8 +71,10 @@ const EventsPreview = () => {
                 </h2>
                 <div className="relative">
                   <div className="flex flex-col absolute w-[112px]">
-                    <span className="">C</span>
-                    <span className="">C</span>
+                    <span className="mt-1">
+                      <LuClock3 />
+                    </span>
+                    <span className=""></span>
                   </div>
                   <div className="font-bold text-base pl-10">
                     <div>
@@ -82,7 +85,9 @@ const EventsPreview = () => {
                     </div>
                   </div>
                   <div className="pt-[20px]">
-                    <span className="absolute">M</span>
+                    <span className="absolute mt-[5px]">
+                      <FaRegMap />
+                    </span>
                     <p className="font-bold text-base pl-10">
                       {event.location}
                     </p>

@@ -4,6 +4,8 @@ import { IoMapOutline } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMailOutline } from "react-icons/io5";
 import { TbPointFilled } from "react-icons/tb";
+import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -12,7 +14,16 @@ const Footer = () => {
         <div className="grid-cols-12 grid h-full gap-5">
           <div className="sm:col-start-3 col-start-3 sm:col-span-3 col-span-8 w-full h-full flex flex-col items-center justify-center flex-wrap">
             <div className="flex flex-col justify-center items-start text-white">
-              <h1 className="mb-5 font-bold text-lg">LOGO</h1>
+              <h1 className="mb-6 cursor-pointer">
+                <Link href="/home">
+                  <Image
+                    src="/images/Church-logo.jpg"
+                    alt="logo"
+                    width={50}
+                    height={50}
+                  />
+                </Link>
+              </h1>
               <p className="mb-5">
                 Everything was seamless. The private guides were interesting
               </p>

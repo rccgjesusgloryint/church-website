@@ -3,6 +3,7 @@ import React from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import Link from "next/link";
 
 const Button = () => {
   const btn = React.useRef<HTMLElement | any>();
@@ -21,7 +22,7 @@ const Button = () => {
       ref={btn}
     >
       <div className="flex justify-center items-center bg-gray-700 w-[210px] h-[60px] border-gray-700 hover:bg-transparent hover:border-2 hover:text-gray-700 duration-500">
-        <p>LEARN MORE NOW</p>
+        <Link href={"/about"}>LEARN MORE NOW</Link>
       </div>
     </div>
   );
