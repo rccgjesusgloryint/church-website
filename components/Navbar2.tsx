@@ -1,0 +1,140 @@
+import Image from "next/image";
+import Link from "next/link";
+
+import React from "react";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
+const Navbar2 = () => {
+  return (
+    <div className="bg-white h-[100px]">
+      <div className="hidden grid-cols-12 md:grid h-full w-full">
+        <div className="md:hidden col-start-1 col-span-1 relative">
+          <Image
+            src="/images/Menu.png"
+            alt="logo"
+            width={18}
+            height={18}
+            className="absolute top-9 left-6"
+          />
+        </div>
+        <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-start">
+          <Link href="/home" className="cursoper-pointer">
+            <Image
+              src="/images/Church-logo.jpg"
+              alt="logo"
+              width={50}
+              height={50}
+            />
+          </Link>
+        </div>
+
+        <div className="hidden col-start-9 col-span-4 w-full h-full md:flex">
+          <div className="flex flex-row gap-9 justify-center items-center flex-wrap w-full">
+            <Link
+              href="/home"
+              className="hover:text-gray-700 duration-200 cursor-pointer"
+            >
+              Home
+            </Link>
+            <Link
+              href="/about"
+              className="hover:text-gray-700 duration-200 cursor-pointer"
+            >
+              About
+            </Link>
+            <Link
+              href="/events"
+              className="hover:text-gray-700 duration-200 cursor-pointer"
+            >
+              Events
+            </Link>
+            <Link
+              href="/gallery"
+              className="hover:text-gray-700 duration-200 cursor-pointer"
+            >
+              Gallery
+            </Link>
+            {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
+            {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}
+          </div>
+        </div>
+      </div>
+      <Sheet>
+        <div className="md:hidden grid-cols-12 grid h-full w-full">
+          <SheetTrigger className="md:hidden col-start-1 col-span-1 relative">
+            <Image
+              src="/images/Menu.png"
+              alt="logo"
+              width={18}
+              height={18}
+              className="absolute top-9 left-6"
+            />
+          </SheetTrigger>
+          <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-start">
+            <Link href="/home" className="cursoper-pointer">
+              <Image
+                src="/images/Church-logo.jpg"
+                alt="logo"
+                width={50}
+                height={50}
+              />
+            </Link>
+          </div>
+          <SheetContent>
+            <SheetDescription>
+              <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-center">
+                <Link href="/home" className="cursoper-pointer">
+                  <Image
+                    src="/images/Church-logo.jpg"
+                    alt="logo"
+                    width={50}
+                    height={50}
+                  />
+                </Link>
+              </div>
+              <div className="flex w-full h-full items-center justify-start pl-11">
+                <div className="flex flex-col gap-11 flex-wrap mt-20 w-full">
+                  <Link
+                    href="/home"
+                    className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    href="/about"
+                    className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+                  >
+                    About
+                  </Link>
+                  <Link
+                    href="/events"
+                    className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+                  >
+                    Events
+                  </Link>
+                  <Link
+                    href="/gallery"
+                    className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+                  >
+                    Gallery
+                  </Link>
+                  {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
+                  {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}
+                </div>
+              </div>
+            </SheetDescription>
+          </SheetContent>
+        </div>
+      </Sheet>
+    </div>
+  );
+};
+
+export default Navbar2;

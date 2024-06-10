@@ -101,6 +101,7 @@ const config = {
       backgroundImage: {
         "home-bg": "url('/images/prayer_pic.jpg')",
         "footer-bg": "url('/images/news-letter.jpg')",
+        "about-bg": "url('/images/about.jpg')",
         "our-ministries": "url('/images/our_ministries-bg.jpeg')",
         "carousel-img1": "url('/images/carousel_img1.jpg')",
         "carousel-img2": "url('/images/carousel_img2.jpg')",

@@ -11,9 +11,10 @@ import {
   SheetContent,
   SheetDescription,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+
+import Link from "next/link";
 
 const Navbar = () => {
   const navbar = React.useRef<HTMLElement | any>();
@@ -32,43 +33,67 @@ const Navbar = () => {
           <Image src={menu_icon} alt="menu" className="pt-5 pl-5 sm:hidden" />
         </SheetTrigger>
         <SheetContent>
-          <SheetHeader>
-            <SheetDescription>
-              <ul className="flex flex-col justify-start items-start pt-5 pl-5 gap-10 text-black active:text-light-gr">
-                <li className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in">
-                  Home
-                </li>
-                <li className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in">
-                  About
-                </li>
-                <li className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in">
+          <SheetDescription>
+            <div className="flex flex-col justify-start items-start pt-5 pl-5 gap-10 text-black active:text-light-gr">
+              <Link
+                href="/home"
+                className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+              >
+                Home
+              </Link>
+              <Link
+                href="/about"
+                className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+              >
+                About
+              </Link>
+              {/* <Link
+                  href=""
+                  className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+                >
                   Blog
-                </li>
-                <li className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in">
-                  Events
-                </li>
-                <li className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in">
+                </Link> */}
+              <Link
+                href="/events"
+                className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+              >
+                Events
+              </Link>
+              {/* <Link
+                  href=""
+                  className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+                >
                   Support
-                </li>
-                <li className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in">
-                  Gallery
-                </li>
-              </ul>
-            </SheetDescription>
-          </SheetHeader>
+                </Link> */}
+              <Link
+                href="/gallery"
+                className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+              >
+                Gallery
+              </Link>
+            </div>
+          </SheetDescription>
         </SheetContent>
       </Sheet>
-      <ul
+      <div
         className="hidden sm:flex flex-row font-normal gap-7 justify-end m-0 pr-11 cursor-pointer"
         ref={navbar}
       >
-        <li className="hover:text-gray-700 duration-200">Home</li>
-        <li className="hover:text-gray-700 duration-200">About</li>
-        <li className="hover:text-gray-700 duration-200">Blog</li>
-        <li className="hover:text-gray-700 duration-200">Events</li>
-        <li className="hover:text-gray-700 duration-200">Support</li>
-        <li className="hover:text-gray-700 duration-200">Gallery</li>
-      </ul>
+        <Link href="/home" className="hover:text-gray-700 duration-200">
+          Home
+        </Link>
+        <Link href="/about" className="hover:text-gray-700 duration-200">
+          About
+        </Link>
+        <Link href="/events" className="hover:text-gray-700 duration-200">
+          Events
+        </Link>
+        <Link href="/gallery" className="hover:text-gray-700 duration-200">
+          Gallery
+        </Link>
+        {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
+        {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}
+      </div>
     </>
   );
 };
