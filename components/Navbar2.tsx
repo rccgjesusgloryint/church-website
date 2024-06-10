@@ -13,7 +13,7 @@ import {
 
 const Navbar2 = () => {
   return (
-    <div className="bg-white h-[100px]">
+    <div className="bg-white h-[100px] shadow-md">
       <div className="hidden grid-cols-12 md:grid h-full w-full">
         <div className="md:hidden col-start-1 col-span-1 relative">
           <Image

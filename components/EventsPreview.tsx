@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 import { FaRegMap } from "react-icons/fa";
 import { LuClock3 } from "react-icons/lu";
@@ -42,9 +43,11 @@ const EventsPreview = () => {
               together, worship together, and grow together.
             </p>
             <div>
-              <h3 className="font-bold text-sm tracking-wider sm:text-left text-center hover:opacity-55 cursor-pointer transition ease-in-out">
-                + VIEW ALL EVENTS
-              </h3>
+              <Link href={"/events"}>
+                <h3 className="font-bold text-sm tracking-wider sm:text-left text-center hover:opacity-55 cursor-pointer transition ease-in-out">
+                  + VIEW ALL EVENTS
+                </h3>
+              </Link>
             </div>
           </div>
         </div>

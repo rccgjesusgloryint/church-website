@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="h-full w-full">
         <div className="grid-cols-12 grid h-full gap-5">
           <div className="sm:col-start-3 col-start-3 sm:col-span-3 col-span-8 w-full h-full flex flex-col items-center justify-center flex-wrap">
-            <div className="flex flex-col justify-center items-start text-white">
+            <div className="flex flex-col justify-center items-start text-white text-le">
               <h1 className="mb-6 cursor-pointer">
                 <Link href="/home">
                   <Image
@@ -73,7 +73,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="sm:col-start-9 col-start-3 sm:col-span-3 col-span-8 w-full h-full flex items-center justify-center">
-            <div className="flex flex-col justify-start items-center text-white">
+            <div className="flex flex-col justify-start items-start text-white">
               <h1 className="mb-5 font-bold text-lg">
                 FEATURED BLOGS/ARTICLES
               </h1>
