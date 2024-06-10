@@ -121,7 +121,7 @@ const Events = () => {
               ref={useTitle2}
             >
               <h1 className="font-bold sm:text-[40px] text-[30px] w-1/2 text-center">
-                Don't Miss Your Chance to Get Closer to God
+                Don&apos;t Miss Your Chance to Get Closer to God
               </h1>
             </div>
           </div>

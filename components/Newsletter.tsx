@@ -3,6 +3,7 @@ import React from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import Image from "next/image";
 
 const Newsletter = () => {
   const SubHeading = React.useRef<HTMLElement | any>();
@@ -46,11 +47,13 @@ const Newsletter = () => {
     <section className="h-auto w-full">
       <div className="h-[558px] w-full bg-footer-bg bg-center bg-cover flex items-center justify-center">
         <div className="flex flex-col items-center justify-center">
-          <img
+          <Image
             src="/church-iconpng.png"
             alt="church-icon"
             className="mb-8"
             ref={chuchIcon}
+            width={50}
+            height={50}
           />
           <h1
             className="flex flex-wrap font-bold sm:text-[45px] text-3xl sm:w-[675px] text-center sm:leading-[50px]"
