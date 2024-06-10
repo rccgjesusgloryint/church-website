@@ -12,7 +12,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 
-const page = () => {
+const Events = () => {
   const eventCards = [
     {
       heading: "Suicide Loss Grief Support Group",
@@ -61,49 +61,35 @@ const page = () => {
     },
   ];
 
-  const title = React.useRef<HTMLElement | any>();
-  const subTitle1 = React.useRef<HTMLElement | any>();
-  const subTitle2 = React.useRef<HTMLElement | any>();
-  const title2 = React.useRef<HTMLElement | any>();
-  const title3 = React.useRef<HTMLElement | any>();
-  const viewLink = React.useRef<HTMLElement | any>();
+  const useTitle = React.useRef<HTMLElement | any>();
+  const useSubTitle1 = React.useRef<HTMLElement | any>();
+  const useSubTitle2 = React.useRef<HTMLElement | any>();
+  const useTitle2 = React.useRef<HTMLElement | any>();
 
   gsap.registerPlugin(ScrollTrigger);
 
   useGSAP(() => {
-    gsap.from(title.current, {
+    gsap.from(useTitle.current, {
       y: 300,
       duration: 1,
       opacity: 0,
     });
-    gsap.from(subTitle1.current, {
-      scrollTrigger: subTitle1.current,
+    gsap.from(useSubTitle1.current, {
+      scrollTrigger: useSubTitle1.current,
       x: -80,
       duration: 1,
       opacity: 0,
     });
-    gsap.from(subTitle2.current, {
-      scrollTrigger: subTitle2.current,
+    gsap.from(useSubTitle2.current, {
+      scrollTrigger: useSubTitle2.current,
       x: -80,
       duration: 1,
       opacity: 0,
     });
-    gsap.from(title2.current, {
-      scrollTrigger: title2.current,
+    gsap.from(useTitle2.current, {
+      scrollTrigger: useTitle2.current,
       x: 300,
       duration: 1,
-      opacity: 0,
-    });
-    gsap.from(title3.current, {
-      scrollTrigger: title3.current,
-      x: -300,
-      duration: 1.2,
-      opacity: 0,
-    });
-    gsap.from(viewLink.current, {
-      scrollTrigger: viewLink.current,
-      x: 300,
-      duration: 1.2,
       opacity: 0,
     });
   });
@@ -112,7 +98,7 @@ const page = () => {
     <>
       <section className="h-screen bg-about-bg bg-cover">
         <Navbar2 />
-        <div className="h-full flex justify-center" ref={title}>
+        <div className="h-full flex justify-center" ref={useTitle}>
           <div className="flex items-center justify-center">
             <h1 className="text-white font-bold sm:text-[80px] text-[35px]">
               Our Events
@@ -125,14 +111,14 @@ const page = () => {
           <div className="flex flex-col items-center w-full mt-11">
             <div
               className="flex flex-col items-start justify-end"
-              ref={subTitle1}
+              ref={useSubTitle1}
             >
               <h3 className="tracking-widest">UPCOMING EVENTS</h3>
               <div className="bg-black opacity-55 w-[163px] h-[1px] mt-1 mb-0"></div>
             </div>
             <div
               className="flex flex-row items-center justify-center w-full relative mt-11"
-              ref={title2}
+              ref={useTitle2}
             >
               <h1 className="font-bold sm:text-[40px] text-[30px] w-1/2 text-center">
                 Don't Miss Your Chance to Get Closer to God
@@ -200,4 +186,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Events;
