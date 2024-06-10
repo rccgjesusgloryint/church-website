@@ -5,27 +5,35 @@ type GridLayout = {
   sides: number;
   fill: boolean;
   color?: string | any;
+  type: "rows" | "cols";
 };
 
-const GridLayout = ({ cls, sides, fill, color }: GridLayout) => {
-  const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: `repeat(${cls}, minmax(0, 1fr))`,
-    gap: `${sides}px`,
-  };
+const GridLayout = ({ cls, sides, fill, color, type }: GridLayout) => {
+  const gridStyle =
+    type === "cols"
+      ? {
+          display: "grid",
+          gridTemplateColumns: `repeat(${cls}, minmax(0, 1fr))`,
+          gap: `${sides}px`,
+        }
+      : {
+          display: "grid",
+          gridTemplateRows: `repeat(${cls}, minmax(0, 1fr))`,
+          gap: `${sides}px`,
+        };
 
   const defaultColor: string | any = color ? color : "bg-red-700";
 
   return (
-    <section className={"h-full px-[20px] z-50 absolute w-full"}>
+    <section className={"h-full px-[30px] z-50 absolute w-full"}>
       <div style={gridStyle} className={"h-full"}>
         {Array.from({ length: cls }).map((_, index) => (
           <div
             key={index}
             className={
               fill
-                ? `grid-cols-1 ${defaultColor} opacity-30 w-full`
-                : `grid-cols-1 border-x-[1px] ${defaultColor} w-full`
+                ? `grid-${type}-1 ${defaultColor} opacity-30 w-full`
+                : `grid-${type}-1 border-x-[1px] border-red-700 w-full`
             }
           ></div>
         ))}
