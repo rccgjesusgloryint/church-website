@@ -75,22 +75,29 @@ const Navbar = () => {
           </SheetDescription>
         </SheetContent>
       </Sheet>
-      <div
-        className="hidden sm:flex flex-row font-normal gap-7 justify-end m-0 pr-11 cursor-pointer"
-        ref={navbar}
-      >
-        <Link href="/home" className="hover:text-gray-700 duration-200">
-          Home
-        </Link>
-        <Link href="/about" className="hover:text-gray-700 duration-200">
-          About
-        </Link>
-        <Link href="/events" className="hover:text-gray-700 duration-200">
-          Events
-        </Link>
-        <Link href="/gallery" className="hover:text-gray-700 duration-200">
-          Gallery
-        </Link>
+      <div className="relative pt-4" ref={navbar}>
+        <div className="hidden sm:flex flex-row font-normal gap-7 justify-center items-center cursor-pointer">
+          <Link href="/home" className="hover:text-gray-700 duration-200">
+            Home
+          </Link>
+          <Link href="/about" className="hover:text-gray-700 duration-200">
+            About
+          </Link>
+          <Link href="/events" className="hover:text-gray-700 duration-200">
+            Events
+          </Link>
+          <Link href="/gallery" className="hover:text-gray-700 duration-200">
+            Gallery
+          </Link>
+        </div>
+        <div className="w-auto h-auto flex flex-row gap-2 absolute top-0 right-5">
+          <div className="flex justify-center items-center hover:bg-gray-700 w-[100px] h-[60px] border-gray-700 bg-transparent border-2 text-gray-700 hover:text-white duration-500 cursor-pointer">
+            <Link href={"/login"}>Login</Link>
+          </div>
+          <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500">
+            <Link href={"/register"}>Register</Link>
+          </div>
+        </div>
         {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
         {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}
       </div>
