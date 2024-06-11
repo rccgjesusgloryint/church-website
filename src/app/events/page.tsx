@@ -11,6 +11,7 @@ import { FaRegMap } from "react-icons/fa6";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import Newsletter from "../../../components/Newsletter";
 
 const Events = () => {
   const eventCards = [
@@ -181,7 +182,8 @@ const Events = () => {
           })}
         </div>
       </section>
-      <Footer />
+      {/* <Footer /> */}
+      <Newsletter />
     </>
   );
 };

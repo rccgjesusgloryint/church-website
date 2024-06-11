@@ -18,7 +18,7 @@ export default function Home() {
       <GalleryPreview />
       <EventsPreview />
       <Newsletter />
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 }

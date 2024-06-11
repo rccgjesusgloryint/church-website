@@ -44,32 +44,50 @@ const Footer = () => {
           <div className="sm:col-start-6 col-start-3 sm:col-span-3 col-span-8 w-full h-full flex items-center justify-start ml-5">
             <div className="flex flex-col justify-center items-start text-white">
               <h1 className="font-bold text-lg">LINKS</h1>
-              <ul className="mt-11 leading-10">
-                <li className="flex flex-row items-center cursor-pointer">
+              <div className="mt-11 leading-10">
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Praise and Worship
-                </li>
-                <li className="flex flex-row items-center cursor-pointer">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Our Ministries
-                </li>
-                <li className="flex flex-row items-center cursor-pointer">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Our Pastors
-                </li>
-                <li className="flex flex-row items-center cursor-pointer">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Sermons & Exhortations
-                </li>
-                <li className="flex flex-row items-center cursor-pointer opacity-0">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer opacity-0"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Our Pastors
-                </li>
-                <li className="flex flex-row items-center cursor-pointer opacity-0">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer opacity-0"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Our Pastors
-                </li>
-              </ul>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="sm:col-start-9 col-start-3 sm:col-span-3 col-span-8 w-full h-full flex items-center justify-center">

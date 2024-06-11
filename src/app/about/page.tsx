@@ -8,6 +8,7 @@ import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import Newsletter from "../../../components/Newsletter";
 
 const About = () => {
   const title = React.useRef<HTMLElement | any>();
@@ -85,13 +86,13 @@ const About = () => {
               <h1 className="font-bold sm:text-[40px] text-[30px]" ref={title2}>
                 Meet Our Wonderful Church Leaders
               </h1>
-              <div
+              {/* <div
                 className="flex items-center gap-3 font-bold hover:opacity-55 transition-opacity ease-in-out cursor-pointer absolute right-0 bottom-0"
                 ref={viewLink}
               >
                 <Link href="">VIEW ALL PASTORS</Link>
                 <Arrow />
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11">
@@ -159,6 +160,7 @@ const About = () => {
           </div>
         </div>
       </section>
+      <Newsletter />
     </>
   );
 };

@@ -132,7 +132,7 @@ const Gallery = () => {
         </motion.div>
       </main>
       <Newsletter />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
