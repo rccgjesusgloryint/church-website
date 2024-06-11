@@ -2,7 +2,7 @@
 
 import React from "react";
 import { animate, motion, useMotionValue } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useMeasure from "react-use-measure";
 import Card from "@/components/custom/Card";
 import Footer from "../../../components/Footer";
