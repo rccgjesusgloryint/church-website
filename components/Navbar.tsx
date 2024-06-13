@@ -26,7 +26,7 @@ const Navbar = () => {
     if (!user) {
       return null;
     } else {
-      setUser(user.role);
+      setUser(user?.role);
     }
   };
   React.useEffect(() => {
