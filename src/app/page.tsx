@@ -5,9 +5,9 @@ import AboutUsPreview from "../../components/AboutUsPreview";
 import OurMinistries from "../../components/OurMinistries";
 import GalleryPreview from "../../components/GalleryPreview";
 import EventsPreview from "../../components/EventsPreview";
-import Footer from "../../components/Footer";
-import GridLayout from "../../components/GridLayout";
 import Newsletter from "../../components/Newsletter";
+
+import React from "react";
 
 export default function Home() {
   return (

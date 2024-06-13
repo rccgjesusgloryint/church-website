@@ -1,22 +1,37 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import menu_icon from "../public/menu-icon.svg";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/all";
+
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
 
 import Link from "next/link";
+import { getAuthUserDetails } from "@/lib/queries";
 
 const Navbar = () => {
+  const [user, setUser] = React.useState("");
+  const getAuth = async () => {
+    const user = await getAuthUserDetails();
+    if (!user) {
+      return null;
+    } else {
+      setUser(user.role);
+    }
+  };
+  React.useEffect(() => {
+    getAuth();
+  }, [user]);
   const navbar = React.useRef<HTMLElement | any>();
 
   useGSAP(() => {
@@ -89,14 +104,20 @@ const Navbar = () => {
           <Link href="/gallery" className="hover:text-gray-700 duration-200">
             Gallery
           </Link>
+          {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
         </div>
-        <div className="w-auto h-auto flex flex-row gap-2 absolute top-0 right-5">
-          <div className="flex justify-center items-center hover:bg-gray-700 w-[100px] h-[60px] border-gray-700 bg-transparent border-2 text-gray-700 hover:text-white duration-500 cursor-pointer">
-            <Link href={"/login"}>Login</Link>
-          </div>
-          <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500">
-            <Link href={"/register"}>Register</Link>
-          </div>
+        <div className="w-auto h-auto flex flex-row gap-2 absolute top-0 right-5 items-center">
+          <SignedOut>
+            <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500">
+              <Link href="/sign-in">Sign In</Link>
+            </div>
+          </SignedOut>
+
+          <SignedIn>
+            <div className="border-2 border-gray-700 flex items-center justify-center p-3">
+              <UserButton />
+            </div>
+          </SignedIn>
         </div>
         {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
         {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}

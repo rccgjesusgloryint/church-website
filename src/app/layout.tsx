@@ -2,6 +2,13 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google"; // Importing DM Sans
 import "./globals.css";
 
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+} from "@clerk/nextjs";
+
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
   style: "normal",
@@ -20,8 +27,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={dmSans.className}>{children}</body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={dmSans.className}>{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
