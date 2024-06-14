@@ -13,7 +13,7 @@ import {
 import { getAuthUserDetails } from "@/lib/queries";
 
 const Navbar2 = () => {
-  // const [user, setUser] = React.useState("");
+  const [user, setUser] = React.useState("");
   // const getAuth = async () => {
   //   const user = await getAuthUserDetails();
   //   if (!user) {

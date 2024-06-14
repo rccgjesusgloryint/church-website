@@ -43,27 +43,28 @@ const UploadMediaForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!values.name || !values.link!) {
-      return alert("INPUTS EMPTY!!");
-    }
+    console.log("VALUES", values);
+    // if (!values.name || !values.link!) {
+    //   return alert("INPUTS EMPTY!!");
+    // }
 
-    const user = await getAuthUserDetails();
-    if (user?.role !== "ADMIN") {
-      throw new Error("User not authenticated");
-    }
+    // const user = await getAuthUserDetails();
+    // if (user?.role !== "ADMIN") {
+    //   throw new Error("User not authenticated");
+    // }
 
-    const externalId = user.externalId as string;
+    // const externalId = user.externalId as string;
 
-    try {
-      await createMedia(externalId, values);
+    // try {
+    //   await createMedia(externalId, values);
 
-      // Handle success (e.g., show a success message, redirect, etc.)
-      alert("QUERY COMPLETED!!");
-      router.refresh();
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      // Handle error (e.g., show an error message)
-    }
+    //   // Handle success (e.g., show a success message, redirect, etc.)
+    //   alert("QUERY COMPLETED!!");
+    //   router.refresh();
+    // } catch (error) {
+    //   console.error("Error submitting form:", error);
+    //   // Handle error (e.g., show an error message)
+    // }
   }
 
   return (

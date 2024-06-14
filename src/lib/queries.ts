@@ -13,6 +13,8 @@ export const allUsers = async () => {
 
 export const getAuthUserDetails = async (): Promise<User | null> => {
   const user = await currentUser();
+  console.log("USER: ", user);
+  console.log("USER ID: ", user?.id);
   if (!user) {
     return null;
   }
@@ -22,6 +24,8 @@ export const getAuthUserDetails = async (): Promise<User | null> => {
       externalId: user.id,
     },
   });
+
+  console.log("USER DATA: ", userData);
 
   return userData;
 };

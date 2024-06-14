@@ -20,7 +20,7 @@ import Link from "next/link";
 import { getAuthUserDetails } from "@/lib/queries";
 
 const Navbar = () => {
-  // const [user, setUser] = React.useState("");
+  const [user, setUser] = React.useState("");
   // const getAuth = async () => {
   //   const user = await getAuthUserDetails();
   //   if (!user) {
