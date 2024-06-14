@@ -64,18 +64,19 @@ export async function POST(req: Request) {
   if (eventType === "user.created" || eventType === "user.updated") {
     const { id, ...attributes } = evt.data;
 
-    // Check if the data has the expected propertie
-    await db.user.upsert({
-      where: { externalId: id as string },
-      create: {
-        externalId: id as string,
-        attributes: attributes as object,
-      },
-      update: {
-        externalId: id as string,
-        attributes: attributes as object,
-      },
-    });
+    // Check if the data has the expected properties
+    console.log("DETAILS: ", attributes);
+    // await db.user.upsert({
+    //   where: { externalId: id as string },
+    //   create: {
+    //     externalId: id as string,
+    //     attributes: attributes as object,
+    //   },
+    //   update: {
+    //     externalId: id as string,
+    //     attributes: attributes as object,
+    //   },
+    // });
   }
 
   return new Response("", { status: 200 });
