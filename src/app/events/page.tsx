@@ -126,7 +126,7 @@ const Events = () => {
                   >
                     <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
                       <p className="text-[28px] text-center w-full mb-[3px] leading-6">
-                        11
+                        {event.date[0].split(" ")[1].slice(0, 2)}
                       </p>
                       <p className="text-base mb-[10px]">
                         {event.date[0].length > 3
