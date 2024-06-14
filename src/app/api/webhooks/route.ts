@@ -66,17 +66,17 @@ export async function POST(req: Request) {
 
     // Check if the data has the expected properties
     console.log("DETAILS: ", attributes);
-    // await db.user.upsert({
-    //   where: { externalId: id as string },
-    //   create: {
-    //     externalId: id as string,
-    //     attributes: attributes as object,
-    //   },
-    //   update: {
-    //     externalId: id as string,
-    //     attributes: attributes as object,
-    //   },
-    // });
+    await db.user.upsert({
+      where: { externalId: id as string },
+      create: {
+        externalId: id as string,
+        attributes: attributes as object,
+      },
+      update: {
+        externalId: id as string,
+        attributes: attributes as object,
+      },
+    });
   }
 
   return new Response("", { status: 200 });

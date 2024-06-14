@@ -14,17 +14,17 @@ import { getAuthUserDetails } from "@/lib/queries";
 
 const Navbar2 = () => {
   const [user, setUser] = React.useState("");
-  // const getAuth = async () => {
-  //   const user = await getAuthUserDetails();
-  //   if (!user) {
-  //     return null;
-  //   } else {
-  //     setUser(user.role);
-  //   }
-  // };
-  // React.useEffect(() => {
-  //   getAuth();
-  // }, [user]);
+  const getAuth = async () => {
+    const user = await getAuthUserDetails();
+    if (!user) {
+      return null;
+    } else {
+      setUser(user.role);
+    }
+  };
+  React.useEffect(() => {
+    getAuth();
+  }, [user]);
   return (
     <div className="bg-white h-[100px] shadow-md">
       <div className="hidden grid-cols-12 md:grid h-full w-full">
@@ -74,7 +74,7 @@ const Navbar2 = () => {
             >
               Gallery
             </Link>
-            {/* {user === "ADMIN" ? <Link href="/media">Media</Link> : ""} */}
+            {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
             {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
             {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}
           </div>

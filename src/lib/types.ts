@@ -5,15 +5,6 @@ export type UserDetails = {
   email: string;
 };
 
-type User = {
-  id: number;
-  email: string;
-  name: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  role: string; // Add this line
-};
-
 export type CreateMediaType = {
   id?: string;
   type?: string | null;

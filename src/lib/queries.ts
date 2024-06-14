@@ -1,6 +1,6 @@
 "use server";
 
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { CreateMediaType, GalleryType } from "./types";
 import { currentUser } from "@clerk/nextjs/server";
 
@@ -11,7 +11,7 @@ export const allUsers = async () => {
   return res;
 };
 
-export const getAuthUserDetails = async (): Promise<User | null> => {
+export const getAuthUserDetails = async () => {
   const user = await currentUser();
   console.log("USER: ", user);
   console.log("USER ID: ", user?.id);

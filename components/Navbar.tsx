@@ -21,17 +21,17 @@ import { getAuthUserDetails } from "@/lib/queries";
 
 const Navbar = () => {
   const [user, setUser] = React.useState("");
-  // const getAuth = async () => {
-  //   const user = await getAuthUserDetails();
-  //   if (!user) {
-  //     return null;
-  //   } else {
-  //     setUser(user?.role);
-  //   }
-  // };
-  // React.useEffect(() => {
-  //   getAuth();
-  // }, [user]);
+  const getAuth = async () => {
+    const user = await getAuthUserDetails();
+    if (!user) {
+      return null;
+    } else {
+      setUser(user?.role);
+    }
+  };
+  React.useEffect(() => {
+    getAuth();
+  }, [user]);
   const navbar = React.useRef<HTMLElement | any>();
 
   useGSAP(() => {
@@ -104,7 +104,7 @@ const Navbar = () => {
           <Link href="/gallery" className="hover:text-gray-700 duration-200">
             Gallery
           </Link>
-          {/* {user === "ADMIN" ? <Link href="/media">Media</Link> : ""} */}
+          {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
         </div>
         <div className="w-auto h-auto flex flex-row gap-2 absolute top-0 right-5 items-center">
           <SignedOut>
