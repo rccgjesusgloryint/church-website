@@ -45,17 +45,7 @@ model Events {
   event        String
   date         String[]
   location     String
-  description  EventDescription?
+  description  Json
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
-}
-
-model EventDescription {
-  eventPosterImage        String?
-  eventDescription        String
-  createdAt               DateTime   @default(now())
-  updatedAt               DateTime   @updatedAt
-
-  eventId                 Int             @unique
-  event                   Events @relation(fields: [eventId], references: [id])
 }

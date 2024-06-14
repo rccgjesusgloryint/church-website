@@ -77,12 +77,7 @@ export const createEvent = async (eventObj: CreateEventType) => {
         event: eventObj.event,
         date: eventObj.date,
         location: eventObj.location,
-        description: {
-          create: {
-            eventPosterImage: eventObj.description.eventPosterImage,
-            eventDescription: eventObj.description.eventDescription,
-          },
-        },
+        description: eventObj.description,
       },
     });
 
@@ -110,14 +105,14 @@ export const getAllEvents = async () => {
   return response;
 };
 
-export const getEventDetail = async (event: EventDetail) => {
-  const response = await prisma.eventDescription.findUnique({
-    where: { eventId: event.eventId },
-    select: {
-      eventDescription: true,
-      eventPosterImage: true,
-    },
-  });
+// export const getEventDetail = async (event: EventDetail) => {
+//   const response = await prisma.eventDescription.findUnique({
+//     where: { eventId: event.eventId },
+//     select: {
+//       eventDescription: true,
+//       eventPosterImage: true,
+//     },
+//   });
 
-  return response;
-};
+//   return response;
+// };

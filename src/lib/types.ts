@@ -25,9 +25,10 @@ export type CreateEventType = {
   event: string;
   date: string[];
   location: string;
-  description: eventDescription;
-  createdAt?: Date | string;
-  updatedAt?: Date | string;
+  description: {
+    eventPosterImage: string;
+    eventDescription: string;
+  };
 };
 
 export type GalleryType = string[];
