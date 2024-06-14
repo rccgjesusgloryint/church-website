@@ -17,6 +17,9 @@ export const ourFileRouter = {
   pictures: f({ image: { maxFileSize: "8MB", maxFileCount: 1 } })
     .middleware(authenticateUser)
     .onUploadComplete((data) => {}),
+  eventPosterImage: f({ image: { maxFileSize: "16MB", maxFileCount: 1 } })
+    .middleware(authenticateUser)
+    .onUploadComplete((data) => {}),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

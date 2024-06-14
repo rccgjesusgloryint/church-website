@@ -15,19 +15,33 @@ export type CreateMediaType = {
   updatedAt?: Date | string;
 };
 
+type eventDescription = {
+  eventPosterImage: string;
+  eventDescription: string;
+};
+
 export type CreateEventType = {
-  id?: string;
+  id?: number;
   event: string;
   date: string[];
   location: string;
+  description: eventDescription;
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
 
 export type GalleryType = string[];
+
 export type EventType = {
   id?: number;
   event: string;
   date: string[];
   location: string;
+  description?: object;
 }[];
+
+export type EventDetail = {
+  eventId?: number;
+  eventPosterImages: string;
+  eventDescription: string;
+};

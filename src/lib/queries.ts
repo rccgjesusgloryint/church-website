@@ -1,7 +1,12 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import { CreateEventType, CreateMediaType, GalleryType } from "./types";
+import {
+  CreateEventType,
+  CreateMediaType,
+  EventDetail,
+  GalleryType,
+} from "./types";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
@@ -68,17 +73,27 @@ export const createEvent = async (eventObj: CreateEventType) => {
   try {
     await prisma.events.create({
       data: {
+        id: eventObj.id,
         event: eventObj.event,
         date: eventObj.date,
         location: eventObj.location,
+        description: {
+          create: {
+            eventPosterImage: eventObj.description.eventPosterImage,
+            eventDescription: eventObj.description.eventDescription,
+          },
+        },
       },
     });
 
     console.log("SUCCESS CREATING EVENT 🟢🟢");
-    return { status: 200 };
+    return { message: "SUCCESS CREATING EVENT 🟢🟢", status: 200 };
   } catch (error) {
-    console.log("OOPS, PROBLEM CREATING EVENT 🔴🔴");
-    return { status: 400 };
+    console.log(`OOPS, PROBLEM CREATING EVENT 🔴🔴 -- ERROR MESSAGE: ${error}`);
+    return {
+      message: `OOPS, PROBLEM CREATING EVENT 🔴🔴 -- ERROR MESSAGE: ${error}`,
+      status: 400,
+    };
   }
 };
 
@@ -89,6 +104,18 @@ export const getAllEvents = async () => {
       event: true,
       date: true,
       location: true,
+    },
+  });
+
+  return response;
+};
+
+export const getEventDetail = async (event: EventDetail) => {
+  const response = await prisma.eventDescription.findUnique({
+    where: { eventId: event.eventId },
+    select: {
+      eventDescription: true,
+      eventPosterImage: true,
     },
   });
 

@@ -32,7 +32,6 @@ const formSchema = z.object({
 });
 
 const UploadMediaForm = () => {
-  const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onSubmit",
@@ -59,7 +58,6 @@ const UploadMediaForm = () => {
 
       // Handle success (e.g., show a success message, redirect, etc.)
       alert("QUERY COMPLETED!!");
-      router.refresh();
     } catch (error) {
       console.error("Error submitting form:", error);
       // Handle error (e.g., show an error message)
