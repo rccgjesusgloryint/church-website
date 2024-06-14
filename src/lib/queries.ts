@@ -99,20 +99,9 @@ export const getAllEvents = async () => {
       event: true,
       date: true,
       location: true,
+      description: true,
     },
   });
 
   return response;
 };
-
-// export const getEventDetail = async (event: EventDetail) => {
-//   const response = await prisma.eventDescription.findUnique({
-//     where: { eventId: event.eventId },
-//     select: {
-//       eventDescription: true,
-//       eventPosterImage: true,
-//     },
-//   });
-
-//   return response;
-// };

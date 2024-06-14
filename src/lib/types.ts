@@ -1,4 +1,5 @@
 import { Prisma } from "@prisma/client";
+import { JsonValue } from "@prisma/client/runtime/library";
 
 export type UserDetails = {
   name: string | null | undefined;
@@ -38,7 +39,7 @@ export type EventType = {
   event: string;
   date: string[];
   location: string;
-  description?: object;
+  description: object | JsonValue;
 }[];
 
 export type EventDetail = {
