@@ -55,10 +55,6 @@ const EventsForm = () => {
     },
   });
 
-  React.useEffect(() => {
-    console.log("FORM: ", form);
-  }, [form]);
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (
       !values.date ||
