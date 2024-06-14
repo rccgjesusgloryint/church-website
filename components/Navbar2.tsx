@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/sheet";
 import { getAuthUserDetails } from "@/lib/queries";
 
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+
 const Navbar2 = () => {
   const [user, setUser] = React.useState("");
   const getAuth = async () => {
@@ -77,6 +79,19 @@ const Navbar2 = () => {
             {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
             {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
             {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}
+          </div>
+          <div className="w-auto h-auto sm:flex flex-row gap-2 absolute top-5 right-3 items-center">
+            <SignedOut>
+              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500">
+                <Link href="/sign-in">Sign In</Link>
+              </div>
+            </SignedOut>
+
+            <SignedIn>
+              <div className="flex items-center justify-center p-3">
+                <UserButton />
+              </div>
+            </SignedIn>
           </div>
         </div>
       </div>
