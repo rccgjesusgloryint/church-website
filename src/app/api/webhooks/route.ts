@@ -65,7 +65,6 @@ export async function POST(req: Request) {
     const { id, ...attributes } = evt.data;
 
     // Check if the data has the expected properties
-    console.log("DETAILS: ", attributes);
     await db.user.upsert({
       where: { externalId: id as string },
       create: {

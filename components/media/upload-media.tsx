@@ -43,7 +43,6 @@ const UploadMediaForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("VALUES", values);
     if (!values.name || !values.link!) {
       return alert("INPUTS EMPTY!!");
     }

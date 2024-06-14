@@ -1,0 +1,136 @@
+"use client";
+
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { createEvent, getAuthUserDetails } from "@/lib/queries";
+import { zodResolver } from "@hookform/resolvers/zod";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+const EventsForm = () => {
+  // Define the schema
+  const formSchema = z.object({
+    event: z.string().min(2).max(50),
+    date: z.tuple([z.string().min(1), z.string().min(1)]),
+    location: z.string().min(25),
+  });
+
+  // Infer the form data type
+  type FormData = z.infer<typeof formSchema>;
+
+  // Initialize the form with the updated schema
+  const form = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    mode: "onSubmit",
+    defaultValues: {
+      event: "",
+      date: ["", ""],
+      location: "",
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (!values.location || !values.date || !values.event) {
+      return alert("INPUTS EMPTY!!");
+    }
+    try {
+      const response = await createEvent(values);
+      if (response.status === 200) {
+        form.resetField("date");
+        form.resetField("location");
+        form.resetField("event");
+      }
+    } catch (error) {
+      console.log("ERROR CREATING EVENT");
+    }
+  }
+
+  return (
+    <Card className="w-full h-full mt-5">
+      <CardHeader>
+        <CardTitle>
+          <CardDescription>
+            Please enter the details for your file
+          </CardDescription>
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <FormField
+              control={form.control}
+              name="event"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Event Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Event" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="date.0"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>From Date</FormLabel>
+                  <FormControl>
+                    <Input placeholder="From (eg. April 28, 2022)" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="date.1"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>To Date</FormLabel>
+                  <FormControl>
+                    <Input placeholder="To (eg. April 30, 2022)" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Address</FormLabel>
+                  <FormControl>
+                    <Input placeholder="The address" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit">Create Event</Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
+  );
+};
+
+export default EventsForm;

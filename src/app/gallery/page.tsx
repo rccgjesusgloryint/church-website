@@ -25,9 +25,6 @@ const Gallery = () => {
     fetchGalleryImages();
   }, []); // Empty dependency array ensures this runs only once
 
-  React.useEffect(() => {
-    console.log("IMAGE: ", galleryImages);
-  }, [galleryImages]);
   return (
     <>
       <Navbar2 />
