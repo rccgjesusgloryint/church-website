@@ -17,7 +17,7 @@ export type CreateMediaType = {
 };
 
 export type CreateEventType = {
-  id: string;
+  id?: string;
   event: string;
   date: string[];
   location: string;
