@@ -105,3 +105,14 @@ export const getAllEvents = async () => {
 
   return response;
 };
+
+export const getEvent = async (id: string) => {
+  const response = await prisma.events.findUnique({
+    where: { id: id },
+    select: {
+      description: true,
+    },
+  });
+
+  return response;
+};

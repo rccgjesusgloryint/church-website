@@ -2,8 +2,8 @@
 
 import React from "react";
 
-import Navbar2 from "../../../components/Navbar2";
-import Footer from "../../../components/Footer";
+import Navbar2 from "../../../../components/Navbar2";
+import Footer from "../../../../components/Footer";
 
 import { LuClock3 } from "react-icons/lu";
 import { FaBullseye, FaRegMap } from "react-icons/fa6";
@@ -11,11 +11,12 @@ import { FaBullseye, FaRegMap } from "react-icons/fa6";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import Newsletter from "../../../components/Newsletter";
+import Newsletter from "../../../../components/Newsletter";
 import { getAllEvents, getAuthUserDetails } from "@/lib/queries";
-import CreateEvent from "../../../components/events";
+import CreateEvent from "../../../../components/events";
 import { EventType } from "@/lib/types";
-import Loader from "../../../components/Loader";
+import Loader from "../../../../components/Loader";
+import { redirect, useRouter } from "next/navigation";
 
 const Events = () => {
   const useTitle = React.useRef<HTMLElement | any>();
@@ -53,6 +54,13 @@ const Events = () => {
   const [user, setUser] = React.useState("");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [events, setEvents] = React.useState<EventType>([]);
+
+  const router = useRouter();
+
+  const handleNavigation = (id: string) => {
+    router.push(`/events/${id}`);
+  };
+
   const getAuth = async () => {
     const user = await getAuthUserDetails();
     if (!user) {
@@ -61,6 +69,7 @@ const Events = () => {
       setUser(user?.role);
     }
   };
+
   React.useEffect(() => {
     getAuth();
   }, [user]);
@@ -74,6 +83,10 @@ const Events = () => {
     };
     fetchEvents();
   }, []); // Empty dependency array ensures this runs only once
+
+  React.useEffect(() => {
+    console.log("EVENTS: ", events);
+  }, [events]);
 
   return (
     <>
@@ -160,7 +173,10 @@ const Events = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="border-2 border-light-gr mt-[56px] w-[160px] h-[60px] flex justify-center items-center hover:bg-light-gr hover:text-white cursor-pointer transition ease-in-out">
+                    <div
+                      className="border-2 border-light-gr mt-[56px] w-[160px] h-[60px] flex justify-center items-center hover:bg-light-gr hover:text-white cursor-pointer transition ease-in-out"
+                      onClick={() => handleNavigation(event.id)}
+                    >
                       <h3 className="font-bold text-sm tracking-wider">
                         READ MORE
                       </h3>
@@ -177,7 +193,7 @@ const Events = () => {
         )}
       </section>
       {user === "ADMIN" ? <CreateEvent /> : ""}
-      {/* <CreateEvent /> */}
+      <CreateEvent />
       <Newsletter />
       {/* <Footer /> */}
     </>

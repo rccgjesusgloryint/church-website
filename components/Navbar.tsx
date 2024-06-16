@@ -52,7 +52,7 @@ const Navbar = () => {
             <SheetDescription>
               <div className="flex flex-col justify-start items-start pt-5 pl-5 gap-10 text-black active:text-light-gr">
                 <Link
-                  href="/home"
+                  href="/"
                   className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
                 >
                   Home
@@ -93,7 +93,7 @@ const Navbar = () => {
         </Sheet>
         <div className="sm:relative sm:pt-4 h-[100px]" ref={navbar}>
           <div className="hidden sm:flex flex-row font-normal gap-7 justify-center items-center cursor-pointer">
-            <Link href="/home" className="hover:text-gray-700 duration-200">
+            <Link href="/" className="hover:text-gray-700 duration-200">
               Home
             </Link>
             <Link href="/about" className="hover:text-gray-700 duration-200">
@@ -121,8 +121,8 @@ const Navbar = () => {
               </div>
             </SignedIn>
           </div>
-          {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
-          {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}
+          {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
+          {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
         </div>
       </div>
     </>

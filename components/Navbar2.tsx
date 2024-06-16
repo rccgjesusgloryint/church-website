@@ -40,7 +40,7 @@ const Navbar2 = () => {
           />
         </div>
         <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-start">
-          <Link href="/home" className="cursoper-pointer">
+          <Link href="/" className="cursoper-pointer">
             <Image
               src="/images/Church-logo.jpg"
               alt="logo"
@@ -53,7 +53,7 @@ const Navbar2 = () => {
         <div className="hidden col-start-9 col-span-4 w-full h-full md:flex">
           <div className="flex flex-row gap-9 justify-center items-center flex-wrap w-full">
             <Link
-              href="/home"
+              href="/"
               className="hover:text-gray-700 duration-200 cursor-pointer"
             >
               Home
@@ -77,8 +77,8 @@ const Navbar2 = () => {
               Gallery
             </Link>
             {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
-            {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
-            {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}
+            {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
+            {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
           </div>
           <div className="w-auto h-auto sm:flex flex-row gap-2 absolute top-5 right-3 items-center">
             <SignedOut>
@@ -107,7 +107,7 @@ const Navbar2 = () => {
             />
           </SheetTrigger>
           <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-start">
-            <Link href="/home" className="cursoper-pointer">
+            <Link href="/" className="cursoper-pointer">
               <Image
                 src="/images/Church-logo.jpg"
                 alt="logo"
@@ -119,7 +119,7 @@ const Navbar2 = () => {
           <SheetContent>
             <SheetDescription>
               <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-center">
-                <Link href="/home" className="cursoper-pointer">
+                <Link href="/" className="cursoper-pointer">
                   <Image
                     src="/images/Church-logo.jpg"
                     alt="logo"
@@ -131,7 +131,7 @@ const Navbar2 = () => {
               <div className="flex w-full h-full items-center justify-start pl-11">
                 <div className="flex flex-col gap-11 flex-wrap mt-20 w-full">
                   <Link
-                    href="/home"
+                    href="/"
                     className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
                   >
                     Home
@@ -154,8 +154,8 @@ const Navbar2 = () => {
                   >
                     Gallery
                   </Link>
-                  {/* <Link href="/home" className="hover:text-gray-700 duration-200">Blog</Link> */}
-                  {/* <Link href="/home" className="hover:text-gray-700 duration-200">Support</Link> */}
+                  {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
+                  {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
                 </div>
               </div>
             </SheetDescription>

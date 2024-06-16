@@ -15,7 +15,7 @@ const Footer = () => {
           <div className="sm:col-start-3 col-start-3 sm:col-span-3 col-span-8 w-full h-full flex flex-col items-center justify-center flex-wrap">
             <div className="flex flex-col justify-center items-start text-white text-le">
               <h1 className="mb-6 cursor-pointer">
-                <Link href="/home">
+                <Link href="/">
                   <Image
                     src="/images/Church-logo.jpg"
                     alt="logo"
