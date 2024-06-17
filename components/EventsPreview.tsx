@@ -10,25 +10,23 @@ import { LuClock3 } from "react-icons/lu";
 import Loader from "./Loader";
 
 const EventsPreview = () => {
-  const month = "november";
-
-  const eventCards = [
-    {
-      heading: "Suicide Loss Grief Support Group",
-      date: ["April 28, 2022", "January 2, 2023"],
-      location: "233 Main St New York, NY United States",
-    },
-    {
-      heading: "Suicide Loss Grief Support Group",
-      date: ["April 28, 2022", "January 2, 2023"],
-      location: "233 Main St New York, NY United States",
-    },
-    {
-      heading: "Suicide Loss Grief Support Group",
-      date: ["April 28, 2022", "January 2, 2023"],
-      location: "233 Main St New York, NY United States",
-    },
+  const today = new Date(Date.now());
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
+  const month = months[today.getMonth() + 1];
+
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [events, setEvents] = React.useState<EventType>([]);
   const router = useRouter();
@@ -51,10 +49,10 @@ const EventsPreview = () => {
         <div className="sm:w-1/3 flex flex-row sm:flex-col items-center justify-center sm:pt-[78px] pt-5 sm:pl-[179px] mb-[50px]">
           <div className="sm:pr-[20px] sm:h-[492px]">
             <div className="sm:text-left sm:block flex flex-col items-center">
-              <h3 className="tracking-widest mb-1 text-light-gr">
+              <h3 className="tracking-widest mb-1 text-light-gr text-left">
                 THIS {month.toUpperCase()}
               </h3>
-              <div className="bg-dark-gr opacity-50 h-[2px] w-[9rem]"></div>
+              <div className="bg-dark-gr opacity-50 h-[2px] w-full"></div>
             </div>
             <h1 className="font-bold sm:text-4xl text-3xl sm:text-left text-center pt-[30px] mb-[30px] sm:w-[300px]">
               Become a part of something great
