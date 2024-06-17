@@ -17,7 +17,6 @@ export const getAuthUserDetails = async () => {
   if (!user) {
     return null;
   }
-
   const userData = await prisma.user.findUnique({
     where: {
       externalId: user.id,

@@ -16,22 +16,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   ]);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const onButtonAutoplayClick = useCallback(
-    (callback: () => void) => {
-      const autoScroll = emblaApi?.plugins()?.autoScroll;
-      if (!autoScroll) return;
-
-      const resetOrStop =
-        autoScroll.options.stopOnInteraction === false
-          ? autoScroll.reset
-          : autoScroll.stop;
-
-      resetOrStop();
-      callback();
-    },
-    [emblaApi]
-  );
-
   const toggleAutoplay = useCallback(() => {
     const autoScroll = emblaApi?.plugins()?.autoScroll;
     if (!autoScroll) return;
