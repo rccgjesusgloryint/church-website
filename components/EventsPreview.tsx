@@ -1,7 +1,13 @@
+"use client";
+
+import { getAllEvents } from "@/lib/queries";
+import { EventType } from "@/lib/types";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaRegMap } from "react-icons/fa";
 import { LuClock3 } from "react-icons/lu";
+import Loader from "./Loader";
 
 const EventsPreview = () => {
   const month = "november";
@@ -23,6 +29,21 @@ const EventsPreview = () => {
       location: "233 Main St New York, NY United States",
     },
   ];
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [events, setEvents] = React.useState<EventType>([]);
+  const router = useRouter();
+  const handleNavigation = (id: string) => {
+    router.push(`/events/${id}`);
+  };
+  React.useEffect(() => {
+    setIsLoading(true);
+    const fetchEvents = async () => {
+      const response = await getAllEvents();
+      setEvents(response);
+      setIsLoading(false);
+    };
+    fetchEvents();
+  }, []); // Empty dependency array ensures this runs only once
 
   return (
     <section className="h-auto sm:h-screen 2xl:h-[90vh] bg-white flex items-center overflow-hidden">
@@ -51,60 +72,77 @@ const EventsPreview = () => {
             </div>
           </div>
         </div>
-        <div className="sm:w-2/3 px-5 flex flex-col sm:flex-row items-center justify-center  sm:items-end 2xl:items-start 2xl:pt-[75px] sm:pt-[100px] sm:pl-0 sm:gap-[18px] gap-[40px] sm:pb-[75px] pt-[50px] h-full">
-          {eventCards.map((event, index) => {
-            return (
-              <div
-                className="sm:w-[290px] 2xl:w-[390px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl"
-                key={index}
-              >
-                <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
-                  <p className="text-[28px] text-center w-full mb-[3px] leading-6">
-                    11
-                  </p>
-                  <p className="text-base mb-[10px]">
-                    {event.date[0].length > 3
-                      ? event.date[0].slice(0, 3)
-                      : event.date[0]}
-                  </p>
-                </div>
+        {isLoading ? (
+          <div className="flex items-center justify-center my-32">
+            <Loader />
+          </div>
+        ) : (
+          <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11">
+            {events.length > 0 ? (
+              events?.map((event, index) => {
+                return (
+                  <div
+                    className="sm:w-[290px] 2xl:w-[390px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl"
+                    key={index}
+                  >
+                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+                      <p className="text-[28px] text-center w-full mb-[3px] leading-6">
+                        {event.date[0].split(" ")[1].length > 2
+                          ? event.date[0].split(" ")[1].slice(0, 2)
+                          : event.date[0].split(" ")[1].slice(0, 1)}
+                      </p>
+                      <p className="text-base mb-[10px]">
+                        {event.date[0].length > 3
+                          ? event.date[0].slice(0, 3)
+                          : event.date[0]}
+                      </p>
+                    </div>
 
-                <h2 className="font-bold text-2xl w-[230px] 2xl:w-[337px] mb-[20px]">
-                  {event.heading}
-                </h2>
-                <div className="relative">
-                  <div className="flex flex-col absolute w-[112px]">
-                    <span className="mt-1">
-                      <LuClock3 />
-                    </span>
-                    <span className=""></span>
-                  </div>
-                  <div className="font-bold text-base pl-10">
-                    <div>
-                      <p>{event.date[0]}</p>
+                    <h2 className="font-bold text-2xl w-[230px] 2xl:w-[337px] mb-[20px]">
+                      {event?.event}
+                    </h2>
+                    <div className="relative">
+                      <div className="flex flex-col absolute w-[112px]">
+                        <span className="mt-1">
+                          <LuClock3 />
+                        </span>
+                        <span className=""></span>
+                      </div>
+                      <div className="font-bold text-base pl-10">
+                        <div>
+                          <p>{event.date[0]}</p>
+                        </div>
+                        <div>
+                          <p>{event.date[1]}</p>
+                        </div>
+                      </div>
+                      <div className="pt-[20px]">
+                        <span className="absolute mt-[5px]">
+                          <FaRegMap />
+                        </span>
+                        <p className="font-bold text-base pl-10">
+                          {event.location}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p>{event.date[1]}</p>
+                    <div
+                      className="border-2 border-light-gr mt-[56px] w-[160px] h-[60px] flex justify-center items-center hover:bg-light-gr hover:text-white cursor-pointer transition ease-in-out"
+                      onClick={() => handleNavigation(event.id)}
+                    >
+                      <h3 className="font-bold text-sm tracking-wider">
+                        READ MORE
+                      </h3>
                     </div>
                   </div>
-                  <div className="pt-[20px]">
-                    <span className="absolute mt-[5px]">
-                      <FaRegMap />
-                    </span>
-                    <p className="font-bold text-base pl-10">
-                      {event.location}
-                    </p>
-                  </div>
-                </div>
-                <div className="border-2 border-light-gr mt-[56px] w-[160px] h-[60px] flex justify-center items-center hover:bg-light-gr hover:text-white cursor-pointer transition ease-in-out">
-                  <h3 className="font-bold text-sm tracking-wider">
-                    READ MORE
-                  </h3>
-                </div>
+                );
+              })
+            ) : (
+              <div>
+                <h1>No events yet!</h1>
               </div>
-            );
-          })}
-        </div>
+            )}
+          </div>
+        )}
         <div className="hidden absolute bottom-20 right-[450px] 3xl:flex gap-1.5">
           <div className="bg-black w-[15px] h-[15px] rounded-[50%] cursor-pointer"></div>
           <div className="bg-gray-500 w-[15px] h-[15px] rounded-[50%] cursor-pointer"></div>

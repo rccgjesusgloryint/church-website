@@ -3,10 +3,9 @@
 import React from "react";
 
 import Navbar2 from "../../../../components/Navbar2";
-import Footer from "../../../../components/Footer";
 
 import { LuClock3 } from "react-icons/lu";
-import { FaBullseye, FaRegMap } from "react-icons/fa6";
+import { FaRegMap } from "react-icons/fa6";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
