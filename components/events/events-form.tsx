@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import FileUpload from "../media/file-upload";
 import { Textarea } from "@/components/ui/textarea";
+import toast from "react-hot-toast";
 
 const EventsForm = () => {
   // Define the schema
@@ -66,7 +67,29 @@ const EventsForm = () => {
       return alert("INPUTS EMPTY!!");
     }
     try {
-      const response = await createEvent(values);
+      const response = await toast.promise(
+        createEvent(values),
+        {
+          loading: "Loading",
+          success: (data) => `Successfully created ${data.message}`,
+          error: (err) => `This just happened: ${err.toString()}`,
+        },
+        {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+          success: {
+            duration: 5000,
+            icon: "🟢",
+          },
+        }
+      );
       if (response.status === 200) {
         form.resetField("date");
         form.resetField("location");

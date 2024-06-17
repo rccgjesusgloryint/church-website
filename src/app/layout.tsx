@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google"; // Importing DM Sans
 import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "react-hot-toast";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -24,7 +25,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={dmSans.className}>{children}</body>
+        <body className={dmSans.className}>
+          {children}
+          <Toaster />
+        </body>
       </html>
     </ClerkProvider>
   );

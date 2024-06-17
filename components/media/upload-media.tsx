@@ -24,7 +24,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -48,7 +48,7 @@ const UploadMediaForm = () => {
 
     const user = await getAuthUserDetails();
     if (user?.role !== "ADMIN") {
-      throw new Error("User not authenticated");
+      return toast.error("User not authenticated");
     }
 
     const externalId = user.externalId as string;
