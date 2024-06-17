@@ -77,7 +77,7 @@ const EventsPreview = () => {
         ) : (
           <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11">
             {events.length > 0 ? (
-              events?.map((event, index) => {
+              events?.slice(3).map((event, index) => {
                 return (
                   <div
                     className="sm:w-[290px] 2xl:w-[390px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl"
