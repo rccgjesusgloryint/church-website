@@ -8,8 +8,17 @@ import EventsPreview from "../../components/EventsPreview";
 import Newsletter from "../../components/Newsletter";
 
 import React from "react";
+import { getAuthUserDetails } from "@/lib/queries";
 
 export default function Home() {
+  //   React.useEffect(() => {
+  //     const auth = async () => {
+  //       const user = await getAuthUserDetails();
+  //       console.log("User: ", user);
+  //     };
+
+  //     auth();
+  //   }, []);
   return (
     <main>
       <Hero />

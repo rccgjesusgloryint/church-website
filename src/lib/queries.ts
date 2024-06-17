@@ -1,12 +1,7 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import {
-  CreateEventType,
-  CreateMediaType,
-  EventDetail,
-  GalleryType,
-} from "./types";
+import { CreateEventType, CreateMediaType } from "./types";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
