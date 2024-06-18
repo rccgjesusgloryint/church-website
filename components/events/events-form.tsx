@@ -22,9 +22,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import FileUpload from "../media/file-upload";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
+import FileUpload from "../media/file-upload";
 
 const EventsForm = () => {
   // Define the schema

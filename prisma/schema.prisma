@@ -35,7 +35,7 @@ model Media {
   type         String?
   name         String
   link         String       @unique
-  externalId   String
+  externalId   String?
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
 }

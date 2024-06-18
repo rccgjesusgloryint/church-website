@@ -1,7 +1,7 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import { CreateEventType, CreateMediaType } from "./types";
+import { CreateEventType, CreateMediaType, UploadMultipleFiles } from "./types";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
@@ -27,18 +27,30 @@ export const getAuthUserDetails = async () => {
 };
 
 export const createMedia = async (
-  externalId: string,
-  mediaFile: CreateMediaType
+  name: string,
+  mediaFile: UploadMultipleFiles
 ) => {
-  const response = await prisma.media.create({
-    data: {
-      link: mediaFile.link,
-      name: mediaFile.name,
-      externalId: externalId,
-    },
-  });
-
-  return response;
+  try {
+    mediaFile.map(async (link) => {
+      try {
+        const response = await prisma.media.create({
+          data: {
+            link: link.url,
+            name: name,
+            // externalId: externalId,
+          },
+        });
+        // console.log("RESPONSE: ", response);
+      } catch (error) {
+        console.log("ERROR: ", error);
+        return { message: "OOPS COULDNT UPLAOD FILES", status: 400 };
+      }
+    });
+    return { message: "SUCCESSFULLY UPLAODED FILES", status: 200 };
+  } catch (error) {
+    console.log("ERROR: ", error);
+    return { message: "OOPS COULDNT UPLAOD FILES", status: 400 };
+  }
 };
 
 export const deleteMedia = async (mediaId: string) => {
