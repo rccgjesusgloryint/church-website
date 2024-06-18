@@ -14,10 +14,10 @@ const authenticateUser = async () => {
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
-  pictures: f({ image: { maxFileSize: "8MB", maxFileCount: 1 } })
+  pictures: f({ image: { maxFileSize: "8GB", maxFileCount: 25 } })
     .middleware(authenticateUser)
     .onUploadComplete((data) => {}),
-  eventPosterImage: f({ image: { maxFileSize: "16GB", maxFileCount: 25 } })
+  eventPosterImage: f({ image: { maxFileSize: "16MB", maxFileCount: 1 } })
     .middleware(authenticateUser)
     .onUploadComplete((data) => {}),
 } satisfies FileRouter;
