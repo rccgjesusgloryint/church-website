@@ -1,6 +1,8 @@
-import { Prisma } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
 
+export type UserExternalId = {
+  externalId: string;
+};
 export type UserDetails = {
   name: string | null | undefined;
   email: string;
@@ -15,6 +17,14 @@ export type CreateMediaType = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
+export type UploadMultipleFiles = {
+  key?: string | undefined;
+  type?: string | undefined;
+  name: string;
+  customId?: string | undefined;
+  severData?: string | undefined;
+  url: string;
+}[];
 
 export type CreateEventType = {
   id?: string;
