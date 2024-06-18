@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
+import ModalProvider from "@/providers/modal-provider";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -26,7 +27,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={dmSans.className}>
-          {children}
+          <ModalProvider>{children}</ModalProvider>
           <Toaster />
         </body>
       </html>
