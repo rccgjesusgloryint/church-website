@@ -11,7 +11,7 @@ import { useModal } from "@/providers/modal-provider";
 
 type Props = {
   title: string;
-  subheading: string;
+  subheading?: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
 };

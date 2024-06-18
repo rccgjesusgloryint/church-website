@@ -1,7 +1,12 @@
 "use server";
 
 import { PrismaClient } from "@prisma/client";
-import { CreateEventType, CreateMediaType, UploadMultipleFiles } from "./types";
+import {
+  CreateEventType,
+  CreateMediaType,
+  GetAllImages,
+  UploadMultipleFiles,
+} from "./types";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
@@ -63,16 +68,13 @@ export const deleteMedia = async (mediaId: string) => {
 };
 
 export const getAllImages = async () => {
-  const res = await prisma.media.findMany({
+  const response = await prisma.media.findMany({
     select: {
       link: true,
+      name: true,
     },
   });
-
-  // Map through the response to get the image links and filter out empty strings
-  const images = res.map((image) => image.link).filter((link) => link !== "");
-
-  return images;
+  return response;
 };
 
 export const createEvent = async (eventObj: CreateEventType) => {

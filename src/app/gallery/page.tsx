@@ -10,9 +10,13 @@ import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import EmblaCarousel from "../media/gallery-carousel";
 import { EmblaOptionsType } from "embla-carousel";
+import { GetAllImages } from "@/lib/types";
+
+type CategoryType = string[];
 
 const Gallery = () => {
-  const [galleryImages, setGalleryImages] = useState<string[]>([]);
+  const [galleryImages, setGalleryImages] = useState<GetAllImages>();
+  const [galleryCategories, setGalleryCat] = useState<CategoryType>([]);
   const [emblaRef] = useEmblaCarousel();
 
   const OPTIONS: EmblaOptionsType = { loop: true, duration: 60 };
@@ -21,9 +25,20 @@ const Gallery = () => {
     const fetchGalleryImages = async () => {
       const response = await getAllImages();
       setGalleryImages(response);
+
+      const categories = Array.from(
+        new Set(response.map((image) => image.name))
+      );
+      setGalleryCat(categories);
     };
+
     fetchGalleryImages();
   }, []); // Empty dependency array ensures this runs only once
+
+  React.useEffect(() => {
+    console.log("GALLERY IMAGES, ", galleryImages);
+    console.log("GALLERY CATEGORIES, ", galleryCategories);
+  }, [galleryImages, galleryCategories]);
 
   return (
     <>
@@ -31,7 +46,24 @@ const Gallery = () => {
       <main className="py-8 flex flex-col gap-11">
         <h1 className="text-black text-4xl text-center">Gallery</h1>
         <div className="h-auto w-full">
-          <EmblaCarousel slides={galleryImages} options={OPTIONS} />
+          <div>
+            {galleryCategories.map((category) => {
+              const filteredImages = galleryImages?.filter(
+                (image) => image.name === category
+              );
+
+              return (
+                <div key={category} className="mb-8">
+                  <h2 className="text-2xl text-center mb-4">{category}</h2>
+                  <EmblaCarousel
+                    slides={filteredImages}
+                    options={OPTIONS}
+                    name={category}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </main>
       <Newsletter />

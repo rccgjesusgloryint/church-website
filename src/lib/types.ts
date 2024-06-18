@@ -59,3 +59,8 @@ export type EventDescription = {
     eventDescription: string;
   };
 };
+
+export type GetAllImages = {
+  link: string;
+  name: string;
+}[];

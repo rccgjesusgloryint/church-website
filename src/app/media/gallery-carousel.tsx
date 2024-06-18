@@ -5,14 +5,16 @@ import AutoScroll from "embla-carousel-auto-scroll";
 import Image from "next/image";
 import { useModal } from "@/providers/modal-provider";
 import CustomModal from "../../../components/global/custom-modal";
+import { GetAllImages } from "@/lib/types";
 
 type PropType = {
-  slides: string[];
+  slides: GetAllImages | undefined;
   options?: EmblaOptionsType;
+  name: string | undefined;
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props;
+  const { slides, options, name } = props;
   const { setOpen } = useModal();
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
     AutoScroll({ playOnInit: true }),
@@ -42,35 +44,39 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
   return (
     <div className="embla">
+      <div>
+        <h1>{name && name}</h1>
+      </div>
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container w-full">
-          {slides.map((link, index) => (
-            <div className="embla__slide" key={index}>
-              <div className="embla__slide__number">
-                <Image
-                  src={link}
-                  alt={`carousel-img-${index}`}
-                  width={800}
-                  height={800}
-                  onClick={() =>
-                    setOpen(
-                      <CustomModal
-                        title="Praise Night"
-                        subheading="Praise and Worship"
-                      >
-                        <Image
-                          src={link}
-                          alt="fullImage"
-                          width={1000}
-                          height={1000}
-                        />
-                      </CustomModal>
-                    )
-                  }
-                />
+          {slides &&
+            slides.map((link, index) => (
+              <div className="embla__slide" key={index}>
+                <div className="embla__slide__number">
+                  <Image
+                    src={link.link}
+                    alt={`carousel-img-${index}`}
+                    width={800}
+                    height={800}
+                    onClick={() =>
+                      setOpen(
+                        <CustomModal
+                          title={link.name}
+                          // subheading="Praise and Worship"
+                        >
+                          <Image
+                            src={link.link}
+                            alt="fullImage"
+                            width={1000}
+                            height={1000}
+                          />
+                        </CustomModal>
+                      )
+                    }
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
 
