@@ -3,6 +3,8 @@ import { EmblaOptionsType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import Image from "next/image";
+import { useModal } from "@/providers/modal-provider";
+import CustomModal from "../../../components/global/custom-modal";
 
 type PropType = {
   slides: string[];
@@ -11,6 +13,7 @@ type PropType = {
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
   const { slides, options } = props;
+  const { setOpen } = useModal();
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
     AutoScroll({ playOnInit: true }),
   ]);
@@ -49,6 +52,21 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                   alt={`carousel-img-${index}`}
                   width={800}
                   height={800}
+                  onClick={() =>
+                    setOpen(
+                      <CustomModal
+                        title="Praise Night"
+                        subheading="Praise and Worship"
+                      >
+                        <Image
+                          src={link}
+                          alt="fullImage"
+                          width={1000}
+                          height={1000}
+                        />
+                      </CustomModal>
+                    )
+                  }
                 />
               </div>
             </div>

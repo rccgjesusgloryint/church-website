@@ -1,9 +1,12 @@
+"use client";
+
 import React from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
+import SubscribeToNewsLetterForm from "./newsletter/subscribe-to-newsletter-form";
 
 const Newsletter = () => {
   const SubHeading = React.useRef<HTMLElement | any>();
@@ -68,21 +71,7 @@ const Newsletter = () => {
             We are committed to Jesus Christ, the Bible, and the Great
             Commission.
           </p>
-          <div
-            className="h-[71px] sm:w-[487px] w-full px-10 mt-5 flex flex-row"
-            ref={btn}
-          >
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Your Email"
-              className="h-full w-full bg-black bg-opacity-55 pl-10 text-white"
-            />
-            <button className="bg-white sm:w-1/2 w-1/2 h-full">
-              SUBSCRIBE
-            </button>
-          </div>
+          <SubscribeToNewsLetterForm />
         </div>
       </div>
     </section>

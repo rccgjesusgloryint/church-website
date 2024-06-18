@@ -110,3 +110,28 @@ export const getEvent = async (id: string) => {
 
   return response;
 };
+
+export const addEmailFromNewsletter = async (email: string) => {
+  try {
+    await prisma.newsletter.upsert({
+      where: { email },
+      create: {
+        email,
+      },
+      update: {
+        email,
+      },
+    });
+
+    console.log("SUCCESS ADDING EMAIL TO DB 🟢🟢");
+    return { message: "SUCCESS ADDING EMAIL TO DB 🟢🟢", status: 200 };
+  } catch (error) {
+    console.log(
+      `OOPS, PROBLEM ADDING EMAIL TO DB 🔴🔴 -- ERROR MESSAGE: ${error}`
+    );
+    return {
+      message: `OOPS, PROBLEM ADDING EMAIL TO DB 🔴🔴 -- ERROR MESSAGE: ${error}`,
+      status: 400,
+    };
+  }
+};
