@@ -9,6 +9,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Newsletter from "../../../components/Newsletter";
+import Image from "next/image";
 
 const About = () => {
   const title = React.useRef<HTMLElement | any>();
@@ -137,25 +138,61 @@ const About = () => {
             </div>
           </div>
           <div className="flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11 ">
-            <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-4">
-              <span>ICON</span>
-              <h3>CAtegory</h3>
-              <h1>Service</h1>
+            <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-bible-studies bg-center bg-cover">
+              <span>
+                <Image
+                  src="/images/Zoom.png"
+                  alt="location"
+                  width={40}
+                  height={40}
+                />
+              </span>
+              <div className="backdrop-blur-xl">
+                <h3 className="font-bold text-lg">Spiritual Growth</h3>
+                <h1 className="font-bold text-3xl">Bible Studies</h1>
+              </div>
             </div>
-            <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-4">
-              <span>ICON</span>
-              <h3>CAtegory</h3>
-              <h1>Service</h1>
+            <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-prayers bg-center bg-cover">
+              <span>
+                <Image
+                  src="/images/Zoom.png"
+                  alt="location"
+                  width={40}
+                  height={40}
+                />
+              </span>
+              <div className="backdrop-blur-xl">
+                <h3 className="font-bold text-lg">Spiritual Growth</h3>
+                <h1 className="font-bold text-3xl">Friday Prayers</h1>
+              </div>
             </div>
-            <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-4">
-              <span>ICON</span>
-              <h3>CAtegory</h3>
-              <h1>Service</h1>
+            <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-sunday-service bg-center bg-cover">
+              <span>
+                <Image
+                  src="/images/Zoom.png"
+                  alt="location"
+                  width={40}
+                  height={40}
+                />
+              </span>
+              <div className="backdrop-blur-xl">
+                <h3 className="font-bold text-lg">Spiritual Growth</h3>
+                <h1 className="font-bold text-3xl">Sunday Service</h1>
+              </div>
             </div>
-            <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-4">
-              <span>ICON</span>
-              <h3>CAtegory</h3>
-              <h1>Service</h1>
+            <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-evangelism bg-center bg-cover">
+              <span>
+                {/* <Image
+                  src="/images/Zoom.png"
+                  alt="location"
+                  width={40}
+                  height={40}
+                /> */}
+              </span>
+              <div className="backdrop-blur-2xl">
+                <h3 className="font-bold text-lg">Soul Winning</h3>
+                <h1 className="font-bold text-3xl">Evangelism</h1>
+              </div>
             </div>
           </div>
         </div>
