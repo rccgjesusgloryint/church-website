@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useState } from "react";
-import Newsletter from "../../../components/Newsletter";
-import Navbar2 from "../../../components/Navbar2";
+import Newsletter from "../../../../components/Newsletter";
+import Navbar2 from "../../../../components/Navbar2";
 import { getAllImages } from "@/lib/queries";
 import Image from "next/image";
 
@@ -55,11 +55,7 @@ const Gallery = () => {
               return (
                 <div key={category} className="mb-8">
                   <h2 className="text-2xl text-center mb-4">{category}</h2>
-                  <EmblaCarousel
-                    slides={filteredImages}
-                    options={OPTIONS}
-                    name={category}
-                  />
+                  <EmblaCarousel slides={filteredImages} options={OPTIONS} />
                 </div>
               );
             })}

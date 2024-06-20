@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import Navbar2 from "../../../../components/Navbar2";
+import Navbar2 from "../../../../../components/Navbar2";
 
 import { LuClock3 } from "react-icons/lu";
 import { FaRegMap } from "react-icons/fa6";
@@ -10,11 +10,11 @@ import { FaRegMap } from "react-icons/fa6";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import Newsletter from "../../../../components/Newsletter";
+import Newsletter from "../../../../../components/Newsletter";
 import { getAllEvents, getAuthUserDetails } from "@/lib/queries";
-import CreateEvent from "../../../../components/events";
+import CreateEvent from "../../../../../components/events";
 import { EventType } from "@/lib/types";
-import Loader from "../../../../components/Loader";
+import Loader from "../../../../../components/Loader";
 import { redirect, useRouter } from "next/navigation";
 
 const Events = () => {
@@ -192,7 +192,7 @@ const Events = () => {
         )}
       </section>
       {user === "ADMIN" ? <CreateEvent /> : ""}
-      {/* <CreateEvent /> */}
+      <CreateEvent />
       <Newsletter />
       {/* <Footer /> */}
     </>

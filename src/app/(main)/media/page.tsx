@@ -1,5 +1,5 @@
 import React from "react";
-import MediaPage from "../../../components/media";
+import MediaPage from "../../../../components/media";
 
 const page = () => {
   return <MediaPage />;

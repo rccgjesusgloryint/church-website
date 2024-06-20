@@ -4,17 +4,16 @@ import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import Image from "next/image";
 import { useModal } from "@/providers/modal-provider";
-import CustomModal from "../../../components/global/custom-modal";
+import CustomModal from "../../../../components/global/custom-modal";
 import { GetAllImages } from "@/lib/types";
 
 type PropType = {
   slides: GetAllImages | undefined;
   options?: EmblaOptionsType;
-  name: string | undefined;
 };
 
 const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options, name } = props;
+  const { slides, options } = props;
   const { setOpen } = useModal();
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
     AutoScroll({ playOnInit: true }),
@@ -44,9 +43,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
 
   return (
     <div className="embla">
-      <div>
-        <h1>{name && name}</h1>
-      </div>
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container w-full">
           {slides &&
@@ -60,10 +56,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                     height={800}
                     onClick={() =>
                       setOpen(
-                        <CustomModal
-                          title={link.name}
-                          // subheading="Praise and Worship"
-                        >
+                        <CustomModal title={link.name}>
                           <Image
                             src={link.link}
                             alt="fullImage"

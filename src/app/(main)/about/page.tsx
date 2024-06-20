@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import Navbar2 from "../../../components/Navbar2";
-import Arrow from "../../../components/icons/Arrow";
+import Navbar2 from "../../../../components/Navbar2";
+import Arrow from "../../../../components/icons/Arrow";
 import Link from "next/link";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import Newsletter from "../../../components/Newsletter";
+import Newsletter from "../../../../components/Newsletter";
 import Image from "next/image";
 
 const About = () => {

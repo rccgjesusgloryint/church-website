@@ -5,7 +5,7 @@ import { EventDescription } from "@/lib/types";
 import { useModal } from "@/providers/modal-provider";
 import Image from "next/image";
 import React from "react";
-import CustomModal from "../../../../../components/global/custom-modal";
+import CustomModal from "../../../../../../components/global/custom-modal";
 
 type Props = {
   params: { id: string };
