@@ -42,11 +42,15 @@ const Navbar = () => {
     });
   });
   return (
-    <>
-      <div>
+    <div className="w-screen">
+      <div className="relative">
         <Sheet>
-          <SheetTrigger>
-            <Image src={menu_icon} alt="menu" className="pt-5 pl-5 sm:hidden" />
+          <SheetTrigger className="sm:hidden w-[100px] h-[100px]">
+            <Image
+              src={menu_icon}
+              alt="menu"
+              className="w-[50px] h-[50px] absolute top-5 left-5"
+            />
           </SheetTrigger>
           <SheetContent>
             <SheetDescription>
@@ -91,26 +95,23 @@ const Navbar = () => {
             </SheetDescription>
           </SheetContent>
         </Sheet>
-        <div className="sm:relative sm:pt-4 h-[100px]" ref={navbar}>
-          <div className="hidden sm:flex flex-row font-normal gap-7 justify-center items-center cursor-pointer">
-            <Link href="/" className="hover:text-gray-700 duration-200">
-              Home
-            </Link>
-            <Link href="/about" className="hover:text-gray-700 duration-200">
-              About
-            </Link>
-            <Link href="/events" className="hover:text-gray-700 duration-200">
-              Events
-            </Link>
-            <Link href="/gallery" className="hover:text-gray-700 duration-200">
-              Gallery
-            </Link>
-            {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
-          </div>
-
-          <div className="w-auto h-auto sm:flex flex-row gap-2 absolute top-3 right-3 items-center">
+        <div className="hidden sm:flex flex-row font-normal gap-7 justify-center items-center cursor-pointer h-full pt-11">
+          <Link href="/" className="hover:text-gray-700 duration-200">
+            Home
+          </Link>
+          <Link href="/about" className="hover:text-gray-700 duration-200">
+            About
+          </Link>
+          <Link href="/events" className="hover:text-gray-700 duration-200">
+            Events
+          </Link>
+          <Link href="/gallery" className="hover:text-gray-700 duration-200">
+            Gallery
+          </Link>
+          {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
+          <div className="absolute top-7 right-5">
             <SignedOut>
-              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500">
+              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
                 <Link href="/sign-in">Sign In</Link>
               </div>
             </SignedOut>
@@ -121,11 +122,26 @@ const Navbar = () => {
               </div>
             </SignedIn>
           </div>
+        </div>
+        <div className="absolute top-7 right-5 sm:hidden">
+          <SignedOut>
+            <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
+              <Link href="/sign-in">Sign In</Link>
+            </div>
+          </SignedOut>
+
+          <SignedIn>
+            <div className="border-2 border-gray-700 flex items-center justify-center p-3">
+              <UserButton />
+            </div>
+          </SignedIn>
+        </div>
+        <div className="sm:relative sm:pt-4 h-[100px]" ref={navbar}>
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

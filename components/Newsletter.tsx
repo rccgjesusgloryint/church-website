@@ -47,7 +47,7 @@ const Newsletter = () => {
     });
   });
   return (
-    <section className="h-auto w-full">
+    <section className="h-auto w-screen">
       <div className="h-[558px] w-full bg-footer-bg bg-center bg-cover flex items-center justify-center">
         <div className="flex flex-col items-center justify-center">
           <Image

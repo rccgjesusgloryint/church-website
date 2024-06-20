@@ -51,7 +51,7 @@ const GalleryPreview = () => {
     });
   });
   return (
-    <section className="sm:h-[170vh] 2xl:h-[150vh] h-[60vh] overflow-clip">
+    <section className="sm:h-[170vh] 2xl:h-[150vh] h-[60vh] overflow-clip w-screen">
       <div className="py-[10%] p-0 m-0 relative sm:block hidden">
         <div className="flex flex-rows w-full h-[500px] gap-10 mb-10">
           <div className="w-1/4 cursor-pointer">

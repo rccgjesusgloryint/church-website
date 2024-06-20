@@ -37,6 +37,7 @@ const EventsPreview = () => {
     setIsLoading(true);
     const fetchEvents = async () => {
       const response = await getAllEvents();
+      const event = response.length > 3 && response.slice(0, 3);
       setEvents(response);
       setIsLoading(false);
     };
@@ -44,9 +45,9 @@ const EventsPreview = () => {
   }, []); // Empty dependency array ensures this runs only once
 
   return (
-    <section className="h-auto sm:h-screen 2xl:h-[90vh] bg-white flex items-center overflow-hidden">
-      <div className="bg-gray-400 bg-opacity-70 w-screen h-full flex flex-col sm:flex-row sm:h-full sm:pt-[102px] sm:pb-[130px] relative">
-        <div className="sm:w-1/3 flex flex-row sm:flex-col items-center justify-center sm:pt-[78px] pt-5 sm:pl-[179px] mb-[50px]">
+    <section className="h-auto sm:h-screen 2xl:h-[90vh] bg-white flex items-center overflow-hidden w-screen">
+      <div className="bg-gray-400 bg-opacity-70 w-full h-full flex flex-col items-center justify-center sm:flex-row sm:h-full sm:pt-[102px] sm:pb-[130px] relative">
+        <div className="hidden sm:w-1/3 xl:flex flex-row sm:flex-col items-center justify-center sm:pt-[78px] pt-5 sm:pl-[179px] mb-[50px] lg:mr-11">
           <div className="sm:pr-[20px] sm:h-[492px]">
             <div className="sm:text-left sm:block flex flex-col items-center">
               <h3 className="tracking-widest mb-1 text-light-gr text-left">
@@ -75,12 +76,12 @@ const EventsPreview = () => {
             <Loader />
           </div>
         ) : (
-          <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11">
+          <div className="flex lg:flex-row flex-col w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] sm:mr-[100px] mb-11">
             {events.length > 0 ? (
               events?.slice(0, 3).map((event, index) => {
                 return (
                   <div
-                    className="sm:w-[290px] 2xl:w-[390px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl"
+                    className="w-[290px] 2xl:w-[390px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl"
                     key={index}
                   >
                     <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
