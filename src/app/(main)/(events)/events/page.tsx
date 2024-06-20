@@ -192,7 +192,6 @@ const Events = () => {
         )}
       </section>
       {user === "ADMIN" ? <CreateEvent /> : ""}
-      <CreateEvent />
       <Newsletter />
       {/* <Footer /> */}
     </>
