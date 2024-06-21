@@ -13,6 +13,7 @@ import {
 import { getAuthUserDetails } from "@/lib/queries";
 
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import GridLayout from "./GridLayout";
 
 const Navbar2 = () => {
   const [user, setUser] = React.useState("");
@@ -29,6 +30,7 @@ const Navbar2 = () => {
   }, [user]);
   return (
     <div className="bg-white h-[100px] shadow-md">
+      {/* <GridLayout cls={8} sides={20} fill={true} type="cols" /> */}
       <div className="hidden grid-cols-12 md:grid h-full w-full">
         <div className="md:hidden col-start-1 col-span-1 relative">
           <Image
@@ -40,7 +42,7 @@ const Navbar2 = () => {
           />
         </div>
         <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-start">
-          <Link href="/" className="cursoper-pointer">
+          <Link href="/" className="cursor-pointer">
             <Image
               src="/images/Church-logo.jpg"
               alt="logo"
@@ -51,7 +53,7 @@ const Navbar2 = () => {
         </div>
 
         <div className="hidden col-start-9 col-span-4 w-full h-full md:flex">
-          <div className="flex flex-row gap-9 justify-center items-center flex-wrap w-full">
+          <div className="flex flex-row gap-9 justify-center items-center flex-wrap w-full mr-[150px]">
             <Link
               href="/"
               className="hover:text-gray-700 duration-200 cursor-pointer"
@@ -82,7 +84,7 @@ const Navbar2 = () => {
           </div>
           <div className="w-auto h-auto sm:flex flex-row gap-2 absolute top-5 right-3 items-center">
             <SignedOut>
-              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500">
+              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 text-white">
                 <Link href="/sign-in">Sign In</Link>
               </div>
             </SignedOut>
@@ -106,7 +108,7 @@ const Navbar2 = () => {
               className="absolute top-9 left-6"
             />
           </SheetTrigger>
-          <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-start">
+          <div className="absolute top-5 right-[11rem]">
             <Link href="/" className="cursoper-pointer">
               <Image
                 src="/images/Church-logo.jpg"
@@ -119,7 +121,7 @@ const Navbar2 = () => {
           <SheetContent>
             <SheetDescription>
               <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-center">
-                <Link href="/" className="cursoper-pointer">
+                <Link href="/" className="cursor-pointer">
                   <Image
                     src="/images/Church-logo.jpg"
                     alt="logo"
