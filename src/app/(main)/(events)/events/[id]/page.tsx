@@ -38,7 +38,7 @@ const Page = ({ params }: Props) => {
   }, [params.id]);
 
   return (
-    <section className="flex flex-col items-center sm:justify-center h-screen w-full pt-5 bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
+    <section className="flex flex-col items-center sm:justify-center h-screen w-full pt-11 bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
