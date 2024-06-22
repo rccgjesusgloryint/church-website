@@ -4,6 +4,8 @@ import { IoMapOutline } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMailOutline } from "react-icons/io5";
 import { TbPointFilled } from "react-icons/tb";
+import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -11,8 +13,17 @@ const Footer = () => {
       <div className="h-full w-full">
         <div className="grid-cols-12 grid h-full gap-5">
           <div className="sm:col-start-3 col-start-3 sm:col-span-3 col-span-8 w-full h-full flex flex-col items-center justify-center flex-wrap">
-            <div className="flex flex-col justify-center items-start text-white">
-              <h1 className="mb-5 font-bold text-lg">LOGO</h1>
+            <div className="flex flex-col justify-center items-start text-white text-le">
+              <h1 className="mb-6 cursor-pointer">
+                <Link href="/">
+                  <Image
+                    src="/images/Church-logo.jpg"
+                    alt="logo"
+                    width={50}
+                    height={50}
+                  />
+                </Link>
+              </h1>
               <p className="mb-5">
                 Everything was seamless. The private guides were interesting
               </p>
@@ -33,36 +44,54 @@ const Footer = () => {
           <div className="sm:col-start-6 col-start-3 sm:col-span-3 col-span-8 w-full h-full flex items-center justify-start ml-5">
             <div className="flex flex-col justify-center items-start text-white">
               <h1 className="font-bold text-lg">LINKS</h1>
-              <ul className="mt-11 leading-10">
-                <li className="flex flex-row items-center cursor-pointer">
+              <div className="mt-11 leading-10">
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Praise and Worship
-                </li>
-                <li className="flex flex-row items-center cursor-pointer">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Our Ministries
-                </li>
-                <li className="flex flex-row items-center cursor-pointer">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Our Pastors
-                </li>
-                <li className="flex flex-row items-center cursor-pointer">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Sermons & Exhortations
-                </li>
-                <li className="flex flex-row items-center cursor-pointer opacity-0">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer opacity-0"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Our Pastors
-                </li>
-                <li className="flex flex-row items-center cursor-pointer opacity-0">
+                </Link>
+                <Link
+                  href="/events"
+                  className="flex flex-row items-center cursor-pointer opacity-0"
+                >
                   <TbPointFilled className="mr-4" color="grey" />
                   Our Pastors
-                </li>
-              </ul>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="sm:col-start-9 col-start-3 sm:col-span-3 col-span-8 w-full h-full flex items-center justify-center">
-            <div className="flex flex-col justify-start items-center text-white">
+            <div className="flex flex-col justify-start items-start text-white">
               <h1 className="mb-5 font-bold text-lg">
                 FEATURED BLOGS/ARTICLES
               </h1>

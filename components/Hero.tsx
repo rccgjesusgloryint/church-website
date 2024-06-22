@@ -18,11 +18,11 @@ const Hero = () => {
   });
 
   return (
-    <section className="h-screen bg-home-bg bg-center bg-cover text-white overflow-clip">
+    <section className="h-screen w-screen bg-home-bg bg-center bg-cover text-white overflow-clip relative">
       <Navbar />
       <div ref={text}>
         <div className="flex flex-col justify-center items-center">
-          <h1 className="text-3xl sm:text-6xl font-bold flex mt-48 text-center sm:w-1/2">
+          <h1 className="text-3xl sm:text-6xl font-bold flex text-center sm:w-1/2">
             Revive the church and evangelise the world.
           </h1>
         </div>

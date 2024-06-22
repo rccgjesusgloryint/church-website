@@ -27,7 +27,7 @@ const AboutUsPreview = () => {
     });
   });
   return (
-    <section className="flex flex-col sm:flex-row justify-center items-center bg-white h-[70vh] sm:h-[50vh]">
+    <section className="flex flex-col sm:flex-row justify-center items-center bg-white h-[70vh] sm:h-[50vh] w-screen">
       <div
         className="p-0 m-0 flex flex-col sm:w-[567px] min-h-[222px] px-[10px] pb-[10px]"
         ref={AboutTxtL}

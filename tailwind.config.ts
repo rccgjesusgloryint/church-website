@@ -1,7 +1,7 @@
-import { transform } from "next/dist/build/swc";
+import { withUt } from "uploadthing/tw";
 import type { Config } from "tailwindcss";
 
-const config = {
+export default withUt({
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -101,6 +101,7 @@ const config = {
       backgroundImage: {
         "home-bg": "url('/images/prayer_pic.jpg')",
         "footer-bg": "url('/images/news-letter.jpg')",
+        "about-bg": "url('/images/about.jpg')",
         "our-ministries": "url('/images/our_ministries-bg.jpeg')",
         "carousel-img1": "url('/images/carousel_img1.jpg')",
         "carousel-img2": "url('/images/carousel_img2.jpg')",
@@ -108,10 +109,12 @@ const config = {
         "carousel-img4": "url('/images/carousel_img4.jpg')",
         "carousel-img5": "url('/images/carousel_img5.jpg')",
         "carousel-img6": "url('/images/carousel_img6.jpg')",
+        "bible-studies": "url('/images/bible-studies.jpg')",
+        prayers: "url('/images/prayers.jpg')",
+        "sunday-service": "url('/images/sunday-service.jpg')",
+        evangelism: "url('/images/evangelism.jpg')",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
-
-export default config;
+} satisfies Config);
