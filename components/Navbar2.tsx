@@ -13,7 +13,6 @@ import {
 import { getAuthUserDetails } from "@/lib/queries";
 
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import GridLayout from "./GridLayout";
 
 const Navbar2 = () => {
   const [user, setUser] = React.useState("");
@@ -35,7 +34,7 @@ const Navbar2 = () => {
         <div className="md:hidden col-start-1 col-span-1 relative">
           <Image
             src="/images/Menu.png"
-            alt="logo"
+            alt="menu"
             width={18}
             height={18}
             className="absolute top-9 left-6"
@@ -53,7 +52,7 @@ const Navbar2 = () => {
         </div>
 
         <div className="hidden col-start-9 col-span-4 w-full h-full md:flex">
-          <div className="flex flex-row gap-9 justify-center items-center flex-wrap w-full mr-[150px]">
+          <div className="flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap pr-[190px]">
             <Link
               href="/"
               className="hover:text-gray-700 duration-200 cursor-pointer"

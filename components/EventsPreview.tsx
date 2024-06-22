@@ -76,7 +76,7 @@ const EventsPreview = () => {
             <Loader />
           </div>
         ) : (
-          <div className="flex lg:flex-row flex-col w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] sm:mr-[100px] mb-11">
+          <div className="flex lg:flex-row flex-col w-full items-center justify-center gap-8 gap-y-[80px] mt-[80px] sm:mr-[100px] mb-11">
             {events.length > 0 ? (
               events?.slice(0, 3).map((event, index) => {
                 return (

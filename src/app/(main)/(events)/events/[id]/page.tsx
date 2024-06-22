@@ -3,9 +3,21 @@
 import { getEvent } from "@/lib/queries";
 import { EventDescription } from "@/lib/types";
 import { useModal } from "@/providers/modal-provider";
+
 import Image from "next/image";
+
 import React from "react";
+
 import CustomModal from "../../../../../../components/global/custom-modal";
+
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 type Props = {
   params: { id: string };
@@ -25,16 +37,27 @@ const Page = ({ params }: Props) => {
     fetchEventDescription();
   }, [params.id]);
 
-  React.useEffect(() => {
-    console.log("EVENTS: ", event);
-  }, [event]);
-
   return (
-    <div className="absolute inset-0 -z-10 h-full w-full bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
-      <section className="flex flex-col items-center justify-center h-full w-full">
-        <h1 className="font-bold text-4xl mb-11">EVENT</h1>
-        <div>
-          {event?.description.eventPosterImage ? (
+    <section className="flex flex-col items-center sm:justify-center h-screen w-full pt-5 bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/events">Events</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Event</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+      <h1 className="font-bold sm:text-4xl text-2xl my-5 sm:mb-11">EVENT</h1>
+      <div>
+        {event?.description.eventPosterImage ? (
+          <div>
             <Image
               src={event.description.eventPosterImage}
               alt="poster-image"
@@ -52,23 +75,31 @@ const Page = ({ params }: Props) => {
                   </CustomModal>
                 )
               }
+              className={"hidden sm:flex"}
             />
+            <Image
+              src={event.description.eventPosterImage}
+              alt="poster-image"
+              width={300}
+              height={300}
+              className={"flex sm:hidden"}
+            />
+          </div>
+        ) : (
+          <h1>Loading...</h1>
+        )}
+      </div>
+      <div className="w-full flex flex-col items-center justify-center sm:m-6 p-4 mb-5">
+        <h3 className="font-bold text-xl sm:mb-6">Description</h3>
+        <p className="sm:w-1/2 text-center">
+          {event?.description.eventDescription ? (
+            event.description.eventDescription
           ) : (
             <h1>Loading...</h1>
           )}
-        </div>
-        <div className="w-full flex flex-col items-center justify-center mt-11">
-          <h3 className="font-bold text-xl mb-11">Description</h3>
-          <p className="w-1/2 text-center">
-            {event?.description.eventDescription ? (
-              event.description.eventDescription
-            ) : (
-              <h1>Loading...</h1>
-            )}
-          </p>
-        </div>
-      </section>
-    </div>
+        </p>
+      </div>
+    </section>
   );
 };
 
