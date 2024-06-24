@@ -64,3 +64,11 @@ export type GetAllImages = {
   link: string;
   name: string;
 }[];
+
+export type SendNewsletterEmailType = {
+  email: string;
+}[];
+
+export type NewletterEmail = {
+  email: string;
+}[];

@@ -62,7 +62,7 @@ const Newsletter = () => {
             className="flex flex-wrap font-bold sm:text-[45px] text-3xl sm:w-[675px] text-center sm:leading-[50px]"
             ref={Heading}
           >
-            Subscribe Our Newsletter and Keep Up With Our Latest News
+            Subscribe To Our Newsletter and Keep Up With Our Latest News
           </h1>
           <p
             className="font-normal text-lg w-4/5 text-white mt-3 text-center"

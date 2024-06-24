@@ -44,7 +44,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   return (
     <div className="embla">
       <div className="embla__viewport" ref={emblaRef}>
-        <div className="embla__container w-full">
+        <div className="embla__container">
           {slides &&
             slides.map((link, index) => (
               <div className="embla__slide" key={index}>
@@ -52,16 +52,16 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                   <Image
                     src={link.link}
                     alt={`carousel-img-${index}`}
-                    width={800}
-                    height={800}
+                    width={300}
+                    height={300}
                     onClick={() =>
                       setOpen(
                         <CustomModal title={link.name}>
                           <Image
                             src={link.link}
                             alt="fullImage"
-                            width={1000}
-                            height={1000}
+                            width={500}
+                            height={500}
                           />
                         </CustomModal>
                       )
