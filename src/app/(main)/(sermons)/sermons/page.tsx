@@ -1,18 +1,22 @@
 "use client";
 
 import React from "react";
-import Navbar2 from "../../../../components/Navbar2";
+import Navbar2 from "../../../../../components/Navbar2";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
+import { Sermon } from "@prisma/client";
+import { getAllSermons } from "@/lib/queries";
 
 const Page = () => {
   const useTitle = React.useRef<HTMLElement | any>();
   const useSubTitle1 = React.useRef<HTMLElement | any>();
   const useSubTitle2 = React.useRef<HTMLElement | any>();
   const useTitle2 = React.useRef<HTMLElement | any>();
+
+  const [sermons, setSermons] = React.useState<Sermon[]>();
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -41,6 +45,20 @@ const Page = () => {
       opacity: 0,
     });
   });
+
+  const getSermons = async () => {
+    const res = await getAllSermons();
+    setSermons(res);
+  };
+
+  React.useEffect(() => {
+    getSermons();
+  }, []);
+
+  React.useEffect(() => {
+    console.log("SERMONS: ", sermons);
+  }, [sermons]);
+
   return (
     <>
       <section className="h-screen bg-about-bg bg-cover">

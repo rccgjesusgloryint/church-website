@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/breadcrumb";
 
 type Props = {
-  params: { id: string };
+  params: { id: number };
 };
 
 const Page = ({ params }: Props) => {
