@@ -35,10 +35,10 @@ const Gallery = () => {
     fetchGalleryImages();
   }, []); // Empty dependency array ensures this runs only once
 
-  React.useEffect(() => {
-    console.log("GALLERY IMAGES, ", galleryImages);
-    console.log("GALLERY CATEGORIES, ", galleryCategories);
-  }, [galleryImages, galleryCategories]);
+  // React.useEffect(() => {
+  //   console.log("GALLERY IMAGES, ", galleryImages);
+  //   console.log("GALLERY CATEGORIES, ", galleryCategories);
+  // }, [galleryImages, galleryCategories]);
 
   return (
     <>
