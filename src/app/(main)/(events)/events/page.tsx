@@ -77,7 +77,7 @@ const Events = () => {
     setIsLoading(true);
     const fetchEvents = async () => {
       const response = await getAllEvents();
-      setEvents(response);
+      setEvents(Object(response));
       setIsLoading(false);
     };
     fetchEvents();
