@@ -49,6 +49,10 @@ const TagCreator = ({ tags, setTags }: Props) => {
       updatedAt: new Date(),
     };
 
+    if (tags.find((tag) => tag.name === tagData.name)) {
+      return alert("Tag already created!");
+    }
+
     setTags([...tags, tagData]);
     setValue("");
     try {
@@ -59,14 +63,13 @@ const TagCreator = ({ tags, setTags }: Props) => {
     }
   };
 
-  const handleDeleteTag = async (tagId: number) => {
-    setTags(tags.filter((tag) => tag.id !== tagId));
-
-    // try {
-    //   const response = await deleteTag(tagId);
-    // } catch (error) {
-    //   console.log("ERROR: ", error);
-    // }
+  const handleDeleteTag = async (tagName: string) => {
+    setTags(tags.filter((tag) => tag.name !== tagName));
+    try {
+      const response = await deleteTag(tagName);
+    } catch (error) {
+      console.log("ERROR: ", error);
+    }
   };
 
   React.useEffect(() => {
@@ -127,7 +130,7 @@ const TagCreator = ({ tags, setTags }: Props) => {
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction
                       className="bg-destructive"
-                      onClick={() => handleDeleteTag(tag.id)}
+                      onClick={() => handleDeleteTag(tag.name)}
                     >
                       Delete Tag
                     </AlertDialogAction>

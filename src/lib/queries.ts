@@ -239,10 +239,10 @@ export const createSermon = async (sermon: CreateSermon, tags: Tag[]) => {
 };
 
 export const upsertTag = async (tag: Prisma.TagUncheckedCreateInput) => {
-  const response = await prisma.tag.upsert({
-    where: { id: tag.id || Math.floor(Math.random() * 100) },
-    update: tag,
-    create: { ...tag },
+  const response = await prisma.tag.create({
+    data: {
+      ...tag,
+    },
   });
 
   return response;
@@ -253,9 +253,9 @@ export const getTags = async () => {
   return response;
 };
 
-export const deleteTag = async (tagId: number) => {
+export const deleteTag = async (tagName: string) => {
   await prisma.tag.delete({
-    where: { id: tagId },
+    where: { name: tagName },
   });
 };
 

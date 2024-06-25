@@ -70,8 +70,8 @@ model Sermon {
 }
 
 model Tag {
-  id        Int    @id @default(autoincrement())
-  name      String
+  id        Int    
+  name      String  @id
   color     String
   sermon    Sermon?  @relation(fields: [sermonId], references: [id])
   sermonId  Int?
