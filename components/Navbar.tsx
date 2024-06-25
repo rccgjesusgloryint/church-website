@@ -109,6 +109,9 @@ const Navbar = () => {
             Gallery
           </Link>
           {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
+          {/* <Link href="/sermons" className="hover:text-gray-700 duration-200">
+            Sermons
+          </Link> */}
           <div className="absolute top-7 right-5">
             <SignedOut>
               <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">

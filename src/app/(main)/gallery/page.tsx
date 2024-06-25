@@ -35,10 +35,10 @@ const Gallery = () => {
     fetchGalleryImages();
   }, []); // Empty dependency array ensures this runs only once
 
-  React.useEffect(() => {
-    console.log("GALLERY IMAGES, ", galleryImages);
-    console.log("GALLERY CATEGORIES, ", galleryCategories);
-  }, [galleryImages, galleryCategories]);
+  // React.useEffect(() => {
+  //   console.log("GALLERY IMAGES, ", galleryImages);
+  //   console.log("GALLERY CATEGORIES, ", galleryCategories);
+  // }, [galleryImages, galleryCategories]);
 
   return (
     <>
@@ -54,7 +54,7 @@ const Gallery = () => {
 
               return (
                 <div key={category} className="mb-8">
-                  <h2 className="text-2xl text-center mb-4">{category}</h2>
+                  <h2 className="text-2xl text-left mb-4">{category}</h2>
                   <EmblaCarousel slides={filteredImages} options={OPTIONS} />
                 </div>
               );
@@ -62,7 +62,7 @@ const Gallery = () => {
           </div>
         </div>
       </main>
-      <Newsletter />
+      {/* <Newsletter /> */}
       {/* <Footer /> */}
     </>
   );

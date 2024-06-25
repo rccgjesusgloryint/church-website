@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
 
 export type UserExternalId = {
@@ -27,7 +28,7 @@ export type UploadMultipleFiles = {
 }[];
 
 export type CreateEventType = {
-  id?: string;
+  id?: number;
   event: string;
   date: string[];
   location: string;
@@ -64,3 +65,27 @@ export type GetAllImages = {
   link: string;
   name: string;
 }[];
+
+export type SendNewsletterEmailType = {
+  email: string;
+}[];
+
+export type NewletterEmail = {
+  email: string;
+}[];
+
+// export type CreateSermon = Prisma.SermonCreateInput;
+export type CreateSermon = {
+  id?: number;
+  videoUrl: string;
+  previewImageUrl: string;
+  sermonTitle: string;
+};
+
+type Tag = {
+  name: string;
+  color: string;
+  sermonId?: number;
+};
+
+export type Tags = Tag[];

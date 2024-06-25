@@ -13,8 +13,8 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <AboutUsPreview />
-      <OurMinistries />
+      {/* <AboutUsPreview /> */}
+      {/* <OurMinistries /> */}
       <GalleryPreview />
       <EventsPreview />
       <Newsletter />

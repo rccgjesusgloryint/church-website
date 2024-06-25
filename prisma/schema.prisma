@@ -9,9 +9,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("PROD_DATABASE_URL")
-  directUrl= env("PROD_DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("PROD_DATABASE_URL")
+  directUrl = env("PROD_DATABASE_URL")
 }
 
 enum Role {
@@ -20,39 +20,71 @@ enum Role {
   MINISTER
 }
 
-
 model User {
-  id           String         @id @default(uuid())
-  externalId   String         @unique
-  attributes   Json    
-  role         Role           @default(MEMBER)
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id         String    @id @default(uuid())
+  externalId String    @unique
+  attributes Json
+  role       Role      @default(MEMBER)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model Media {
-  id           String       @id @default(uuid())
-  type         String?
-  name         String
-  link         String       @unique
-  externalId   String?
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  id         String   @id @default(uuid())
+  type       String?
+  name       String
+  link       String   @unique
+  externalId String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Events {
-  id           String         @id @default(uuid())
-  event        String
-  date         String[]
-  location     String
-  description  Json
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id          Int      @id @default(autoincrement())
+  event       String
+  date        String[]
+  location    String
+  description Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Newsletter {
-  id           String         @id @default(uuid())
-  email        String         @unique
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Sermon {
+  id              Int      @id @default(autoincrement())
+  videoUrl        String
+  previewImageUrl String
+  sermonTitle     String
+  tags            Tag[]
+  likes           Int?
+  comments        Comment[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Tag {
+  id        Int    @id @default(autoincrement())
+  name      String
+  color     String
+  sermon    Sermon?  @relation(fields: [sermonId], references: [id])
+  sermonId  Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Comment {
+  id          Int    @id @default(autoincrement())
+  content     String
+  likes       Int
+  sermon      Sermon? @relation(fields: [sermonId], references: [id])
+  sermonId    Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

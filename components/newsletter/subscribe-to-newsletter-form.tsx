@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { addEmailFromNewsletter } from "@/lib/queries";
+import { addEmailFromNewsletterToDB, sendWelcomeEmail } from "@/lib/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -35,8 +35,9 @@ const SubscribeToNewsLetterForm = (props: Props) => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const response = await toast.promise(
-      addEmailFromNewsletter(values.email),
+    await addEmailFromNewsletterToDB(values.email);
+    await toast.promise(
+      sendWelcomeEmail(values.email as string),
       {
         loading: "Loading",
         success: (data) => `Thanks for joining out Newsletter, God bless!`,
@@ -58,7 +59,6 @@ const SubscribeToNewsLetterForm = (props: Props) => {
         },
       }
     );
-
     form.resetField("email");
   }
 

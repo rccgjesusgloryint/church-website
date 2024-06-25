@@ -1,14 +1,21 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient, Tag } from "@prisma/client";
+
 import {
   CreateEventType,
   CreateMediaType,
+  CreateSermon,
   GetAllImages,
+  NewletterEmail,
   UploadMultipleFiles,
 } from "./types";
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+
+import { Resend } from "resend";
+import { V4MAPPED } from "dns";
+import { randomUUID } from "crypto";
 
 const prisma = new PrismaClient();
 
@@ -114,7 +121,7 @@ export const getAllEvents = async () => {
   return response;
 };
 
-export const getEvent = async (id: string) => {
+export const getEvent = async (id: number) => {
   const response = await prisma.events.findUnique({
     where: { id: id },
     select: {
@@ -125,7 +132,7 @@ export const getEvent = async (id: string) => {
   return response;
 };
 
-export const addEmailFromNewsletter = async (email: string) => {
+export const addEmailFromNewsletterToDB = async (email: string) => {
   try {
     await prisma.newsletter.upsert({
       where: { email },
@@ -148,4 +155,115 @@ export const addEmailFromNewsletter = async (email: string) => {
       status: 400,
     };
   }
+};
+
+export const sendWelcomeEmail = async (email: string) => {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+
+  resend.emails.send({
+    from: "Jesus Glory Athy <onboarding@resend.dev>",
+    to: email,
+    subject: "Hello World",
+    text: "Welcome! Thank you for joining the Jesus Glory Athy Newletter!",
+    headers: {
+      "List-Unsubscribe": "<https://example.com/unsubscribe>",
+    },
+  });
+};
+
+export const getNewsletterUsers = async () => {
+  const response = prisma.newsletter.findMany({
+    select: {
+      email: true,
+    },
+  });
+
+  return response;
+};
+
+export const sendBulkNewsletterEmail = async (
+  newsletterEmails: NewletterEmail
+) => {
+  const resend = new Resend(process.env.PROD_RESEND_API_KEY);
+
+  if (!newsletterEmails) {
+    return null;
+  }
+
+  try {
+    const response = await resend.batch.send(
+      newsletterEmails.map((email) => {
+        return {
+          from: "Jesus Glory Athy Newsletter <onboarding@resend.dev>",
+          to: [email.email],
+          subject: "TEST",
+          html: "<h1>it works!</h1>",
+        };
+      })
+    );
+
+    console.log("RES: ", response);
+  } catch (error) {
+    console.log("ERROR: ", error);
+  }
+};
+
+export const createSermon = async (sermon: CreateSermon, tags: Tag[]) => {
+  try {
+    const response = await prisma.sermon.upsert({
+      where: {
+        id: sermon.id || Math.floor(Math.random() * 1000000),
+      },
+      update: {
+        videoUrl: sermon.videoUrl,
+        previewImageUrl: sermon.previewImageUrl,
+        sermonTitle: sermon.sermonTitle,
+        tags: { set: tags },
+      },
+      create: {
+        videoUrl: sermon.videoUrl,
+        previewImageUrl: sermon.previewImageUrl,
+        sermonTitle: sermon.sermonTitle,
+        tags: { connect: tags },
+      },
+    });
+    // return Response.json({ message: response }, { status: 200 });
+    return { message: `🟢🟢 ${response}`, status: 200 };
+  } catch (error) {
+    // return Response.json({ message: error }, { status: 200 });
+    return {
+      message: `🔴🔴 -- ERROR MESSAGE: ${error}`,
+      status: 400,
+    };
+  }
+};
+
+export const upsertTag = async (tag: Prisma.TagUncheckedCreateInput) => {
+  const response = await prisma.tag.upsert({
+    where: { id: tag.id || Math.floor(Math.random() * 100) },
+    update: tag,
+    create: { ...tag },
+  });
+
+  return response;
+};
+
+export const getTags = async () => {
+  const response = await prisma.tag.findMany({});
+  return response;
+};
+
+export const deleteTag = async (tagId: number) => {
+  await prisma.tag.delete({
+    where: { id: tagId },
+  });
+};
+
+export const getAllSermons = async () => {
+  const response = await prisma.sermon.findMany({
+    include: {
+      tags: true,
+    },
+  });
+  return response;
 };

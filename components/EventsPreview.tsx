@@ -38,7 +38,7 @@ const EventsPreview = () => {
     const fetchEvents = async () => {
       const response = await getAllEvents();
       const event = response.length > 3 && response.slice(0, 3);
-      setEvents(response);
+      setEvents(Object(response));
       setIsLoading(false);
     };
     fetchEvents();

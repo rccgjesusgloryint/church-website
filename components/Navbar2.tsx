@@ -77,6 +77,7 @@ const Navbar2 = () => {
             >
               Gallery
             </Link>
+            {/* <Link href="/sermons">Sermons</Link> */}
             {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
             {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
             {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
