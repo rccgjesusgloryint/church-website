@@ -215,53 +215,16 @@ export const createSermon = async (sermon: CreateSermon, tags: string[]) => {
         tags: [...tags],
       },
     });
-    // return Response.json({ message: response }, { status: 200 });
+    console.log("SUCCESS CREATING SERMON 🟢🟢");
     return { message: "🟢🟢SUCCESS", status: 200 };
   } catch (error) {
-    // return Response.json({ message: error }, { status: 200 });
+    console.log("🔴🔴 OOPS COULDNT CREATE SERMON -- ", error);
     return {
       message: `🔴🔴 -- ERROR MESSAGE: ${error}`,
       status: 400,
     };
   }
 };
-
-// export const upsertTag = async (tag: Prisma.TagUncheckedCreateInput) => {
-//   const response = await prisma.tag.upsert({
-//     where: { id: tag.id },
-//     update: {
-//       name: tag.name,
-//       color: tag.color,
-//       sermons: tag.sermons,
-//     },
-//     create: {
-//       name: tag.name,
-//       color: tag.color,
-//       sermons: tag.sermons,
-//     },
-//   });
-
-//   return response;
-// };
-
-// export const getTags = async (): Promise<Tag[]> => {
-//   const response = await prisma.tag.findMany({
-//     include: {
-//       sermons: {
-//         include: {
-//           sermon: true,
-//         },
-//       },
-//     },
-//   });
-//   return response as Tag[];
-// };
-
-// export const deleteTag = async (tagId: number) => {
-//   await prisma.tag.delete({
-//     where: { id: tagId },
-//   });
-// };
 
 export const getAllSermons = async (): Promise<Sermon[]> => {
   const response = await prisma.sermon.findMany({});
