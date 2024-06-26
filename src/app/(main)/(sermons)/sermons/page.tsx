@@ -93,7 +93,7 @@ const Page = () => {
                         {sermon.tags.length !== 0 && sermon.tags.length > 1 ? (
                           <div className="flex flex-row gap-1">
                             <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center border-2 border-black">
-                              {sermon.tags[0].name}
+                              {sermon.tags[0]}
                             </span>
                             <span className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black">
                               +1
@@ -101,7 +101,7 @@ const Page = () => {
                           </div>
                         ) : (
                           <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center">
-                            {sermon.tags.length !== 0 && sermon.tags[0].name}
+                            {sermon.tags.length !== 0 && sermon.tags[0]}
                           </span>
                         )}
                       </div>

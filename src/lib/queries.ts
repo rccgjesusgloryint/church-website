@@ -1,21 +1,18 @@
 "use server";
 
-import { Prisma, PrismaClient, Tag } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 import {
   CreateEventType,
-  CreateMediaType,
   CreateSermon,
-  GetAllImages,
   NewletterEmail,
+  Sermon,
+  Tags,
   UploadMultipleFiles,
 } from "./types";
 import { currentUser } from "@clerk/nextjs/server";
-import { NextResponse } from "next/server";
 
 import { Resend } from "resend";
-import { V4MAPPED } from "dns";
-import { randomUUID } from "crypto";
 
 const prisma = new PrismaClient();
 
@@ -208,27 +205,18 @@ export const sendBulkNewsletterEmail = async (
   }
 };
 
-export const createSermon = async (sermon: CreateSermon, tags: Tag[]) => {
+export const createSermon = async (sermon: CreateSermon, tags: string[]) => {
   try {
-    const response = await prisma.sermon.upsert({
-      where: {
-        id: sermon.id || Math.floor(Math.random() * 1000000),
-      },
-      update: {
+    const response = await prisma.sermon.create({
+      data: {
         videoUrl: sermon.videoUrl,
         previewImageUrl: sermon.previewImageUrl,
         sermonTitle: sermon.sermonTitle,
-        tags: { set: tags },
-      },
-      create: {
-        videoUrl: sermon.videoUrl,
-        previewImageUrl: sermon.previewImageUrl,
-        sermonTitle: sermon.sermonTitle,
-        tags: { connect: tags },
+        tags: [...tags],
       },
     });
     // return Response.json({ message: response }, { status: 200 });
-    return { message: `🟢🟢 ${response}`, status: 200 };
+    return { message: "🟢🟢SUCCESS", status: 200 };
   } catch (error) {
     // return Response.json({ message: error }, { status: 200 });
     return {
@@ -238,38 +226,44 @@ export const createSermon = async (sermon: CreateSermon, tags: Tag[]) => {
   }
 };
 
-export const upsertTag = async (tag: Prisma.TagUncheckedCreateInput) => {
-  const response = await prisma.tag.create({
-    data: {
-      ...tag,
-    },
-  });
+// export const upsertTag = async (tag: Prisma.TagUncheckedCreateInput) => {
+//   const response = await prisma.tag.upsert({
+//     where: { id: tag.id },
+//     update: {
+//       name: tag.name,
+//       color: tag.color,
+//       sermons: tag.sermons,
+//     },
+//     create: {
+//       name: tag.name,
+//       color: tag.color,
+//       sermons: tag.sermons,
+//     },
+//   });
 
-  return response;
-};
+//   return response;
+// };
 
-export const getTags = async () => {
-  const response = await prisma.tag.findMany({});
-  return response;
-};
+// export const getTags = async (): Promise<Tag[]> => {
+//   const response = await prisma.tag.findMany({
+//     include: {
+//       sermons: {
+//         include: {
+//           sermon: true,
+//         },
+//       },
+//     },
+//   });
+//   return response as Tag[];
+// };
 
-export const deleteTag = async (tagName: string) => {
-  await prisma.tag.delete({
-    where: { name: tagName },
-  });
-};
+// export const deleteTag = async (tagId: number) => {
+//   await prisma.tag.delete({
+//     where: { id: tagId },
+//   });
+// };
 
-export const getAllSermons = async () => {
-  const response = await prisma.sermon.findMany({
-    select: {
-      id: true,
-      videoUrl: true,
-      previewImageUrl: true,
-      sermonTitle: true,
-      tags: true,
-      createdAt: true,
-      updatedAt: true,
-    },
-  });
-  return response;
+export const getAllSermons = async (): Promise<Sermon[]> => {
+  const response = await prisma.sermon.findMany({});
+  return response as Sermon[];
 };

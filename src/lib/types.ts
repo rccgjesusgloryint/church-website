@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Comment, Prisma } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
 
 export type UserExternalId = {
@@ -80,25 +80,39 @@ export type CreateSermon = {
   videoUrl: string;
   previewImageUrl: string;
   sermonTitle: string;
+  tags?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
-type Tag = {
-  id: number;
-  name: string;
-  color: string;
-  sermonId: number | null;
-  createdAt: Date;
-  updatedAt: Date;
+export type Tag = {
+  id?: number;
+  tagName: string;
+  sermons?: [];
+  sermonId?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
+// export type Sermon = {
+//   id: number;
+//   videoUrl: string;
+//   previewImageUrl: string;
+//   sermonTitle: string;
+//   tags: Tags;
+//   createdAt: Date;
+//   updatedAt: Date;
+// };
 export type Sermon = {
-  id: number;
+  id?: number;
   videoUrl: string;
   previewImageUrl: string;
   sermonTitle: string;
-  tags: Tags;
-  createdAt: Date;
-  updatedAt: Date;
+  tags: string[];
+  likes?: number | null;
+  comments?: Comment[];
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type Tags = Tag[];

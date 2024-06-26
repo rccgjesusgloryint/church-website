@@ -20,67 +20,28 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { deleteTag, getTags, upsertTag } from "@/lib/queries";
-import { Tag } from "@prisma/client";
 import { PlusCircleIcon, Trash2Icon } from "lucide-react";
 import React from "react";
 import TagComponent from "./tag";
 
 type Props = {
-  tags: Tag[];
-  setTags: (tags: Tag[]) => void;
+  tags: string[];
+  setTags: (tags: string[]) => void;
 };
 
 const TagCreator = ({ tags, setTags }: Props) => {
   const [value, setValue] = React.useState("");
 
   const handleAddTag = async () => {
-    if (!value) {
-      alert("Tags need to have a name");
-      return;
+    if (tags.includes(value)) {
+      return setValue("");
     }
-
-    const tagData: Tag = {
-      color: "orange",
-      sermonId: null,
-      createdAt: new Date(),
-      id: Math.floor(Math.random() * 100),
-      name: value,
-      updatedAt: new Date(),
-    };
-
-    if (tags.find((tag) => tag.name === tagData.name)) {
-      return alert("Tag already created!");
-    }
-
-    setTags([...tags, tagData]);
+    setTags([...tags, value]);
     setValue("");
-    try {
-      const response = await upsertTag(tagData);
-    } catch (error) {
-      console.log("ERROR:", error);
-    }
-  };
-
-  const handleDeleteTag = async (tagName: string) => {
-    setTags(tags.filter((tag) => tag.name !== tagName));
-    // try {
-    //   const response = await deleteTag(tagName);
-    // } catch (error) {
-    //   console.log("ERROR: ", error);
-    // }
   };
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const response = await getTags();
-      if (response) setTags(response);
-    };
-    fetchData();
-  }, []);
-
-  React.useEffect(() => {
-    console.log("TAgs: ", tags);
+    console.log("TAGS: ", tags);
   }, [tags]);
 
   return (
@@ -88,7 +49,7 @@ const TagCreator = ({ tags, setTags }: Props) => {
       <Command className="bg-transparent">
         <div className="relative w-1/2">
           <CommandInput
-            placeholder="Search for tag..."
+            placeholder="Create tag..."
             value={value}
             onValueChange={setValue}
           />
@@ -101,18 +62,18 @@ const TagCreator = ({ tags, setTags }: Props) => {
         <CommandList>
           <CommandSeparator className="w-1/2" />
           <CommandGroup heading="Tags">
-            {tags.map((tag) => (
+            {tags.map((tag, index) => (
               <CommandItem
-                key={tag.id}
+                key={index}
                 className="hover:!bg-secondary !bg-transparent flex items-center justify-between !font-light cursor-pointer"
               >
                 <div>
-                  <TagComponent title={tag.name} id={tag.id} />
+                  <TagComponent title={tag} id={index} />
                 </div>
                 <AlertDialogTrigger>
                   <Trash2Icon
                     size={16}
-                    className="cursor-pointer text-muted-foreground hover:text-rose-400  transition-all"
+                    className="cursor-pointer text-muted-foreground hover:text-rose-400 transition-all"
                   />
                 </AlertDialogTrigger>
                 <AlertDialogContent>
@@ -127,10 +88,7 @@ const TagCreator = ({ tags, setTags }: Props) => {
                   </AlertDialogHeader>
                   <AlertDialogFooter className="items-center">
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      className="bg-destructive"
-                      onClick={() => handleDeleteTag(tag.name)}
-                    >
+                    <AlertDialogAction className="bg-destructive">
                       Delete Tag
                     </AlertDialogAction>
                   </AlertDialogFooter>
