@@ -76,8 +76,11 @@ const Page = () => {
           <div className="flex flex-col items-center w-full mt-11">
             <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
               {sermons
-                ? sermons.map((sermon) => (
-                    <div className="sm:w-[290px] w-[390px] 2xl:w-[390px] h-[420px] bg-gradient-to-t from-gray-600 to-gray-200 px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl flex flex-col items-center justify-center rounded-2xl">
+                ? sermons.map((sermon, index) => (
+                    <div
+                      className="sm:w-[290px] w-[390px] 2xl:w-[390px] h-[420px] bg-gradient-to-t from-gray-600 to-gray-200 px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl flex flex-col items-center justify-center rounded-2xl"
+                      key={index}
+                    >
                       <Image
                         src="/images/play-btn.png"
                         alt="play-btn"
