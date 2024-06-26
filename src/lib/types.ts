@@ -83,9 +83,22 @@ export type CreateSermon = {
 };
 
 type Tag = {
+  id: number;
   name: string;
   color: string;
-  sermonId?: number;
+  sermonId: number | null;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type Sermon = {
+  id: number;
+  videoUrl: string;
+  previewImageUrl: string;
+  sermonTitle: string;
+  tags: Tags;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type Tags = Tag[];
