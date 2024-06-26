@@ -261,8 +261,14 @@ export const deleteTag = async (tagName: string) => {
 
 export const getAllSermons = async () => {
   const response = await prisma.sermon.findMany({
-    include: {
+    select: {
+      id: true,
+      videoUrl: true,
+      previewImageUrl: true,
+      sermonTitle: true,
       tags: true,
+      createdAt: true,
+      updatedAt: true,
     },
   });
   return response;

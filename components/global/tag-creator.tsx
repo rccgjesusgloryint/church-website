@@ -57,7 +57,6 @@ const TagCreator = ({ tags, setTags }: Props) => {
     setValue("");
     try {
       const response = await upsertTag(tagData);
-      alert("Created tag!");
     } catch (error) {
       console.log("ERROR:", error);
     }
@@ -65,11 +64,11 @@ const TagCreator = ({ tags, setTags }: Props) => {
 
   const handleDeleteTag = async (tagName: string) => {
     setTags(tags.filter((tag) => tag.name !== tagName));
-    try {
-      const response = await deleteTag(tagName);
-    } catch (error) {
-      console.log("ERROR: ", error);
-    }
+    // try {
+    //   const response = await deleteTag(tagName);
+    // } catch (error) {
+    //   console.log("ERROR: ", error);
+    // }
   };
 
   React.useEffect(() => {
@@ -87,7 +86,7 @@ const TagCreator = ({ tags, setTags }: Props) => {
   return (
     <AlertDialog>
       <Command className="bg-transparent">
-        <div className="">
+        <div className="relative w-1/2">
           <CommandInput
             placeholder="Search for tag..."
             value={value}
@@ -100,7 +99,7 @@ const TagCreator = ({ tags, setTags }: Props) => {
           />
         </div>
         <CommandList>
-          <CommandSeparator />
+          <CommandSeparator className="w-1/2" />
           <CommandGroup heading="Tags">
             {tags.map((tag) => (
               <CommandItem

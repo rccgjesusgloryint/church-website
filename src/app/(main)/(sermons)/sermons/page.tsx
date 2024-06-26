@@ -7,8 +7,8 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
-import { Sermon } from "@prisma/client";
 import { getAllSermons } from "@/lib/queries";
+import { Sermon } from "@/lib/types";
 
 const Page = () => {
   const useTitle = React.useRef<HTMLElement | any>();
@@ -75,21 +75,39 @@ const Page = () => {
         <div className="flex flex-col w-full">
           <div className="flex flex-col items-center w-full mt-11">
             <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
-              <div className="sm:w-[290px] w-[390px] 2xl:w-[390px] h-[420px] bg-gradient-to-t from-gray-600 to-gray-200 px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl flex flex-col items-center justify-center rounded-2xl">
-                <span className="absolute bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] top-3 left-7 rounded flex items-center justify-center">
-                  Date
-                </span>
-                <Image
-                  src="/images/play-btn.png"
-                  alt="play-btn"
-                  width={100}
-                  height={100}
-                  className="cursor-pointer"
-                />
-                <h1 className="absolute bottom-5 text-center text-2xl w-full p-3 font-bold">
-                  Lorem ipsum dolor sit amet
-                </h1>
-              </div>
+              {sermons
+                ? sermons.map((sermon) => (
+                    <div className="sm:w-[290px] w-[390px] 2xl:w-[390px] h-[420px] bg-gradient-to-t from-gray-600 to-gray-200 px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl flex flex-col items-center justify-center rounded-2xl">
+                      <Image
+                        src="/images/play-btn.png"
+                        alt="play-btn"
+                        width={100}
+                        height={100}
+                        className="cursor-pointer"
+                      />
+                      <h1 className="absolute bottom-9 text-center text-2xl w-full p-3 font-bold mb-3">
+                        {sermon.sermonTitle}
+                      </h1>
+
+                      <div className="absolute bottom-3 left-7 flex flex-row">
+                        {sermon.tags.length !== 0 && sermon.tags.length > 1 ? (
+                          <div className="flex flex-row gap-1">
+                            <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center border-2 border-black">
+                              {sermon.tags[0].name}
+                            </span>
+                            <span className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black">
+                              +1
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center">
+                            {sermon.tags.length !== 0 && sermon.tags[0].name}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))
+                : "No Sermons"}
             </div>
           </div>
         </div>
