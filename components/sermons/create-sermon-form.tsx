@@ -141,7 +141,7 @@ const CreateSermonForm = () => {
               name="tags"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Event Name</FormLabel>
+                  <FormLabel>Sermon Tags</FormLabel>
                   <FormControl>
                     <TagCreator tags={tags} setTags={setTags} />
                   </FormControl>

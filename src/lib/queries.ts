@@ -230,3 +230,23 @@ export const getAllSermons = async (): Promise<Sermon[]> => {
   const response = await prisma.sermon.findMany({});
   return response as Sermon[];
 };
+
+export const getExistingTags = async (): Promise<string[]> => {
+  try {
+    const response = await prisma.sermon.findMany({
+      select: {
+        tags: true,
+      },
+    });
+
+    // Flatten the array of arrays and remove duplicates
+    const tagsList = response.flatMap((sermon) => sermon.tags);
+    const uniqueTags = new Set(tagsList);
+    const uniquesTagsLost = Array.from(uniqueTags);
+
+    return uniquesTagsLost;
+  } catch (error) {
+    console.error("Error fetching tags:", error);
+    return [];
+  }
+};
