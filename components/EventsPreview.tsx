@@ -30,7 +30,7 @@ const EventsPreview = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [events, setEvents] = React.useState<EventType>([]);
   const router = useRouter();
-  const handleNavigation = (id: string) => {
+  const handleNavigation = (id: number) => {
     router.push(`/events/${id}`);
   };
   React.useEffect(() => {
