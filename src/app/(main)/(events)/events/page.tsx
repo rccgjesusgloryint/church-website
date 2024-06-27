@@ -56,7 +56,7 @@ const Events = () => {
 
   const router = useRouter();
 
-  const handleNavigation = (id: string) => {
+  const handleNavigation = (id: number) => {
     router.push(`/events/${id}`);
   };
 

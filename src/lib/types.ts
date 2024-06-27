@@ -41,7 +41,7 @@ export type CreateEventType = {
 export type GalleryType = string[];
 
 export type EventType = {
-  id: string;
+  id: number;
   event: string;
   date: string[];
   location: string;

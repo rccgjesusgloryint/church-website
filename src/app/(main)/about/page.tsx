@@ -5,6 +5,12 @@ import Navbar2 from "../../../../components/Navbar2";
 import Arrow from "../../../../components/icons/Arrow";
 import Link from "next/link";
 
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
@@ -139,42 +145,58 @@ const About = () => {
           </div>
           <div className="flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11 ">
             <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-bible-studies bg-center bg-cover">
-              <span>
-                <Image
-                  src="/images/Zoom.png"
-                  alt="location"
-                  width={40}
-                  height={40}
-                />
-              </span>
+              {/* TODO: make the link available only to members that have signed up, when auth.js is setup */}
+              <HoverCard>
+                <HoverCardTrigger className="cursor-pointer">
+                  <Image
+                    src="/images/Zoom.png"
+                    alt="location"
+                    width={40}
+                    height={40}
+                  />
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  Zoom Link : u3u42u4u23u432u4u23u4
+                </HoverCardContent>
+              </HoverCard>
               <div className="backdrop-blur-xl">
                 <h3 className="font-bold text-lg">Spiritual Growth</h3>
                 <h1 className="font-bold text-3xl">Bible Studies</h1>
               </div>
             </div>
             <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-sunday-service bg-center bg-cover">
-              <span>
-                <Image
-                  src="/images/Zoom.png"
-                  alt="location"
-                  width={40}
-                  height={40}
-                />
-              </span>
+              <HoverCard>
+                <HoverCardTrigger className="cursor-pointer">
+                  <Image
+                    src="/images/Zoom.png"
+                    alt="location"
+                    width={40}
+                    height={40}
+                  />
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  Zoom Link : u3u42u4u23u432u4u23u4
+                </HoverCardContent>
+              </HoverCard>
               <div className="backdrop-blur-xl">
                 <h3 className="font-bold text-lg">Fellowship</h3>
                 <h1 className="font-bold text-3xl">Sunday Service</h1>
               </div>
             </div>
             <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-prayers bg-center bg-cover">
-              <span>
-                <Image
-                  src="/images/Zoom.png"
-                  alt="location"
-                  width={40}
-                  height={40}
-                />
-              </span>
+              <HoverCard>
+                <HoverCardTrigger className="cursor-pointer">
+                  <Image
+                    src="/images/Zoom.png"
+                    alt="location"
+                    width={40}
+                    height={40}
+                  />
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  Zoom Link : u3u42u4u23u432u4u23u4
+                </HoverCardContent>
+              </HoverCard>
               <div className="backdrop-blur-xl">
                 <h3 className="font-bold text-lg">Spiritual Growth</h3>
                 <h1 className="font-bold text-3xl">Friday Prayers</h1>

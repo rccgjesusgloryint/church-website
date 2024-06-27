@@ -30,7 +30,7 @@ const Page = ({ params }: Props) => {
 
   React.useEffect(() => {
     const fetchEventDescription = async () => {
-      const event = await getEvent(params.id);
+      const event = await getEvent(Number(params.id));
       setEvent(Object(event));
     };
 
