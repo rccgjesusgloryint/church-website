@@ -106,9 +106,9 @@ const CreateSermonForm = () => {
               name="videoUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Event Name</FormLabel>
+                  <FormLabel>Sermon Video Url</FormLabel>
                   <FormControl>
-                    <Input placeholder="videoUrl" {...field} />
+                    <Input placeholder="https://localhost:3000" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,9 +119,9 @@ const CreateSermonForm = () => {
               name="previewImageUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Event Name</FormLabel>
+                  <FormLabel>Sermon Preview Image Url</FormLabel>
                   <FormControl>
-                    <Input placeholder="previewImageUrl" {...field} />
+                    <Input placeholder="https://localhost:3000" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -132,9 +132,9 @@ const CreateSermonForm = () => {
               name="sermonTitle"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Event Name</FormLabel>
+                  <FormLabel>Sermon Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="sermonTitle" {...field} />
+                    <Input placeholder="Are you a child of God?" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
