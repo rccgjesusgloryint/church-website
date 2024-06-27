@@ -53,6 +53,9 @@ const CreateSermonForm = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("SERMON: ", values, tags);
+    if (tags.length < 1) {
+      return alert("Please add a tag");
+    }
     try {
       const response = await toast.promise(
         createSermon(values, tags),

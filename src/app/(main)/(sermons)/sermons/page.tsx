@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
-import { getAllSermons } from "@/lib/queries";
+import { getAllSermons, getExistingTags } from "@/lib/queries";
 import { Sermon } from "@/lib/types";
 
 const Page = () => {
@@ -16,7 +16,14 @@ const Page = () => {
   const useSubTitle2 = React.useRef<HTMLElement | any>();
   const useTitle2 = React.useRef<HTMLElement | any>();
 
-  const [sermons, setSermons] = React.useState<Sermon[]>();
+  const [allSermons, setAllSermons] = React.useState<Sermon[]>();
+  const [displaySermons, setDisplaySermons] = React.useState<Sermon[]>();
+  const [allTags, setAllTags] = React.useState<string[]>([]);
+
+  const getTags = async () => {
+    const data = await getExistingTags();
+    setAllTags(data);
+  };
 
   gsap.registerPlugin(ScrollTrigger);
 
@@ -48,16 +55,25 @@ const Page = () => {
 
   const getSermons = async () => {
     const res = await getAllSermons();
-    setSermons(res);
+    setAllSermons(res);
+    setDisplaySermons(res);
+  };
+
+  const filterSermonByTags = (tag: string) => {
+    const filteredSermon = allSermons?.filter((sermon) =>
+      sermon.tags.includes(tag)
+    );
+    setDisplaySermons(filteredSermon);
   };
 
   React.useEffect(() => {
     getSermons();
+    getTags();
   }, []);
 
   React.useEffect(() => {
-    console.log("SERMONS: ", sermons);
-  }, [sermons]);
+    console.log("ALL SERMONS: ", allSermons);
+  }, [allSermons]);
 
   return (
     <>
@@ -72,11 +88,22 @@ const Page = () => {
         </div>
       </section>
       <section className="h-auto w-full relative">
-        <div className="flex flex-col w-full">
-          <div className="flex flex-col items-center w-full mt-11">
+        <div className="flex flex-col w-full border-2 border-black">
+          <div className="flex flex-col items-center w-full mt-11 relative">
+            <div className="flex flex-row gap-2 absolute top-3 left-6">
+              {allTags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center cursor-pointer"
+                  onClick={() => filterSermonByTags(tag)}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
             <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
-              {sermons
-                ? sermons.map((sermon, index) => (
+              {displaySermons
+                ? displaySermons.map((sermon, index) => (
                     <div
                       className="sm:w-[290px] w-[390px] 2xl:w-[390px] h-[420px] bg-gradient-to-t from-gray-600 to-gray-200 px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl flex flex-col items-center justify-center rounded-2xl"
                       key={index}
