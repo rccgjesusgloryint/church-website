@@ -93,8 +93,8 @@ const TagCreator = ({ tags, setTags }: Props) => {
   return (
     <Command className="bg-transparent">
       <div>
-        {tags.map((tag) => (
-          <div className="flex flex-row gap-3">
+        {tags.map((tag, index) => (
+          <div className="flex flex-row gap-3" key={index}>
             {tag}
             <span className="cursor-pointer" onClick={() => handleXClick(tag)}>
               <Trash2Icon
