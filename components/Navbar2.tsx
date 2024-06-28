@@ -79,7 +79,7 @@ const Navbar2 = () => {
             >
               Gallery
             </Link>
-            {/* <Link href="/sermons">Sermons</Link> */}
+            <Link href="/sermons">Sermons</Link>
             {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
             {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
             {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
@@ -157,6 +157,12 @@ const Navbar2 = () => {
                     className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
                   >
                     Gallery
+                  </Link>
+                  <Link
+                    href="/sermons"
+                    className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+                  >
+                    Sermons
                   </Link>
                   {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
                   {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}

@@ -91,6 +91,12 @@ const Navbar = () => {
                 >
                   Gallery
                 </Link>
+                <Link
+                  href="/sermon"
+                  className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+                >
+                  Sermons
+                </Link>
               </div>
             </SheetDescription>
           </SheetContent>
@@ -108,10 +114,10 @@ const Navbar = () => {
           <Link href="/gallery" className="hover:text-gray-700 duration-200">
             Gallery
           </Link>
-          {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
-          {/* <Link href="/sermons" className="hover:text-gray-700 duration-200">
+          <Link href="/sermons" className="hover:text-gray-700 duration-200">
             Sermons
-          </Link> */}
+          </Link>
+          {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
           <div className="absolute top-7 right-5">
             <SignedOut>
               <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
