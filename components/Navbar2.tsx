@@ -45,10 +45,10 @@ const Navbar2 = () => {
         <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-start">
           <Link href="/" className="cursor-pointer">
             <Image
-              src="/images/Church-logo.jpg"
+              src="/images/church-logo.svg"
               alt="logo"
-              width={50}
-              height={50}
+              width={70}
+              height={70}
             />
           </Link>
         </div>
@@ -110,13 +110,13 @@ const Navbar2 = () => {
               className="absolute top-9 left-6"
             />
           </SheetTrigger>
-          <div className="absolute top-5 right-[11rem]">
+          <div className="absolute top-3 right-[10rem]">
             <Link href="/" className="cursoper-pointer">
               <Image
-                src="/images/Church-logo.jpg"
+                src="images/church-logo.svg"
                 alt="logo"
-                width={50}
-                height={50}
+                width={70}
+                height={70}
               />
             </Link>
           </div>
@@ -125,10 +125,10 @@ const Navbar2 = () => {
               <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-center">
                 <Link href="/" className="cursor-pointer">
                   <Image
-                    src="/images/Church-logo.jpg"
+                    src="/images/church-logo.svg"
                     alt="logo"
-                    width={50}
-                    height={50}
+                    width={70}
+                    height={70}
                   />
                 </Link>
               </div>
