@@ -9,6 +9,13 @@ import { ScrollTrigger } from "gsap/all";
 import Image from "next/image";
 import { getAllSermons, getExistingTags } from "@/lib/queries";
 import { Sermon } from "@/lib/types";
+import { Input } from "@/components/ui/input";
+
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 const Page = () => {
   const useTitle = React.useRef<HTMLElement | any>();
@@ -19,6 +26,7 @@ const Page = () => {
   const [allSermons, setAllSermons] = React.useState<Sermon[]>();
   const [displaySermons, setDisplaySermons] = React.useState<Sermon[]>();
   const [allTags, setAllTags] = React.useState<string[]>([]);
+  const [search, setSearch] = React.useState("");
 
   const getTags = async () => {
     const data = await getExistingTags();
@@ -75,6 +83,14 @@ const Page = () => {
     console.log("ALL SERMONS: ", allSermons);
   }, [allSermons]);
 
+  const filterBySearch = (search: string) => {
+    setSearch(search);
+    const filteredSearch = allSermons?.filter((sermon) =>
+      sermon.sermonTitle.toLowerCase().includes(search.toLowerCase())
+    );
+    setDisplaySermons(filteredSearch);
+  };
+
   return (
     <>
       <section className="h-screen bg-about-bg bg-cover">
@@ -89,17 +105,24 @@ const Page = () => {
       </section>
       <section className="h-auto w-full relative">
         <div className="flex flex-col w-full border-2 border-black">
-          <div className="flex flex-col items-center w-full mt-11 relative">
-            <div className="flex flex-row gap-2 absolute top-3 left-6">
-              {allTags.map((tag, index) => (
-                <span
-                  key={index}
-                  className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center cursor-pointer"
-                  onClick={() => filterSermonByTags(tag)}
-                >
-                  {tag}
-                </span>
-              ))}
+          <div className="flex flex-col sm:items-start items-center w-full mt-11 relative">
+            <div className="flex flex-col gap-2 w-auto sm:pl-[180px]">
+              <Input
+                value={search}
+                onChange={(e) => filterBySearch(e.target.value)}
+                className="sm:w-[140%] w-full"
+              />
+              <div className="flex flex-row gap-2">
+                {allTags.map((tag, index) => (
+                  <span
+                    key={index}
+                    className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center cursor-pointer"
+                    onClick={() => filterSermonByTags(tag)}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
             <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
               {displaySermons
@@ -121,14 +144,27 @@ const Page = () => {
 
                       <div className="absolute bottom-3 left-7 flex flex-row">
                         {sermon.tags.length !== 0 && sermon.tags.length > 1 ? (
-                          <div className="flex flex-row gap-1">
-                            <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center border-2 border-black">
-                              {sermon.tags[0]}
-                            </span>
-                            <span className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black">
-                              +1
-                            </span>
-                          </div>
+                          <HoverCard>
+                            <div className="flex flex-row gap-1">
+                              <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center border-2 border-black">
+                                {sermon.tags[0]}
+                              </span>
+                              <HoverCardTrigger className="cursor-pointer">
+                                <span className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black">
+                                  +1
+                                </span>
+                              </HoverCardTrigger>
+                              <HoverCardContent className="w-auto">
+                                <div className="flex flex-row">
+                                  {sermon.tags.map((tag) => (
+                                    <span className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black">
+                                      {tag}
+                                    </span>
+                                  ))}
+                                </div>
+                              </HoverCardContent>
+                            </div>
+                          </HoverCard>
                         ) : (
                           <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center">
                             {sermon.tags.length !== 0 && sermon.tags[0]}
