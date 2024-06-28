@@ -3,6 +3,8 @@
 import React from "react";
 import Navbar2 from "../../../../../components/Navbar2";
 
+import { CiSearch } from "react-icons/ci";
+
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
@@ -111,6 +113,7 @@ const Page = () => {
                 value={search}
                 onChange={(e) => filterBySearch(e.target.value)}
                 className="sm:w-[140%] w-full"
+                placeholder="Search sermon..."
               />
               <div className="flex flex-row gap-2">
                 {allTags.map((tag, index) => (
