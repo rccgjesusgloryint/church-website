@@ -18,16 +18,27 @@ import Link from "next/link";
 import { auth } from "@/auth";
 import { any } from "zod";
 import { useSession } from "next-auth/react";
+import { isAdmin } from "@/lib/queries";
 // import { getAuthUserDetails } from "@/lib/queries";
 
 const Navbar = () => {
+  const [admin, setAdmin] = React.useState<boolean | null>(null);
   const navbar = React.useRef<HTMLElement | any>();
 
   const session = useSession();
 
   React.useEffect(() => {
+    const checkUserAdmin = async () => {
+      const res = await isAdmin();
+      setAdmin(res);
+    };
+    checkUserAdmin();
     console.log("Session: ", session);
   }, []);
+
+  React.useEffect(() => {
+    console.log("ADMIN: ", admin);
+  }, [admin]);
 
   useGSAP(() => {
     gsap.from(navbar.current, {
@@ -112,7 +123,7 @@ const Navbar = () => {
           <Link href="/sermons" className="hover:text-gray-700 duration-200">
             Sermons
           </Link>
-          {/* {user === "ADMIN" ? <Link href="/media">Media</Link> : ""} */}
+          {admin && <Link href="/media">Media</Link>}
           <div className="absolute top-7 right-5 flex">
             {session.status === "authenticated" ? (
               <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">

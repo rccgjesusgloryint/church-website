@@ -21,6 +21,22 @@ export const allUsers = async () => {
   return res;
 };
 
+export const isAdmin = async () => {
+  const session = await auth();
+  if (!session) {
+    return null;
+  }
+  const res = await prisma.user.findUnique({
+    where: { id: session.user?.id },
+  });
+
+  if (res?.member === "ADMIN") {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export const getAuthUserDetails = async () => {
   const session = await auth();
   if (!session) {

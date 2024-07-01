@@ -106,7 +106,7 @@ const Page = () => {
         </div>
       </section>
       <section className="h-auto w-full relative">
-        <div className="flex flex-col w-full border-2 border-black">
+        <div className="flex flex-col w-full">
           <div className="flex flex-col sm:items-start items-center w-full mt-11 relative">
             <div className="flex flex-col gap-2 w-auto sm:pl-[180px]">
               <Input
@@ -116,70 +116,76 @@ const Page = () => {
                 placeholder="Search sermon..."
               />
               <div className="flex flex-row gap-2">
-                {allTags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center cursor-pointer"
-                    onClick={() => filterSermonByTags(tag)}
-                  >
-                    {tag}
-                  </span>
-                ))}
+                {allTags.length > 0 ? (
+                  allTags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center cursor-pointer"
+                      onClick={() => filterSermonByTags(tag)}
+                    >
+                      {tag}
+                    </span>
+                  ))
+                ) : (
+                  <div>No Tags!</div>
+                )}
               </div>
             </div>
             <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
-              {displaySermons
-                ? displaySermons.map((sermon, index) => (
-                    <div
-                      className="sm:w-[290px] w-[390px] 2xl:w-[390px] h-[420px] bg-gradient-to-t from-gray-600 to-gray-200 px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl flex flex-col items-center justify-center rounded-2xl"
-                      key={index}
-                    >
-                      <Image
-                        src="/images/play-btn.png"
-                        alt="play-btn"
-                        width={100}
-                        height={100}
-                        className="cursor-pointer"
-                      />
-                      <h1 className="absolute bottom-9 text-center text-2xl w-full p-3 font-bold mb-3">
-                        {sermon.sermonTitle}
-                      </h1>
+              {displaySermons?.length !== 0 ? (
+                displaySermons?.map((sermon, index) => (
+                  <div
+                    className="sm:w-[290px] w-[390px] 2xl:w-[390px] h-[420px] bg-gradient-to-t from-gray-600 to-gray-200 px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl flex flex-col items-center justify-center rounded-2xl"
+                    key={index}
+                  >
+                    <Image
+                      src={sermon.previewImageUrl}
+                      alt="play-btn"
+                      width={100}
+                      height={100}
+                      className="cursor-pointer"
+                    />
+                    <h1 className="absolute bottom-9 text-center text-2xl w-full p-3 font-bold mb-3">
+                      {sermon.sermonTitle}
+                    </h1>
 
-                      <div className="absolute bottom-3 left-7 flex flex-row">
-                        {sermon.tags.length !== 0 && sermon.tags.length > 1 ? (
-                          <HoverCard>
-                            <div className="flex flex-row gap-1">
-                              <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center border-2 border-black">
-                                {sermon.tags[0]}
+                    <div className="absolute bottom-3 left-7 flex flex-row">
+                      {sermon.tags.length !== 0 && sermon.tags.length > 1 ? (
+                        <HoverCard>
+                          <div className="flex flex-row gap-1">
+                            <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center border-2 border-black">
+                              {sermon.tags[0]}
+                            </span>
+                            <HoverCardTrigger className="cursor-pointer">
+                              <span className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black">
+                                +1
                               </span>
-                              <HoverCardTrigger className="cursor-pointer">
-                                <span className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black">
-                                  +1
-                                </span>
-                              </HoverCardTrigger>
-                              <HoverCardContent className="w-auto">
-                                <div className="flex flex-row">
-                                  {sermon.tags.map((tag, index) => (
-                                    <span
-                                      className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black"
-                                      key={index}
-                                    >
-                                      {tag}
-                                    </span>
-                                  ))}
-                                </div>
-                              </HoverCardContent>
-                            </div>
-                          </HoverCard>
-                        ) : (
-                          <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center">
-                            {sermon.tags.length !== 0 && sermon.tags[0]}
-                          </span>
-                        )}
-                      </div>
+                            </HoverCardTrigger>
+                            <HoverCardContent className="w-auto">
+                              <div className="flex flex-row">
+                                {sermon.tags.map((tag, index) => (
+                                  <span
+                                    className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black"
+                                    key={index}
+                                  >
+                                    {tag}
+                                  </span>
+                                ))}
+                              </div>
+                            </HoverCardContent>
+                          </div>
+                        </HoverCard>
+                      ) : (
+                        <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center">
+                          {sermon.tags.length !== 0 && sermon.tags[0]}
+                        </span>
+                      )}
                     </div>
-                  ))
-                : "No Sermons"}
+                  </div>
+                ))
+              ) : (
+                <div>NO Sermons!</div>
+              )}
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import Link from "next/link";
 import { auth } from "@/auth";
 
 import { AuthProvider } from "../../components/AuthProvider";
+import { Prisma, Session } from "@prisma/client";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -27,11 +28,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
+  const session = auth();
   return (
     <html lang="en">
       <body className={dmSans.className}>
-        <AuthProvider session={session}>
+        <AuthProvider session={session as any}>
           <ModalProvider>{children}</ModalProvider>
           <Toaster />
         </AuthProvider>

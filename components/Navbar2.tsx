@@ -11,9 +11,23 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useSession } from "next-auth/react";
+import { isAdmin } from "@/lib/queries";
 
 const Navbar2 = () => {
   const session = useSession();
+  const [admin, setAdmin] = React.useState<boolean | null>(null);
+  React.useEffect(() => {
+    const checkUserAdmin = async () => {
+      const res = await isAdmin();
+      setAdmin(res);
+    };
+    checkUserAdmin();
+    console.log("Session: ", session);
+  }, []);
+
+  React.useEffect(() => {
+    console.log("ADMIN: ", admin);
+  }, [admin]);
 
   return (
     <div className="bg-white h-[100px] shadow-md">
@@ -40,7 +54,7 @@ const Navbar2 = () => {
         </div>
 
         <div className="hidden col-start-9 col-span-4 w-full h-full md:flex">
-          <div className="flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap pr-[230px]">
+          <div className="flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap pr-[400px]">
             <Link
               href="/"
               className="hover:text-gray-700 duration-200 cursor-pointer"
@@ -66,7 +80,7 @@ const Navbar2 = () => {
               Gallery
             </Link>
             <Link href="/sermons">Sermons</Link>
-            {/* {user === "ADMIN" ? <Link href="/media">Media</Link> : ""} */}
+            {admin && <Link href="/media">Media</Link>}
             {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
             {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
           </div>
