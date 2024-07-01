@@ -10,9 +10,9 @@ import {
   Tags,
   UploadMultipleFiles,
 } from "./types";
-import { currentUser } from "@clerk/nextjs/server";
 
 import { Resend } from "resend";
+import { auth } from "@/auth";
 
 const prisma = new PrismaClient();
 
@@ -22,13 +22,13 @@ export const allUsers = async () => {
 };
 
 export const getAuthUserDetails = async () => {
-  const user = await currentUser();
-  if (!user) {
+  const session = await auth();
+  if (!session) {
     return null;
   }
   const userData = await prisma.user.findUnique({
     where: {
-      externalId: user.id,
+      id: session.user?.id,
     },
   });
 

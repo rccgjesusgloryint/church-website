@@ -1,9 +1,8 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextRequest } from "next/server";
 
-const isProtectedRoute = createRouteMatcher(["/media"]);
+export function middleware(request: NextRequest) {}
 
-export default clerkMiddleware((auth, req) => {});
-
+// Optionally, don't invoke Middleware on some paths
 export const config = {
-  matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

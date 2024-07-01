@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google"; // Importing DM Sans
 import "./globals.css";
 
-import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 import ModalProvider from "@/providers/modal-provider";
-import Head from "next/head";
 import Link from "next/link";
+
+import { auth } from "@/auth";
+
+import { AuthProvider } from "../../components/AuthProvider";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -20,19 +22,20 @@ export const metadata: Metadata = {
   description: "Local Church Website in Athy Co.Kildare",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={dmSans.className}>
+    <html lang="en">
+      <body className={dmSans.className}>
+        <AuthProvider session={session}>
           <ModalProvider>{children}</ModalProvider>
           <Toaster />
-        </body>
-      </html>
-    </ClerkProvider>
+        </AuthProvider>
+      </body>
+    </html>
   );
 }

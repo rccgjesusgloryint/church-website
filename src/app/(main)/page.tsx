@@ -1,5 +1,3 @@
-"use client";
-
 import Hero from "../../../components/Hero";
 import AboutUsPreview from "../../../components/AboutUsPreview";
 import OurMinistries from "../../../components/OurMinistries";
@@ -8,8 +6,12 @@ import EventsPreview from "../../../components/EventsPreview";
 import Newsletter from "../../../components/Newsletter";
 
 import React from "react";
+import { auth } from "@/auth";
+import Navbar from "../../../components/Navbar";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+
   return (
     <main>
       <Hero />

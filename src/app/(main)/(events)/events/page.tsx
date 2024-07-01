@@ -11,7 +11,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Newsletter from "../../../../../components/Newsletter";
-import { getAllEvents, getAuthUserDetails } from "@/lib/queries";
+import { getAllEvents } from "@/lib/queries";
 import CreateEvent from "../../../../../components/events";
 import { EventType } from "@/lib/types";
 import Loader from "../../../../../components/Loader";
@@ -59,19 +59,6 @@ const Events = () => {
   const handleNavigation = (id: number) => {
     router.push(`/events/${id}`);
   };
-
-  const getAuth = async () => {
-    const user = await getAuthUserDetails();
-    if (!user) {
-      return null;
-    } else {
-      setUser(user?.role);
-    }
-  };
-
-  React.useEffect(() => {
-    getAuth();
-  }, [user]);
 
   React.useEffect(() => {
     setIsLoading(true);

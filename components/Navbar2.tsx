@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,23 +10,11 @@ import {
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { getAuthUserDetails } from "@/lib/queries";
-
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useSession } from "next-auth/react";
 
 const Navbar2 = () => {
-  const [user, setUser] = React.useState("");
-  const getAuth = async () => {
-    const user = await getAuthUserDetails();
-    if (!user) {
-      return null;
-    } else {
-      setUser(user.role);
-    }
-  };
-  React.useEffect(() => {
-    getAuth();
-  }, [user]);
+  const session = useSession();
+
   return (
     <div className="bg-white h-[100px] shadow-md">
       {/* <GridLayout cls={8} sides={20} fill={true} type="cols" /> */}
@@ -54,7 +40,7 @@ const Navbar2 = () => {
         </div>
 
         <div className="hidden col-start-9 col-span-4 w-full h-full md:flex">
-          <div className="flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap pr-[190px]">
+          <div className="flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap pr-[230px]">
             <Link
               href="/"
               className="hover:text-gray-700 duration-200 cursor-pointer"
@@ -80,22 +66,21 @@ const Navbar2 = () => {
               Gallery
             </Link>
             <Link href="/sermons">Sermons</Link>
-            {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
+            {/* {user === "ADMIN" ? <Link href="/media">Media</Link> : ""} */}
             {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
             {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
           </div>
           <div className="w-auto h-auto sm:flex flex-row gap-2 absolute top-5 right-3 items-center">
-            <SignedOut>
-              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 text-white">
-                <Link href="/sign-in">Sign In</Link>
+            {session.status === "authenticated" ? (
+              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
+                <Link href="/api/auth/signout">Sign Out</Link>
               </div>
-            </SignedOut>
-
-            <SignedIn>
-              <div className="flex items-center justify-center p-3">
-                <UserButton />
+            ) : (
+              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
+                <Link href="/api/auth/signin">Sign In</Link>
               </div>
-            </SignedIn>
+            )}
+            <div className="flex items-center justify-center p-3"></div>
           </div>
         </div>
       </div>

@@ -159,8 +159,11 @@ const Page = () => {
                               </HoverCardTrigger>
                               <HoverCardContent className="w-auto">
                                 <div className="flex flex-row">
-                                  {sermon.tags.map((tag) => (
-                                    <span className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black">
+                                  {sermon.tags.map((tag, index) => (
+                                    <span
+                                      className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black"
+                                      key={index}
+                                    >
                                       {tag}
                                     </span>
                                   ))}
