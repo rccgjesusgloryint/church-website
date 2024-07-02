@@ -22,12 +22,12 @@ const Navbar2 = () => {
       setAdmin(res);
     };
     checkUserAdmin();
-    console.log("Session: ", session);
+    // console.log("Session: ", session);
   }, []);
 
-  React.useEffect(() => {
-    console.log("ADMIN: ", admin);
-  }, [admin]);
+  // React.useEffect(() => {
+  //   console.log("ADMIN: ", admin);
+  // }, [admin]);
 
   return (
     <div className="bg-white h-[100px] shadow-md">

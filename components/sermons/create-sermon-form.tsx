@@ -29,33 +29,6 @@ import toast from "react-hot-toast";
 import TagCreator from "../global/tag-creator";
 import { createSermon } from "@/lib/queries";
 
-function getYoutubeThumbnailUrl(youtubeUrl: string) {
-  // Define regex patterns to extract the video ID
-  const patterns = [
-    /youtube\.com\/watch\?v=([^&]+)/,
-    /youtube\.com\/embed\/([^&]+)/,
-    /youtu\.be\/([^?&]+)/,
-  ];
-
-  let videoId = null;
-  for (const pattern of patterns) {
-    const match = youtubeUrl.match(pattern);
-    if (match) {
-      videoId = match[1];
-      break;
-    }
-  }
-
-  if (!videoId) {
-    throw new Error("Invalid YouTube URL");
-  }
-
-  // Construct the thumbnail URL
-  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-
-  return thumbnailUrl;
-}
-
 // // Example usage
 // const youtubeLink = "https://youtu.be/W7dx30ATm4M?si=aGMQO0oqrgECGJoA";
 // const thumbnailUrl = getYoutubeThumbnailUrl(youtubeLink);
@@ -67,7 +40,6 @@ const CreateSermonForm = () => {
   const formSchema = z.object({
     id: z.number().min(2).optional(),
     videoUrl: z.string().min(2).max(50),
-    previewImageUrl: z.string().min(2).max(50),
     sermonTitle: z.string().min(2).max(50),
   });
 
@@ -78,7 +50,6 @@ const CreateSermonForm = () => {
     mode: "onSubmit",
     defaultValues: {
       videoUrl: "",
-      previewImageUrl: "",
       sermonTitle: "",
     },
   });
@@ -87,9 +58,6 @@ const CreateSermonForm = () => {
     console.log("SERMON: ", values, tags);
     if (tags.length < 1) {
       return alert("Please add a tag");
-    }
-    if (values) {
-      values.previewImageUrl = getYoutubeThumbnailUrl(values.previewImageUrl);
     }
     try {
       const response = await toast.promise(
@@ -118,7 +86,6 @@ const CreateSermonForm = () => {
       console.log("RES: ", response);
       if (response.status === 200) {
         form.resetField("videoUrl");
-        form.resetField("previewImageUrl");
         form.resetField("sermonTitle");
         setTags([]);
       }
@@ -142,19 +109,6 @@ const CreateSermonForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Sermon Video Url</FormLabel>
-                  <FormControl>
-                    <Input placeholder="https://localhost:3000" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="previewImageUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sermon Preview Image Url</FormLabel>
                   <FormControl>
                     <Input placeholder="https://localhost:3000" {...field} />
                   </FormControl>

@@ -95,7 +95,6 @@ model Newsletter {
 model Sermon {
   id              Int       @id @default(autoincrement())
   videoUrl        String
-  previewImageUrl String
   sermonTitle     String
   tags            String[]
   likes           Int?

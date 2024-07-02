@@ -9,7 +9,6 @@ import Link from "next/link";
 import { auth } from "@/auth";
 
 import { AuthProvider } from "../../components/AuthProvider";
-import { Prisma, Session } from "@prisma/client";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({

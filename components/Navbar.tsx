@@ -33,12 +33,12 @@ const Navbar = () => {
       setAdmin(res);
     };
     checkUserAdmin();
-    console.log("Session: ", session);
+    // console.log("Session: ", session);
   }, []);
 
-  React.useEffect(() => {
-    console.log("ADMIN: ", admin);
-  }, [admin]);
+  // React.useEffect(() => {
+  //   console.log("ADMIN: ", admin);
+  // }, [admin]);
 
   useGSAP(() => {
     gsap.from(navbar.current, {

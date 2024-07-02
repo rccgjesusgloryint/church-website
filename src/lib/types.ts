@@ -1,4 +1,4 @@
-import { Comment, Prisma } from "@prisma/client";
+import { Comment } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
 
 export type UserExternalId = {
@@ -78,7 +78,6 @@ export type NewletterEmail = {
 export type CreateSermon = {
   id?: number;
   videoUrl: string;
-  previewImageUrl: string;
   sermonTitle: string;
   tags?: string[];
   createdAt?: Date;
@@ -106,7 +105,6 @@ export type Tag = {
 export type Sermon = {
   id?: number;
   videoUrl: string;
-  previewImageUrl: string;
   sermonTitle: string;
   tags: string[];
   likes?: number | null;

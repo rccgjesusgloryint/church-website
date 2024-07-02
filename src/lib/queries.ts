@@ -1,7 +1,5 @@
 "use server";
 
-import { Prisma, PrismaClient } from "@prisma/client";
-
 import {
   CreateEventType,
   CreateSermon,
@@ -13,8 +11,7 @@ import {
 
 import { Resend } from "resend";
 import { auth } from "@/auth";
-
-const prisma = new PrismaClient();
+import prisma from "./db";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
@@ -223,10 +220,9 @@ export const sendBulkNewsletterEmail = async (
 
 export const createSermon = async (sermon: CreateSermon, tags: string[]) => {
   try {
-    const response = await prisma.sermon.create({
+    await prisma.sermon.create({
       data: {
         videoUrl: sermon.videoUrl,
-        previewImageUrl: sermon.previewImageUrl,
         sermonTitle: sermon.sermonTitle,
         tags: [...tags],
       },
