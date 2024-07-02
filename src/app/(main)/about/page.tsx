@@ -1,5 +1,7 @@
 "use client";
 
+import { CiLogin } from "react-icons/ci";
+
 import React from "react";
 import Navbar2 from "../../../../components/Navbar2";
 import Arrow from "../../../../components/icons/Arrow";
@@ -16,6 +18,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Newsletter from "../../../../components/Newsletter";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const About = () => {
   const title = React.useRef<HTMLElement | any>();
@@ -64,6 +67,9 @@ const About = () => {
       opacity: 0,
     });
   });
+
+  const { status } = useSession();
+
   return (
     <>
       <section className="h-screen bg-about-bg bg-cover">
@@ -156,7 +162,16 @@ const About = () => {
                   />
                 </HoverCardTrigger>
                 <HoverCardContent>
-                  Zoom Link : u3u42u4u23u432u4u23u4
+                  {status === "authenticated" ? (
+                    <p>Zoom Link : u3u42u4u23u432u4u23u4</p>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-4">
+                      <p className="text-xl">Sensitive data! Please log in</p>
+                      <Link href="/api/auth/signin">
+                        <CiLogin size={35} />
+                      </Link>
+                    </div>
+                  )}
                 </HoverCardContent>
               </HoverCard>
               <div className="backdrop-blur-xl">
@@ -175,7 +190,16 @@ const About = () => {
                   />
                 </HoverCardTrigger>
                 <HoverCardContent>
-                  Zoom Link : u3u42u4u23u432u4u23u4
+                  {status === "authenticated" ? (
+                    <p>Zoom Link : u3u42u4u23u432u4u23u4</p>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-4">
+                      <p className="text-xl">Sensitive data! Please log in</p>
+                      <Link href="/api/auth/signin">
+                        <CiLogin size={35} />
+                      </Link>
+                    </div>
+                  )}
                 </HoverCardContent>
               </HoverCard>
               <div className="backdrop-blur-xl">
@@ -194,7 +218,16 @@ const About = () => {
                   />
                 </HoverCardTrigger>
                 <HoverCardContent>
-                  Zoom Link : u3u42u4u23u432u4u23u4
+                  {status === "authenticated" ? (
+                    <p>Zoom Link : u3u42u4u23u432u4u23u4</p>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-4">
+                      <p className="text-xl">Sensitive data! Please log in</p>
+                      <Link href="/api/auth/signin">
+                        <CiLogin size={35} />
+                      </Link>
+                    </div>
+                  )}
                 </HoverCardContent>
               </HoverCard>
               <div className="backdrop-blur-xl">
