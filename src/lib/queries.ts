@@ -20,15 +20,12 @@ export const allUsers = async () => {
 
 export const isAdmin = async () => {
   const session = await auth();
-  console.log("SESSION IN SERVER", session);
   if (!session) {
     return null;
   }
   const res = await prisma.user.findUnique({
     where: { id: session.user?.id },
   });
-
-  console.log("USER IN SERVER: ", res?.member);
 
   if (res?.member === "ADMIN") {
     return true;
