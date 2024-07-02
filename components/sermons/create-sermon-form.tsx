@@ -92,60 +92,63 @@ const CreateSermonForm = () => {
     } catch (error) {}
   }
   return (
-    <Card className="w-full h-full mt-5">
-      <CardHeader>
-        <CardTitle>
-          <CardDescription>
-            Please enter the details for your file
-          </CardDescription>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="videoUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sermon Video Url</FormLabel>
-                  <FormControl>
-                    <Input placeholder="https://localhost:3000" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="sermonTitle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sermon Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Are you a child of God?" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="tags"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Sermon Tags</FormLabel>
-                  <FormControl>
-                    <TagCreator tags={tags} setTags={setTags} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Create Sermon</Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+    <>
+      <h1 className="font-bold text-lg">Sermon Form</h1>
+      <Card className="w-full h-full mt-5">
+        <CardHeader>
+          <CardTitle>
+            <CardDescription>
+              Please enter the details for your file
+            </CardDescription>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="videoUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sermon Video Url</FormLabel>
+                    <FormControl>
+                      <Input placeholder="https://localhost:3000" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sermonTitle"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sermon Title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Are you a child of God?" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="tags"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sermon Tags</FormLabel>
+                    <FormControl>
+                      <TagCreator tags={tags} setTags={setTags} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Create Sermon</Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </>
   );
 };
 

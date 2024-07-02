@@ -1,12 +1,10 @@
 import React from "react";
-import Navbar from "../Navbar";
 import UploadMediaForm from "./upload-media";
-import CreateSermonForm from "../sermons/create-sermon-form";
 
 const MediaPage = () => {
   return (
     <section>
-      <Navbar />
+      <h1 className="font-bold text-lg">Media Form</h1>
       <UploadMediaForm />
     </section>
   );

@@ -7,7 +7,6 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
-  SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useSession } from "next-auth/react";
@@ -20,31 +19,29 @@ const Navbar2 = () => {
   React.useEffect(() => {
     const checkUserAdmin = async () => {
       const res = await isAdmin();
+      console.log("ADMIN IN FUNXTION : ", res);
       setAdmin(res);
     };
     checkUserAdmin();
-    // console.log("Session: ", session);
+    console.log("Session: ", session);
   }, []);
 
-  // React.useEffect(() => {
-  //   console.log("ADMIN: ", admin);
-  // }, [admin]);
+  React.useEffect(() => {
+    console.log("ADMIN: ", admin);
+  }, [admin]);
 
   return (
     <div className="bg-white h-[100px] shadow-md w-full">
-      {/* <GridLayout cls={12} sides={20} fill={true} type="cols" /> */}
       <div className="h-full flex justify-end">
         <div className="hidden md:flex flex-row gap-9 justify-end items-center w-full 2xl:flex-wrap relative">
-          <div className="w-full h-full flex items-center justify-center absolute">
-            <Link href="/" className="cursor-pointer absolute top-3 left-3">
-              <Image
-                src="/images/church-logo.svg"
-                alt="logo"
-                width={70}
-                height={70}
-              />
-            </Link>
-          </div>
+          <Link href="/" className="cursor-pointer absolute top-3 left-3">
+            <Image
+              src="/images/church-logo.svg"
+              alt="logo"
+              width={70}
+              height={70}
+            />
+          </Link>
           <Link
             href="/"
             className="hover:text-gray-700 duration-200 cursor-pointer"
@@ -75,7 +72,7 @@ const Navbar2 = () => {
           >
             Sermons
           </Link>
-          {/* {admin && <Link href="/media">Media</Link>} */}
+          {admin && <Link href="/media">Media</Link>}
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
           <div className="flex items-center justify-center">
@@ -156,6 +153,7 @@ const Navbar2 = () => {
                     >
                       Sermons
                     </Link>
+                    {admin && <Link href="/admin">Admin</Link>}
                     {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
                     {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
                   </div>
