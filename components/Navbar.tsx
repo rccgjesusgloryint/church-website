@@ -55,7 +55,7 @@ const Navbar = () => {
             <Image
               src={menu_icon}
               alt="menu"
-              className="w-[50px] h-[50px] absolute top-5 left-5"
+              className="w-[50px] h-[50px] absolute top-7 left-5"
             />
           </SheetTrigger>
           <SheetContent>
@@ -98,7 +98,7 @@ const Navbar = () => {
                   Gallery
                 </Link>
                 <Link
-                  href="/sermon"
+                  href="/sermons"
                   className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
                 >
                   Sermons
@@ -134,18 +134,18 @@ const Navbar = () => {
                 <Link href="/api/auth/signin">Sign In</Link>
               </div>
             )}
-            <div className="border-2 border-gray-700 flex items-center justify-center p-3"></div>
           </div>
         </div>
-        <div className="absolute top-7 right-5 sm:hidden">
-          <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
-            <Link href="/api/auth/signin">Sign In</Link>
-          </div>
-          <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
-            <Link href="/api/auth/signout">Sign Out</Link>
-          </div>
-
-          <div className="border-2 border-gray-700 flex items-center justify-center p-3"></div>
+        <div className="sm:hidden absolute top-7 right-5 flex">
+          {session.status === "authenticated" ? (
+            <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
+              <Link href="/api/auth/signout">Sign Out</Link>
+            </div>
+          ) : (
+            <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
+              <Link href="/api/auth/signin">Sign In</Link>
+            </div>
+          )}
         </div>
         <div className="sm:relative sm:pt-4 h-[100px]" ref={navbar}>
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
