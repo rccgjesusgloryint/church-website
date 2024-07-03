@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar2 from "../../../../components/Navbar2";
 import Newsletter from "../../../../components/Newsletter";
+import ContactForm from "../../../../components/contact/contact-form";
 
 const page = () => {
   return (
@@ -18,8 +19,8 @@ const page = () => {
           src={`https://www.google.com/maps/embed/v1/place?key=${process.env.GOOGLE_MAP_EMBED_API}&q=${process.env.CHURCH_LOCATION}`}
           allowFullScreen
         />
-        <div className="sm:absolute bottom-[-100px] left-[150px] h-screen sm:h-[720px] sm:w-[540px] bg-slate-300">
-          CONTACT FORM
+        <div className="sm:absolute bottom-[-60px] left-[150px] h-screen sm:h-[650px] sm:w-[450px] bg-light-gr">
+          <ContactForm />
         </div>
       </section>
       <Newsletter />
