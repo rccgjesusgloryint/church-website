@@ -72,7 +72,7 @@ const Navbar2 = () => {
           >
             Sermons
           </Link>
-          {admin && <Link href="/media">Media</Link>}
+          {admin && <Link href="/media">Admin</Link>}
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
           <div className="flex items-center justify-center">

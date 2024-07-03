@@ -123,7 +123,7 @@ const Navbar = () => {
           <Link href="/sermons" className="hover:text-gray-700 duration-200">
             Sermons
           </Link>
-          {admin && <Link href="/admin">Media</Link>}
+          {admin && <Link href="/admin">Admin</Link>}
           <div className="absolute top-7 right-5 flex">
             {session.status === "authenticated" ? (
               <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
