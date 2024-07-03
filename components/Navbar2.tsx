@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,7 +13,6 @@ import {
 } from "@/components/ui/sheet";
 import { useSession } from "next-auth/react";
 import { isAdmin } from "@/lib/queries";
-import GridLayout from "./GridLayout";
 
 const Navbar2 = () => {
   const session = useSession();
@@ -72,7 +73,7 @@ const Navbar2 = () => {
           >
             Sermons
           </Link>
-          {admin && <Link href="/media">Admin</Link>}
+          {admin && <Link href="/admin">Admin</Link>}
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
           <div className="flex items-center justify-center">

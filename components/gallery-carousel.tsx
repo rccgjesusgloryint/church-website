@@ -4,7 +4,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import Image from "next/image";
 import { useModal } from "@/providers/modal-provider";
-import CustomModal from "../../../../components/global/custom-modal";
+import CustomModal from "./global/custom-modal";
 import { GetAllImages } from "@/lib/types";
 
 type PropType = {

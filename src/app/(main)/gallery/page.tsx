@@ -8,7 +8,7 @@ import { getAllImages } from "@/lib/queries";
 import Image from "next/image";
 
 import useEmblaCarousel from "embla-carousel-react";
-import EmblaCarousel from "../media/gallery-carousel";
+import EmblaCarousel from "../../../../components/gallery-carousel";
 import { EmblaOptionsType } from "embla-carousel";
 import { GetAllImages } from "@/lib/types";
 
