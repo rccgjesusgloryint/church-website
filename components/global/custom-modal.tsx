@@ -13,7 +13,7 @@ import {
 import { useModal } from "@/providers/modal-provider";
 
 type Props = {
-  title: string;
+  title?: string;
   subheading?: string;
   children: React.ReactNode;
   defaultOpen?: boolean;
@@ -25,7 +25,7 @@ const CustomModal = ({ children, defaultOpen, subheading, title }: Props) => {
     <Dialog open={isOpen || defaultOpen} onOpenChange={setClose}>
       <DialogContent className="overflow-scroll md:max-h-[700px] md:h-fit h-screen bg-card w-full">
         <DialogClose asChild className="absolute top-5 right-5">
-          <Button type="button" variant="secondary">
+          <Button type="button" variant="secondary" className="rounded-md">
             <svg
               width="15"
               height="15"
