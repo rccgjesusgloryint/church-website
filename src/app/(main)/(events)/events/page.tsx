@@ -11,7 +11,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Newsletter from "../../../../../components/Newsletter";
-import { getAllEvents, getAuthUserDetails } from "@/lib/queries";
+import { getAllEvents } from "@/lib/queries";
 import CreateEvent from "../../../../../components/events";
 import { EventType } from "@/lib/types";
 import Loader from "../../../../../components/Loader";
@@ -56,22 +56,9 @@ const Events = () => {
 
   const router = useRouter();
 
-  const handleNavigation = (id: string) => {
+  const handleNavigation = (id: number) => {
     router.push(`/events/${id}`);
   };
-
-  const getAuth = async () => {
-    const user = await getAuthUserDetails();
-    if (!user) {
-      return null;
-    } else {
-      setUser(user?.role);
-    }
-  };
-
-  React.useEffect(() => {
-    getAuth();
-  }, [user]);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -113,7 +100,7 @@ const Events = () => {
               className="flex flex-row items-center justify-center w-full relative mt-11"
               ref={useTitle2}
             >
-              <h1 className="font-bold sm:text-[40px] text-[30px] w-1/2 text-center">
+              <h1 className="font-bold sm:text-[40px] text-[30px] w-full text-center">
                 Don&apos;t Miss Your Chance to Get Closer to God
               </h1>
             </div>

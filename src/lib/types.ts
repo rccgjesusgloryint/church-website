@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { Comment } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
 
 export type UserExternalId = {
@@ -41,7 +41,7 @@ export type CreateEventType = {
 export type GalleryType = string[];
 
 export type EventType = {
-  id: string;
+  id: number;
   event: string;
   date: string[];
   location: string;
@@ -78,14 +78,47 @@ export type NewletterEmail = {
 export type CreateSermon = {
   id?: number;
   videoUrl: string;
-  previewImageUrl: string;
   sermonTitle: string;
+  tags?: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
-type Tag = {
-  name: string;
-  color: string;
+export type Tag = {
+  id?: number;
+  tagName: string;
+  sermons?: [];
   sermonId?: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+// export type Sermon = {
+//   id: number;
+//   videoUrl: string;
+//   previewImageUrl: string;
+//   sermonTitle: string;
+//   tags: Tags;
+//   createdAt: Date;
+//   updatedAt: Date;
+// };
+export type Sermon = {
+  id?: number;
+  videoUrl: string;
+  sermonTitle: string;
+  tags: string[];
+  likes?: number | null;
+  comments?: Comment[];
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type Tags = Tag[];
+
+export type EventTrack = {
+  id?: string;
+  event_type: string;
+  event_calls: number;
+  createdAt: Date;
+  updatedAt: Date;
+};

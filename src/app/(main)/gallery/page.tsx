@@ -8,7 +8,7 @@ import { getAllImages } from "@/lib/queries";
 import Image from "next/image";
 
 import useEmblaCarousel from "embla-carousel-react";
-import EmblaCarousel from "../media/gallery-carousel";
+import EmblaCarousel from "../../../../components/gallery-carousel";
 import { EmblaOptionsType } from "embla-carousel";
 import { GetAllImages } from "@/lib/types";
 
@@ -47,18 +47,26 @@ const Gallery = () => {
         <h1 className="text-black text-4xl text-center">Gallery</h1>
         <div className="h-auto w-full">
           <div>
-            {galleryCategories.map((category) => {
-              const filteredImages = galleryImages?.filter(
-                (image) => image.name === category
-              );
+            {galleryCategories.length > 0 ? (
+              galleryCategories.map((category) => {
+                const filteredImages = galleryImages?.filter(
+                  (image) => image.name === category
+                );
 
-              return (
-                <div key={category} className="mb-8">
-                  <h2 className="text-2xl text-left mb-4">{category}</h2>
-                  <EmblaCarousel slides={filteredImages} options={OPTIONS} />
-                </div>
-              );
-            })}
+                return (
+                  <div key={category} className="mb-8">
+                    <h2 className="text-2xl text-left mb-4">{category}</h2>
+                    <EmblaCarousel slides={filteredImages} options={OPTIONS} />
+                  </div>
+                );
+              })
+            ) : (
+              <div className="flex items-center justify-center">
+                <h1 className="font-bold text-3xl">
+                  SORRY NO IMAGES IN GALLERY YET!
+                </h1>
+              </div>
+            )}
           </div>
         </div>
       </main>

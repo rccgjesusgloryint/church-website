@@ -7,8 +7,6 @@ import menu_icon from "../public/menu-icon.svg";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-
 import {
   Sheet,
   SheetContent,
@@ -17,22 +15,30 @@ import {
 } from "@/components/ui/sheet";
 
 import Link from "next/link";
-import { getAuthUserDetails } from "@/lib/queries";
+import { auth } from "@/auth";
+import { any } from "zod";
+import { useSession } from "next-auth/react";
+import { isAdmin } from "@/lib/queries";
+// import { getAuthUserDetails } from "@/lib/queries";
 
 const Navbar = () => {
-  const [user, setUser] = React.useState("");
-  const getAuth = async () => {
-    const user = await getAuthUserDetails();
-    if (!user) {
-      return null;
-    } else {
-      setUser(user?.role);
-    }
-  };
-  React.useEffect(() => {
-    getAuth();
-  }, [user]);
+  const [admin, setAdmin] = React.useState<boolean | null>(null);
   const navbar = React.useRef<HTMLElement | any>();
+
+  const session = useSession();
+
+  React.useEffect(() => {
+    const checkUserAdmin = async () => {
+      const res = await isAdmin();
+      setAdmin(res);
+    };
+    checkUserAdmin();
+    // console.log("Session: ", session);
+  }, []);
+
+  // React.useEffect(() => {
+  //   console.log("ADMIN: ", admin);
+  // }, [admin]);
 
   useGSAP(() => {
     gsap.from(navbar.current, {
@@ -49,7 +55,7 @@ const Navbar = () => {
             <Image
               src={menu_icon}
               alt="menu"
-              className="w-[50px] h-[50px] absolute top-5 left-5"
+              className="w-[50px] h-[50px] absolute top-7 left-5"
             />
           </SheetTrigger>
           <SheetContent>
@@ -91,6 +97,12 @@ const Navbar = () => {
                 >
                   Gallery
                 </Link>
+                <Link
+                  href="/sermons"
+                  className="active:bg-blue-300 w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
+                >
+                  Sermons
+                </Link>
               </div>
             </SheetDescription>
           </SheetContent>
@@ -108,36 +120,32 @@ const Navbar = () => {
           <Link href="/gallery" className="hover:text-gray-700 duration-200">
             Gallery
           </Link>
-          {user === "ADMIN" ? <Link href="/media">Media</Link> : ""}
-          {/* <Link href="/sermons" className="hover:text-gray-700 duration-200">
+          <Link href="/sermons" className="hover:text-gray-700 duration-200">
             Sermons
-          </Link> */}
-          <div className="absolute top-7 right-5">
-            <SignedOut>
+          </Link>
+          {admin && <Link href="/admin">Admin</Link>}
+          <div className="absolute top-7 right-5 flex">
+            {session.status === "authenticated" ? (
               <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
-                <Link href="/sign-in">Sign In</Link>
+                <Link href="/api/auth/signout">Sign Out</Link>
               </div>
-            </SignedOut>
-
-            <SignedIn>
-              <div className="border-2 border-gray-700 flex items-center justify-center p-3">
-                <UserButton />
+            ) : (
+              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
+                <Link href="/api/auth/signin">Sign In</Link>
               </div>
-            </SignedIn>
+            )}
           </div>
         </div>
-        <div className="absolute top-7 right-5 sm:hidden">
-          <SignedOut>
+        <div className="sm:hidden absolute top-7 right-5 flex">
+          {session.status === "authenticated" ? (
             <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
-              <Link href="/sign-in">Sign In</Link>
+              <Link href="/api/auth/signout">Sign Out</Link>
             </div>
-          </SignedOut>
-
-          <SignedIn>
-            <div className="border-2 border-gray-700 flex items-center justify-center p-3">
-              <UserButton />
+          ) : (
+            <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
+              <Link href="/api/auth/signin">Sign In</Link>
             </div>
-          </SignedIn>
+          )}
         </div>
         <div className="sm:relative sm:pt-4 h-[100px]" ref={navbar}>
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}

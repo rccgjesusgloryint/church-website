@@ -1,17 +1,6 @@
 "use client";
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import {
   Command,
   CommandEmpty,
   CommandGroup,
@@ -20,126 +9,115 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { deleteTag, getTags, upsertTag } from "@/lib/queries";
-import { Tag } from "@prisma/client";
 import { PlusCircleIcon, Trash2Icon } from "lucide-react";
 import React from "react";
 import TagComponent from "./tag";
+import { getExistingTags, getAllSermons } from "@/lib/queries";
 
 type Props = {
-  tags: Tag[];
-  setTags: (tags: Tag[]) => void;
+  tags: string[];
+  setTags: (tags: string[]) => void;
 };
 
 const TagCreator = ({ tags, setTags }: Props) => {
   const [value, setValue] = React.useState("");
+  const [allTags, setAllTags] = React.useState<string[]>([]);
+
+  const getTags = async () => {
+    const data = await getExistingTags();
+    setAllTags(data);
+  };
+
+  const tagsFormat = (tag: string) => {
+    let temp = tag.toLowerCase();
+    let capLetter = temp.charAt(0).toUpperCase();
+    let restWord = temp.substring(1);
+    let fullWord = capLetter + restWord;
+    return fullWord;
+  };
 
   const handleAddTag = async () => {
-    if (!value) {
-      alert("Tags need to have a name");
-      return;
+    //if tag exists in sermon tags list
+    if (tags.includes(value)) {
+      return setValue("");
     }
-
-    const tagData: Tag = {
-      color: "orange",
-      sermonId: null,
-      createdAt: new Date(),
-      id: Math.floor(Math.random() * 100),
-      name: value,
-      updatedAt: new Date(),
-    };
-
-    setTags([...tags, tagData]);
+    //if tag isnt in sermons tags list but already exists, add to sermons tags list
+    if (allTags.includes(value)) {
+      setTags([...tags, tagsFormat(value)]);
+      return setValue("");
+    }
+    setTags([...tags, tagsFormat(value)]);
     setValue("");
-    try {
-      const response = await upsertTag(tagData);
-      alert("Created tag!");
-    } catch (error) {
-      console.log("ERROR:", error);
-    }
-  };
-
-  const handleDeleteTag = async (tagId: number) => {
-    setTags(tags.filter((tag) => tag.id !== tagId));
-
-    // try {
-    //   const response = await deleteTag(tagId);
-    // } catch (error) {
-    //   console.log("ERROR: ", error);
-    // }
   };
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const response = await getTags();
-      if (response) setTags(response);
-    };
-    fetchData();
+    console.log("TAGS: ", tags);
+    console.log("ALL TAGS: ", allTags);
+  }, [tags, allTags]);
+
+  React.useEffect(() => {
+    getTags();
+    console.log(tags.includes("Faith"));
   }, []);
 
-  React.useEffect(() => {
-    console.log("TAgs: ", tags);
-  }, [tags]);
+  const handleTagClick = (tag: string) => {
+    if (tags.includes(tag)) {
+      return alert("Tag already in your list!");
+    } else {
+      setTags([...tags, tag]);
+      setValue("");
+    }
+  };
+
+  const handleXClick = (tag: string) => {
+    const filterTags = tags.filter((t) => tag !== t);
+    setTags(filterTags);
+  };
 
   return (
-    <AlertDialog>
-      <Command className="bg-transparent">
-        <div className="">
-          <CommandInput
-            placeholder="Search for tag..."
-            value={value}
-            onValueChange={setValue}
-          />
-          <PlusCircleIcon
-            onClick={handleAddTag}
-            size={20}
-            className="absolute top-1/2 transform -translate-y-1/2 right-2 hover:text-primary transition-all cursor-pointer text-muted-foreground"
-          />
-        </div>
-        <CommandList>
-          <CommandSeparator />
-          <CommandGroup heading="Tags">
-            {tags.map((tag) => (
-              <CommandItem
-                key={tag.id}
-                className="hover:!bg-secondary !bg-transparent flex items-center justify-between !font-light cursor-pointer"
-              >
-                <div>
-                  <TagComponent title={tag.name} id={tag.id} />
-                </div>
-                <AlertDialogTrigger>
-                  <Trash2Icon
-                    size={16}
-                    className="cursor-pointer text-muted-foreground hover:text-rose-400  transition-all"
-                  />
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle className="text-left">
-                      Are you absolutely sure?
-                    </AlertDialogTitle>
-                    <AlertDialogDescription className="text-left">
-                      This action cannot be undone. This will permanently delete
-                      your the tag and remove it from our servers.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter className="items-center">
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      className="bg-destructive"
-                      onClick={() => handleDeleteTag(tag.id)}
-                    >
-                      Delete Tag
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-          <CommandEmpty>No results found.</CommandEmpty>
-        </CommandList>
-      </Command>
-    </AlertDialog>
+    <Command className="bg-transparent">
+      <div>
+        {tags.map((tag, index) => (
+          <div className="flex flex-row gap-3" key={index}>
+            {tag}
+            <span className="cursor-pointer" onClick={() => handleXClick(tag)}>
+              <Trash2Icon
+                size={16}
+                className="cursor-pointer text-muted-foreground hover:text-rose-400 transition-all"
+              />
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="relative w-1/2">
+        <CommandInput
+          placeholder="Create tag..."
+          value={value}
+          onValueChange={setValue}
+        />
+        <PlusCircleIcon
+          onClick={handleAddTag}
+          size={20}
+          className="absolute top-1/2 transform -translate-y-1/2 right-2 hover:text-primary transition-all cursor-pointer text-muted-foreground"
+        />
+      </div>
+      <CommandList>
+        <CommandSeparator className="w-1/2" />
+        <CommandGroup heading="Tags Inventory...">
+          {allTags.map((tag, index) => (
+            <CommandItem
+              key={index}
+              className="flex items-center justify-between cursor-pointer w-auto"
+            >
+              <div onClick={() => handleTagClick(tag)}>
+                <TagComponent title={tag} id={index} />
+              </div>
+            </CommandItem>
+          ))}
+        </CommandGroup>
+        <CommandEmpty>No results found.</CommandEmpty>
+      </CommandList>
+    </Command>
   );
 };
 

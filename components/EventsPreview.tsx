@@ -8,6 +8,7 @@ import React from "react";
 import { FaRegMap } from "react-icons/fa";
 import { LuClock3 } from "react-icons/lu";
 import Loader from "./Loader";
+import { trackEventCall } from "@/lib/actions";
 
 const EventsPreview = () => {
   const today = new Date(Date.now());
@@ -30,7 +31,7 @@ const EventsPreview = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [events, setEvents] = React.useState<EventType>([]);
   const router = useRouter();
-  const handleNavigation = (id: string) => {
+  const handleNavigation = (id: number) => {
     router.push(`/events/${id}`);
   };
   React.useEffect(() => {
@@ -45,30 +46,31 @@ const EventsPreview = () => {
   }, []); // Empty dependency array ensures this runs only once
 
   return (
-    <section className="h-auto sm:h-screen 2xl:h-[90vh] bg-white flex items-center overflow-hidden w-screen">
-      <div className="bg-gray-400 bg-opacity-70 w-full h-full flex flex-col items-center justify-center sm:flex-row sm:h-full sm:pt-[102px] sm:pb-[130px] relative">
-        <div className="hidden sm:w-1/3 xl:flex flex-row sm:flex-col items-center justify-center sm:pt-[78px] pt-5 sm:pl-[179px] mb-[50px] lg:mr-11">
-          <div className="sm:pr-[20px] sm:h-[492px]">
-            <div className="sm:text-left sm:block flex flex-col items-center">
-              <h3 className="tracking-widest mb-1 text-light-gr text-left">
-                THIS {month.toUpperCase()}
+    <section className="h-auto flex items-center overflow-hidden w-screen">
+      <div className="bg-gray-400 bg-opacity-70 w-full h-full flex xl:flex-nowrap flex-wrap items-center justify-center px-5">
+        <div className="h-full w-auto xl:pl-[50px] xl:pt-0 pt-5">
+          <div className="sm:text-left sm:block flex flex-col items-center">
+            <h3 className="tracking-widest mb-1 text-light-gr text-left">
+              THIS {month.toUpperCase()}
+            </h3>
+            <div className="bg-dark-gr opacity-50 h-[2px] w-1/2"></div>
+          </div>
+          <h1 className="font-bold sm:text-4xl text-3xl sm:text-left text-center pt-[30px] mb-[30px] sm:w-[300px]">
+            Become a part of something great
+          </h1>
+          <p className="text-base sm:text-left text-center sm:w-72 leading-6 mb-[20px] sm:px-0 px-6">
+            We enjoy being a multi-denominational church where we work together,
+            worship together, and grow together.
+          </p>
+          <div>
+            <Link
+              href={"/events"}
+              onClick={() => trackEventCall("View All Events Button")}
+            >
+              <h3 className="font-bold text-sm tracking-wider sm:text-left text-center hover:opacity-55 cursor-pointer transition ease-in-out">
+                + VIEW ALL EVENTS
               </h3>
-              <div className="bg-dark-gr opacity-50 h-[2px] w-full"></div>
-            </div>
-            <h1 className="font-bold sm:text-4xl text-3xl sm:text-left text-center pt-[30px] mb-[30px] sm:w-[300px]">
-              Become a part of something great
-            </h1>
-            <p className="text-base sm:text-left text-center sm:w-72 leading-6 mb-[20px] sm:px-0 px-6">
-              We enjoy being a multi-denominational church where we work
-              together, worship together, and grow together.
-            </p>
-            <div>
-              <Link href={"/events"}>
-                <h3 className="font-bold text-sm tracking-wider sm:text-left text-center hover:opacity-55 cursor-pointer transition ease-in-out">
-                  + VIEW ALL EVENTS
-                </h3>
-              </Link>
-            </div>
+            </Link>
           </div>
         </div>
         {isLoading ? (
@@ -76,12 +78,14 @@ const EventsPreview = () => {
             <Loader />
           </div>
         ) : (
-          <div className="flex lg:flex-row flex-col w-full items-center justify-center gap-8 gap-y-[80px] mt-[80px] sm:mr-[100px] mb-11">
+          <div className="flex lg:flex-nowrap flex-wrap xl:h-screen xl:mt-0 mt-16 w-full items-center justify-center gap-8">
             {events.length > 0 ? (
               events?.slice(0, 3).map((event, index) => {
                 return (
                   <div
-                    className="sm:w-[290px] w-[390px]  2xl:w-[390px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl"
+                    className={`w-[300px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block ${
+                      index === 2 ? "hidden" : ""
+                    }`}
                     key={index}
                   >
                     <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">

@@ -1,15 +1,31 @@
 "use client";
 
+import { CiLogin } from "react-icons/ci";
+
 import React from "react";
 import Navbar2 from "../../../../components/Navbar2";
-import Arrow from "../../../../components/icons/Arrow";
+import { GoArrowUpRight } from "react-icons/go";
 import Link from "next/link";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import Newsletter from "../../../../components/Newsletter";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
+import { isMobile } from "@/lib/actions";
 
 const About = () => {
   const title = React.useRef<HTMLElement | any>();
@@ -58,6 +74,9 @@ const About = () => {
       opacity: 0,
     });
   });
+
+  const { status } = useSession();
+
   return (
     <>
       <section className="h-screen bg-about-bg bg-cover">
@@ -139,42 +158,120 @@ const About = () => {
           </div>
           <div className="flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11 ">
             <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-bible-studies bg-center bg-cover">
-              <span>
-                <Image
-                  src="/images/Zoom.png"
-                  alt="location"
-                  width={40}
-                  height={40}
-                />
-              </span>
+              <HoverCard>
+                <HoverCardTrigger className="cursor-pointer">
+                  <Image
+                    src="/images/Zoom.png"
+                    alt="location"
+                    width={40}
+                    height={40}
+                  />
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  {status === "authenticated" ? (
+                    <div>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_ZOOM_LINK}`}
+                        className="flex gap-2 items-center justify-center"
+                        target="_blank"
+                      >
+                        Join Meeting{" "}
+                        <span>
+                          <GoArrowUpRight />
+                        </span>
+                      </Link>
+                      <p>Zoom Password :sdfsdfdsf</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-4">
+                      <p className="text-xl">Sensitive data! Please log in</p>
+                      <Link href="/api/auth/signin">
+                        <CiLogin size={35} />
+                      </Link>
+                    </div>
+                  )}
+                </HoverCardContent>
+              </HoverCard>
               <div className="backdrop-blur-xl">
                 <h3 className="font-bold text-lg">Spiritual Growth</h3>
                 <h1 className="font-bold text-3xl">Bible Studies</h1>
               </div>
             </div>
             <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-sunday-service bg-center bg-cover">
-              <span>
-                <Image
-                  src="/images/Zoom.png"
-                  alt="location"
-                  width={40}
-                  height={40}
-                />
-              </span>
+              <HoverCard>
+                <HoverCardTrigger className="cursor-pointer">
+                  <Image
+                    src="/images/Zoom.png"
+                    alt="location"
+                    width={40}
+                    height={40}
+                  />
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  {status === "authenticated" ? (
+                    <div>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_ZOOM_LINK}`}
+                        className="flex gap-2 items-center justify-center"
+                        target="_blank"
+                      >
+                        Join Meeting{" "}
+                        <span>
+                          <GoArrowUpRight />
+                        </span>
+                      </Link>
+                      <p>Zoom Password :sdfsdfdsf</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-4">
+                      <p className="text-xl">Sensitive data! Please log in</p>
+                      <Link href="/api/auth/signin">
+                        <CiLogin size={35} />
+                      </Link>
+                    </div>
+                  )}
+                </HoverCardContent>
+              </HoverCard>
               <div className="backdrop-blur-xl">
                 <h3 className="font-bold text-lg">Fellowship</h3>
                 <h1 className="font-bold text-3xl">Sunday Service</h1>
               </div>
             </div>
             <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-prayers bg-center bg-cover">
-              <span>
-                <Image
-                  src="/images/Zoom.png"
-                  alt="location"
-                  width={40}
-                  height={40}
-                />
-              </span>
+              <HoverCard>
+                <HoverCardTrigger className="cursor-pointer">
+                  <Image
+                    src="/images/Zoom.png"
+                    alt="location"
+                    width={40}
+                    height={40}
+                  />
+                </HoverCardTrigger>
+                <HoverCardContent>
+                  {status === "authenticated" ? (
+                    <div>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_ZOOM_LINK}`}
+                        className="flex gap-2 items-center justify-center"
+                        target="_blank"
+                      >
+                        Join Meeting{" "}
+                        <span>
+                          <GoArrowUpRight />
+                        </span>
+                      </Link>
+                      <p>Zoom Password :sdfsdfdsf</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center gap-4">
+                      <p className="text-xl">Sensitive data! Please log in</p>
+                      <Link href="/api/auth/signin">
+                        <CiLogin size={35} />
+                      </Link>
+                    </div>
+                  )}
+                </HoverCardContent>
+              </HoverCard>
               <div className="backdrop-blur-xl">
                 <h3 className="font-bold text-lg">Spiritual Growth</h3>
                 <h1 className="font-bold text-3xl">Friday Prayers</h1>

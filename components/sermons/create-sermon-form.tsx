@@ -27,23 +27,19 @@ import { number, z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
 import TagCreator from "../global/tag-creator";
-import { Tag } from "@prisma/client";
 import { createSermon } from "@/lib/queries";
 
-const CreateSermonForm = () => {
-  const [tags, setTags] = React.useState<Tag[]>([]);
+// // Example usage
+// const youtubeLink = "https://youtu.be/W7dx30ATm4M?si=aGMQO0oqrgECGJoA";
+// const thumbnailUrl = getYoutubeThumbnailUrl(youtubeLink);
+// console.log(thumbnailUrl); // Output: https://img.youtube.com/vi/W7dx30ATm4M/hqdefault.jpg
 
-  const TagObjectShema = z.object({
-    id: z.number().min(1),
-    name: z.string().min(1),
-    color: z.string().min(1),
-    sermonId: z.number().min(1).optional() || undefined || null,
-  });
+const CreateSermonForm = () => {
+  const [tags, setTags] = React.useState<string[]>([]);
 
   const formSchema = z.object({
     id: z.number().min(2).optional(),
     videoUrl: z.string().min(2).max(50),
-    previewImageUrl: z.string().min(2).max(50),
     sermonTitle: z.string().min(2).max(50),
   });
 
@@ -54,84 +50,104 @@ const CreateSermonForm = () => {
     mode: "onSubmit",
     defaultValues: {
       videoUrl: "",
-      previewImageUrl: "",
       sermonTitle: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("SERMON: ", values);
-    const response = await createSermon(values, tags);
-    console.log("RES: ", response);
+    console.log("SERMON: ", values, tags);
+    if (tags.length < 1) {
+      return alert("Please add a tag");
+    }
+    try {
+      const response = await toast.promise(
+        createSermon(values, tags),
+        {
+          loading: "Loading",
+          success: (data) => `Successfully created sermon!`,
+          error: (err) => `OOPS!! This just happened: ${err.toString()}`,
+        },
+        {
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+          iconTheme: {
+            primary: "#713200",
+            secondary: "#FFFAEE",
+          },
+          success: {
+            duration: 5000,
+            icon: "🟢",
+          },
+        }
+      );
+      console.log("RES: ", response);
+      if (response.status === 200) {
+        form.resetField("videoUrl");
+        form.resetField("sermonTitle");
+        setTags([]);
+      }
+    } catch (error) {}
   }
   return (
-    <Card className="w-full h-full mt-5">
-      <CardHeader>
-        <CardTitle>
-          <CardDescription>
-            Please enter the details for your file
-          </CardDescription>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="videoUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Event Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="videoUrl" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="previewImageUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Event Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="previewImageUrl" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="sermonTitle"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Event Name</FormLabel>
-                  <FormControl>
-                    <Input placeholder="sermonTitle" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="tags"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Event Name</FormLabel>
-                  <FormControl>
-                    <TagCreator tags={tags} setTags={setTags} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Create Sermon</Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+    <>
+      <Card className="w-auto h-auto mt-5">
+        <CardHeader>
+          <CardTitle>
+            <CardDescription>
+              Please enter the details for your file
+            </CardDescription>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <FormField
+                control={form.control}
+                name="videoUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sermon Video Url</FormLabel>
+                    <FormControl>
+                      <Input placeholder="https://localhost:3000" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sermonTitle"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sermon Title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Are you a child of God?" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="tags"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Sermon Tags</FormLabel>
+                    <FormControl>
+                      <TagCreator tags={tags} setTags={setTags} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Create Sermon</Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </>
   );
 };
 
