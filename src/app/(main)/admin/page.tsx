@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useEffect, useState } from "react";
 import MediaPage from "../../../../components/media";
 import CreateEvent from "../../../../components/events";
 import CreateSermonForm from "../../../../components/sermons/create-sermon-form";
@@ -10,9 +10,9 @@ import { getAllTrackedEvent } from "@/lib/queries";
 import { CustomBarChart } from "../../../../components/charts/bar-chart";
 
 const page = () => {
-  const [eventData, setEventData] = React.useState<EventTrack[]>([]);
+  const [eventData, setEventData] = useState<EventTrack[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getData = async () => {
       const response = await getAllTrackedEvent();
       setEventData(response);
@@ -20,7 +20,7 @@ const page = () => {
     getData();
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     console.log("EVENT DATA: ", eventData);
   }, [eventData]);
   return (

@@ -1,17 +1,6 @@
 "use client";
 
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import {
   Command,
   CommandEmpty,
   CommandGroup,
@@ -24,7 +13,6 @@ import { PlusCircleIcon, Trash2Icon } from "lucide-react";
 import React from "react";
 import TagComponent from "./tag";
 import { getExistingTags, getAllSermons } from "@/lib/queries";
-import { Sermon } from "@/lib/types";
 
 type Props = {
   tags: string[];
@@ -84,10 +72,6 @@ const TagCreator = ({ tags, setTags }: Props) => {
   const handleXClick = (tag: string) => {
     const filterTags = tags.filter((t) => tag !== t);
     setTags(filterTags);
-  };
-
-  const click = () => {
-    alert("CLICK");
   };
 
   return (
