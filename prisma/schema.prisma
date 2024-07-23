@@ -21,7 +21,7 @@ enum Role {
 }
 
 model User {
-  id            String          @id @default(cuid())
+  id            String          @id @default(uuid())
   name          String?
   email         String          @unique
   emailVerified DateTime?
@@ -111,4 +111,12 @@ model Comment {
   sermonId  Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id                  String  @default(uuid())
+  event_type          String  @id 
+  event_calls         Int     @default(0)
+  createdAt           DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
 }

@@ -100,7 +100,7 @@ const Events = () => {
               className="flex flex-row items-center justify-center w-full relative mt-11"
               ref={useTitle2}
             >
-              <h1 className="font-bold sm:text-[40px] text-[30px] w-1/2 text-center">
+              <h1 className="font-bold sm:text-[40px] text-[30px] w-full text-center">
                 Don&apos;t Miss Your Chance to Get Closer to God
               </h1>
             </div>

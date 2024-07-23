@@ -3,8 +3,8 @@ import UploadMediaForm from "./upload-media";
 
 const MediaPage = () => {
   return (
-    <section>
-      <h1 className="font-bold text-lg">Media Form</h1>
+    <section className="h-screen bg-red-300">
+      <h1 className="font-bold text-lg">Add Media Form</h1>
       <UploadMediaForm />
     </section>
   );

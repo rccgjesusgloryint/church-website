@@ -17,19 +17,14 @@ import { isAdmin } from "@/lib/queries";
 const Navbar2 = () => {
   const session = useSession();
   const [admin, setAdmin] = React.useState<boolean | null>(null);
+
   React.useEffect(() => {
     const checkUserAdmin = async () => {
       const res = await isAdmin();
-      console.log("ADMIN IN FUNXTION : ", res);
       setAdmin(res);
     };
     checkUserAdmin();
-    console.log("Session: ", session);
   }, []);
-
-  React.useEffect(() => {
-    console.log("ADMIN: ", admin);
-  }, [admin]);
 
   return (
     <div className="bg-white h-[100px] shadow-md w-full">
@@ -78,11 +73,11 @@ const Navbar2 = () => {
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
           <div className="flex items-center justify-center">
             {session.status === "authenticated" ? (
-              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
+              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 text-white">
                 <Link href="/api/auth/signout">Sign Out</Link>
               </div>
             ) : (
-              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
+              <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 text-white">
                 <Link href="/api/auth/signin">Sign In</Link>
               </div>
             )}

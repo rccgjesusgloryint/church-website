@@ -7,7 +7,7 @@ import MultiplFileUpload from "./multiple-file-upload";
 
 const UploadMediaForm = () => {
   return (
-    <Card className="w-full h-full mt-5">
+    <Card className="w-auto h-auto mt-5">
       <CardContent>
         <MultiplFileUpload apiEndpoint="pictures" />
       </CardContent>

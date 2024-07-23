@@ -28,6 +28,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/providers/modal-provider";
 import CustomModal from "./global/custom-modal";
+import { getTrackedEvent, trackEvent } from "@/lib/queries";
+import { getTraceEvents } from "next/dist/trace";
+import { trackEventCall } from "@/lib/actions";
 
 const GalleryPreview = () => {
   const carouselImgs: string[] = [
@@ -46,6 +49,12 @@ const GalleryPreview = () => {
   const viewAllBtn = React.useRef<HTMLElement | any>();
 
   gsap.registerPlugin(ScrollTrigger);
+
+  const handleViewGalleryClick = async () => {
+    const event = await getTrackedEvent("View Gallery");
+    const event_calls = event ? event.event_calls : 0;
+    await trackEvent("View Gallery", event_calls);
+  };
 
   useGSAP(() => {
     gsap.from(viewAllBtn.current, {
@@ -189,7 +198,7 @@ const GalleryPreview = () => {
             />
           </div>
         </div>
-        <Link href="/gallery">
+        <Link href="/gallery" onClick={() => trackEventCall("View Gallery")}>
           <div
             className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute right-5 xl:bottom-20 lg:bottom-14 bottom-5"
             ref={viewAllBtn}

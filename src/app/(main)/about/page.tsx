@@ -4,8 +4,14 @@ import { CiLogin } from "react-icons/ci";
 
 import React from "react";
 import Navbar2 from "../../../../components/Navbar2";
-import Arrow from "../../../../components/icons/Arrow";
+import { GoArrowUpRight } from "react-icons/go";
 import Link from "next/link";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 import {
   HoverCard,
@@ -19,6 +25,7 @@ import { ScrollTrigger } from "gsap/all";
 import Newsletter from "../../../../components/Newsletter";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import { isMobile } from "@/lib/actions";
 
 const About = () => {
   const title = React.useRef<HTMLElement | any>();
@@ -151,7 +158,6 @@ const About = () => {
           </div>
           <div className="flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11 ">
             <div className="sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 bg-bible-studies bg-center bg-cover">
-              {/* TODO: make the link available only to members that have signed up, when auth.js is setup */}
               <HoverCard>
                 <HoverCardTrigger className="cursor-pointer">
                   <Image
@@ -163,7 +169,19 @@ const About = () => {
                 </HoverCardTrigger>
                 <HoverCardContent>
                   {status === "authenticated" ? (
-                    <p>Zoom Link : u3u42u4u23u432u4u23u4</p>
+                    <div>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_ZOOM_LINK}`}
+                        className="flex gap-2 items-center justify-center"
+                        target="_blank"
+                      >
+                        Join Meeting{" "}
+                        <span>
+                          <GoArrowUpRight />
+                        </span>
+                      </Link>
+                      <p>Zoom Password :sdfsdfdsf</p>
+                    </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center gap-4">
                       <p className="text-xl">Sensitive data! Please log in</p>
@@ -191,7 +209,19 @@ const About = () => {
                 </HoverCardTrigger>
                 <HoverCardContent>
                   {status === "authenticated" ? (
-                    <p>Zoom Link : u3u42u4u23u432u4u23u4</p>
+                    <div>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_ZOOM_LINK}`}
+                        className="flex gap-2 items-center justify-center"
+                        target="_blank"
+                      >
+                        Join Meeting{" "}
+                        <span>
+                          <GoArrowUpRight />
+                        </span>
+                      </Link>
+                      <p>Zoom Password :sdfsdfdsf</p>
+                    </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center gap-4">
                       <p className="text-xl">Sensitive data! Please log in</p>
@@ -219,7 +249,19 @@ const About = () => {
                 </HoverCardTrigger>
                 <HoverCardContent>
                   {status === "authenticated" ? (
-                    <p>Zoom Link : u3u42u4u23u432u4u23u4</p>
+                    <div>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_ZOOM_LINK}`}
+                        className="flex gap-2 items-center justify-center"
+                        target="_blank"
+                      >
+                        Join Meeting{" "}
+                        <span>
+                          <GoArrowUpRight />
+                        </span>
+                      </Link>
+                      <p>Zoom Password :sdfsdfdsf</p>
+                    </div>
                   ) : (
                     <div className="flex flex-col items-center justify-center gap-4">
                       <p className="text-xl">Sensitive data! Please log in</p>

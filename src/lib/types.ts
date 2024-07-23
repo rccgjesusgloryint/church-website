@@ -114,3 +114,11 @@ export type Sermon = {
 };
 
 export type Tags = Tag[];
+
+export type EventTrack = {
+  id?: string;
+  event_type: string;
+  event_calls: number;
+  createdAt: Date;
+  updatedAt: Date;
+};

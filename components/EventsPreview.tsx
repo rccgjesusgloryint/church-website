@@ -8,6 +8,7 @@ import React from "react";
 import { FaRegMap } from "react-icons/fa";
 import { LuClock3 } from "react-icons/lu";
 import Loader from "./Loader";
+import { trackEventCall } from "@/lib/actions";
 
 const EventsPreview = () => {
   const today = new Date(Date.now());
@@ -62,7 +63,10 @@ const EventsPreview = () => {
             worship together, and grow together.
           </p>
           <div>
-            <Link href={"/events"}>
+            <Link
+              href={"/events"}
+              onClick={() => trackEventCall("View All Events Button")}
+            >
               <h3 className="font-bold text-sm tracking-wider sm:text-left text-center hover:opacity-55 cursor-pointer transition ease-in-out">
                 + VIEW ALL EVENTS
               </h3>

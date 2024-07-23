@@ -93,8 +93,7 @@ const CreateSermonForm = () => {
   }
   return (
     <>
-      <h1 className="font-bold text-lg">Sermon Form</h1>
-      <Card className="w-full h-full mt-5">
+      <Card className="w-auto h-auto mt-5">
         <CardHeader>
           <CardTitle>
             <CardDescription>
