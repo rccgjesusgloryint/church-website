@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React from "react";
 import MediaPage from "../../../../components/media";
 import CreateEvent from "../../../../components/events";
 import CreateSermonForm from "../../../../components/sermons/create-sermon-form";
@@ -9,10 +9,10 @@ import { EventTrack } from "@/lib/types";
 import { getAllTrackedEvent } from "@/lib/queries";
 import { CustomBarChart } from "../../../../components/charts/bar-chart";
 
-const page = () => {
-  const [eventData, setEventData] = useState<EventTrack[]>([]);
+const AdminPage = () => {
+  const [eventData, setEventData] = React.useState<EventTrack[]>([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const getData = async () => {
       const response = await getAllTrackedEvent();
       setEventData(response);
@@ -20,7 +20,7 @@ const page = () => {
     getData();
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     console.log("EVENT DATA: ", eventData);
   }, [eventData]);
   return (
@@ -47,4 +47,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default AdminPage;
