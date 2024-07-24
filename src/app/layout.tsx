@@ -22,6 +22,8 @@ export const metadata: Metadata = {
   description: "Local Church Website in Athy Co.Kildare",
 };
 
+export const fetchCache = "default-no-store";
+
 export default async function RootLayout({
   children,
 }: Readonly<{

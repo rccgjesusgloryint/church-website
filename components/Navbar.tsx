@@ -17,7 +17,7 @@ import {
 import Link from "next/link";
 import { auth } from "@/auth";
 import { any } from "zod";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { isAdmin } from "@/lib/queries";
 
 // import { getAuthUserDetails } from "@/lib/queries";
@@ -129,11 +129,11 @@ const Navbar = () => {
           <div className="absolute top-7 right-5 flex">
             {status === "authenticated" ? (
               <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
-                <Link href="/api/auth/signout">Sign Out</Link>
+                <p onClick={() => signOut()}>Sign Out</p>
               </div>
             ) : status === "unauthenticated" ? (
               <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
-                <Link href="/api/auth/signin">Sign In</Link>
+                <p onClick={() => signIn("google")}>Sign In</p>
               </div>
             ) : null}
           </div>
