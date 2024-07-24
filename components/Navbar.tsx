@@ -19,6 +19,7 @@ import { auth } from "@/auth";
 import { any } from "zod";
 import { useSession } from "next-auth/react";
 import { isAdmin } from "@/lib/queries";
+
 // import { getAuthUserDetails } from "@/lib/queries";
 
 const Navbar = () => {
@@ -33,12 +34,13 @@ const Navbar = () => {
       setAdmin(res);
     };
     checkUserAdmin();
-    // console.log("Session: ", session);
+    console.log("status: ", status);
+    console.log("session: ", session);
   }, []);
 
-  // React.useEffect(() => {
-  //   console.log("ADMIN: ", admin);
-  // }, [admin]);
+  React.useEffect(() => {
+    console.log("status: ", status);
+  }, [status]);
 
   useGSAP(() => {
     gsap.from(navbar.current, {
