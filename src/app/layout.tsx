@@ -4,7 +4,6 @@ import "./globals.css";
 
 import { Toaster } from "react-hot-toast";
 import ModalProvider from "@/providers/modal-provider";
-import Link from "next/link";
 
 import { auth } from "@/auth";
 
@@ -29,7 +28,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = auth();
+  const session = await auth();
+  console.log("status from layout: ", session);
   return (
     <html lang="en">
       <body className={dmSans.className}>
