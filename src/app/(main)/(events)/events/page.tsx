@@ -116,7 +116,7 @@ const Events = () => {
               events?.map((event, index) => {
                 return (
                   <div
-                    className="sm:w-[290px] w-[390px] 2xl:w-[390px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl"
+                    className="sm:w-[290px] w-[390px] 2xl:w-[390px] min-h-[420px] h-auto bg-white px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl"
                     key={index}
                   >
                     <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">

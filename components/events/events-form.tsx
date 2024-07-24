@@ -30,7 +30,7 @@ const EventsForm = () => {
   // Define the schema
   const formSchema = z.object({
     event: z.string().min(2).max(50),
-    date: z.tuple([z.string().min(1), z.string().min(1)]),
+    date: z.tuple([z.string().min(1), z.string()]),
     location: z.string().min(15),
     description: z.object({
       eventPosterImage: z.string().min(1),
