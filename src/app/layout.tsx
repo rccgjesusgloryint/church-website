@@ -4,7 +4,6 @@ import "./globals.css";
 
 import { Toaster } from "react-hot-toast";
 import ModalProvider from "@/providers/modal-provider";
-import Link from "next/link";
 
 import { auth } from "@/auth";
 
@@ -22,12 +21,15 @@ export const metadata: Metadata = {
   description: "Local Church Website in Athy Co.Kildare",
 };
 
+export const fetchCache = "default-no-store";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = auth();
+  const session = await auth();
+  console.log("status from layout: ", session);
   return (
     <html lang="en">
       <body className={dmSans.className}>

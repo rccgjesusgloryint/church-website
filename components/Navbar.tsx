@@ -17,15 +17,16 @@ import {
 import Link from "next/link";
 import { auth } from "@/auth";
 import { any } from "zod";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { isAdmin } from "@/lib/queries";
+
 // import { getAuthUserDetails } from "@/lib/queries";
 
 const Navbar = () => {
   const [admin, setAdmin] = React.useState<boolean | null>(null);
   const navbar = React.useRef<HTMLElement | any>();
 
-  const session = useSession();
+  const { data: session, status } = useSession();
 
   React.useEffect(() => {
     const checkUserAdmin = async () => {
@@ -33,12 +34,13 @@ const Navbar = () => {
       setAdmin(res);
     };
     checkUserAdmin();
-    // console.log("Session: ", session);
+    console.log("status: ", status);
+    console.log("session: ", session);
   }, []);
 
-  // React.useEffect(() => {
-  //   console.log("ADMIN: ", admin);
-  // }, [admin]);
+  React.useEffect(() => {
+    console.log("status: ", status);
+  }, [status]);
 
   useGSAP(() => {
     gsap.from(navbar.current, {
@@ -125,27 +127,27 @@ const Navbar = () => {
           </Link>
           {admin && <Link href="/admin">Admin</Link>}
           <div className="absolute top-7 right-5 flex">
-            {session.status === "authenticated" ? (
+            {status === "authenticated" ? (
               <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
-                <Link href="/api/auth/signout">Sign Out</Link>
+                <p onClick={() => signOut()}>Sign Out</p>
               </div>
-            ) : (
+            ) : status === "unauthenticated" ? (
               <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
-                <Link href="/api/auth/signin">Sign In</Link>
+                <p onClick={() => signIn("google")}>Sign In</p>
               </div>
-            )}
+            ) : null}
           </div>
         </div>
-        <div className="sm:hidden absolute top-7 right-5 flex">
-          {session.status === "authenticated" ? (
+        <div className="absolute top-7 right-5 flex">
+          {status === "authenticated" ? (
             <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
               <Link href="/api/auth/signout">Sign Out</Link>
             </div>
-          ) : (
+          ) : status === "unauthenticated" ? (
             <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 ">
               <Link href="/api/auth/signin">Sign In</Link>
             </div>
-          )}
+          ) : null}
         </div>
         <div className="sm:relative sm:pt-4 h-[100px]" ref={navbar}>
           {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
