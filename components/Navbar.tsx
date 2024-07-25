@@ -103,7 +103,7 @@ const Navbar = () => {
             </SheetDescription>
           </SheetContent>
         </Sheet>
-        <div className="hidden sm:flex flex-row font-normal gap-7 justify-center items-center cursor-pointer h-full pt-11">
+        <div className="hidden sm:flex flex-row font-normal gap-7 justify-center items-center cursor-pointer h-full pt-11 mb-[10rem]">
           <Link href="/" className="hover:text-gray-700 duration-200">
             Home
           </Link>
@@ -142,10 +142,6 @@ const Navbar = () => {
               <Link href="/api/auth/signin">Sign In</Link>
             </div>
           ) : null}
-        </div>
-        <div className="sm:relative sm:pt-4 h-[100px]" ref={navbar}>
-          {/* <Link href="/" className="hover:text-gray-700 duration-200">Blog</Link> */}
-          {/* <Link href="/" className="hover:text-gray-700 duration-200">Support</Link> */}
         </div>
       </div>
     </div>
