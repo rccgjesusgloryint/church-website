@@ -16,13 +16,13 @@ export const config = {
   },
   events: {
     async signIn(message) {
-      console.log("Signed In!", { message });
+      console.log("Signed In!", message.user);
     },
     async signOut(message) {
       console.log("Signed Out!", { message });
     },
     async createUser(message) {
-      console.log("User Created!", { message });
+      console.log("User Created!", message.user);
     },
   },
 } satisfies NextAuthConfig;

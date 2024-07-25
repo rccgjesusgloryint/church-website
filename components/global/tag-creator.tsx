@@ -51,13 +51,7 @@ const TagCreator = ({ tags, setTags }: Props) => {
   };
 
   React.useEffect(() => {
-    console.log("TAGS: ", tags);
-    console.log("ALL TAGS: ", allTags);
-  }, [tags, allTags]);
-
-  React.useEffect(() => {
     getTags();
-    console.log(tags.includes("Faith"));
   }, []);
 
   const handleTagClick = (tag: string) => {

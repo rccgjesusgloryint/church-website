@@ -37,10 +37,6 @@ const Page = ({ params }: Props) => {
     fetchEventDescription();
   }, [params.id]);
 
-  React.useEffect(() => {
-    console.log("Event: ", event);
-  }, [event]);
-
   return (
     <section className="flex flex-col items-center sm:justify-center sm:h-auto w-full pt-11 bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
       <Breadcrumb>

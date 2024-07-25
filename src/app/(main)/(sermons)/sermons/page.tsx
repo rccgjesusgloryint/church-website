@@ -82,10 +82,6 @@ const Page = () => {
     getTags();
   }, []);
 
-  React.useEffect(() => {
-    console.log("ALL SERMONS: ", allSermons);
-  }, [allSermons]);
-
   const filterBySearch = (search: string) => {
     setSearch(search);
     const filteredSearch = allSermons?.filter((sermon) =>

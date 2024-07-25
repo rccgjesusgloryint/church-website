@@ -20,9 +20,6 @@ const AdminPage = () => {
     getData();
   }, []);
 
-  React.useEffect(() => {
-    console.log("EVENT DATA: ", eventData);
-  }, [eventData]);
   return (
     <section className="w-full h-full px-10">
       <Navbar2 />

@@ -34,13 +34,7 @@ const Navbar = () => {
       setAdmin(res);
     };
     checkUserAdmin();
-    console.log("status: ", status);
-    console.log("session: ", session);
   }, []);
-
-  React.useEffect(() => {
-    console.log("status: ", status);
-  }, [status]);
 
   useGSAP(() => {
     gsap.from(navbar.current, {

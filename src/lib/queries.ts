@@ -64,7 +64,7 @@ export const createMedia = async (
             // externalId: externalId,
           },
         });
-        // console.log("RESPONSE: ", response);
+        // ("RESPONSE: ", response);
       } catch (error) {
         console.log("ERROR: ", error);
         return { message: "OOPS COULDNT UPLAOD FILES", status: 400 };
@@ -232,8 +232,6 @@ export const sendBulkNewsletterEmail = async (
         };
       })
     );
-
-    console.log("RES: ", response);
   } catch (error) {
     console.log("ERROR: ", error);
   }
@@ -308,7 +306,6 @@ export const getTrackedEvent = async (event: string): Promise<EventTrack> => {
   const response = await prisma.event.findUnique({
     where: { event_type: event },
   });
-  console.log("RES: ", response);
   return response as EventTrack;
 };
 

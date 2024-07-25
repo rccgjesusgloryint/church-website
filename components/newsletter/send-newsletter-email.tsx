@@ -23,10 +23,6 @@ const SendNewsletterEmail = () => {
     getEmails();
   }, []);
 
-  React.useEffect(() => {
-    console.log("EMAILS: ", emails as NewletterEmail);
-  }, [emails]);
-
   const handleClick = () => {
     if (!emails) {
       return;

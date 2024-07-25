@@ -70,10 +70,6 @@ const Events = () => {
     fetchEvents();
   }, []); // Empty dependency array ensures this runs only once
 
-  React.useEffect(() => {
-    console.log("EVENTS: ", events);
-  }, [events]);
-
   return (
     <>
       <section className="h-screen bg-about-bg bg-cover">

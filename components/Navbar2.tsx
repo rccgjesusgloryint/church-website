@@ -24,13 +24,7 @@ const Navbar2 = () => {
       setAdmin(res);
     };
     checkUserAdmin();
-    console.log("status: ", status);
-    console.log("session: ", session);
   }, []);
-
-  React.useEffect(() => {
-    console.log("status: ", status);
-  }, [status]);
 
   return (
     <div className="bg-white h-[100px] shadow-md w-full">

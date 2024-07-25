@@ -92,7 +92,6 @@ const MultiplFileUpload = ({ apiEndpoint, onChange }: Props) => {
         },
       }
     );
-    console.log("RESPONSE : ", response);
 
     if (response.status === 200) {
       setLinks([]);
