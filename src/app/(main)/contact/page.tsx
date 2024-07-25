@@ -7,8 +7,8 @@ const page = () => {
   return (
     <section>
       <Navbar2 />
-      <div className="h-[470px] bg-light-gr flex items-center justify-center">
-        <h1 className=" font-medium text-4xl text-white tracking-wider">
+      <div className="h-[470px] bg-about-bg bg-cover flex items-center justify-center">
+        <h1 className="text-white font-bold sm:text-[80px] text-[35px]">
           CONTACT US
         </h1>
       </div>
