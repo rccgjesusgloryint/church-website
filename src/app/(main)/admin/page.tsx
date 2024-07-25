@@ -24,25 +24,25 @@ const AdminPage = () => {
     console.log("EVENT DATA: ", eventData);
   }, [eventData]);
   return (
-    <section className="w-full h-full">
+    <section className="w-full h-full px-10">
       <Navbar2 />
       <h1 className="flex items-center justify-center text-xl mt-8">
         Admin Page
       </h1>
       <MediaPage />
       <CreateEvent />
-      <section className="h-screen bg-red-500">
+      <section className="h-auto bg-zinc-700 p-5">
         <h1>Create Sermon Form</h1>
         <CreateSermonForm />
       </section>
-      <section className="h-screen bg-red-600">
+      {/* <section className="h-screen">
         <h1>Statistic Page</h1>
         <CustomBarChart
           eventData={eventData}
           primaryKey="event_type"
           dataKey2="event_calls"
         />
-      </section>
+      </section> */}
     </section>
   );
 };
