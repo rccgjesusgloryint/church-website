@@ -37,8 +37,12 @@ const Page = ({ params }: Props) => {
     fetchEventDescription();
   }, [params.id]);
 
+  React.useEffect(() => {
+    console.log("Event: ", event);
+  }, [event]);
+
   return (
-    <section className="flex flex-col items-center sm:justify-center h-screen w-full pt-11 bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
+    <section className="flex flex-col items-center sm:justify-center sm:h-auto w-full pt-11 bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -89,6 +93,10 @@ const Page = ({ params }: Props) => {
           <h1>Loading...</h1>
         )}
       </div>
+      <div className="flex flex-col items-center">
+        <h3 className="font-bold text-xl sm:mb-6 mt-4">Location</h3>
+        <div>{event?.location}</div>
+      </div>
       <div className="w-full flex flex-col items-center justify-center sm:m-6 p-4 mb-5">
         <h3 className="font-bold text-xl sm:mb-6">Description</h3>
         <p className="sm:w-1/2 text-center">
@@ -102,5 +110,4 @@ const Page = ({ params }: Props) => {
     </section>
   );
 };
-
 export default Page;

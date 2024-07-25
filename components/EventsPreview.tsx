@@ -83,7 +83,7 @@ const EventsPreview = () => {
               events?.slice(0, 3).map((event, index) => {
                 return (
                   <div
-                    className={`w-[300px] h-[420px] bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block ${
+                    className={`w-[300px] min-h-[420px] h-auto bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block ${
                       index === 2 ? "hidden" : ""
                     }`}
                     key={index}
@@ -124,7 +124,10 @@ const EventsPreview = () => {
                           <FaRegMap />
                         </span>
                         <p className="font-bold text-base pl-10">
-                          {event.location}
+                          {event.location.length > 25
+                            ? // events[1].location.split(" ").slice(0, 3)
+                              event.location.slice(0, 25) + "..."
+                            : event.location}
                         </p>
                       </div>
                     </div>

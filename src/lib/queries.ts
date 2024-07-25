@@ -138,6 +138,7 @@ export const getEvent = async (id: number) => {
     where: { id: id },
     select: {
       description: true,
+      location: true,
     },
   });
 

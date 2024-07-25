@@ -59,6 +59,7 @@ export type EventDescription = {
     eventPosterImage: string;
     eventDescription: string;
   };
+  location: string;
 };
 
 export type GetAllImages = {
