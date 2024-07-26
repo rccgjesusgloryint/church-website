@@ -101,7 +101,7 @@ const EventsPreview = () => {
                       </p>
                     </div>
 
-                    <h2 className="font-bold text-2xl w-[230px] 2xl:w-[337px] mb-[20px]">
+                    <h2 className="font-bold text-2xl w-[230px] mb-[20px]">
                       {event?.event}
                     </h2>
                     <div className="relative">
