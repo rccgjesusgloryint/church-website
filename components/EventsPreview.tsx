@@ -26,7 +26,7 @@ const EventsPreview = () => {
     "November",
     "December",
   ];
-  const month = months[today.getMonth() + 1];
+  const month = months[today.getMonth()];
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [events, setEvents] = React.useState<EventType>([]);
@@ -43,6 +43,7 @@ const EventsPreview = () => {
       setIsLoading(false);
     };
     fetchEvents();
+    console.log("months: ", month);
   }, []); // Empty dependency array ensures this runs only once
 
   return (
