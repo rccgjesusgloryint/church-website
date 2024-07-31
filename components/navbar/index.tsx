@@ -11,9 +11,14 @@ import {
 } from "@/components/ui/sheet";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { isAdmin } from "@/lib/queries";
+import React from "react";
 
 export const navContent = [
-  { label: "Home", link: "/" },
+  {
+    label: "Home",
+    link: "/",
+  },
   {
     label: "About",
     link: "/about",
@@ -66,8 +71,34 @@ export const AuthButton = () => {
     </div>
   );
 };
+export const AuthButton2 = () => {
+  const { data: session, status } = useSession();
+  return (
+    <div className="flex items-center justify-center">
+      {status === "authenticated" ? (
+        <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 text-white">
+          <Link href="/api/auth/signout">Sign Out</Link>
+        </div>
+      ) : status === "unauthenticated" ? (
+        <div className="flex justify-center items-center bg-gray-700 w-[100px] h-[60px] border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 text-white">
+          <Link href="/api/auth/signin">Sign In</Link>
+        </div>
+      ) : null}
+      {/* <div className="flex items-center justify-center p-3"></div> */}
+    </div>
+  );
+};
 
 export const MobileViewNavbar = () => {
+  const [admin, setAdmin] = React.useState<boolean | null>(null);
+
+  React.useEffect(() => {
+    const checkUserAdmin = async () => {
+      const res = await isAdmin();
+      setAdmin(res);
+    };
+    checkUserAdmin();
+  }, []);
   return (
     <Sheet>
       <SheetTrigger className="sm:hidden w-[100px] h-[100px]">
@@ -83,12 +114,84 @@ export const MobileViewNavbar = () => {
             {navContent.map(({ label, link }) => (
               <Link
                 href={link}
-                className="active:bg-blue-300 bg-none w-full h-[60px] flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl"
                 key={label}
+                className={`${
+                  (admin === null && label === "Admin") ||
+                  (admin === false && label === "Admin")
+                    ? "hidden"
+                    : ""
+                } active:bg-blue-300 bg-none w-full flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl`}
               >
                 {label}
               </Link>
             ))}
+          </div>
+        </SheetDescription>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export const MobileViewNavbar2 = () => {
+  const [admin, setAdmin] = React.useState<boolean | null>(null);
+
+  React.useEffect(() => {
+    const checkUserAdmin = async () => {
+      const res = await isAdmin();
+      setAdmin(res);
+    };
+    checkUserAdmin();
+  }, []);
+  return (
+    <Sheet>
+      <SheetTrigger className="md:hidden absolute top-9 left-6">
+        <Image
+          src="/images/Menu.png"
+          alt="logo"
+          width={24}
+          height={24}
+          className=""
+        />
+      </SheetTrigger>
+      <div className="flex items-center justify-center">
+        <Link href="/" className="cursor-pointer">
+          <Image
+            src="images/church-logo.svg"
+            alt="logo"
+            width={70}
+            height={70}
+          />
+        </Link>
+      </div>
+      <SheetContent>
+        <SheetDescription>
+          <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-center">
+            <Link href="/" className="cursor-pointer">
+              <Image
+                src="/images/church-logo.svg"
+                alt="logo"
+                width={70}
+                height={70}
+              />
+            </Link>
+          </div>
+          <div className="flex w-full h-full items-center justify-start pl-11">
+            <div className="flex flex-col gap-11 flex-wrap mt-20 w-full">
+              {navContent.map(({ label, link }) => (
+                <Link
+                  href={link}
+                  key={label}
+                  className={`${
+                    (admin === null && label === "Admin") ||
+                    (admin === false && label === "Admin")
+                      ? "hidden"
+                      : ""
+                  } active:bg-blue-300 bg-none w-full flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl`}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
           </div>
         </SheetDescription>
       </SheetContent>

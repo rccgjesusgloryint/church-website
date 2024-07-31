@@ -6,7 +6,6 @@ import {
   EventTrack,
   NewletterEmail,
   Sermon,
-  Tags,
   UploadMultipleFiles,
 } from "./types";
 
@@ -23,7 +22,7 @@ export const allUsers = async () => {
 export const isAdmin = async () => {
   const session = await auth();
   if (!session) {
-    return null;
+    return false;
   }
   const res = await prisma.user.findUnique({
     where: { id: session.user?.id },

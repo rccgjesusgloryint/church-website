@@ -8,9 +8,19 @@ import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 
 import { AuthButton, MobileViewNavbar, navContent } from ".";
+import { isAdmin } from "@/lib/queries";
 
 const Navbar = () => {
   const navbar = React.useRef<HTMLElement | any>();
+  const [admin, setAdmin] = React.useState<boolean | null>(null);
+
+  React.useEffect(() => {
+    const checkUserAdmin = async () => {
+      const res = await isAdmin();
+      setAdmin(res);
+    };
+    checkUserAdmin();
+  }, []);
 
   useGSAP(() => {
     gsap.from(navbar.current, {
@@ -28,8 +38,13 @@ const Navbar = () => {
           {navContent.map(({ label, link }) => (
             <Link
               href={link}
-              className="hover:text-gray-700 duration-200"
               key={label}
+              className={`${
+                (admin === null && label === "Admin") ||
+                (admin === false && label === "Admin")
+                  ? "hidden"
+                  : ""
+              } hover:text-gray-700 duration-200`}
             >
               {label}
             </Link>

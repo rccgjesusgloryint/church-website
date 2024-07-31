@@ -43,7 +43,6 @@ const EventsPreview = () => {
       setIsLoading(false);
     };
     fetchEvents();
-    console.log("months: ", month);
   }, []); // Empty dependency array ensures this runs only once
 
   return (
