@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Navbar2 from "../../../../../components/Navbar2";
+import Navbar2 from "../../../../../components/navbar/Navbar2";
 
 import { CiSearch } from "react-icons/ci";
 

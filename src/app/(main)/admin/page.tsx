@@ -4,7 +4,7 @@ import React from "react";
 import MediaPage from "../../../../components/media";
 import CreateEvent from "../../../../components/events";
 import CreateSermonForm from "../../../../components/sermons/create-sermon-form";
-import Navbar2 from "../../../../components/Navbar2";
+import Navbar2 from "../../../../components/navbar/Navbar2";
 import { EventTrack } from "@/lib/types";
 import { getAllTrackedEvent } from "@/lib/queries";
 import { CustomBarChart } from "../../../../components/charts/bar-chart";

@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import Navbar2 from "../../../../../components/Navbar2";
+import Navbar2 from "../../../../../components/navbar/Navbar2";
 
 import { LuClock3 } from "react-icons/lu";
 import { FaRegMap } from "react-icons/fa6";

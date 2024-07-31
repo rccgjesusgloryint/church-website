@@ -3,7 +3,7 @@
 import React from "react";
 import { useState } from "react";
 import Newsletter from "../../../../components/Newsletter";
-import Navbar2 from "../../../../components/Navbar2";
+import Navbar2 from "../../../../components/navbar/Navbar2";
 import { getAllImages } from "@/lib/queries";
 import Image from "next/image";
 

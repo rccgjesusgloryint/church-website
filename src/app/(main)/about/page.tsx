@@ -3,7 +3,7 @@
 import { CiLogin } from "react-icons/ci";
 
 import React from "react";
-import Navbar2 from "../../../../components/Navbar2";
+import Navbar2 from "../../../../components/navbar/Navbar2";
 import { GoArrowUpRight } from "react-icons/go";
 import Link from "next/link";
 
