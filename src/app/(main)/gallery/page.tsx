@@ -2,10 +2,8 @@
 
 import React from "react";
 import { useState } from "react";
-import Newsletter from "../../../../components/Newsletter";
 import Navbar2 from "../../../../components/navbar/Navbar2";
 import { getAllImages } from "@/lib/queries";
-import Image from "next/image";
 
 import useEmblaCarousel from "embla-carousel-react";
 import EmblaCarousel from "../../../../components/gallery-carousel";
@@ -33,12 +31,7 @@ const Gallery = () => {
     };
 
     fetchGalleryImages();
-  }, []); // Empty dependency array ensures this runs only once
-
-  // React.useEffect(() => {
-  //   console.log("GALLERY IMAGES, ", galleryImages);
-  //   console.log("GALLERY CATEGORIES, ", galleryCategories);
-  // }, [galleryImages, galleryCategories]);
+  }, []);
 
   return (
     <>
@@ -70,8 +63,6 @@ const Gallery = () => {
           </div>
         </div>
       </main>
-      {/* <Newsletter /> */}
-      {/* <Footer /> */}
     </>
   );
 };
