@@ -7,7 +7,6 @@ import CreateSermonForm from "../../../../components/sermons/create-sermon-form"
 import Navbar2 from "../../../../components/navbar/Navbar2";
 import { EventTrack } from "@/lib/types";
 import { getAllTrackedEvent } from "@/lib/queries";
-import { CustomBarChart } from "../../../../components/charts/bar-chart";
 
 const AdminPage = () => {
   const [eventData, setEventData] = React.useState<EventTrack[]>([]);
@@ -32,14 +31,6 @@ const AdminPage = () => {
         <h1>Create Sermon Form</h1>
         <CreateSermonForm />
       </section>
-      {/* <section className="h-screen">
-        <h1>Statistic Page</h1>
-        <CustomBarChart
-          eventData={eventData}
-          primaryKey="event_type"
-          dataKey2="event_calls"
-        />
-      </section> */}
     </section>
   );
 };
