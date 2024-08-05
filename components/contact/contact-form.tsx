@@ -16,10 +16,8 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { FaPhoneAlt } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
-import { IoMdMail } from "react-icons/io";
-import { FaClock } from "react-icons/fa6";
+import { contactInfo } from ".";
+import toast from "react-hot-toast";
 
 const ContactForm = () => {
   const formSchema = z.object({
@@ -43,6 +41,27 @@ const ContactForm = () => {
     form.resetField("name");
     form.resetField("email");
     form.resetField("message");
+    //   toast.promise({ functionToSendEmail,
+    //     loading: "Loading",
+    //     success: (data) => `Successfully created ${data.message}`,
+    //     error: (err) => `This just happened: ${err.toString()}`,
+    //   },
+    //   {
+    //     style: {
+    //       border: "1px solid #713200",
+    //       padding: "16px",
+    //       color: "#713200",
+    //     },
+    //     iconTheme: {
+    //       primary: "#713200",
+    //       secondary: "#FFFAEE",
+    //     },
+    //     success: {
+    //       duration: 5000,
+    //       icon: "🟢",
+    //     },
+    //   }
+    // );
   }
 
   // Infer the form data type
@@ -51,30 +70,12 @@ const ContactForm = () => {
     <div className="flex flex-col justify-evenly h-full">
       <div className="flex flex-col gap-2 p-5">
         <h1 className="font-bold text-4xl mb-5 text-dark-gr">How To Find Us</h1>
-        <p className="flex gap-2 items-center text-[#BBBBBB]">
-          <span className="text-dark-gr">
-            <FaPhoneAlt />
-          </span>
-          Lorem ipsum dolor sit amet consectetur adipisicing
-        </p>
-        <p className="flex gap-2 items-center text-[#BBBBBB]">
-          <span className="text-dark-gr">
-            <FaLocationDot />
-          </span>
-          Lorem ipsum dolor sit amet consectetur adipisicing
-        </p>
-        <p className="flex gap-2 items-center text-[#BBBBBB]">
-          <span className="text-dark-gr">
-            <IoMdMail />
-          </span>
-          Lorem ipsum dolor sit amet consectetur adipisicing
-        </p>
-        <p className="flex gap-2 items-center text-[#BBBBBB]">
-          <span className="text-dark-gr">
-            <FaClock />
-          </span>
-          Lorem ipsum dolor sit amet consectetur adipisicing
-        </p>
+        {contactInfo.map(({ icon, text, label }, index) => (
+          <p className="flex gap-2 items-center text-[#BBBBBB]" key={label}>
+            <span className="text-dark-gr">{icon}</span>
+            {text}
+          </p>
+        ))}
       </div>
       <div className="">
         <Form {...form}>

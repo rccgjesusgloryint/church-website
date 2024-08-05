@@ -283,7 +283,7 @@ export const getExistingTags = async (): Promise<string[]> => {
 
 export const trackEvent = async (event: string, calls: number) => {
   try {
-    const response = await prisma.event.upsert({
+    await prisma.event.upsert({
       where: {
         event_type: event,
       },
@@ -295,7 +295,6 @@ export const trackEvent = async (event: string, calls: number) => {
         event_calls: calls + 1,
       },
     });
-    console.log("SUCCESS!", response);
   } catch (error) {
     console.log(error);
   }
