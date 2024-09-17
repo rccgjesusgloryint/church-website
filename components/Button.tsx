@@ -2,12 +2,11 @@ import React from "react";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/all";
 import Link from "next/link";
-import { trackEventCall } from "@/lib/actions";
 
 const Button = () => {
   const btn = React.useRef<HTMLElement | any>();
+  const [disabledBtn, setDisabledBtn] = React.useState(false);
 
   useGSAP(() => {
     gsap.from(btn.current, {
@@ -17,16 +16,20 @@ const Button = () => {
       ease: "back",
     });
   });
+
   return (
     <Link href={"/about"}>
       <div
         className="btn flex flex-col justify-center items-center cursor-pointer"
         ref={btn}
-        onClick={() => trackEventCall("Hero SEO About Button Click")}
       >
-        <div className="flex justify-center items-center bg-gray-700 w-[210px] h-[60px] border-gray-700 hover:bg-transparent hover:border-2 hover:text-gray-700 duration-500">
+        <button
+          onClick={() => setDisabledBtn(true)}
+          disabled={disabledBtn}
+          className="flex justify-center items-center bg-gray-700 w-[210px] h-[60px] border-gray-700 hover:bg-transparent hover:border-2 hover:text-gray-700 duration-500 disabled:bg-gray-900"
+        >
           LEARN MORE NOW
-        </div>
+        </button>
       </div>
     </Link>
   );

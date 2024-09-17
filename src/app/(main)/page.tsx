@@ -1,9 +1,9 @@
 import Hero from "../../../components/Hero";
-import GalleryPreview from "../../../components/GalleryPreview";
-import EventsPreview from "../../../components/EventsPreview";
+import EventsPreview from "../../../components/events/EventsPreview";
 import Newsletter from "../../../components/Newsletter";
 
 import React from "react";
+import GalleryPreview from "../../../components/gallery/GalleryPreview";
 
 export default async function Home() {
   return (

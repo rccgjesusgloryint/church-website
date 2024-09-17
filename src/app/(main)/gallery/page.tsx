@@ -6,9 +6,9 @@ import Navbar2 from "../../../../components/navbar/Navbar2";
 import { getAllImages } from "@/lib/queries";
 
 import useEmblaCarousel from "embla-carousel-react";
-import EmblaCarousel from "../../../../components/gallery-carousel";
 import { EmblaOptionsType } from "embla-carousel";
 import { GetAllImages } from "@/lib/types";
+import EmblaCarousel from "../../../../components/gallery/gallery-carousel";
 
 type CategoryType = string[];
 
