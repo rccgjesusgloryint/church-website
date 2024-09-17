@@ -13,6 +13,7 @@ import {
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useSession } from "next-auth/react";
 
 const Services = () => {
   const subTitle2 = React.useRef<HTMLElement | any>();
@@ -32,6 +33,8 @@ const Services = () => {
       opacity: 0,
     });
   });
+
+  const { status } = useSession();
 
   return (
     <section className="h-auto w-full relative">

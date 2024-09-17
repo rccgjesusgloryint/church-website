@@ -7,7 +7,6 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 
-import { useSession } from "next-auth/react";
 import Services from "./Services";
 import Leaders from "./Leaders";
 
@@ -23,8 +22,6 @@ const About = () => {
       opacity: 0,
     });
   });
-
-  const { status } = useSession();
 
   return (
     <>
