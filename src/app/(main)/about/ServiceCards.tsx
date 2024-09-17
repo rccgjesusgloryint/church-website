@@ -50,6 +50,7 @@ const ServiceCards = (props: Props) => {
       {serviceCards.map(({ category, icon, service, style }) => (
         <div
           className={`sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 ${style} bg-center bg-cover`}
+          key={style}
         >
           <HoverCard>
             {icon && (
