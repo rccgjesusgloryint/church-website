@@ -12,12 +12,29 @@ const EventsPreview = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [events, setEvents] = React.useState<EventType>([]);
 
+  const today = new Date(Date.now());
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const month = months[today.getMonth()];
+
   React.useEffect(() => {
     setIsLoading(true);
     const fetchEvents = async () => {
       const response = await getAllEvents();
-      const event = response.length > 3 && response.slice(0, 3);
-      setEvents(Object(response));
+      const upcomingEvents = response.filter((e) => e.date.includes(month));
+      setEvents(Object(upcomingEvents));
       setIsLoading(false);
     };
     fetchEvents();

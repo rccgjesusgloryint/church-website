@@ -11,7 +11,8 @@ import { ScrollTrigger } from "gsap/all";
 import { getAllEvents } from "@/lib/queries";
 import { EventType } from "@/lib/types";
 
-import { EventCards, EventHeadings } from ".";
+import { UpcomingEventCards } from "./UpcomingEvents";
+import { PastEvents } from "./PastEvents";
 
 const Events = () => {
   const useTitle = React.useRef<HTMLElement | any>();
@@ -27,13 +28,34 @@ const Events = () => {
   });
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [events, setEvents] = React.useState<EventType>([]);
+  const [upcomingEvents, setUpcomingEvents] = React.useState<EventType>([]);
+  const [pastEvents, setPastEvents] = React.useState<EventType>([]);
+
+  const today = new Date(Date.now());
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const month = months[today.getMonth()];
 
   React.useEffect(() => {
     setIsLoading(true);
     const fetchEvents = async () => {
       const response = await getAllEvents();
-      setEvents(Object(response));
+      const upcomingEventsList = response.filter((e) => e.date.includes(month));
+      const pastEventsList = response.filter((e) => !e.date.includes(month));
+      setUpcomingEvents(Object(upcomingEventsList));
+      setPastEvents(Object(pastEventsList));
       setIsLoading(false);
     };
     fetchEvents();
@@ -51,9 +73,11 @@ const Events = () => {
           </div>
         </div>
       </section>
+      <section className="h-screen w-full relative">
+        <UpcomingEventCards isLoading={isLoading} events={upcomingEvents} />
+      </section>
       <section className="h-auto w-full relative">
-        <EventHeadings />
-        <EventCards isLoading={isLoading} events={events} />
+        <PastEvents pastEvents={pastEvents} isLoading={isLoading} />
       </section>
     </>
   );

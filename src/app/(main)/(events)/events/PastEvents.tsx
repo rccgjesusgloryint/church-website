@@ -1,23 +1,23 @@
-import React from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
-import { EventType } from "@/lib/types";
-import Loader from "../../../../../components/Loader";
+import { ScrollTrigger } from "gsap/all";
 
 import { LuClock3 } from "react-icons/lu";
 import { FaRegMap } from "react-icons/fa6";
 
 import { useRouter } from "next/navigation";
 
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/all";
+import React from "react";
+import { EventType } from "@/lib/types";
+import Loader from "../../../../../components/Loader";
 
-interface EventCardsProps {
+type Props = {
+  pastEvents: EventType;
   isLoading: boolean;
-  events: EventType;
-}
+};
 
-export const EventCards = ({ isLoading, events }: EventCardsProps) => {
+export const PastEvents = ({ pastEvents, isLoading }: Props) => {
   const router = useRouter();
 
   const handleNavigation = (id: number) => {
@@ -26,14 +26,15 @@ export const EventCards = ({ isLoading, events }: EventCardsProps) => {
 
   return (
     <>
+      <EventHeadings />
       {isLoading ? (
         <div className="flex items-center justify-center my-32">
           <Loader />
         </div>
       ) : (
         <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
-          {events.length > 0 ? (
-            events?.map((event, index) => {
+          {pastEvents.length > 0 ? (
+            pastEvents?.map((event, index) => {
               return (
                 <div
                   className="sm:w-[290px] w-[390px] 2xl:w-[390px] min-h-[420px] h-auto bg-white px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl"
@@ -92,7 +93,7 @@ export const EventCards = ({ isLoading, events }: EventCardsProps) => {
             })
           ) : (
             <div>
-              <h1>No events yet!</h1>
+              <h1>No pastEvents yet!</h1>
             </div>
           )}
         </div>
@@ -101,7 +102,7 @@ export const EventCards = ({ isLoading, events }: EventCardsProps) => {
   );
 };
 
-export const EventHeadings = () => {
+const EventHeadings = () => {
   const useSubTitle1 = React.useRef<HTMLElement | any>();
   const useTitle2 = React.useRef<HTMLElement | any>();
 
@@ -123,22 +124,14 @@ export const EventHeadings = () => {
   });
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full mb-10">
       <div className="flex flex-col items-center w-full mt-11">
         <div
           className="flex flex-col items-start justify-end"
           ref={useSubTitle1}
         >
-          <h3 className="tracking-widest">UPCOMING EVENTS</h3>
-          <div className="bg-black opacity-55 w-[163px] h-[1px] mt-1 mb-0"></div>
-        </div>
-        <div
-          className="flex flex-row items-center justify-center w-full relative mt-11"
-          ref={useTitle2}
-        >
-          <h1 className="font-bold sm:text-[40px] text-[30px] w-full text-center">
-            Don&apos;t Miss Your Chance to Get Closer to God
-          </h1>
+          <h3 className="tracking-widest">PAST EVENTS</h3>
+          <div className="bg-black opacity-55 w-[114px] h-[1px] mt-1 mb-0"></div>
         </div>
       </div>
     </div>
