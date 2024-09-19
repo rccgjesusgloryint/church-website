@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/hover-card";
 
 import { useSession } from "next-auth/react";
+import MobileViewServiceCards from "./MobileViewServiceCards";
 
 type Props = {};
 
@@ -46,55 +47,60 @@ const ServiceCards = (props: Props) => {
     },
   ];
   return (
-    <div className="flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11 ">
-      {serviceCards.map(({ category, icon, service, style }) => (
-        <div
-          className={`sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 ${style} bg-center bg-cover`}
-          key={style}
-        >
-          <HoverCard>
-            {icon && (
-              <HoverCardTrigger className="cursor-pointer">
-                <Image
-                  src="/images/Zoom.png"
-                  alt="location"
-                  width={40}
-                  height={40}
-                />
-              </HoverCardTrigger>
-            )}
-            <HoverCardContent>
-              {status === "authenticated" ? (
-                <div>
-                  <Link
-                    href={`${process.env.NEXT_PUBLIC_ZOOM_LINK}`}
-                    className="flex gap-2 items-center justify-center"
-                    target="_blank"
-                  >
-                    Join Meeting{" "}
-                    <span>
-                      <GoArrowUpRight />
-                    </span>
-                  </Link>
-                  <p>Zoom Password : 2244</p>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center gap-4">
-                  <p className="text-xl">Sensitive data! Please log in</p>
-                  <Link href="/api/auth/signin">
-                    <CiLogin size={35} />
-                  </Link>
-                </div>
+    <>
+      <div className="hidden sm:flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11 ">
+        {serviceCards.map(({ category, icon, service, style }) => (
+          <div
+            className={`sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 ${style} bg-center bg-cover`}
+            key={style}
+          >
+            <HoverCard>
+              {icon && (
+                <HoverCardTrigger className="cursor-pointer">
+                  <Image
+                    src="/images/Zoom.png"
+                    alt="location"
+                    width={40}
+                    height={40}
+                  />
+                </HoverCardTrigger>
               )}
-            </HoverCardContent>
-          </HoverCard>
-          <div className="backdrop-blur-xl">
-            <h3 className="font-bold text-lg">{category}</h3>
-            <h1 className="font-bold text-3xl">{service}</h1>
+              <HoverCardContent>
+                {status === "authenticated" ? (
+                  <div>
+                    <Link
+                      href={`${process.env.NEXT_PUBLIC_ZOOM_LINK}`}
+                      className="flex gap-2 items-center justify-center"
+                      target="_blank"
+                    >
+                      Join Meeting{" "}
+                      <span>
+                        <GoArrowUpRight />
+                      </span>
+                    </Link>
+                    <p>Zoom Password : 2244</p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center gap-4">
+                    <p className="text-xl">Sensitive data! Please log in</p>
+                    <Link href="/api/auth/signin">
+                      <CiLogin size={35} />
+                    </Link>
+                  </div>
+                )}
+              </HoverCardContent>
+            </HoverCard>
+            <div className="backdrop-blur-xl">
+              <h3 className="font-bold text-lg">{category}</h3>
+              <h1 className="font-bold text-3xl">{service}</h1>
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+      <div className="sm:hidden flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11 ">
+        <MobileViewServiceCards serviceCards={serviceCards} status={status} />
+      </div>
+    </>
   );
 };
 
