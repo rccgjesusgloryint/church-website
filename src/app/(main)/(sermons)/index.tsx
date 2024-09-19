@@ -96,7 +96,7 @@ export const Sermons = () => {
               </div>
               <div className="flex flex-col gap-3">
                 <h1 className="font-bold text-2xl">{sermon.sermonTitle}</h1>
-                <SermonCards sermon={sermon} />
+                <SermonTags sermon={sermon} />
               </div>
             </div>
           ))
@@ -108,22 +108,22 @@ export const Sermons = () => {
   );
 };
 
-const SermonCards = ({ sermon }: { sermon: Sermon }) => {
+const SermonTags = ({ sermon }: { sermon: Sermon }) => {
   return (
     <div className="flex flex-row">
       {sermon.tags.length !== 0 && sermon.tags.length > 1 ? (
         <HoverCard>
           <div className="flex flex-row gap-1">
-            <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center border-2 border-black">
+            <span className="bg-[#5B5966] bg-opacity-50 w-[100px] -[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center border-2 border-black">
               {sermon.tags[0]}
             </span>
             <HoverCardTrigger className="cursor-pointer">
-              <span className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black">
+              <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center border-2 border-black">
                 +1
               </span>
             </HoverCardTrigger>
             <HoverCardContent className="w-auto">
-              <div className="flex flex-row">
+              <div className="flex flex-row gap-2">
                 {sermon.tags.map((tag, index) => (
                   <span
                     className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black"
@@ -137,7 +137,7 @@ const SermonCards = ({ sermon }: { sermon: Sermon }) => {
           </div>
         </HoverCard>
       ) : (
-        <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center border-2 border-black">
+        <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center border-2 border-black">
           {sermon.tags.length !== 0 && sermon.tags[0]}
         </span>
       )}
@@ -152,7 +152,7 @@ const DisplayTags = ({ allTags, filterSermonByTags }: DisplayTagsProps) => {
         allTags.map((tag, index) => (
           <span
             key={index}
-            className="bg-[#5B5966] bg-opacity-50 w-[100px] h-[40px] rounded flex items-center justify-center cursor-pointer"
+            className="bg-[#5B5966] bg-opacity-50 w-[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center"
             onClick={() => filterSermonByTags(tag)}
           >
             {tag}
