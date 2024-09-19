@@ -11,6 +11,7 @@ import {
   DialogContent,
   DialogTrigger,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 
 import {
@@ -44,10 +45,7 @@ const MobileViewServiceCards = ({ serviceCards, status }: Props) => {
         >
           <Dialog>
             {icon && (
-              <DialogTrigger
-                className="cursor-pointer"
-                onClick={() => console.log("clicked")}
-              >
+              <DialogTrigger className="cursor-pointer">
                 <Image
                   src="/images/Zoom.png"
                   alt="location"
@@ -85,6 +83,7 @@ const MobileViewServiceCards = ({ serviceCards, status }: Props) => {
                   </CardContent>
                 )}
               </Card>
+              <DialogDescription></DialogDescription>
             </DialogContent>
           </Dialog>
           <div className="backdrop-blur-xl">
