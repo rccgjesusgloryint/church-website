@@ -69,7 +69,7 @@ const SubscribeToNewsLetterForm = (props: Props) => {
           control={form.control}
           name="email"
           render={({ field }) => (
-            <FormItem className="h-[71px] sm:w-[487px] w-full px-10 mt-5 flex sm:flex-row flex-col relative">
+            <FormItem className="space-y-0 h-[71px] sm:w-[487px] w-full sm:px-[3.25rem] mt-5 flex sm:flex-row flex-col relative">
               <FormControl className="h-full sm:w-1/2 w-full bg-black bg-opacity-55 pl-10 text-white sm:absolute">
                 <Input placeholder="Your Email" {...field} />
               </FormControl>
