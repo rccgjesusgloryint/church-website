@@ -32,7 +32,7 @@
     "embla-carousel-react": "^8.1.5",
     "gsap": "^3.12.5",
     "lucide-react": "^0.381.0",
-    "next": "14.2.3",
+    "next": "^14.2.23",
     "next-auth": "^5.0.0-beta.19",
     "pure-react-carousel": "^1.30.1",
     "react": "^18",
