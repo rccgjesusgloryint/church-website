@@ -5,7 +5,7 @@ This feature is for the pastor to post blog like sermons, teachings he may be go
 ## Brain Dump:
 
 - I want the format of this to be like the Dribble blogs section.
-  ![Dribble Blog Page](public/docs/Dribble_Blog_Page.png)
+  ![Dribble Blog Page](/public/docs/Dribble_Blog_Page.png)
 - Maybe in a later time add the ability for users to comment under posts
   - And add te ability for admin users like the pastors, assistant pastors, deacons etc to post their findings with the approval of the pastor.
     - Will have to create an additional system that, when an admin posts something it goes into a queue, where when the queue is updated theres a request sent to the pastor for approval, the admin will also get a client side notification , notifying them that it has been sent for approval to the pastor. Pastor will have the ability to read and either approve or deny (with a denial note), the blog post.
@@ -21,4 +21,4 @@ This feature is for the pastor to post blog like sermons, teachings he may be go
 
 ## Blog Architecture
 
-![Events Architecture](public/docs/Blogs_Architecture.png)
+![Events Architecture](/public/docs/Blog_Architecture.png)
