@@ -18,4 +18,4 @@ This feature displays recurring activities that will be happening in the upcomin
 
 ## Events Code Architecture
 
-![Events Code Architecture](public/docs/Events_Architecture.png)
+![Events Code Architecture](/public/docs/Events_Architecture.png)
