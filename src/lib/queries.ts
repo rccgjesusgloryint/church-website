@@ -13,6 +13,7 @@ import { Resend } from "resend";
 import { auth } from "@/auth";
 import prisma from "./db";
 import { title } from "process";
+import { Blog } from "@prisma/client";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
@@ -281,40 +282,25 @@ export const getExistingTags = async (): Promise<string[]> => {
   }
 };
 
-export const trackEvent = async (event: string, calls: number) => {
-  try {
-    await prisma.event.upsert({
-      where: {
-        event_type: event,
-      },
-      create: {
-        event_type: event,
-        event_calls: 1,
-      },
-      update: {
-        event_calls: calls + 1,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-  }
+export const getBlogs = async (): Promise<Blog[]> => {
+  const response = await prisma.blog.findMany({});
+
+  return response as Blog[];
 };
 
-export const getTrackedEvent = async (event: string): Promise<EventTrack> => {
-  const response = await prisma.event.findUnique({
-    where: { event_type: event },
-  });
-  return response as EventTrack;
+export const getBlogWithId = async (blogId: string): Promise<Blog> => {
+  const response = await prisma.blog.findUnique({ where: { id: blogId } });
+
+  return response as Blog;
 };
 
-export const getAllTrackedEvent = async (): Promise<EventTrack[]> => {
-  const response = await prisma.event.findMany({
-    select: {
-      event_calls: true,
-      event_type: true,
-      createdAt: true,
-      updatedAt: true,
-    },
+// TO DO: refactor this to only return an array of categories
+export const getBlogCategories = async (category: string): Promise<any[]> => {
+  const response = await prisma.blog.findMany({
+    select: { category: true },
   });
-  return response as EventTrack[];
+
+  const categories = response.filter((blog) => blog.category === category);
+
+  return categories;
 };
