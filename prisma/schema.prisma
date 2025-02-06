@@ -114,10 +114,22 @@ model Comment {
   updatedAt DateTime @updatedAt
 }
 
-model Event {
-  id                  String  @default(uuid())
-  event_type          String  @id 
-  event_calls         Int     @default(0)
+model Blog {
+  id                  String  @default(uuid()) @id
+  blogTitle           String
+  blogDescription     String
+  blogPoster          String?   
+  blogContent         String
+  series              Blog_Series[]
+  category            String 
   createdAt           DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
+  updatedAt           DateTime          @updatedAt
+}
+
+model Blog_Series{
+  id                  Int      @id @default(autoincrement())
+  blog                Blog?    @relation(fields: [blogId], references: [id])
+  blogId              String?  @unique
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }

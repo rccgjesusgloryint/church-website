@@ -1,0 +1,226 @@
+export const TEMP_BLOG_DATA = [
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+    createdAt: "2024-07-23T15:41:36.436Z",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+    createdAt: "2024-07-23T15:41:36.436Z",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+    createdAt: "2024-07-23T15:41:36.436Z",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+    createdAt: "2024-07-23T15:41:36.436Z",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+    createdAt: "2024-07-23T15:41:36.436Z",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+    createdAt: "2024-07-23T15:41:36.436Z",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+    createdAt: "2024-07-23T15:41:36.436Z",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+    createdAt: "2024-07-23T15:41:36.436Z",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+    createdAt: "2024-07-23T15:41:36.436Z",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+  },
+  {
+    id: "67a33e4d-c5d4-8002-8f8e-b860c841102f",
+    blogTitle: "Jesus Loves You",
+    blogDescription:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibusLorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    blogPoster:
+      "https://res.cloudinary.com/teepublic/image/private/s--sGMyrsXx--/c_crop,x_10,y_10/c_fit,h_1109/c_crop,g_north_west,h_1260,w_1260,x_-160,y_-76/co_rgb:000000,e_colorize,u_Misc:One%20Pixel%20Gray/c_scale,g_north_west,h_1260,w_1260/fl_layer_apply,g_north_west,x_-160,y_-76/bo_157px_solid_white/e_overlay,fl_layer_apply,h_1260,l_Misc:Art%20Print%20Bumpmap,w_1260/e_shadow,x_6,y_6/c_limit,h_1254,w_1254/c_lpad,g_center,h_1260,w_1260/b_rgb:eeeeee/c_limit,f_auto,h_630,q_auto:good:420,w_630/v1694969835/production/designs/50701053_0.jpg",
+    blogContent:
+      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error repellat commodi voluptas quam nesciunt necessitatibus ex qui assumenda distinctio in iure quis asperiores illum dolor esse, fugit vero molestias. Corrupti?",
+    series: [],
+    category: "Spiritual Growth",
+  },
+];
+
+export const TEMP_BLOG_CATEGOORIES = [
+  "Interviews",
+  "Podcast",
+  "Community",
+  "Meetups",
+  "Inspiration",
+  "Process",
+  "Updates",
+  "Hang Time",
+];
