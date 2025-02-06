@@ -6,17 +6,21 @@ import CreateEvent from "../../../../components/events";
 import CreateSermonForm from "../../../../components/sermons/create-sermon-form";
 import Navbar2 from "../../../../components/navbar/Navbar2";
 import { EventTrack } from "@/lib/types";
-import { getAllTrackedEvent } from "@/lib/queries";
+import BlogCreator from "../../../../components/blogs/BlogCreator";
+import { getAuthUserDetails } from "@/lib/queries";
+import { User } from "@prisma/client";
 
 const AdminPage = () => {
   const [eventData, setEventData] = React.useState<EventTrack[]>([]);
+  const [user, setUser] = React.useState<string>();
 
   React.useEffect(() => {
-    const getData = async () => {
-      const response = await getAllTrackedEvent();
-      setEventData(response);
+    // getUserDetailsFunction
+    const getInfo = async () => {
+      const response = (await getAuthUserDetails()) as User;
+      setUser(response.id);
     };
-    getData();
+    getInfo();
   }, []);
 
   return (
@@ -30,6 +34,10 @@ const AdminPage = () => {
       <section className="h-auto bg-zinc-700 p-5">
         <h1>Create Sermon Form</h1>
         <CreateSermonForm />
+      </section>
+      <section>
+        {/* <BlogCreator user={userDetails} /> */}
+        <BlogCreator userId={user} />
       </section>
     </section>
   );

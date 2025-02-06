@@ -123,3 +123,15 @@ export type EventTrack = {
   createdAt: Date;
   updatedAt: Date;
 };
+
+export type BlogType = {
+  id?: string;
+  blogTitle: string;
+  blogDescription: string;
+  blogPoster?: string | null;
+  blogContent: string;
+  blogAuthor: string;
+  category?: string | null;
+  createdAt?: Date;
+  updatedAt?: Date;
+};

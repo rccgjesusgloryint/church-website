@@ -1,6 +1,7 @@
 "use server";
 
 import {
+  BlogType,
   CreateEventType,
   CreateSermon,
   EventTrack,
@@ -303,4 +304,9 @@ export const getBlogCategories = async (category: string): Promise<any[]> => {
   const categories = response.filter((blog) => blog.category === category);
 
   return categories;
+};
+
+export const postBlog = async (blog: BlogType) => {
+  const response = await prisma.blog.create({ data: blog });
+  console.log("POST CREATED");
 };

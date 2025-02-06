@@ -1,5 +1,3 @@
-import { getTrackedEvent, trackEvent } from "./queries";
-
 export function getYoutubeVidId(youtubeUrl: string) {
   // Define regex patterns to extract the video ID
   const patterns = [
@@ -29,9 +27,3 @@ export function isMobile() {
     /Mobi|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
   return regex.test(navigator.userAgent);
 }
-
-export const trackEventCall = async (events: string) => {
-  const event = await getTrackedEvent(events);
-  const event_calls = event ? event.event_calls : 0;
-  await trackEvent(events, event_calls);
-};

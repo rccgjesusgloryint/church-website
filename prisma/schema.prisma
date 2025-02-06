@@ -120,8 +120,9 @@ model Blog {
   blogDescription     String
   blogPoster          String?   
   blogContent         String
+  blogAuthor          String
   series              Blog_Series[]
-  category            String 
+  category            String? 
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
 }
