@@ -1,7 +1,5 @@
 "use client";
 
-import { TEMP_BLOG_DATA } from "../temp_data";
-
 import React from "react";
 import Navbar2 from "../../../../../components/navbar/Navbar2";
 
@@ -16,7 +14,6 @@ type BlogProps = {
     blogId: string;
   };
 };
-// TO DO: use the blog id from the params to fetch the blog details
 
 const Blogs = ({ params }: BlogProps) => {
   const [blog, setBlog] = React.useState<Blog | null>();
@@ -32,36 +29,34 @@ const Blogs = ({ params }: BlogProps) => {
     });
   });
 
-  // React.useEffect(() => {
-  //   const getBlog = async () => {
-  //     const response = await getBlogWithId(params.blogId);
-  //     setBlog(response);
-  //   };
+  React.useEffect(() => {
+    const getBlog = async () => {
+      const response = await getBlogWithId(params.blogId);
+      setBlog(response);
+    };
 
-  //   getBlog();
-  // }, []);
+    getBlog();
+  }, []);
   return (
     <>
       <section className="h-screen bg-about-bg bg-cover">
         <Navbar2 />
         <div className="h-full flex justify-center" ref={useTitle}>
           <div className="flex flex-col items-center justify-center text-white">
-            <span className="bg-[#5B5966] w-auto  h-auto rounded flex items-center justify-center p-3 text-center">
-              {TEMP_BLOG_DATA[0].category}
+            <span className="bg-[#5B5966] w-auto h-auto rounded flex items-center justify-center p-3 text-center">
+              {blog?.category}
             </span>
             <h1 className="font-bold sm:text-[80px] text-[35px]">
-              {TEMP_BLOG_DATA[0].blogTitle}
+              {blog?.blogTitle}
             </h1>
             <span className="text-[1rem] font-medium">
-              {TEMP_BLOG_DATA[0].createdAt}
+              {blog?.createdAt.toUTCString()}
             </span>
           </div>
         </div>
       </section>
       <section className="h-screen w-full relative p-[15rem]">
-        <span className="text-2xl font-normal">
-          {TEMP_BLOG_DATA[0].blogContent}
-        </span>
+        <span className="text-2xl font-normal">{blog?.blogContent}</span>
       </section>
       <section className="h-"></section>
     </>

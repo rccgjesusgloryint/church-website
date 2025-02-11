@@ -121,7 +121,7 @@ export const createEvent = async (eventObj: CreateEventType) => {
 };
 
 export const getAllEvents = async () => {
-  const response = await prisma.events.findMany({
+  const response = await prisma.events?.findMany({
     select: {
       id: true,
       event: true,
@@ -283,7 +283,7 @@ export const getExistingTags = async (): Promise<string[]> => {
   }
 };
 
-export const getBlogs = async (): Promise<Blog[]> => {
+export const getAllBlogs = async (): Promise<Blog[]> => {
   const response = await prisma.blog.findMany({});
 
   return response as Blog[];
@@ -306,7 +306,26 @@ export const getBlogCategories = async (category: string): Promise<any[]> => {
   return categories;
 };
 
-export const postBlog = async (blog: BlogType) => {
-  const response = await prisma.blog.create({ data: blog });
-  console.log("POST CREATED");
+export const postBlog = async (blog: BlogType, userId: string | undefined) => {
+  if (!userId) return false;
+  try {
+    await prisma.blog.create({
+      data: {
+        blogImage: blog.blogImage,
+        blogContent: blog.blogContent,
+        blogDescription: blog.blogDescription,
+        blogTitle: blog.blogTitle,
+        category: blog.category,
+        blogAuthor: userId,
+      },
+    });
+    console.log("BLOG POSTED 🟢🟢");
+    return { message: "🟢🟢SUCCESS", status: 200 };
+  } catch (error) {
+    console.log("🔴🔴 OOPS COULDNT CREATE SERMON -- ", error);
+    return {
+      message: `🔴🔴 -- ERROR MESSAGE: ${error}`,
+      status: 400,
+    };
+  }
 };

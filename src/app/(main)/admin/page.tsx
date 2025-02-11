@@ -36,7 +36,6 @@ const AdminPage = () => {
         <CreateSermonForm />
       </section>
       <section>
-        {/* <BlogCreator user={userDetails} /> */}
         <BlogCreator userId={user} />
       </section>
     </section>

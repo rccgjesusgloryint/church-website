@@ -128,10 +128,10 @@ export type BlogType = {
   id?: string;
   blogTitle: string;
   blogDescription: string;
-  blogPoster?: string | null;
+  blogImage?: string | null;
   blogContent: string;
-  blogAuthor: string;
-  category?: string | null;
+  blogAuthor?: string;
+  category: string;
   createdAt?: Date;
   updatedAt?: Date;
 };

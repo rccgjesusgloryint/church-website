@@ -8,6 +8,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -16,12 +25,15 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { postBlog } from "@/lib/queries";
 import toast from "react-hot-toast";
+import { UploadDropzone } from "@/lib/uploadthing";
+import { ClientUploadedFileData } from "uploadthing/types";
 
 type Props = {
   userId: string | undefined;
 };
 
 const BlogCreator = ({ userId }: Props) => {
+  const [posterImageUrl, setPosterImageUrl] = React.useState<string>("");
   const formSchema = z.object({
     blogTitle: z
       .string()
@@ -31,20 +43,19 @@ const BlogCreator = ({ userId }: Props) => {
       .max(50, {
         message: "Your title is too long!",
       }),
-    category: z
-      .string()
-      .max(30, { message: "This category is too big try something smaller" }),
+    category: z.string().max(30, {
+      message: "This category name is too big try something smaller",
+    }),
     blogDescription: z
       .string()
       .min(30, "Your description must be longer than this!")
       .max(450, {
         message: "Your description cant be longer than 450 characters!",
       }),
-    posterImage: z.string().min(20).max(100),
+    blogImage: z.string().optional(),
     blogContent: z
       .string()
       .min(2, { message: "This is not enough content for a Blog!" }),
-    blogAuthor: z.string(),
   });
 
   type FormData = z.infer<typeof formSchema>;
@@ -55,20 +66,29 @@ const BlogCreator = ({ userId }: Props) => {
     defaultValues: {
       blogTitle: "",
       blogDescription: "",
-      posterImage: "",
+      blogImage: "",
       blogContent: "",
       category: "",
-      blogAuthor: userId,
     },
   });
 
+  React.useEffect(() => {
+    console.log(form);
+  }, [posterImageUrl]);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("submitted");
     try {
-      alert("clicked");
-      console.log("inside try catch");
       await toast.promise(
-        postBlog(values),
+        postBlog(
+          {
+            blogContent: values.blogContent,
+            blogDescription: values.blogDescription,
+            blogTitle: values.blogTitle,
+            category: values.category,
+            blogImage: values.blogImage || null,
+          },
+          userId
+        ),
         {
           loading: "Loading",
           success: (data) => `You successfully posted a blog!`,
@@ -90,79 +110,119 @@ const BlogCreator = ({ userId }: Props) => {
           },
         }
       );
+
+      // form.reset();
     } catch (error) {
-      alert(error);
       console.log(error);
     }
   }
+
   return (
-    <section className="p-[10rem] min-h-[500px]">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <FormField
-            control={form.control}
-            name="blogTitle"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Blog Title</FormLabel>
-                <FormControl>
-                  <Input placeholder="Who created God?" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* TO DO: Implement AI to create the decription for the user, from the users Content and blog title */}
-          <FormField
-            control={form.control}
-            name="blogDescription"
-            render={({ field }) => (
-              <FormItem>
-                <span>{}</span>
-                <FormLabel>Blog Description</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Give a brief description of what to expect in this blog..."
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="blogContent"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Blog Content</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="What's on your mind?" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Blog Category</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="What category would this blog fall under?"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit">Post Blog</Button>
-        </form>
-      </Form>
-    </section>
+    <>
+      <Card className="p-[10rem] min-h-[500px]">
+        <CardHeader>
+          <CardTitle>
+            <CardDescription>Upload a new blog!</CardDescription>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="flex flex-col gap-3"
+            >
+              <FormField
+                control={form.control}
+                name="blogTitle"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Blog Title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Who created God?" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* TO DO: Implement AI to create the decription for the user, from the users Content and blog title */}
+              <FormField
+                control={form.control}
+                name="blogDescription"
+                render={({ field }) => (
+                  <FormItem>
+                    <span>{}</span>
+                    <FormLabel>Blog Description</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Give a brief description of what to expect in this blog..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* TO DO: Implement document pklaygrounf for custom writing formatting. eg. Bold, Italic, H1 , H2 etc */}
+              <FormField
+                control={form.control}
+                name="blogContent"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Blog Content</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="What's on your mind?" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Blog Category</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="What category would this blog fall under?"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="blogImage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Poster Image</FormLabel>
+                    <FormControl>
+                      <UploadDropzone
+                        endpoint="pictures"
+                        onClientUploadComplete={(res) => {
+                          form.setValue("blogImage", res[0].url, {
+                            shouldValidate: true,
+                          }); // Update the form field
+                        }}
+                        onUploadError={(error: Error) => {
+                          console.log(error);
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit" className="mt-5">
+                Post Blog
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+      </Card>
+    </>
   );
 };
 
