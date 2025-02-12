@@ -14,11 +14,22 @@ import { Resend } from "resend";
 import { auth } from "@/auth";
 import prisma from "./db";
 import { title } from "process";
-import { Blog } from "@prisma/client";
+import { Blog, Role } from "@prisma/client";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
   return res;
+};
+
+export const findUser = async (userId: string): Promise<string | false> => {
+  const res = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      name: true,
+    },
+  });
+  if (!res?.name) return false;
+  return res.name as string;
 };
 
 export const isAdmin = async () => {
@@ -35,6 +46,18 @@ export const isAdmin = async () => {
   } else {
     return false;
   }
+};
+
+export const accessCheck = async (): Promise<Role | undefined> => {
+  const session = await auth();
+  if (!session) {
+    return undefined;
+  }
+  const res = await prisma.user.findUnique({
+    where: { id: session.user?.id },
+  });
+
+  return res?.member;
 };
 
 export const getAuthUserDetails = async () => {

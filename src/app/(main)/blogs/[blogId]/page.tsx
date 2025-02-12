@@ -7,7 +7,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { Blog } from "@prisma/client";
-import { getBlogWithId } from "@/lib/queries";
+import { findUser, getBlogWithId } from "@/lib/queries";
 
 type BlogProps = {
   params: {
@@ -17,6 +17,7 @@ type BlogProps = {
 
 const Blogs = ({ params }: BlogProps) => {
   const [blog, setBlog] = React.useState<Blog | null>();
+  const [author, setAuthor] = React.useState<string>();
   const useTitle = React.useRef<HTMLElement | any>();
 
   gsap.registerPlugin(ScrollTrigger);
@@ -32,11 +33,18 @@ const Blogs = ({ params }: BlogProps) => {
   React.useEffect(() => {
     const getBlog = async () => {
       const response = await getBlogWithId(params.blogId);
+      const blog_author = await findUser(response.blogAuthor);
       setBlog(response);
+      if (!blog_author) return alert("no author");
+      setAuthor(blog_author);
     };
-
     getBlog();
   }, []);
+
+  React.useEffect(() => {
+    console.log(blog);
+    console.log(author);
+  }, [blog, author]);
   return (
     <>
       <section className="h-screen bg-about-bg bg-cover">
@@ -49,14 +57,19 @@ const Blogs = ({ params }: BlogProps) => {
             <h1 className="font-bold sm:text-[80px] text-[35px]">
               {blog?.blogTitle}
             </h1>
-            <span className="text-[1rem] font-medium">
-              {blog?.createdAt.toUTCString()}
-            </span>
+            <div className="flex flex-col justify-center items-center">
+              <span className="text-[1rem] font-medium">
+                {blog?.createdAt.toDateString().slice(3)}
+              </span>
+              {/* <span className="text-[1rem] font-medium">by {author}</span> */}
+            </div>
           </div>
         </div>
       </section>
-      <section className="h-screen w-full relative p-[15rem]">
-        <span className="text-2xl font-normal">{blog?.blogContent}</span>
+      <section className="h-auto border flex items-center justify-center py-[15rem]">
+        <span className="max-w-[1000px] h-auto text-2xl font-normal break-words">
+          {blog?.blogContent}
+        </span>
       </section>
       <section className="h-"></section>
     </>

@@ -8,18 +8,25 @@ import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 
 import { AuthButton, MobileViewNavbar, navContent } from ".";
-import { isAdmin } from "@/lib/queries";
+import { accessCheck, isAdmin } from "@/lib/queries";
+import { Role } from "@prisma/client";
 
 const Navbar = () => {
   const navbar = React.useRef<HTMLElement | any>();
   const [admin, setAdmin] = React.useState<boolean | null>(null);
+  const [userRole, setUserRole] = React.useState<Role | undefined>();
 
   React.useEffect(() => {
     const checkUserAdmin = async () => {
       const res = await isAdmin();
       setAdmin(res);
     };
+    const checkUserRole = async () => {
+      const userRole = await accessCheck();
+      setUserRole(userRole);
+    };
     checkUserAdmin();
+    checkUserRole();
   }, []);
 
   useGSAP(() => {
@@ -40,8 +47,10 @@ const Navbar = () => {
               href={link}
               key={label}
               className={`${
-                (admin === null && label === "Admin") ||
-                (admin === false && label === "Admin")
+                admin === null ||
+                (admin === false && label === "Admin") ||
+                admin === null ||
+                (userRole === undefined && label === "Blogs")
                   ? "hidden"
                   : ""
               } hover:text-gray-700 duration-200`}

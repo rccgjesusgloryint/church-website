@@ -24,21 +24,23 @@ const AdminPage = () => {
   }, []);
 
   return (
-    <section className="w-full h-full px-10">
+    <>
       <Navbar2 />
-      <h1 className="flex items-center justify-center text-xl mt-8">
-        Admin Page
-      </h1>
-      <MediaPage />
-      <CreateEvent />
-      <section className="h-auto bg-zinc-700 p-5">
-        <h1>Create Sermon Form</h1>
-        <CreateSermonForm />
+      <section className="w-full h-full px-10">
+        <h1 className="flex items-center justify-center text-xl mt-8">
+          Admin Page
+        </h1>
+        <MediaPage />
+        <CreateEvent />
+        <section className="h-auto border p-5">
+          <h1>Create Sermon Form</h1>
+          <CreateSermonForm />
+        </section>
+        <section>
+          <BlogCreator userId={user} />
+        </section>
       </section>
-      <section>
-        <BlogCreator userId={user} />
-      </section>
-    </section>
+    </>
   );
 };
 

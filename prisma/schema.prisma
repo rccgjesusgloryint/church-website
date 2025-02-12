@@ -15,10 +15,17 @@ datasource db {
 }
 
 enum Role {
-  ADMIN
+  ADMIN  
   MEMBER
   MINISTER
   OWNER
+}
+
+enum Permissions {
+  readonly_access
+  admin_access
+  member_access
+  minister_access
 }
 
 model User {

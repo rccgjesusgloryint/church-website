@@ -23,10 +23,10 @@ export const navContent = [
     label: "About",
     link: "/about",
   },
-  // {
-  //   label: "Blog",
-  //   link: "/blog",
-  // },
+  {
+    label: "Blogs",
+    link: "/blogs",
+  },
   {
     label: "Events",
     link: "/events",

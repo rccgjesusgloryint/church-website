@@ -59,7 +59,9 @@ const Blogs = (props: BlogProps) => {
               </div>
             </div>
             <div className="flex flex-col gap-3">
-              <div className="">{blogs[0].createdAt.toUTCString()}</div>
+              <div className="">
+                {blogs[0].createdAt.toDateString().slice(3)}
+              </div>
               <h1
                 className="font-bold text-4xl cursor-pointer hover:text-gray-600"
                 onClick={() => handleBlogRedirection(blogs[0].id)}
@@ -100,7 +102,9 @@ const Blogs = (props: BlogProps) => {
                     onClick={() => handleBlogRedirection(blog.id)}
                   />
                   <div className="flex flex-col gap-3">
-                    <div className="">{blog.createdAt.toUTCString()}</div>
+                    <div className="">
+                      {blog.createdAt.toDateString().slice(3)}
+                    </div>
                     <h1
                       className="font-bold text-2xl cursor-pointer hover:text-gray-600"
                       onClick={() => handleBlogRedirection(blog.id)}

@@ -1,13 +1,13 @@
-import Unauthorized from "@/components/unauthorized/AdminOnly";
-import { isAdmin } from "@/lib/queries";
+import Unauthorized from "@/components/unauthorized/MembersOnly";
+import { accessCheck } from "@/lib/queries";
 
 type Props = {
   children: React.ReactNode;
 };
 
 const layout = async ({ children }: Props) => {
-  const admin = await isAdmin();
-  if (!admin) {
+  const userRole = await accessCheck();
+  if (!userRole) {
     return <Unauthorized />;
   }
   return <div>{children}</div>;

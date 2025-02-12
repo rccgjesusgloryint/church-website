@@ -1,5 +1,5 @@
 import ComingSoon from "@/components/comingsoon";
-import Unauthorized from "@/components/unauthorized";
+import Unauthorized from "@/components/unauthorized/AdminOnly";
 import { isAdmin } from "@/lib/queries";
 import Link from "next/link";
 

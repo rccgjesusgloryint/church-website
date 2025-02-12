@@ -121,8 +121,10 @@ const BlogCreator = ({ userId }: Props) => {
     <>
       <Card className="p-[10rem] min-h-[500px]">
         <CardHeader>
-          <CardTitle>
-            <CardDescription>Upload a new blog!</CardDescription>
+          <CardTitle className="font-bold">
+            <CardDescription className="text-4xl">
+              Create a new blog
+            </CardDescription>
           </CardTitle>
         </CardHeader>
         <CardContent>
