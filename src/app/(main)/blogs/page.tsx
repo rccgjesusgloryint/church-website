@@ -9,15 +9,7 @@ import Image from "next/image";
 import { getAllBlogs } from "@/lib/queries";
 import { Blog } from "@prisma/client";
 
-type BlogProps = {
-  id: string;
-  blogTitle: string;
-  blogDescription: string;
-  category?: string;
-  createdAt?: Date;
-};
-
-const Blogs = (props: BlogProps) => {
+const Blogs = () => {
   const [blogs, setBlogs] = React.useState<Blog[]>();
   const router = useRouter();
 

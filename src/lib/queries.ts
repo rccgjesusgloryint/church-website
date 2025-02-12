@@ -169,31 +169,6 @@ export const getEvent = async (id: number) => {
   return response;
 };
 
-export const addEmailFromNewsletterToDB = async (email: string) => {
-  try {
-    await prisma.newsletter.upsert({
-      where: { email },
-      create: {
-        email,
-      },
-      update: {
-        email,
-      },
-    });
-
-    console.log("SUCCESS ADDING EMAIL TO DB 🟢🟢");
-    return { message: "SUCCESS ADDING EMAIL TO DB 🟢🟢", status: 200 };
-  } catch (error) {
-    console.log(
-      `OOPS, PROBLEM ADDING EMAIL TO DB 🔴🔴 -- ERROR MESSAGE: ${error}`
-    );
-    return {
-      message: `OOPS, PROBLEM ADDING EMAIL TO DB 🔴🔴 -- ERROR MESSAGE: ${error}`,
-      status: 400,
-    };
-  }
-};
-
 export const sendWelcomeEmail = async (email: string) => {
   const resend = new Resend(process.env.LOCAL_RESEND_API_KEY);
   try {
@@ -224,16 +199,6 @@ export const sendWelcomeEmail = async (email: string) => {
       status: 400,
     };
   }
-};
-
-export const getNewsletterUsers = async () => {
-  const response = prisma.newsletter.findMany({
-    select: {
-      email: true,
-    },
-  });
-
-  return response;
 };
 
 export const sendBulkNewsletterEmail = async (

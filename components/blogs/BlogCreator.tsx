@@ -74,7 +74,7 @@ const BlogCreator = ({ userId }: Props) => {
 
   React.useEffect(() => {
     console.log(form);
-  }, [posterImageUrl]);
+  }, [posterImageUrl, form]);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {

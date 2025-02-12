@@ -19,7 +19,6 @@ import {
 } from "@/components/ui/chart";
 import React from "react";
 import { EventTrack } from "@/lib/types";
-import { getAllTrackedEvent } from "@/lib/queries";
 const chartData = [
   { month: "January", desktop: 186 },
   { month: "February", desktop: 305 },
