@@ -10,8 +10,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL")
+  url       = env("PROD_DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum Role {
@@ -93,20 +93,12 @@ model Events {
   updatedAt   DateTime @updatedAt
 }
 
-model Newsletter {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model Sermon {
   id              Int       @id @default(autoincrement())
   videoUrl        String
   sermonTitle     String
   tags            String[]
   likes           Int?
-  comments        Comment[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
@@ -115,8 +107,6 @@ model Comment {
   id        Int      @id @default(autoincrement())
   content   String
   likes     Int?
-  sermon    Sermon?  @relation(fields: [sermonId], references: [id])
-  sermonId  Int?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
