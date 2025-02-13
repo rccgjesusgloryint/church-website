@@ -32,44 +32,46 @@ const Blogs = () => {
       <Navbar2 />
       <div className="h-screen w-full">
         <div className="flex flex-col flex-wrap gap-3 items-center pt-[10rem]">
-          <div
-            className="flex flex-col gap-5 max-h-[800px] relative"
-            key={blogs[0]?.id}
-          >
-            <div className="absolute top-[25rem] right-[-15rem]">
-              <h1 className="font-medium text-[20px] mb-3">All categories</h1>
-              <div className="flex flex-col">
-                {TEMP_BLOG_CATEGOORIES.map((category) => (
-                  <span className="cursor-pointer" key={category}>
-                    {category}
-                  </span>
-                ))}
+          {blogs.length > 0 && (
+            <div
+              className="flex flex-col gap-5 max-h-[800px] relative"
+              key={blogs[0]?.id}
+            >
+              <div className="absolute top-[25rem] right-[-15rem]">
+                <h1 className="font-medium text-[20px] mb-3">All categories</h1>
+                <div className="flex flex-col">
+                  {TEMP_BLOG_CATEGOORIES.map((category) => (
+                    <span className="cursor-pointer" key={category}>
+                      {category}
+                    </span>
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className="flex flex-col gap-3">
-              <div className="">
-                {blogs[0]?.createdAt.toDateString().slice(3)}
+              <div className="flex flex-col gap-3">
+                <div className="">
+                  {blogs[0]?.createdAt.toDateString().slice(3)}
+                </div>
+                <h1
+                  className="font-bold text-4xl cursor-pointer hover:text-gray-600"
+                  onClick={() => handleBlogRedirection(blogs[0]?.id)}
+                >
+                  {blogs[0]?.blogTitle}
+                </h1>
               </div>
-              <h1
-                className="font-bold text-4xl cursor-pointer hover:text-gray-600"
+              <Image
+                alt="poster-image"
+                src={
+                  blogs[0]?.blogImage ||
+                  "https://www.1689designs.com/cdn/shop/files/all-over-print-flag-white-front-6604d51e7e80c.png?v=1711592746"
+                }
+                width={500}
+                height={500}
+                className="cursor-pointer hover:opacity-80 max-h-[500px] object-contain"
                 onClick={() => handleBlogRedirection(blogs[0]?.id)}
-              >
-                {blogs[0]?.blogTitle}
-              </h1>
+              />
+              <h1 className="font-normal">{blogs[0]?.blogDescription}</h1>
             </div>
-            <Image
-              alt="poster-image"
-              src={
-                blogs[0]?.blogImage ||
-                "https://www.1689designs.com/cdn/shop/files/all-over-print-flag-white-front-6604d51e7e80c.png?v=1711592746"
-              }
-              width={500}
-              height={500}
-              className="cursor-pointer hover:opacity-80 max-h-[500px] object-contain"
-              onClick={() => handleBlogRedirection(blogs[0]?.id)}
-            />
-            <h1 className="font-normal">{blogs[0]?.blogDescription}</h1>
-          </div>
+          )}
           {blogs?.length !== 0 ? (
             blogs
               ?.filter((num, index) => index > 0)

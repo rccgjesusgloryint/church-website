@@ -75,10 +75,6 @@ const BlogCreator = ({ userId }: Props) => {
     },
   });
 
-  React.useEffect(() => {
-    console.log(form);
-  }, [posterImageUrl, form]);
-
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       await toast.promise(
