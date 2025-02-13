@@ -27,8 +27,11 @@ const Navbar2 = () => {
   }, []);
   return (
     <div className="bg-white h-[100px] shadow-md w-full">
-      <div className="h-full flex justify-end">
-        <div className="hidden md:flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap relative mr-10">
+      <div className="h-full flex justify-end relative">
+        <div className="md:hidden h-full w-full flex items-center justify-center">
+          <MobileViewNavbar2 />
+        </div>
+        <div className="hidden md:flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap relative mr-10 border">
           <Link href="/" className="cursor-pointer absolute top-3 left-3">
             <Image
               src="/images/church-logo.svg"
@@ -55,9 +58,6 @@ const Navbar2 = () => {
           ))}
         </div>
         <AuthButton2 />
-        <div className="md:hidden h-full w-full flex items-center justify-center relative">
-          <MobileViewNavbar2 />
-        </div>
       </div>
     </div>
   );

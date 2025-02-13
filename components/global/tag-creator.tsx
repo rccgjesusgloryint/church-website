@@ -83,7 +83,7 @@ const TagCreator = ({ tags, setTags }: Props) => {
           </div>
         ))}
       </div>
-      <div className="relative w-1/2">
+      <div className="relative sm:w-1/2 w-full">
         <CommandInput
           placeholder="Create tag..."
           value={value}

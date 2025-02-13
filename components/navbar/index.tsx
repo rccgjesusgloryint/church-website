@@ -11,8 +11,9 @@ import {
 } from "@/components/ui/sheet";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { isAdmin } from "@/lib/queries";
+import { accessCheck, isAdmin } from "@/lib/queries";
 import React from "react";
+import { Role } from "@prisma/client";
 
 export const navContent = [
   {
@@ -91,13 +92,19 @@ export const AuthButton2 = () => {
 
 export const MobileViewNavbar = () => {
   const [admin, setAdmin] = React.useState<boolean | null>(null);
+  const [userRole, setUserRole] = React.useState<Role | undefined>();
 
   React.useEffect(() => {
     const checkUserAdmin = async () => {
       const res = await isAdmin();
       setAdmin(res);
     };
+    const checkUserRole = async () => {
+      const userRole = await accessCheck();
+      setUserRole(userRole);
+    };
     checkUserAdmin();
+    checkUserRole();
   }, []);
   return (
     <Sheet>
@@ -116,8 +123,10 @@ export const MobileViewNavbar = () => {
                 href={link}
                 key={label}
                 className={`${
-                  (admin === null && label === "Admin") ||
-                  (admin === false && label === "Admin")
+                  admin === null ||
+                  (admin === false && label === "Admin") ||
+                  admin === null ||
+                  (userRole === undefined && label === "Blogs")
                     ? "hidden"
                     : ""
                 } active:bg-blue-300 bg-none w-full flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl`}
@@ -134,12 +143,18 @@ export const MobileViewNavbar = () => {
 
 export const MobileViewNavbar2 = () => {
   const [admin, setAdmin] = React.useState<boolean | null>(null);
+  const [userRole, setUserRole] = React.useState<Role | undefined>();
 
   React.useEffect(() => {
     const checkUserAdmin = async () => {
       const res = await isAdmin();
       setAdmin(res);
     };
+    const checkUserRole = async () => {
+      const userRole = await accessCheck();
+      setUserRole(userRole);
+    };
+    checkUserRole();
     checkUserAdmin();
   }, []);
   return (
@@ -182,8 +197,10 @@ export const MobileViewNavbar2 = () => {
                   href={link}
                   key={label}
                   className={`${
-                    (admin === null && label === "Admin") ||
-                    (admin === false && label === "Admin")
+                    admin === null ||
+                    (admin === false && label === "Admin") ||
+                    admin === null ||
+                    (userRole === undefined && label === "Blogs")
                       ? "hidden"
                       : ""
                   } active:bg-blue-300 bg-none w-full flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl`}
