@@ -134,7 +134,7 @@ const BlogCreator = ({ userId }: Props) => {
 
   return (
     <>
-      <Card className="p-[10rem] min-h-[500px]">
+      <Card className="sm:p-[10rem] min-h-[500px]">
         <CardHeader>
           <CardTitle className="font-bold">
             <CardDescription className="text-4xl">
