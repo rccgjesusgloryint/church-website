@@ -1,6 +1,7 @@
 import React from "react";
 
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+
 import "react-quill/dist/quill.snow.css"; // include styles
 
 import {
@@ -25,18 +26,33 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { postBlog } from "@/lib/queries";
 import toast from "react-hot-toast";
 import { UploadDropzone } from "@/lib/uploadthing";
-import { ClientUploadedFileData } from "uploadthing/types";
+
+import { forwardRef } from "react";
+import { ControllerRenderProps } from "react-hook-form";
 
 type Props = {
   userId: string | undefined;
 };
 
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+
+interface BlogCreatorProps {
+  field: ControllerRenderProps<any, string>;
+}
+
+// Wrap ReactQuill in forwardRef to prevent ref warnings
+const QuillEditor = forwardRef(({ field }: BlogCreatorProps, ref) => (
+  <ReactQuill
+    value={field.value}
+    onChange={(content) => field.onChange(content)}
+  />
+));
+QuillEditor.displayName = "QuillEditor"; // Required for React dev tools
+
 const BlogCreator = ({ userId }: Props) => {
-  const [posterImageUrl, setPosterImageUrl] = React.useState<string>("");
   const formSchema = z.object({
     blogTitle: z
       .string()
@@ -172,9 +188,8 @@ const BlogCreator = ({ userId }: Props) => {
                     <FormLabel>Blog Content</FormLabel>
                     <FormControl>
                       <ReactQuill
-                        {...field}
-                        onChange={field.onChange}
-                        value={field.value || ""}
+                        value={field.value} // Explicitly set the value
+                        onChange={(content) => field.onChange(content)} // Ensure React Hook Form updates state correctly
                       />
                     </FormControl>
                     <FormMessage />
