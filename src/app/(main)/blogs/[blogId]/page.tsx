@@ -8,6 +8,7 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { Blog } from "@prisma/client";
 import { findUser, getBlogWithId } from "@/lib/queries";
+import DOMPurify from "dompurify"; // Import DOMPurify for sanitization
 
 type BlogProps = {
   params: {
@@ -16,18 +17,20 @@ type BlogProps = {
 };
 
 const Blogs = ({ params }: BlogProps) => {
-  const [blog, setBlog] = React.useState<Blog | null>();
-  const [author, setAuthor] = React.useState<string>();
-  const useTitle = React.useRef<HTMLElement | any>();
+  const [blog, setBlog] = React.useState<Blog | null>(null);
+  const [author, setAuthor] = React.useState<string | null>(null);
+  const useTitle = React.useRef<HTMLDivElement | null>(null);
 
   gsap.registerPlugin(ScrollTrigger);
 
   useGSAP(() => {
-    gsap.from(useTitle.current, {
-      y: 300,
-      duration: 1,
-      opacity: 0,
-    });
+    if (useTitle.current) {
+      gsap.from(useTitle.current, {
+        y: 300,
+        duration: 1,
+        opacity: 0,
+      });
+    }
   });
 
   React.useEffect(() => {
@@ -35,18 +38,20 @@ const Blogs = ({ params }: BlogProps) => {
       const response = await getBlogWithId(params.blogId);
       const blog_author = await findUser(response.blogAuthor);
       setBlog(response);
-      if (!blog_author) return alert("no author");
+      if (!blog_author) return alert("No author found");
       setAuthor(blog_author);
     };
     getBlog();
-  }, []);
+  }, [params.blogId]);
 
   React.useEffect(() => {
     console.log(blog);
     console.log(author);
   }, [blog, author]);
+
   return (
     <>
+      {/* Hero Section */}
       <section className="h-screen bg-about-bg bg-cover">
         <Navbar2 />
         <div className="h-full flex justify-center" ref={useTitle}>
@@ -66,11 +71,19 @@ const Blogs = ({ params }: BlogProps) => {
           </div>
         </div>
       </section>
+
+      {/* Blog Content Section */}
       <section className="h-auto border flex items-center justify-center py-[15rem]">
-        <span className="max-w-[1000px] h-auto text-2xl font-normal break-words">
-          {blog?.blogContent}
-        </span>
+        <div
+          className="blog-content max-w-[1000px] h-auto text-2xl font-normal break-words overflow-wrap"
+          dangerouslySetInnerHTML={{
+            __html: blog?.blogContent
+              ? DOMPurify.sanitize(blog.blogContent)
+              : "",
+          }}
+        />
       </section>
+
       <section className="h-"></section>
     </>
   );

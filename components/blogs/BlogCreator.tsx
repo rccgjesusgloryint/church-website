@@ -1,5 +1,8 @@
 import React from "react";
 
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // include styles
+
 import {
   Form,
   FormControl,
@@ -111,7 +114,7 @@ const BlogCreator = ({ userId }: Props) => {
         }
       );
 
-      // form.reset();
+      form.reset();
     } catch (error) {
       console.log(error);
     }
@@ -172,12 +175,17 @@ const BlogCreator = ({ userId }: Props) => {
                   <FormItem>
                     <FormLabel>Blog Content</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="What's on your mind?" {...field} />
+                      <ReactQuill
+                        {...field}
+                        onChange={field.onChange}
+                        value={field.value || ""}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               <FormField
                 control={form.control}
                 name="category"
