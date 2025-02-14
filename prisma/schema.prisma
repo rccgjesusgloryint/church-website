@@ -93,6 +93,11 @@ model Events {
   updatedAt   DateTime @updatedAt
 }
 
+model NewsletterEmail {
+  email String @id // Email as the primary key (unique identifier)
+}
+
+
 model Sermon {
   id              Int       @id @default(autoincrement())
   videoUrl        String

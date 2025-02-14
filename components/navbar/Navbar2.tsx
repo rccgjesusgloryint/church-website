@@ -31,7 +31,7 @@ const Navbar2 = () => {
         <div className="md:hidden h-full w-full flex items-center justify-center">
           <MobileViewNavbar2 />
         </div>
-        <div className="hidden md:flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap relative mr-10 border">
+        <div className="hidden md:flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap relative mr-10">
           <Link href="/" className="cursor-pointer absolute top-3 left-3">
             <Image
               src="/images/church-logo.svg"

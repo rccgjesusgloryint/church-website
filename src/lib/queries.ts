@@ -170,29 +170,112 @@ export const getEvent = async (id: number) => {
 };
 
 export const sendWelcomeEmail = async (email: string) => {
-  const resend = new Resend(process.env.LOCAL_RESEND_API_KEY);
+  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
-    resend.emails.send({
-      from: "Jesus Glory Athy <onboarding@resend.dev>",
+    const { data, error } = await resend.emails.send({
+      from: "Jesus Glory Athy <onboarding@jesusgloryintl.com>",
       to: email,
-      subject: "Hello World",
-      text: "Welcome! Thank you for joining the Jesus Glory Athy Newletter!",
+      subject: "Welcome to Jesus Glory Athy! 🌟",
+      html: `<!DOCTYPE html>
+              <html>
+              <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1">
+                  <title>Welcome to Jesus Glory Athy</title>
+                  <style>
+                      body {
+                          font-family: Arial, sans-serif;
+                          background-color: #f4f4f4;
+                          margin: 0;
+                          padding: 0;
+                      }
+                      .container {
+                          max-width: 600px;
+                          margin: 20px auto;
+                          background: #ffffff;
+                          padding: 20px;
+                          border-radius: 8px;
+                          box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+                          text-align: center;
+                      }
+                      .header {
+                          background: #0073e6;
+                          color: #ffffff;
+                          padding: 15px;
+                          border-radius: 8px 8px 0 0;
+                      }
+                      h1 {
+                          margin: 0;
+                          font-size: 24px;
+                      }
+                      .content {
+                          padding: 20px;
+                          color: #333333;
+                          font-size: 16px;
+                          line-height: 1.6;
+                      }
+                      .button {
+                          display: inline-block;
+                          background: #0073e6;
+                          color: #ffffff;
+                          text-decoration: none;
+                          padding: 10px 20px;
+                          border-radius: 5px;
+                          font-size: 16px;
+                          margin-top: 15px;
+                      }
+                      .footer {
+                          font-size: 14px;
+                          color: #777777;
+                          margin-top: 20px;
+                          padding-top: 15px;
+                          border-top: 1px solid #eeeeee;
+                      }
+                      a {
+                          color: #0073e6;
+                      }
+                  </style>
+              </head>
+              <body>
+                  <div class="container">
+                      <div class="header">
+                          <h1>Welcome to Jesus Glory Athy! 🙌</h1>
+                      </div>
+                      <div class="content">
+                          <p>Thank you for joining the <strong>Jesus Glory Athy Newsletter</strong>! We are so excited to have you as part of our community.</p>
+                          <p>You’ll receive inspiring messages, event updates, and faith-filled content straight to your inbox.</p>
+                          <a href="${process.env.NEXTAUTH_URL}/events" class="button">Explore Upcoming Events</a>
+                          <p>We pray this journey strengthens your faith and brings blessings to your life.</p>
+                      </div>
+                      <div class="footer">
+                           <p>Want to manage your preferences? <a href="${process.env.NEXTAUTH_URL}/unsubscribe?email=${email}">Unsubscribe here</a>.</p>
+                          <p>May God bless you abundantly! ✨</p>
+                      </div>
+                  </div>
+              </body>
+              </html>
+              `,
       headers: {
-        "List-Unsubscribe": "<https://example.com/unsubscribe>",
+        "List-Unsubscribe": `<mailto:unsubscribe@jesusgloryintl.com>`,
       },
     });
-    await fetch("https://projectplannerai.com/api/events", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        key: "User joined newsletter", // any custom event you want to track
-        projectId: "j5791dfb8vwbk25j4c7t3adrjx6wa790",
-      }),
-    });
-    console.log("SUCCESS SENDINB EMAIL 🟢🟢");
-    return { message: "SUCCESS SENDINB EMAIL 🟢🟢", status: 200 };
+
+    if (error) {
+      return {
+        message: `OOPS, PROBLEM SENDING EMAIL 🔴🔴 :${error}`,
+        status: 400,
+      };
+    }
+
+    try {
+      await prisma.newsletterEmail.create({
+        data: { email },
+      });
+    } catch (error) {
+      return console.log(error);
+    }
+
+    return { message: "SUCCESS SENDING EMAIL 🟢🟢", status: 200 };
   } catch (error) {
     return {
       message: `OOPS, PROBLEM SENDING EMAIL 🔴🔴 -- ERROR MESSAGE: ${error}`,
