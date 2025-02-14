@@ -15,6 +15,7 @@ import { auth } from "@/auth";
 import prisma from "./db";
 import { title } from "process";
 import { Blog, Role } from "@prisma/client";
+import { NextResponse } from "next/server";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
@@ -171,7 +172,19 @@ export const getEvent = async (id: number) => {
 
 export const sendWelcomeEmail = async (email: string) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
+
   try {
+    // ✅ Step 1: Check if the email already exists
+    const existingEmail = await prisma.newsletterEmail.findUnique({
+      where: { email },
+    });
+
+    if (existingEmail) {
+      console.log(`Email already exists`);
+      return { message: "This email is already subscribed.", status: 409 };
+    }
+
+    // ✅ Step 2: Send the Welcome Email
     const { data, error } = await resend.emails.send({
       from: "Jesus Glory Athy <onboarding@jesusgloryintl.com>",
       to: email,
@@ -253,8 +266,7 @@ export const sendWelcomeEmail = async (email: string) => {
                       </div>
                   </div>
               </body>
-              </html>
-              `,
+              </html>`,
       headers: {
         "List-Unsubscribe": `<mailto:unsubscribe@jesusgloryintl.com>`,
       },
@@ -267,20 +279,43 @@ export const sendWelcomeEmail = async (email: string) => {
       };
     }
 
+    // ✅ Step 3: Add Email to Database After Successful Email Sending
     try {
       await prisma.newsletterEmail.create({
         data: { email },
       });
     } catch (error) {
-      return console.log(error);
+      console.error("Database Error:", error);
+      return { message: "Error saving email to database", status: 500 };
     }
 
     return { message: "SUCCESS SENDING EMAIL 🟢🟢", status: 200 };
   } catch (error) {
+    console.error("Unexpected Error:", error);
     return {
       message: `OOPS, PROBLEM SENDING EMAIL 🔴🔴 -- ERROR MESSAGE: ${error}`,
-      status: 400,
+      status: 500,
     };
+  }
+};
+
+export const addEmailToNewsletter = async (newEmail: string) => {
+  const email = await prisma.newsletterEmail.findUnique({
+    where: { email: newEmail },
+  });
+
+  if (email) {
+    console.log("email already exists!");
+    return { message: "email already exists!", status: 305 };
+  }
+  try {
+    await prisma.newsletterEmail.create({
+      data: { email: newEmail },
+    });
+    console.log({ message: "SUCCESS SENDING EMAIL 🟢🟢", status: 200 });
+    return { message: "SUCCESS SENDING EMAIL 🟢🟢", status: 200 };
+  } catch (error) {
+    return console.log(error);
   }
 };
 

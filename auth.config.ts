@@ -1,3 +1,4 @@
+import { addEmailToNewsletter } from "@/lib/queries";
 import { NextAuthConfig } from "next-auth";
 import google from "next-auth/providers/google";
 
@@ -16,13 +17,9 @@ export const config = {
   },
   events: {
     async signIn(message) {
-      console.log("Signed In!", message.user);
+      await addEmailToNewsletter(message.user.email as string);
     },
-    async signOut(message) {
-      console.log("Signed Out!", { message });
-    },
-    async createUser(message) {
-      console.log("User Created!", message.user);
-    },
+    async signOut() {},
+    async createUser() {},
   },
 } satisfies NextAuthConfig;
