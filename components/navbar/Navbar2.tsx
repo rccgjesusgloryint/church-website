@@ -26,20 +26,26 @@ const Navbar2 = () => {
     checkUserRole();
   }, []);
   return (
-    <div className="bg-white h-[100px] shadow-md w-full">
-      <div className="h-full flex justify-end relative">
-        <div className="md:hidden h-full w-full flex items-center justify-center">
+    <div className="bg-white h-[100px] shadow-md w-full flex items-center justify-center relative">
+      <Link
+        href="/"
+        className="hidden md:flex cursor-pointer absolute top-3 left-5"
+      >
+        <Image
+          src="/images/church-logo.svg"
+          alt="logo"
+          width={70}
+          height={70}
+        />
+      </Link>
+      <div className="hidden md:flex absolute top-5 right-5">
+        <AuthButton2 />
+      </div>
+      <div className="h-full sm:flex sm:justify-end">
+        <div className="sm:hidden h-full w-full flex items-center justify-center">
           <MobileViewNavbar2 />
         </div>
         <div className="hidden md:flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap relative mr-10">
-          <Link href="/" className="cursor-pointer absolute top-3 left-3">
-            <Image
-              src="/images/church-logo.svg"
-              alt="logo"
-              width={70}
-              height={70}
-            />
-          </Link>
           {navContent.map(({ label, link }) => (
             <Link
               href={link}
@@ -57,7 +63,6 @@ const Navbar2 = () => {
             </Link>
           ))}
         </div>
-        <AuthButton2 />
       </div>
     </div>
   );

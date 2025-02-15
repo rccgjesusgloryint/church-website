@@ -115,7 +115,7 @@ export const MobileViewNavbar = () => {
           className="w-[50px] h-[50px] absolute top-7 left-5"
         />
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="w-1/2">
         <SheetDescription>
           <div className="flex flex-col justify-start items-start pt-5 pl-5 gap-10 text-black active:text-light-gr">
             {navContent.map(({ label, link }) => (
@@ -178,9 +178,9 @@ export const MobileViewNavbar2 = () => {
           />
         </Link>
       </div>
-      <SheetContent>
+      <SheetContent className="w-3/5">
         <SheetDescription>
-          <div className="md:col-start-1 md:col-span-2 col-start-6 w-full h-full flex items-center sm:justify-center justify-center">
+          <div className="w-full h-full flex items-center sm:justify-center justify-center">
             <Link href="/" className="cursor-pointer">
               <Image
                 src="/images/church-logo.svg"
