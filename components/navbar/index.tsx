@@ -48,6 +48,10 @@ export const navContent = [
     label: "Admin",
     link: "/admin",
   },
+  {
+    label: "Contact",
+    link: "/contact",
+  },
 ];
 
 export const AuthButton = () => {
@@ -191,7 +195,7 @@ export const MobileViewNavbar2 = () => {
             </Link>
           </div>
           <div className="flex w-full h-full items-center justify-start pl-11">
-            <div className="flex flex-col gap-11 flex-wrap mt-20 w-full">
+            <div className="flex flex-col gap-8 flex-wrap mt-10 w-full">
               {navContent.map(({ label, link }) => (
                 <Link
                   href={link}

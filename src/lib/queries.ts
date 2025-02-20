@@ -2,6 +2,7 @@
 
 import {
   BlogType,
+  ContactFormType,
   CreateEventType,
   CreateSermon,
   EventTrack,
@@ -316,6 +317,80 @@ export const addEmailToNewsletter = async (newEmail: string) => {
     return { message: "SUCCESS SENDING EMAIL 🟢🟢", status: 200 };
   } catch (error) {
     return console.log(error);
+  }
+};
+
+export const sendContactEmail = async ({
+  email,
+  name,
+  message,
+}: ContactFormType) => {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  try {
+    const { data, error } = await resend.emails.send({
+      from: `${name} <contact@jesusgloryintl.com>`,
+      to: "rccgjesusgloryint@gmail.com",
+      subject: `From contact form`,
+      html: `<!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>Message from contact form</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .container {
+                        max-width: 600px;
+                        margin: 20px auto;
+                        background: #ffffff;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                    }
+                    h1 {
+                        margin: 0;
+                        font-size: 24px;
+                    }
+                    .content {
+                        padding: 20px;
+                        color: #333333;
+                        font-size: 16px;
+                        line-height: 1.6;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                <div>
+                  <h1>${name} is contacting the church from the contact form, here's what they said...</h1>
+                </div>
+                    <div class="content">
+                        <p>${message}</p>
+                    </div>
+                </div>
+            </body>
+            </html>`,
+    });
+
+    if (error) {
+      return {
+        message: `OOPS, PROBLEM SENDING EMAIL 🔴🔴 :${error}`,
+        status: 400,
+      };
+    }
+    return { message: "SUCCESS SENDING EMAIL 🟢🟢", status: 200 };
+  } catch (error) {
+    console.error("Unexpected Error:", error);
+    return {
+      message: `OOPS, PROBLEM SENDING EMAIL 🔴🔴 -- ERROR MESSAGE: ${error}`,
+      status: 500,
+    };
   }
 };
 

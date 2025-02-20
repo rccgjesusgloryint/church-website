@@ -135,3 +135,9 @@ export type BlogType = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type ContactFormType = {
+  name: string;
+  email: string;
+  message: string;
+};

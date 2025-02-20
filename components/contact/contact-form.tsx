@@ -18,12 +18,16 @@ import { z } from "zod";
 
 import { contactInfo } from ".";
 import toast from "react-hot-toast";
+import { sendContactEmail } from "@/lib/queries";
 
 const ContactForm = () => {
   const formSchema = z.object({
-    name: z.string().min(2).max(50),
+    name: z
+      .string()
+      .min(5)
+      .max(25, { message: "Thats quite a long name, shorten for us please!" }),
     email: z.string().email(),
-    message: z.string().min(5),
+    message: z.string().min(10, { message: "This message is too short!" }),
   });
 
   const form = useForm<FormData>({
@@ -36,32 +40,48 @@ const ContactForm = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    alert("Hi");
+  async function onSubmit({
+    email,
+    message,
+    name,
+  }: z.infer<typeof formSchema>) {
+    await toast.promise(
+      sendContactEmail({ email, message, name }).then((response) => {
+        if (response.status === 400) {
+          throw new Error("Something went wrong. Please try again. 🔄");
+        }
+        console.log(response);
+        return response;
+      }),
+      {
+        loading: "Loading...",
+        success:
+          "Email was sent, we'll get back to you as soon as possible! God bless!",
+        error: (err) => err.message, // ✅ Uses friendly toast error message
+      },
+      {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
+        success: {
+          duration: 5000,
+          icon: "🟢",
+        },
+        error: {
+          duration: 5000,
+          icon: "🔴",
+        },
+      }
+    );
     form.resetField("name");
     form.resetField("email");
     form.resetField("message");
-    //   toast.promise({ functionToSendEmail,
-    //     loading: "Loading",
-    //     success: (data) => `Successfully created ${data.message}`,
-    //     error: (err) => `This just happened: ${err.toString()}`,
-    //   },
-    //   {
-    //     style: {
-    //       border: "1px solid #713200",
-    //       padding: "16px",
-    //       color: "#713200",
-    //     },
-    //     iconTheme: {
-    //       primary: "#713200",
-    //       secondary: "#FFFAEE",
-    //     },
-    //     success: {
-    //       duration: 5000,
-    //       icon: "🟢",
-    //     },
-    //   }
-    // );
   }
 
   // Infer the form data type
