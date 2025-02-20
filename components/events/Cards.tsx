@@ -84,7 +84,7 @@ const Cards = ({ events }: CardProps) => {
       );
     })
   ) : (
-    <div>
+    <div className="sm:mb-0 mb-10">
       <h1>No events yet!</h1>
     </div>
   );

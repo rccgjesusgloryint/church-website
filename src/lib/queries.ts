@@ -257,11 +257,11 @@ export const sendWelcomeEmail = async (email: string) => {
                       <div class="content">
                           <p>Thank you for joining the <strong>Jesus Glory Athy Newsletter</strong>! We are so excited to have you as part of our community.</p>
                           <p>You’ll receive inspiring messages, event updates, and faith-filled content straight to your inbox.</p>
-                          <a href="${process.env.NEXTAUTH_URL}/events" class="button">Explore Upcoming Events</a>
+                          <a href="${process.env.BASE_URL}/events" class="button">Explore Upcoming Events</a>
                           <p>We pray this journey strengthens your faith and brings blessings to your life.</p>
                       </div>
                       <div class="footer">
-                           <p>Want to manage your preferences? <a href="${process.env.NEXTAUTH_URL}/unsubscribe?email=${email}">Unsubscribe here</a>.</p>
+                           <p>Want to manage your preferences? <a href="${process.env.BASE_URL}/unsubscribe?email=${email}">Unsubscribe here</a>.</p>
                           <p>May God bless you abundantly! ✨</p>
                       </div>
                   </div>

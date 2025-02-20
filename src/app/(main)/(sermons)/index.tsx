@@ -147,7 +147,7 @@ const SermonTags = ({ sermon }: { sermon: Sermon }) => {
 
 const DisplayTags = ({ allTags, filterSermonByTags }: DisplayTagsProps) => {
   return (
-    <div className="flex flex-row gap-2">
+    <div className="flex flex-row gap-2 flex-wrap items-center justify-center">
       {allTags.length > 0 ? (
         allTags.map((tag, index) => (
           <span
@@ -179,7 +179,7 @@ const Filter = ({
     setDisplaySermons(filteredSermon);
   };
   return (
-    <div className="flex flex-col gap-2 w-auto sm:pl-[180px]">
+    <div className="flex flex-col gap-2 w-full sm:pl-[180px] px-3">
       <Input
         value={search}
         onChange={(e) => filterBySearch(e.target.value)}

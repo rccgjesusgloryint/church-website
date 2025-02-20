@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/all";
 
 import Services from "./Services";
 import Leaders from "./Leaders";
+import Newsletter from "../../../../components/Newsletter";
 
 const About = () => {
   const title = React.useRef<HTMLElement | any>();
@@ -40,7 +41,7 @@ const About = () => {
       </section>
       {/* <Leaders /> */}
       <Services />
-      {/* <Newsletter /> */}
+      <Newsletter />
     </>
   );
 };
