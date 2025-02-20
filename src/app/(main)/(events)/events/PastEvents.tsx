@@ -94,6 +94,7 @@ export const PastEvents = ({ pastEvents, isLoading }: Props) => {
           ) : (
             <div>
               <h1>No pastEvents yet!</h1>
+              <Loader />
             </div>
           )}
         </div>

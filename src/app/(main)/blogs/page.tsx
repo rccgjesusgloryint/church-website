@@ -25,7 +25,7 @@ const Blogs = () => {
     getData();
   }, []);
 
-  if (!blogs) return <div>No Blogs </div>;
+  if (!blogs) return <div className="h-screen">No Blogs </div>;
 
   return (
     <>
@@ -109,7 +109,7 @@ const Blogs = () => {
                 </div>
               ))
           ) : (
-            <div>NO Blogs!</div>
+            <div className="h-screen">No blogs have been posted yet</div>
           )}
         </div>
       </div>

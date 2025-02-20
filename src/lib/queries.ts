@@ -239,7 +239,7 @@ export const sendWelcomeEmail = async (email: string) => {
                       }
                       .footer {
                           font-size: 14px;
-                          color: #777777;
+                          color: #777777 !important;
                           margin-top: 20px;
                           padding-top: 15px;
                           border-top: 1px solid #eeeeee;

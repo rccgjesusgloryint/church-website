@@ -9,12 +9,14 @@ import useEmblaCarousel from "embla-carousel-react";
 import { EmblaOptionsType } from "embla-carousel";
 import { GetAllImages } from "@/lib/types";
 import EmblaCarousel from "../../../../components/gallery/gallery-carousel";
+import Loader from "../../../../components/Loader";
 
 type CategoryType = string[];
 
 const Gallery = () => {
   const [galleryImages, setGalleryImages] = useState<GetAllImages>();
   const [galleryCategories, setGalleryCat] = useState<CategoryType>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [emblaRef] = useEmblaCarousel();
 
   const OPTIONS: EmblaOptionsType = { loop: true, duration: 60 };
@@ -28,6 +30,7 @@ const Gallery = () => {
         new Set(response.map((image) => image.name))
       );
       setGalleryCat(categories);
+      setIsLoading(false);
     };
 
     fetchGalleryImages();
@@ -39,28 +42,37 @@ const Gallery = () => {
       <main className="py-8 flex flex-col gap-11">
         <h1 className="text-black text-4xl text-center">Gallery</h1>
         <div className="h-auto w-full">
-          <div>
-            {galleryCategories.length > 0 ? (
-              galleryCategories.map((category) => {
-                const filteredImages = galleryImages?.filter(
-                  (image) => image.name === category
-                );
+          {isLoading ? (
+            <div className="flex items-center justify-center mt-10">
+              <Loader />
+            </div>
+          ) : (
+            <div>
+              {galleryCategories.length > 0 ? (
+                galleryCategories.map((category) => {
+                  const filteredImages = galleryImages?.filter(
+                    (image) => image.name === category
+                  );
 
-                return (
-                  <div key={category} className="mb-8">
-                    <h2 className="text-2xl text-left mb-4">{category}</h2>
-                    <EmblaCarousel slides={filteredImages} options={OPTIONS} />
-                  </div>
-                );
-              })
-            ) : (
-              <div className="flex items-center justify-center">
-                <h1 className="font-bold text-3xl">
-                  SORRY NO IMAGES IN GALLERY YET!
-                </h1>
-              </div>
-            )}
-          </div>
+                  return (
+                    <div key={category} className="mb-8">
+                      <h2 className="text-2xl text-left mb-4">{category}</h2>
+                      <EmblaCarousel
+                        slides={filteredImages}
+                        options={OPTIONS}
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="flex items-center justify-center">
+                  <h1 className="font-bold text-3xl">
+                    SORRY NO IMAGES IN GALLERY YET!
+                  </h1>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </main>
     </>

@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Sermon } from "@/lib/types";
 import React from "react";
 import { getAllSermons, getExistingTags } from "@/lib/queries";
+import Loader from "../../../../components/Loader";
 
 interface SermonsProps {
   displaySermons: Sermon[];
@@ -33,17 +34,7 @@ export const Sermons = () => {
   const [search, setSearch] = React.useState("");
   const [displaySermons, setDisplaySermons] = React.useState<Sermon[]>();
   const [allTags, setAllTags] = React.useState<string[]>([]);
-
-  const getTags = async () => {
-    const data = await getExistingTags();
-    setAllTags(data);
-  };
-
-  const getSermons = async () => {
-    const res = await getAllSermons();
-    setAllSermons(res);
-    setDisplaySermons(res);
-  };
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const filterSermonByTags = (tag: string) => {
     const filteredSermon = allSermons?.filter((sermon) =>
@@ -53,8 +44,18 @@ export const Sermons = () => {
   };
 
   React.useEffect(() => {
-    getSermons();
+    const getSermons = async () => {
+      const res = await getAllSermons();
+      setAllSermons(res);
+      setDisplaySermons(res);
+    };
+    const getTags = async () => {
+      const data = await getExistingTags();
+      setAllTags(data);
+    };
     getTags();
+    getSermons();
+    setIsLoading(false);
   }, []);
 
   const filterBySearch = (search: string) => {
@@ -66,7 +67,7 @@ export const Sermons = () => {
   };
 
   if (!allSermons) {
-    return <div>No sermons provided</div>;
+    return false;
   }
 
   return (
@@ -79,7 +80,9 @@ export const Sermons = () => {
         setDisplaySermons={setDisplaySermons}
       />
       <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
-        {displaySermons?.length !== 0 ? (
+        {isLoading ? (
+          <Loader />
+        ) : (
           displaySermons?.map((sermon, index) => (
             <div className="w-auto h-auto p-6 pb-6 bg-slate-400" key={index}>
               <div className="h-[315px] sm:w-[560px] w-full">
@@ -100,8 +103,6 @@ export const Sermons = () => {
               </div>
             </div>
           ))
-        ) : (
-          <div>NO Sermons!</div>
         )}
       </div>
     </div>
@@ -147,12 +148,12 @@ const SermonTags = ({ sermon }: { sermon: Sermon }) => {
 
 const DisplayTags = ({ allTags, filterSermonByTags }: DisplayTagsProps) => {
   return (
-    <div className="flex flex-row gap-2 flex-wrap items-center justify-center">
+    <div className="flex flex-row gap-2 items-center justify-start overflow-x-auto snap-x snap-mandatory py-3">
       {allTags.length > 0 ? (
         allTags.map((tag, index) => (
           <span
             key={index}
-            className="bg-[#5B5966] bg-opacity-50 w-[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center"
+            className="bg-[#5B5966] bg-opacity-50 min-w-[100px] min-h-[50px] h-auto rounded cursor-pointer flex items-center justify-center text-center px-3 whitespace-nowrap shrink-0"
             onClick={() => filterSermonByTags(tag)}
           >
             {tag}
@@ -179,12 +180,12 @@ const Filter = ({
     setDisplaySermons(filteredSermon);
   };
   return (
-    <div className="flex flex-col gap-2 w-full sm:pl-[180px] px-3">
+    <div className="flex flex-col gap-2 sm:w-1/2 w-full sm:pl-[180px] px-3">
       <Input
         value={search}
         onChange={(e) => filterBySearch(e.target.value)}
-        className="sm:w-[140%] w-full"
-        placeholder="Search sermon..."
+        className="sm:w-[140%] w-full border-black"
+        placeholder="Search sermon title..."
       />
       <DisplayTags allTags={allTags} filterSermonByTags={filterSermonByTags} />
     </div>
