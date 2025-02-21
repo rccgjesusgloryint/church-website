@@ -120,7 +120,7 @@ const BlogCreator = ({ userId }: Props) => {
             secondary: "#FFFAEE",
           },
           success: {
-            duration: 5000,
+            duration: 2000,
             icon: "🟢",
           },
         }

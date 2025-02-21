@@ -1,14 +1,12 @@
+import { useState, useEffect } from "react";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { getYoutubeVidId } from "@/lib/actions";
-
 import { Input } from "@/components/ui/input";
-
 import { Sermon } from "@/lib/types";
-import React from "react";
 import { getAllSermons, getExistingTags } from "@/lib/queries";
 import Loader from "../../../../components/Loader";
 
@@ -19,7 +17,7 @@ interface SermonsProps {
 interface FilterProps {
   allSermons: Sermon[];
   setDisplaySermons: (variable: Sermon[]) => void;
-  filterBySearch: (varaible: string) => void;
+  filterBySearch: (variable: string) => void;
   search: string;
   allTags: string[];
 }
@@ -30,11 +28,11 @@ interface DisplayTagsProps {
 }
 
 export const Sermons = () => {
-  const [allSermons, setAllSermons] = React.useState<Sermon[]>();
-  const [search, setSearch] = React.useState("");
-  const [displaySermons, setDisplaySermons] = React.useState<Sermon[]>();
-  const [allTags, setAllTags] = React.useState<string[]>([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [allSermons, setAllSermons] = useState<Sermon[]>();
+  const [search, setSearch] = useState("");
+  const [displaySermons, setDisplaySermons] = useState<Sermon[]>();
+  const [allTags, setAllTags] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const filterSermonByTags = (tag: string) => {
     const filteredSermon = allSermons?.filter((sermon) =>
@@ -43,19 +41,22 @@ export const Sermons = () => {
     setDisplaySermons(filteredSermon);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getSermons = async () => {
+      setIsLoading(true);
       const res = await getAllSermons();
       setAllSermons(res);
       setDisplaySermons(res);
+      setIsLoading(false);
     };
+
     const getTags = async () => {
       const data = await getExistingTags();
       setAllTags(data);
     };
+
     getTags();
     getSermons();
-    setIsLoading(false);
   }, []);
 
   const filterBySearch = (search: string) => {
@@ -66,24 +67,28 @@ export const Sermons = () => {
     setDisplaySermons(filteredSearch);
   };
 
-  if (!allSermons) {
-    return false;
+  if (isLoading) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <Loader />
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col sm:items-start items-center w-full mt-11 relative">
-      <Filter
-        allSermons={allSermons}
-        allTags={allTags}
-        filterBySearch={filterBySearch}
-        search={search}
-        setDisplaySermons={setDisplaySermons}
-      />
+      {displaySermons && displaySermons.length > 0 && (
+        <Filter
+          allSermons={allSermons!!}
+          allTags={allTags}
+          filterBySearch={filterBySearch}
+          search={search}
+          setDisplaySermons={setDisplaySermons}
+        />
+      )}
       <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          displaySermons?.map((sermon, index) => (
+        {displaySermons && displaySermons.length > 0 ? (
+          displaySermons.map((sermon, index) => (
             <div className="w-auto h-auto p-6 pb-6 bg-slate-400" key={index}>
               <div className="h-[315px] sm:w-[560px] w-full">
                 <iframe
@@ -103,6 +108,10 @@ export const Sermons = () => {
               </div>
             </div>
           ))
+        ) : (
+          <div className="h-1/2">
+            <h1 className="text-2xl font-bold">No sermons posted yet!</h1>
+          </div>
         )}
       </div>
     </div>
@@ -149,7 +158,7 @@ const SermonTags = ({ sermon }: { sermon: Sermon }) => {
 const DisplayTags = ({ allTags, filterSermonByTags }: DisplayTagsProps) => {
   return (
     <div className="flex flex-row gap-2 items-center justify-start overflow-x-auto snap-x snap-mandatory py-3">
-      {allTags.length > 0 ? (
+      {allTags.length > 0 &&
         allTags.map((tag, index) => (
           <span
             key={index}
@@ -158,10 +167,7 @@ const DisplayTags = ({ allTags, filterSermonByTags }: DisplayTagsProps) => {
           >
             {tag}
           </span>
-        ))
-      ) : (
-        <div>No Tags!</div>
-      )}
+        ))}
     </div>
   );
 };

@@ -61,11 +61,11 @@ const SubscribeToNewsLetterForm = (props: Props) => {
             secondary: "#FFFAEE",
           },
           success: {
-            duration: 5000,
+            duration: 2000,
             icon: "🟢",
           },
           error: {
-            duration: 5000,
+            duration: 2000,
             icon: "🔴",
           },
         }
