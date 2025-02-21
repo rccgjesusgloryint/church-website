@@ -52,8 +52,20 @@ const Events = () => {
     setIsLoading(true);
     const fetchEvents = async () => {
       const response = await getAllEvents();
-      const upcomingEventsList = response.filter((e) => e.date.includes(month));
-      const pastEventsList = response.filter((e) => !e.date.includes(month));
+      const upcomingEventsList = response.filter((e) => {
+        if (e.date.length > 0) {
+          const eventDate = new Date(e.date[0]);
+          return eventDate >= today;
+        }
+        return false;
+      });
+      const pastEventsList = response.filter((e) => {
+        if (e.date.length > 0) {
+          const eventDate = new Date(e.date[0]);
+          return eventDate < today;
+        }
+        return false;
+      });
       setUpcomingEvents(Object(upcomingEventsList));
       setPastEvents(Object(pastEventsList));
       setIsLoading(false);
