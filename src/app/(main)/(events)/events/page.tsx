@@ -52,13 +52,18 @@ const Events = () => {
     setIsLoading(true);
     const fetchEvents = async () => {
       const response = await getAllEvents();
-      const upcomingEventsList = response.filter((e) => {
-        if (e.date.length > 0) {
-          const eventDate = new Date(e.date[0]);
-          return eventDate >= today;
-        }
-        return false;
-      });
+      const upcomingEventsList = response
+        .filter((e) => {
+          if (e.date.length > 0) {
+            const eventDate = new Date(e.date[0]);
+            return eventDate >= today;
+          }
+          return false;
+        })
+        .sort(
+          (a, b) =>
+            new Date(a.date[0]).getTime() - new Date(b.date[0]).getTime()
+        );
       const pastEventsList = response.filter((e) => {
         if (e.date.length > 0) {
           const eventDate = new Date(e.date[0]);
