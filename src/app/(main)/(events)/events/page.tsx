@@ -90,7 +90,7 @@ const Events = () => {
           </div>
         </div>
       </section>
-      <section className="h-screen w-full relative">
+      <section className="h-auto w-full relative">
         <UpcomingEventCards isLoading={isLoading} events={upcomingEvents} />
       </section>
       <section className="h-auto w-full relative">
