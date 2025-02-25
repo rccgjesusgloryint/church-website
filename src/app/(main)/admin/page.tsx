@@ -72,7 +72,7 @@ const AdminPage = () => {
           <h1 className="text-2xl">Edit Users</h1>
           <div className="flex flex-col">
             {allUsers?.map(({ name, member, id }) => (
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-2" key={id}>
                 <span>
                   {name}-{member}
                 </span>

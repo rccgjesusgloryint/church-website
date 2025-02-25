@@ -115,7 +115,11 @@ const UpdateUserForm = ({ usersRole, userId, setRefresh }: Props) => {
                       </SelectTrigger>
                       <SelectContent>
                         {roles.map((role) => (
-                          <SelectItem value={role} className="cursor-pointer">
+                          <SelectItem
+                            value={role}
+                            className="cursor-pointer"
+                            key={role}
+                          >
                             {role}
                           </SelectItem>
                         ))}
