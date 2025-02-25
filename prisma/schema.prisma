@@ -123,16 +123,16 @@ model Blog {
   blogImage           String?  
   blogContent         String
   blogAuthor          String
-  // series              Blog_Series[]
+  series              Blog_Series[]
   category            String
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
 }
 
-// model Blog_Series{
-//   id                  Int      @id @default(autoincrement())
-//   blog                Blog?    @relation(fields: [blogId], references: [id])
-//   blogId              String?  @unique
-//   createdAt           DateTime @default(now())
-//   updatedAt           DateTime @updatedAt
-// }
+model Blog_Series{
+  id                  Int      @id @default(autoincrement())
+  blog                Blog?    @relation(fields: [blogId], references: [id])
+  blogId              String?  @unique
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}

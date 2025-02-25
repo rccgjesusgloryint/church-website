@@ -510,3 +510,30 @@ export const postBlog = async (blog: BlogType, userId: string | undefined) => {
     };
   }
 };
+
+export const getAllUsers = async () => {
+  try {
+    const response = await prisma.user.findMany({});
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateUsersRole = async (
+  userId: string,
+  role: "ADMIN" | "MEMBER" | "OWNER" | "MINISTER"
+) => {
+  try {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        member: role,
+      },
+    });
+    return { status: 200, message: "Success updating users role!" };
+  } catch (error) {
+    console.log(error);
+    return { status: 400, message: "Error updating users role!" };
+  }
+};
