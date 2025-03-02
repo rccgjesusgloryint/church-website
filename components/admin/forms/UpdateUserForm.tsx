@@ -37,9 +37,10 @@ interface Props {
   usersRole: Role;
   userId: string;
   setRefresh: Dispatch<SetStateAction<boolean>>;
+  setClose: () => void;
 }
 
-const UpdateUserForm = ({ usersRole, userId, setRefresh }: Props) => {
+const UpdateUserForm = ({ usersRole, userId, setRefresh, setClose }: Props) => {
   const roles = ["ADMIN", "MEMBER", "MINISTER", "OWNER"];
   // Define the schema
   const formSchema = z.object({
@@ -84,8 +85,8 @@ const UpdateUserForm = ({ usersRole, userId, setRefresh }: Props) => {
         }
       );
       if (response.status === 200) {
-        form.resetField("role");
         setRefresh((prev) => !prev); // 🔄 Toggle state to trigger rerender
+        setClose();
       }
     } catch (error) {
       console.log("ERROR Updating User");

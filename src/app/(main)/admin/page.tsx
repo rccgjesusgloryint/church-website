@@ -1,24 +1,33 @@
 "use client";
 
 import React from "react";
-import { BiEdit } from "react-icons/bi";
 import MediaPage from "../../../../components/media";
 import CreateEvent from "../../../../components/events";
 import CreateSermonForm from "../../../../components/sermons/create-sermon-form";
 import Navbar2 from "../../../../components/navbar/Navbar2";
 
 import BlogCreator from "../../../../components/blogs/BlogCreator";
-import { getAllUsers, getAuthUserDetails } from "@/lib/queries";
-import { Role, User } from "@prisma/client";
+import {
+  getAllUsers,
+  getAuthUserDetails,
+  getEventById,
+  getSermonById,
+} from "@/lib/queries";
+import { Events, Role, User } from "@prisma/client";
 import { useModal } from "@/providers/modal-provider";
 import CustomModal from "../../../../components/global/custom-modal";
-import UpdateUserForm from "../../../../components/admin/UpdateUserForm";
+import UpdateUserForm from "../../../../components/admin/forms/UpdateUserForm";
+import EditPage from "../../../../components/admin/EditPage";
+import UpdateUser from "../../../../components/admin/UpdateUser";
+import UpdateSermonForm from "../../../../components/admin/forms/UpdateSermonForm";
+import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
+import { EventsType, Sermon } from "@/lib/types";
 
 const AdminPage = () => {
   const [user, setUser] = React.useState<string>();
   const [allUsers, setAllUsers] = React.useState<User[]>();
   const [refresh, setRefresh] = React.useState(false);
-  const { setOpen } = useModal();
+  const { setOpen, setClose } = useModal();
 
   React.useEffect(() => {
     // Fetch authenticated user details
@@ -47,6 +56,34 @@ const AdminPage = () => {
           usersRole={user.member as Role}
           userId={user.id}
           setRefresh={setRefresh}
+          setClose={setClose}
+        />
+      </CustomModal>
+    );
+  };
+
+  const handleSermonEdit = async (id: number) => {
+    const sermonFromDb = (await getSermonById(id)) as Sermon;
+    if (!sermonFromDb) return alert("No Sermon provided!");
+    setOpen(
+      <CustomModal>
+        <UpdateSermonForm
+          sermon={sermonFromDb}
+          setRefresh={setRefresh}
+          setClose={setClose}
+        />
+      </CustomModal>
+    );
+  };
+  const handleEventEdit = async (id: number) => {
+    const eventFromDb = (await getEventById(id)) as EventsType;
+    if (eventFromDb === null) return alert("No event found!");
+    setOpen(
+      <CustomModal>
+        <UpdateEventForm
+          oldEvent={eventFromDb}
+          setRefresh={setRefresh}
+          setClose={setClose}
         />
       </CustomModal>
     );
@@ -68,22 +105,15 @@ const AdminPage = () => {
         <section>
           <BlogCreator userId={user} />
         </section>
-        <section>
-          <h1 className="text-2xl">Edit Users</h1>
-          <div className="flex flex-col">
-            {allUsers?.map(({ name, member, id }) => (
-              <div className="flex items-center justify-center gap-2" key={id}>
-                <span>
-                  {name}-{member}
-                </span>
-                <BiEdit
-                  className="cursor-pointer"
-                  onClick={() => handleEditClick(id)}
-                />
-              </div>
-            ))}
-          </div>
-        </section>
+        <UpdateUser
+          allUsers={allUsers as User[]}
+          handleEditClick={handleEditClick}
+        />
+        <EditPage
+          handleSermonEdit={handleSermonEdit}
+          handleEventEdit={handleEventEdit}
+          refresh={refresh}
+        />
       </section>
     </>
   );

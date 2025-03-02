@@ -5,7 +5,9 @@ import {
   ContactFormType,
   CreateEventType,
   CreateSermon,
+  EventsType,
   EventTrack,
+  EventType,
   NewletterEmail,
   Sermon,
   UploadMultipleFiles,
@@ -15,7 +17,7 @@ import { Resend } from "resend";
 import { auth } from "@/auth";
 import prisma from "./db";
 import { title } from "process";
-import { Blog, Role } from "@prisma/client";
+import { Blog, Events, Role } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export const allUsers = async () => {
@@ -169,6 +171,14 @@ export const getEvent = async (id: number) => {
   });
 
   return response;
+};
+
+export const getEventById = async (id: number): Promise<EventsType | null> => {
+  const response = await prisma.events.findUnique({
+    where: { id: id },
+  });
+
+  return Object(response) as EventsType;
 };
 
 export const sendWelcomeEmail = async (email: string) => {
@@ -444,6 +454,13 @@ export const getAllSermons = async (): Promise<Sermon[]> => {
   return response as Sermon[];
 };
 
+export const getSermonById = async (id: number): Promise<Sermon> => {
+  const response = await prisma.sermon.findUnique({
+    where: { id },
+  });
+  return response as Sermon;
+};
+
 export const getExistingTags = async (): Promise<string[]> => {
   try {
     const response = await prisma.sermon.findMany({
@@ -535,5 +552,31 @@ export const updateUsersRole = async (
   } catch (error) {
     console.log(error);
     return { status: 400, message: "Error updating users role!" };
+  }
+};
+
+export const updateSermon = async (sermonId: number, sermon: Sermon) => {
+  try {
+    await prisma.sermon.update({
+      where: { id: sermonId },
+      data: sermon,
+    });
+    return { status: 200, message: "Success updating sermon!" };
+  } catch (error) {
+    console.log(error);
+    return { status: 400, message: "Error updating sermon!" };
+  }
+};
+
+export const updateEvent = async (eventId: number, event: EventsType) => {
+  try {
+    await prisma.events.update({
+      where: { id: eventId },
+      data: event,
+    });
+    return { status: 200, message: "Success updating event!" };
+  } catch (error) {
+    console.log(error);
+    return { status: 400, message: "Error updating event!" };
   }
 };

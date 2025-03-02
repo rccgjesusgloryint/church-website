@@ -48,6 +48,19 @@ export type EventType = {
   description: object | JsonValue;
 }[];
 
+export type EventsType = {
+  id?: number;
+  event: string;
+  date: string[];
+  location: string;
+  description: EventsDescription;
+};
+
+type EventsDescription = {
+  eventPosterImage: string;
+  eventDescription: string;
+};
+
 export type EventDetail = {
   eventId?: string;
   eventPosterImage: string;
