@@ -113,6 +113,7 @@ const AdminPage = () => {
           handleSermonEdit={handleSermonEdit}
           handleEventEdit={handleEventEdit}
           refresh={refresh}
+          setRefresh={setRefresh}
         />
       </section>
     </>

@@ -429,6 +429,22 @@ export const sendBulkNewsletterEmail = async (
   }
 };
 
+export const deleteSermon = async (sermonId: number) => {
+  try {
+    await prisma.sermon.delete({
+      where: { id: sermonId },
+    });
+    console.log({ message: "SUCCESS DELETING SERMON", status: 200 });
+    return { message: "SUCCESS DELETING SERMON", status: 200 };
+  } catch (error) {
+    console.log("🔴🔴 OOPS COULDNT DELETE SERMON -- ", error);
+    return {
+      message: `🔴🔴 -- ERROR MESSAGE: ${error}`,
+      status: 400,
+    };
+  }
+};
+
 export const createSermon = async (sermon: CreateSermon, tags: string[]) => {
   try {
     await prisma.sermon.create({
@@ -494,14 +510,16 @@ export const getBlogWithId = async (blogId: string): Promise<Blog> => {
 };
 
 // TO DO: refactor this to only return an array of categories
-export const getBlogCategories = async (category: string): Promise<any[]> => {
+export const getBlogCategories = async (): Promise<string[]> => {
   const response = await prisma.blog.findMany({
     select: { category: true },
   });
 
-  const categories = response.filter((blog) => blog.category === category);
+  let allCategories = [] as string[];
 
-  return categories;
+  response.map((blog) => allCategories.push(blog.category));
+
+  return allCategories;
 };
 
 export const postBlog = async (blog: BlogType, userId: string | undefined) => {
@@ -578,5 +596,18 @@ export const updateEvent = async (eventId: number, event: EventsType) => {
   } catch (error) {
     console.log(error);
     return { status: 400, message: "Error updating event!" };
+  }
+};
+
+export const deleteEvent = async (eventId: number) => {
+  try {
+    await prisma.events.delete({
+      where: { id: eventId },
+    });
+    console.log({ status: 200, message: "Success deleting event!" });
+    return { status: 200, message: "Success deleting event!" };
+  } catch (error) {
+    console.log(error);
+    return { status: 400, message: "Error deleting event!" };
   }
 };

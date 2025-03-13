@@ -6,13 +6,14 @@ import Navbar2 from "../../../../components/navbar/Navbar2";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { getAllBlogs } from "@/lib/queries";
+import { getAllBlogs, getBlogCategories } from "@/lib/queries";
 import { Blog } from "@prisma/client";
 import Loader from "../../../../components/Loader";
 
 const Blogs = () => {
   const [blogs, setBlogs] = React.useState<Blog[]>();
   const [isLoading, setIsLoading] = React.useState(false);
+  const [categories, setCategories] = React.useState<any>([]);
   const router = useRouter();
 
   const handleBlogRedirection = (blogId: string) => {
@@ -23,7 +24,9 @@ const Blogs = () => {
     const getData = async () => {
       setIsLoading(true);
       const response = await getAllBlogs();
+      const categoriesFromDb = await getBlogCategories();
       setBlogs(response);
+      setCategories(categoriesFromDb);
       setIsLoading(false);
     };
     getData();
@@ -51,8 +54,8 @@ const Blogs = () => {
                     All categories
                   </h1>
                   <div className="flex flex-col">
-                    {TEMP_BLOG_CATEGOORIES.map((category) => (
-                      <span className="cursor-pointer" key={category}>
+                    {categories.map((category: any) => (
+                      <span className="" key={category}>
                         {category}
                       </span>
                     ))}

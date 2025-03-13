@@ -32,6 +32,7 @@ import { UploadDropzone } from "@/lib/uploadthing";
 
 import { forwardRef } from "react";
 import { ControllerRenderProps } from "react-hook-form";
+import FileUpload from "../media/file-upload";
 
 type Props = {
   userId: string | undefined;
@@ -220,16 +221,10 @@ const BlogCreator = ({ userId }: Props) => {
                   <FormItem>
                     <FormLabel>Poster Image</FormLabel>
                     <FormControl>
-                      <UploadDropzone
-                        endpoint="pictures"
-                        onClientUploadComplete={(res) => {
-                          form.setValue("blogImage", res[0].url, {
-                            shouldValidate: true,
-                          }); // Update the form field
-                        }}
-                        onUploadError={(error: Error) => {
-                          console.log(error);
-                        }}
+                      <FileUpload
+                        apiEndpoint="pictures"
+                        onChange={field.onChange}
+                        value={field.value}
                       />
                     </FormControl>
                     <FormMessage />
