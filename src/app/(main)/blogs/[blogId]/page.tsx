@@ -59,9 +59,7 @@ const Blogs = ({ params }: BlogProps) => {
             <span className="bg-[#5B5966] w-auto h-auto rounded flex items-center justify-center p-3 text-center">
               {blog?.category}
             </span>
-            <h1 className="font-bold sm:text-[80px] text-[35px]">
-              {blog?.blogTitle}
-            </h1>
+            <h1 className="font-bold text-[25px] m-5">{blog?.blogTitle}</h1>
             <div className="flex flex-col justify-center items-center">
               <span className="text-[1rem] font-medium">
                 {blog?.createdAt.toDateString().slice(3)}
@@ -75,7 +73,7 @@ const Blogs = ({ params }: BlogProps) => {
       {/* Blog Content Section */}
       <section className="h-auto border flex items-center justify-center py-[15rem]">
         <div
-          className="blog-content max-w-[1000px] h-auto text-2xl font-normal break-words overflow-wrap"
+          className="blog-content max-w-[1000px] h-auto text-2xl font-normal break-words overflow-wrap px-5"
           dangerouslySetInnerHTML={{
             __html: blog?.blogContent
               ? DOMPurify.sanitize(blog.blogContent)

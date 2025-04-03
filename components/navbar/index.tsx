@@ -166,7 +166,7 @@ export const MobileViewNavbar2 = () => {
       <SheetTrigger className="md:hidden absolute top-9 left-6">
         <Image
           src="/images/Menu.png"
-          alt="logo"
+          alt="menu-logo"
           width={24}
           height={24}
           className=""
@@ -175,8 +175,8 @@ export const MobileViewNavbar2 = () => {
       <div className="flex items-center justify-center">
         <Link href="/" className="cursor-pointer">
           <Image
-            src="images/church-logo.svg"
-            alt="logo"
+            src="/images/church-logo.svg"
+            alt="church-logo"
             width={70}
             height={70}
           />
@@ -188,7 +188,7 @@ export const MobileViewNavbar2 = () => {
             <Link href="/" className="cursor-pointer">
               <Image
                 src="/images/church-logo.svg"
-                alt="logo"
+                alt="church-logo"
                 width={70}
                 height={70}
               />

@@ -43,13 +43,13 @@ const Blogs = () => {
             <Loader />
           </div>
         ) : (
-          <div className="flex flex-col flex-wrap gap-3 items-center pt-[10rem]">
+          <div className="flex flex-col flex-wrap gap-3 items-center pt-[7rem] sm:pt-[10rem]">
             {blogs && blogs.length > 0 && (
               <div
-                className="flex flex-col gap-5 max-h-[800px] relative"
+                className="flex flex-col gap-5 sm:max-h-[800px] relative px-5 sm:p-0"
                 key={blogs[0]?.id}
               >
-                <div className="absolute top-[25rem] right-[-15rem]">
+                <div className="absolute top-[25rem] right-[-15rem] hidden sm:block">
                   <h1 className="font-medium text-[20px] mb-3">
                     All categories
                   </h1>
@@ -83,7 +83,9 @@ const Blogs = () => {
                   className="cursor-pointer hover:opacity-80 max-h-[500px] object-contain"
                   onClick={() => handleBlogRedirection(blogs[0]?.id)}
                 />
-                <h1 className="font-normal">{blogs[0]?.blogDescription}</h1>
+                <h1 className="font-normal max-w-[818px]">
+                  {blogs[0]?.blogDescription}
+                </h1>
               </div>
             )}
             {blogs?.length !== 0 ? (
@@ -91,7 +93,7 @@ const Blogs = () => {
                 ?.filter((num, index) => index > 0)
                 .map((blog, index) => (
                   <div
-                    className="flex flex-row items-start gap-5 py-10 max-w-[800px] border-t-[1px] border-[#e0e0e0]"
+                    className="flex sm:flex-row flex-col items-start gap-5 py-10 px-5 max-w-[800px] border-t-[1px] border-[#e0e0e0]"
                     key={blog.id}
                   >
                     <Image
@@ -100,9 +102,9 @@ const Blogs = () => {
                         blog.blogImage ||
                         "https://www.1689designs.com/cdn/shop/files/all-over-print-flag-white-front-6604d51e7e80c.png?v=1711592746"
                       }
-                      width={200}
+                      width={500}
                       height={150}
-                      className="cursor-pointer hover:opacity-80"
+                      className="cursor-pointer hover:opacity-80 sm:w-[200px]"
                       onClick={() => handleBlogRedirection(blog.id)}
                     />
                     <div className="flex flex-col gap-3">
@@ -115,7 +117,7 @@ const Blogs = () => {
                       >
                         {blog.blogTitle}
                       </h1>
-                      <h1 className="font-normal">
+                      <h1 className="font-normal max-w-[818px]">
                         {/* TO DO// When creating the form for posting blogs make the description cap at 450 characters */}
                         {blog.blogDescription.slice(0, 450)}
                       </h1>
