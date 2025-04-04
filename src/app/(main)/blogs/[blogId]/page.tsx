@@ -71,9 +71,9 @@ const Blogs = ({ params }: BlogProps) => {
       </section>
 
       {/* Blog Content Section */}
-      <section className="h-auto border flex items-center justify-center py-[15rem]">
+      <section className="h-auto flex items-center justify-center py-20 px-4 sm:px-6 md:px-12">
         <div
-          className="blog-content max-w-[1000px] h-auto text-2xl font-normal break-words overflow-wrap px-5"
+          className="blog-content w-full max-w-[1000px] text-base sm:text-lg md:text-xl font-normal break-words overflow-wrap"
           dangerouslySetInnerHTML={{
             __html: blog?.blogContent
               ? DOMPurify.sanitize(blog.blogContent)
