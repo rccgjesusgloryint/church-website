@@ -26,7 +26,11 @@ const Blogs = () => {
       const response = await getAllBlogs();
       const categoriesFromDb = await getBlogCategories();
       setBlogs(response);
-      setCategories(categoriesFromDb);
+      //filter categories to remove duplicate categories
+      let uniqueCategories = categoriesFromDb.filter(
+        (item, index) => categoriesFromDb.indexOf(item) === index
+      );
+      setCategories(uniqueCategories);
       setIsLoading(false);
     };
     getData();
@@ -54,7 +58,7 @@ const Blogs = () => {
                     All categories
                   </h1>
                   <div className="flex flex-col">
-                    {categories.map((category: any) => (
+                    {categories?.map((category: any) => (
                       <span className="" key={category}>
                         {category}
                       </span>
