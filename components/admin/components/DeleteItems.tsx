@@ -16,13 +16,13 @@ import { Trash2Icon } from "lucide-react";
 
 type Props = {
   item: string;
-  func: (id: number | string) => Promise<void>;
-  id: number | string;
+  func: (id: any) => Promise<void>;
+  id: any;
   setRefresh: Dispatch<SetStateAction<boolean>>;
 };
 
 const DeleteItems = ({ item, func, id, setRefresh }: Props) => {
-  const handleDelete = async (id: number | string) => {
+  const handleDelete = async (id: any) => {
     func(id);
     setRefresh((prev) => !prev);
   };

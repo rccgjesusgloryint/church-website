@@ -44,7 +44,7 @@ const EditSermon = ({ sermons, setRefresh, handleSermonEdit }: Props) => {
                   />
                   <DeleteItems
                     item={"Sermon"}
-                    func={handleSermonDelete}
+                    func={handleSermonDelete as any}
                     id={s.id!!}
                     setRefresh={setRefresh}
                   />

@@ -45,7 +45,7 @@ const EditEvent = ({ events, setRefresh, handleEventEdit }: Props) => {
 
                 <DeleteItems
                   item={"Event"}
-                  func={handleEventDelete}
+                  func={handleEventDelete as any}
                   id={e.id!!}
                   setRefresh={setRefresh}
                 />

@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import MediaPage from "../../../../components/media";
 import CreateEvent from "../../../../components/events";
@@ -91,6 +90,7 @@ const AdminPage = () => {
       </CustomModal>
     );
   };
+
   const handleEventEdit = async (id: number) => {
     const eventFromDb = (await getEventById(id)) as EventsType;
     if (eventFromDb === null) return alert("No event found!");

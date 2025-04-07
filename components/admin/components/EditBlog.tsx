@@ -18,7 +18,7 @@ type Props = {
 };
 
 const EditBlog = ({ blogs, setRefresh, handleBlogEdit }: Props) => {
-  const handleBlogDelete = async (id: number | string) => {
+  const handleBlogDelete = async (id: string) => {
     await deleteBlog(id as string);
   };
   return (

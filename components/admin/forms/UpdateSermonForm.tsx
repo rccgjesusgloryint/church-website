@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -16,22 +14,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Role, User } from "@prisma/client";
 import toast from "react-hot-toast";
-import { updateSermon, updateUsersRole } from "@/lib/queries";
+import { updateSermon } from "@/lib/queries";
 import { Sermon } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import TagCreator from "../../global/tag-creator";
