@@ -43,7 +43,7 @@ const Blogs = () => {
             <Loader />
           </div>
         ) : (
-          <div className="flex flex-col flex-wrap gap-3 items-center pt-[7rem] sm:pt-[10rem]">
+          <div className="flex flex-col flex-wrap gap-3 items-center py-[7rem] sm:pt-[10rem]">
             {blogs && blogs.length > 0 && (
               <div
                 className="flex flex-col gap-5 sm:max-h-[800px] relative px-5 sm:p-0"

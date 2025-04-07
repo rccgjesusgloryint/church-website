@@ -546,6 +546,35 @@ export const postBlog = async (blog: BlogType, userId: string | undefined) => {
   }
 };
 
+export const deleteBlog = async (blogId: string) => {
+  try {
+    await prisma.blog.delete({
+      where: { id: blogId },
+    });
+    console.log({ message: "SUCCESS DELETING BLOG", status: 200 });
+    return { message: "SUCCESS DELETING BLOG", status: 200 };
+  } catch (error) {
+    console.log("🔴🔴 OOPS COULDNT DELETE BLOG -- ", error);
+    return {
+      message: `🔴🔴 -- ERROR MESSAGE: ${error}`,
+      status: 400,
+    };
+  }
+};
+
+export const updateBlog = async (blog: BlogType, blogId: string) => {
+  try {
+    await prisma.blog.update({
+      where: { id: blogId },
+      data: blog,
+    });
+    return { status: 200, message: "Success updating sermon!" };
+  } catch (error) {
+    console.log(error);
+    return { status: 400, message: "Error updating sermon!" };
+  }
+};
+
 export const getAllUsers = async () => {
   try {
     const response = await prisma.user.findMany({});

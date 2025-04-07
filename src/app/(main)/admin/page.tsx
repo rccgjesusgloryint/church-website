@@ -10,6 +10,7 @@ import BlogCreator from "../../../../components/blogs/BlogCreator";
 import {
   getAllUsers,
   getAuthUserDetails,
+  getBlogWithId,
   getEventById,
   getSermonById,
 } from "@/lib/queries";
@@ -21,7 +22,8 @@ import EditPage from "../../../../components/admin/EditPage";
 import UpdateUser from "../../../../components/admin/UpdateUser";
 import UpdateSermonForm from "../../../../components/admin/forms/UpdateSermonForm";
 import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
-import { EventsType, Sermon } from "@/lib/types";
+import { BlogType, EventsType, Sermon } from "@/lib/types";
+import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
 
 const AdminPage = () => {
   const [user, setUser] = React.useState<string>();
@@ -75,6 +77,20 @@ const AdminPage = () => {
       </CustomModal>
     );
   };
+
+  const handleBlogEdit = async (id: string) => {
+    const blogFromDb = (await getBlogWithId(id)) as BlogType;
+    if (!blogFromDb) return alert("No Blog provided!");
+    setOpen(
+      <CustomModal>
+        <UpdateBlogForm
+          blog={blogFromDb}
+          setRefresh={setRefresh}
+          setClose={setClose}
+        />
+      </CustomModal>
+    );
+  };
   const handleEventEdit = async (id: number) => {
     const eventFromDb = (await getEventById(id)) as EventsType;
     if (eventFromDb === null) return alert("No event found!");
@@ -112,6 +128,7 @@ const AdminPage = () => {
         <EditPage
           handleSermonEdit={handleSermonEdit}
           handleEventEdit={handleEventEdit}
+          handleBlogEdit={handleBlogEdit}
           refresh={refresh}
           setRefresh={setRefresh}
         />
