@@ -9,6 +9,7 @@ import Image from "next/image";
 import { getAllBlogs, getBlogCategories } from "@/lib/queries";
 import { Blog } from "@prisma/client";
 import Loader from "../../../../components/Loader";
+import { BlogType } from "@/lib/types";
 
 const Blogs = () => {
   const [blogs, setBlogs] = React.useState<Blog[]>();
@@ -24,8 +25,14 @@ const Blogs = () => {
     const getData = async () => {
       setIsLoading(true);
       const response = await getAllBlogs();
+      const sortedBlogs = response.sort(
+        (a: BlogType, b: BlogType) =>
+          new Date(b.createdAt ?? 0).getTime() -
+          new Date(a.createdAt ?? 0).getTime()
+      );
+      setBlogs(sortedBlogs);
+
       const categoriesFromDb = await getBlogCategories();
-      setBlogs(response);
       //filter categories to remove duplicate categories
       let uniqueCategories = categoriesFromDb.filter(
         (item, index) => categoriesFromDb.indexOf(item) === index
