@@ -6,8 +6,6 @@ import {
   CreateEventType,
   CreateSermon,
   EventsType,
-  EventTrack,
-  EventType,
   NewletterEmail,
   Sermon,
   UploadMultipleFiles,
@@ -15,10 +13,9 @@ import {
 
 import { Resend } from "resend";
 import { auth } from "@/auth";
-import prisma from "./db";
-import { title } from "process";
-import { Blog, Events, Role } from "@prisma/client";
-import { NextResponse } from "next/server";
+import { prisma } from "./db";
+
+import { Blog, Role } from "@prisma/client";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
@@ -538,7 +535,7 @@ export const postBlog = async (blog: BlogType, userId: string | undefined) => {
     console.log("BLOG POSTED 🟢🟢");
     return { message: "🟢🟢SUCCESS", status: 200 };
   } catch (error) {
-    console.log("🔴🔴 OOPS COULDNT CREATE SERMON -- ", error);
+    console.log("🔴🔴 OOPS COULDNT POST BLOG -- ", error);
     return {
       message: `🔴🔴 -- ERROR MESSAGE: ${error}`,
       status: 400,
