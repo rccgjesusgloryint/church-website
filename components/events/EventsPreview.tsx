@@ -33,7 +33,18 @@ const EventsPreview = () => {
     setIsLoading(true);
     const fetchEvents = async () => {
       const response = await getAllEvents();
-      const upcomingEvents = response?.filter((e) => e.date.includes(month));
+      const upcomingEvents = response
+        .filter((e) => {
+          if (e.date.length > 0) {
+            const eventDate = new Date(e.date[0]);
+            return eventDate >= today;
+          }
+          return false;
+        })
+        .sort(
+          (a, b) =>
+            new Date(a.date[0]).getTime() - new Date(b.date[0]).getTime()
+        );
       setEvents(Object(upcomingEvents));
       setIsLoading(false);
     };

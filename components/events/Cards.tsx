@@ -73,10 +73,7 @@ const Cards = ({ events }: CardProps) => {
             className="border-2 border-light-gr mt-[56px] w-[160px] h-[60px] flex justify-center items-center hover:bg-light-gr hover:text-white cursor-pointer transition ease-in-out"
             onClick={() => handleNavigation(event.id)}
           >
-            <button
-              disabled={true}
-              className="font-bold text-sm tracking-wider"
-            >
+            <button className="font-bold text-sm tracking-wider">
               READ MORE
             </button>
           </div>
