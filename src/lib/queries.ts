@@ -80,25 +80,27 @@ export const createMedia = async (
   mediaFile: UploadMultipleFiles
 ) => {
   try {
-    mediaFile.map(async (link) => {
+    for (const link of mediaFile) {
       try {
-        const response = await prisma.media.create({
+        await prisma.media.create({
           data: {
             link: link.url,
             name: name,
-            // externalId: externalId,
           },
         });
-        // ("RESPONSE: ", response);
+
+        // Small delay to prevent overwhelming DB (optional but helps on low limits)
+        await new Promise((resolve) => setTimeout(resolve, 50));
       } catch (error) {
-        console.log("ERROR: ", error);
-        return { message: "OOPS COULDNT UPLAOD FILES", status: 400 };
+        console.error("Error creating media record:", error);
+        return { message: "OOPS COULDN'T UPLOAD SOME FILES", status: 400 };
       }
-    });
-    return { message: "SUCCESSFULLY UPLAODED FILES", status: 200 };
+    }
+
+    return { message: "SUCCESSFULLY UPLOADED FILES", status: 200 };
   } catch (error) {
-    console.log("ERROR: ", error);
-    return { message: "OOPS COULDNT UPLAOD FILES", status: 400 };
+    console.error("Fatal error in createMedia:", error);
+    return { message: "FATAL ERROR UPLOADING FILES", status: 500 };
   }
 };
 
