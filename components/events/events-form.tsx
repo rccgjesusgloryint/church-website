@@ -66,6 +66,12 @@ const EventsForm = () => {
     },
   });
 
+  const monthlyValue = form.watch("monthly"); // this will return "true", "false", or undefined
+
+  React.useEffect(() => {
+    console.log("Monthly Value: ", monthlyValue, typeof monthlyValue);
+  }, [monthlyValue]);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (
       !values.date ||
@@ -145,7 +151,10 @@ const EventsForm = () => {
                 <FormItem>
                   <FormLabel>Is this a Monthly event?</FormLabel>
                   <FormControl>
-                    <Select>
+                    <Select
+                      onValueChange={(val) => field.onChange(val === "true")}
+                      value={String(field.value)}
+                    >
                       <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Yes" />
                       </SelectTrigger>
@@ -159,32 +168,44 @@ const EventsForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="date.0"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>From Date</FormLabel>
-                  <FormControl>
-                    <Input placeholder="From (eg. April 28, 2022)" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="date.1"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>To Date</FormLabel>
-                  <FormControl>
-                    <Input placeholder="To (eg. April 30, 2022)" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
+            {/* Conditionally render date fields if monthly is "false" */}
+            {!monthlyValue && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="date.0"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>From Date</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="From (eg. April 28, 2022)"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="date.1"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>To Date</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="To (eg. April 30, 2022)"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
             <FormField
               control={form.control}
               name="location"

@@ -49,6 +49,22 @@ export const isAdmin = async () => {
   }
 };
 
+export const isOwner = async () => {
+  const session = await auth();
+  if (!session) {
+    return false;
+  }
+  const res = await prisma.user.findUnique({
+    where: { id: session.user?.id },
+  });
+
+  if (res?.member === "ADMIN") {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export const accessCheck = async (): Promise<Role | undefined> => {
   const session = await auth();
   if (!session) {
