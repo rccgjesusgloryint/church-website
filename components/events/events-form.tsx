@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -36,6 +44,7 @@ const EventsForm = () => {
       eventPosterImage: z.string().min(1),
       eventDescription: z.string().min(1),
     }),
+    monthly: z.boolean(),
   });
 
   // Infer the form data type
@@ -53,6 +62,7 @@ const EventsForm = () => {
         eventPosterImage: "",
         eventDescription: "",
       },
+      monthly: false,
     },
   });
 
@@ -61,6 +71,7 @@ const EventsForm = () => {
       !values.date ||
       !values.description ||
       !values.event ||
+      !values.monthly ||
       !values.description.eventDescription ||
       !values.description.eventPosterImage
     ) {
@@ -122,6 +133,27 @@ const EventsForm = () => {
                   <FormLabel>Event Name</FormLabel>
                   <FormControl>
                     <Input placeholder="Event" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="monthly"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Is this a Monthly event?</FormLabel>
+                  <FormControl>
+                    <Select>
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Yes" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="true">Yes</SelectItem>
+                        <SelectItem value="false">No</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

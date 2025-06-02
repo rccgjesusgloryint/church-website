@@ -132,6 +132,7 @@ export const createEvent = async (eventObj: CreateEventType) => {
         date: eventObj.date,
         location: eventObj.location,
         description: eventObj.description,
+        monthly: eventObj.monthly,
       },
     });
 
@@ -154,6 +155,7 @@ export const getAllEvents = async () => {
       date: true,
       location: true,
       description: true,
+      monthly: true,
     },
   });
 

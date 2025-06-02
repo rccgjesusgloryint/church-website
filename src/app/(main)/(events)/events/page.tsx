@@ -13,6 +13,7 @@ import { EventType } from "@/lib/types";
 
 import { UpcomingEventCards } from "./UpcomingEvents";
 import { PastEvents } from "./PastEvents";
+import { MonthlyEvents } from "../MonthlyEvents";
 
 const Events = () => {
   const useTitle = React.useRef<HTMLElement | any>();
@@ -30,6 +31,7 @@ const Events = () => {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [upcomingEvents, setUpcomingEvents] = React.useState<EventType>([]);
   const [pastEvents, setPastEvents] = React.useState<EventType>([]);
+  const [monthlyEvents, setMonthlyEvents] = React.useState<EventType>([]);
 
   const today = new Date(Date.now());
   const months = [
@@ -54,6 +56,7 @@ const Events = () => {
       const response = await getAllEvents();
       const upcomingEventsList = response
         .filter((e) => {
+          if (e.monthly) return false;
           if (e.date.length > 0) {
             const eventDate = new Date(e.date[0]);
             return eventDate >= today;
@@ -65,12 +68,15 @@ const Events = () => {
             new Date(a.date[0]).getTime() - new Date(b.date[0]).getTime()
         );
       const pastEventsList = response.filter((e) => {
+        if (e.monthly) return false;
         if (e.date.length > 0) {
           const eventDate = new Date(e.date[0]);
           return eventDate < today;
         }
         return false;
       });
+      const monthlyEvents = response.filter((e) => e.monthly === true);
+      setMonthlyEvents(monthlyEvents);
       setUpcomingEvents(Object(upcomingEventsList));
       setPastEvents(Object(pastEventsList));
       setIsLoading(false);
@@ -95,6 +101,9 @@ const Events = () => {
       </section>
       <section className="h-auto w-full relative">
         <PastEvents pastEvents={pastEvents} isLoading={isLoading} />
+      </section>
+      <section className="h-auto w-full relative">
+        <MonthlyEvents monthlyEvents={monthlyEvents} isLoading={isLoading} />
       </section>
     </>
   );

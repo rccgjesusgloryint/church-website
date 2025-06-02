@@ -89,6 +89,7 @@ model Events {
   date        String[]
   location    String
   description Json
+  monthly     Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

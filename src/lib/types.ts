@@ -36,6 +36,7 @@ export type CreateEventType = {
     eventPosterImage: string;
     eventDescription: string;
   };
+  monthly: boolean;
 };
 
 export type GalleryType = string[];
@@ -45,6 +46,7 @@ export type EventType = {
   event: string;
   date: string[];
   location: string;
+  monthly?: boolean;
   description: object | JsonValue;
 }[];
 
@@ -54,6 +56,7 @@ export type EventsType = {
   date: string[];
   location: string;
   description: EventsDescription;
+  monthly?: boolean;
 };
 
 type EventsDescription = {
