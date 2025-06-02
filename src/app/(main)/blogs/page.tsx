@@ -1,15 +1,23 @@
 "use client";
 
+import { FaShareFromSquare } from "react-icons/fa6";
+
 import React from "react";
-import { TEMP_BLOG_CATEGOORIES } from "./temp_data";
+
 import Navbar2 from "../../../../components/navbar/Navbar2";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import { getAllBlogs, getBlogCategories } from "@/lib/queries";
 import { Blog } from "@prisma/client";
 import Loader from "../../../../components/Loader";
 import { BlogType } from "@/lib/types";
+
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 const Blogs = () => {
   const [blogs, setBlogs] = React.useState<Blog[]>();
@@ -43,7 +51,11 @@ const Blogs = () => {
     getData();
   }, []);
 
-  // if (!blogs) return false;
+  const handleShareFunc = (id: string) => {
+    navigator.clipboard.writeText(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/blogs/${id}`
+    );
+  };
 
   return (
     <>
@@ -54,7 +66,7 @@ const Blogs = () => {
             <Loader />
           </div>
         ) : (
-          <div className="flex flex-col flex-wrap gap-3 items-center py-[7rem] sm:pt-[10rem]">
+          <div className="flex flex-col flex-wrap gap-3 items-center py-[7rem] sm:pt-[10rem] relative">
             {blogs && blogs.length > 0 && (
               <div
                 className="flex flex-col gap-5 sm:max-h-[800px] relative px-5 sm:p-0"
@@ -104,9 +116,26 @@ const Blogs = () => {
                 ?.filter((num, index) => index > 0)
                 .map((blog, index) => (
                   <div
-                    className="flex sm:flex-row flex-col items-start gap-5 py-10 px-5 max-w-[800px] border-t-[1px] border-[#e0e0e0]"
+                    className="flex sm:flex-row flex-col items-start gap-5 py-10 px-5 max-w-[800px] border-t-[1px] border-[#e0e0e0] relative"
                     key={blog.id}
                   >
+                    <span className="absolute top-5 right-2">
+                      <HoverCard openDelay={100}>
+                        <HoverCardTrigger>
+                          <FaShareFromSquare
+                            className="cursor-pointer"
+                            onClick={() => handleShareFunc(blog.id)}
+                          />
+                        </HoverCardTrigger>
+                        <HoverCardContent
+                          className="w-auto bg-black !border-black"
+                          style={{ padding: "3px" }}
+                        >
+                          <span className="text-white">Share Blog</span>
+                        </HoverCardContent>
+                      </HoverCard>
+                    </span>
+
                     <Image
                       alt="poster-image"
                       src={
