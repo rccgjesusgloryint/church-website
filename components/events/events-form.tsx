@@ -36,16 +36,27 @@ import FileUpload from "../media/file-upload";
 
 const EventsForm = () => {
   // Define the schema
-  const formSchema = z.object({
-    event: z.string().min(2).max(50),
-    date: z.tuple([z.string().min(1), z.string()]),
-    location: z.string().min(15),
-    description: z.object({
-      eventPosterImage: z.string().min(1),
-      eventDescription: z.string().min(1),
-    }),
-    monthly: z.boolean(),
-  });
+  const formSchema = z
+    .object({
+      event: z.string().min(2).max(50),
+      date: z.tuple([z.string().min(1), z.string()]).optional(),
+      location: z.string().min(15),
+      description: z.object({
+        eventPosterImage: z.string().min(1),
+        eventDescription: z.string().min(1),
+      }),
+      monthly: z.boolean(),
+    })
+    .refine(
+      (data) =>
+        data.monthly ||
+        (data.date && data.date[0].trim() && data.date[1].trim()),
+      {
+        path: ["date"],
+        message:
+          "From and To dates are required when the event is not monthly.",
+      }
+    );
 
   // Infer the form data type
   type FormData = z.infer<typeof formSchema>;
@@ -68,21 +79,7 @@ const EventsForm = () => {
 
   const monthlyValue = form.watch("monthly"); // this will return "true", "false", or undefined
 
-  React.useEffect(() => {
-    console.log("Monthly Value: ", monthlyValue, typeof monthlyValue);
-  }, [monthlyValue]);
-
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (
-      !values.date ||
-      !values.description ||
-      !values.event ||
-      !values.monthly ||
-      !values.description.eventDescription ||
-      !values.description.eventPosterImage
-    ) {
-      return alert("INPUTS EMPTY!!");
-    }
+  const handleValidSubmit = async (values: any) => {
     try {
       const response = await toast.promise(
         createEvent(values),
@@ -108,16 +105,16 @@ const EventsForm = () => {
         }
       );
       if (response.status === 200) {
-        form.resetField("date");
-        form.resetField("location");
-        form.resetField("event");
-        form.resetField("description.eventDescription");
-        form.resetField("description.eventPosterImage");
+        form.reset();
       }
     } catch (error) {
-      console.log("ERROR CREATING EVENT");
+      console.error("ERROR CREATING EVENT", error);
     }
-  }
+  };
+
+  const handleInvalidSubmit = (errors: typeof form.formState.errors) => {
+    toast.error("Please fix the form errors before submitting.");
+  };
 
   return (
     <Card className="w-full h-full mt-5">
@@ -130,7 +127,9 @@ const EventsForm = () => {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={form.handleSubmit(handleValidSubmit, handleInvalidSubmit)}
+          >
             <FormField
               control={form.control}
               name="event"

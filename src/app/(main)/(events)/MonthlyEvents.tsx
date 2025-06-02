@@ -96,7 +96,7 @@ export const MonthlyEvents = ({
             })
           ) : (
             <div>
-              <h1>No monthlyEvents yet!</h1>
+              <h1>No Monthly Events yet!</h1>
             </div>
           )}
         </div>
@@ -136,14 +136,14 @@ const EventHeadings = () => {
           <h3 className="tracking-widest">MONTHLY EVENTS</h3>
           <div className="bg-black opacity-55 w-[163px] h-[1px] mt-1 mb-0"></div>
         </div>
-        <div
+        {/* <div
           className="flex flex-row items-center justify-center w-full relative mt-11"
           ref={useTitle2}
         >
           <h1 className="font-bold sm:text-[40px] text-[30px] w-full text-center">
             Don&apos;t Miss Your Chance to Get Closer to God
           </h1>
-        </div>
+        </div> */}
       </div>
     </div>
   );
