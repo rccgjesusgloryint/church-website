@@ -86,13 +86,14 @@ model Media {
 model Events {
   id          Int      @id @default(autoincrement())
   event       String
-  date        String[]
+  date        String[]  @default(["", ""])
   location    String
   description Json
   monthly     Boolean @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
 
 model NewsletterEmail {
   email String @id // Email as the primary key (unique identifier)

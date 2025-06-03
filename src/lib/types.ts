@@ -30,11 +30,11 @@ export type UploadMultipleFiles = {
 export type CreateEventType = {
   id?: number;
   event: string;
-  date: string[];
+  date?: string[];
   location: string;
   description: {
     eventPosterImage: string;
-    eventDescription: string;
+    eventDescription?: string;
   };
   monthly: boolean;
 };
@@ -44,7 +44,7 @@ export type GalleryType = string[];
 export type EventType = {
   id: number;
   event: string;
-  date: string[];
+  date?: string[];
   location: string;
   monthly?: boolean;
   description: object | JsonValue;
@@ -53,7 +53,7 @@ export type EventType = {
 export type EventsType = {
   id?: number;
   event: string;
-  date: string[];
+  date?: string[];
   location: string;
   description: EventsDescription;
   monthly?: boolean;
@@ -73,7 +73,7 @@ export type EventDetail = {
 export type EventDescription = {
   description: {
     eventPosterImage: string;
-    eventDescription: string;
+    eventDescription?: string;
   };
   location: string;
 };

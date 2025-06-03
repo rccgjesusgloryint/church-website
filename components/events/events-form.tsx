@@ -39,7 +39,7 @@ const EventsForm = () => {
   const formSchema = z
     .object({
       event: z.string().min(2).max(50),
-      date: z.tuple([z.string().min(1), z.string()]).optional(),
+      date: z.tuple([z.string(), z.string()]).optional(),
       location: z.string().min(15),
       description: z.object({
         eventPosterImage: z.string().min(1),
@@ -51,6 +51,7 @@ const EventsForm = () => {
       (data) =>
         data.monthly ||
         (data.date && data.date[0].trim() && data.date[1].trim()),
+
       {
         path: ["date"],
         message:
@@ -79,7 +80,7 @@ const EventsForm = () => {
 
   const monthlyValue = form.watch("monthly"); // this will return "true", "false", or undefined
 
-  const handleValidSubmit = async (values: any) => {
+  const validSubmissions = async (values: any) => {
     try {
       const response = await toast.promise(
         createEvent(values),
@@ -108,11 +109,15 @@ const EventsForm = () => {
         form.reset();
       }
     } catch (error) {
-      console.error("ERROR CREATING EVENT", error);
+      console.log("SOMETHING WENT WRONG! COULDNT CREATE EVENT");
+      toast.error("Please fix the form errors before submitting.");
     }
   };
 
-  const handleInvalidSubmit = (errors: typeof form.formState.errors) => {
+  const invalidSubmissions = async (errors: typeof form.formState.errors) => {
+    if (errors.date) {
+      return toast.error("Please fill in the dates for the event");
+    }
     toast.error("Please fix the form errors before submitting.");
   };
 
@@ -128,7 +133,7 @@ const EventsForm = () => {
       <CardContent>
         <Form {...form}>
           <form
-            onSubmit={form.handleSubmit(handleValidSubmit, handleInvalidSubmit)}
+            onSubmit={form.handleSubmit(validSubmissions, invalidSubmissions)}
           >
             <FormField
               control={form.control}

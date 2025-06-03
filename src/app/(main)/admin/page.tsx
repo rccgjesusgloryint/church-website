@@ -12,6 +12,7 @@ import {
   getBlogWithId,
   getEventById,
   getSermonById,
+  isUserOwner,
 } from "@/lib/queries";
 import { Events, Role, User } from "@prisma/client";
 import { useModal } from "@/providers/modal-provider";
@@ -121,6 +122,7 @@ const AdminPage = () => {
         <section>
           <BlogCreator userId={user} />
         </section>
+        {/* //TO DO: Add permission types to admin users */}
         <UpdateUser
           allUsers={allUsers as User[]}
           handleEditClick={handleEditClick}
