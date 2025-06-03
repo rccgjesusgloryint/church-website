@@ -15,9 +15,10 @@ import Loader from "../../../../../components/Loader";
 type Props = {
   pastEvents: EventType;
   isLoading: boolean;
+  lastSunday: string[];
 };
 
-export const PastEvents = ({ pastEvents, isLoading }: Props) => {
+export const PastEvents = ({ pastEvents, isLoading, lastSunday }: Props) => {
   const router = useRouter();
 
   const handleNavigation = (id: number) => {
@@ -40,18 +41,33 @@ export const PastEvents = ({ pastEvents, isLoading }: Props) => {
                   className="sm:w-[290px] w-[390px] 2xl:w-[390px] min-h-[420px] h-auto bg-white px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl"
                   key={index}
                 >
-                  <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
-                    <p className="text-[28px] text-center w-full mb-[3px] leading-6">
-                      {event.date[0].split(" ")[1].length > 2
-                        ? event.date[0].split(" ")[1].slice(0, 2)
-                        : event.date[0].split(" ")[1].slice(0, 1)}
-                    </p>
-                    <p className="text-base mb-[10px]">
-                      {event.date[0].length > 3
-                        ? event.date[0].slice(0, 3)
-                        : event.date[0]}
-                    </p>
-                  </div>
+                  {event.monthly ? (
+                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+                      <>
+                        <p className="text-[28px] text-center w-full mb-[3px] leading-6">
+                          {lastSunday[1]}
+                        </p>
+                        <p className="text-base mb-[10px]">{lastSunday[0]}</p>
+                      </>
+                    </div>
+                  ) : (
+                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+                      {event.date && (
+                        <>
+                          <p className="text-[28px] text-center w-full mb-[3px] leading-6">
+                            {event.date[0].split(" ")[1].length > 2
+                              ? event.date[0].split(" ")[1].slice(0, 2)
+                              : event.date[0].split(" ")[1].slice(0, 1)}
+                          </p>
+                          <p className="text-base mb-[10px]">
+                            {event.date[0].length > 3
+                              ? event.date[0].slice(0, 3)
+                              : event.date[0]}
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  )}
 
                   <h2 className="font-bold text-2xl w-[230px] 2xl:w-[337px] mb-[20px]">
                     {event?.event}
@@ -64,12 +80,18 @@ export const PastEvents = ({ pastEvents, isLoading }: Props) => {
                       <span className=""></span>
                     </div>
                     <div className="font-bold text-base pl-10">
-                      <div>
-                        <p>{event.date[0]}</p>
-                      </div>
-                      <div>
-                        <p>{event.date[1]}</p>
-                      </div>
+                      {event.monthly ? (
+                        <div>End of the Month</div>
+                      ) : (
+                        <>
+                          <div>
+                            <p>{event.date && event.date[0]}</p>
+                          </div>
+                          <div>
+                            <p>{event.date && event.date[1]}</p>
+                          </div>
+                        </>
+                      )}
                     </div>
                     <div className="pt-[20px]">
                       <span className="absolute mt-[5px]">

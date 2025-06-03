@@ -14,6 +14,7 @@ import { EventType } from "@/lib/types";
 import { UpcomingEventCards } from "./UpcomingEvents";
 import { PastEvents } from "./PastEvents";
 import { MonthlyEvents } from "../MonthlyEvents";
+import { getLastSundayOfTheMonth } from "@/lib/actions";
 
 const Events = () => {
   const useTitle = React.useRef<HTMLElement | any>();
@@ -49,6 +50,9 @@ const Events = () => {
     "December",
   ];
   const month = months[today.getMonth()];
+
+  let d = new Date();
+  const lastSunday = getLastSundayOfTheMonth(d.getFullYear(), d.getMonth());
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -97,13 +101,25 @@ const Events = () => {
         </div>
       </section>
       <section className="h-auto w-full relative">
-        <UpcomingEventCards isLoading={isLoading} events={upcomingEvents} />
+        <UpcomingEventCards
+          isLoading={isLoading}
+          events={upcomingEvents}
+          lastSunday={lastSunday}
+        />
       </section>
       <section className="h-auto w-full relative">
-        <PastEvents pastEvents={pastEvents} isLoading={isLoading} />
+        <PastEvents
+          pastEvents={pastEvents}
+          isLoading={isLoading}
+          lastSunday={lastSunday}
+        />
       </section>
       <section className="h-auto w-full relative">
-        <MonthlyEvents monthlyEvents={monthlyEvents} isLoading={isLoading} />
+        <MonthlyEvents
+          monthlyEvents={monthlyEvents}
+          isLoading={isLoading}
+          lastSunday={lastSunday}
+        />
       </section>
     </>
   );

@@ -109,6 +109,7 @@ const AdminPage = () => {
   return (
     <>
       <Navbar2 />
+
       <section className="w-full h-full px-10">
         <h1 className="flex items-center justify-center text-xl mt-8">
           Admin Page

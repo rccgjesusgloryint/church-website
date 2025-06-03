@@ -16,18 +16,20 @@ import { getLastSundayOfTheMonth } from "@/lib/actions";
 interface EventCardsProps {
   isLoading: boolean;
   monthlyEvents: EventType;
+  lastSunday: string[];
 }
 
 export const MonthlyEvents = ({
   isLoading,
   monthlyEvents,
+  lastSunday,
 }: EventCardsProps) => {
   const router = useRouter();
-  let d = new Date();
-  const lastSunday = getLastSundayOfTheMonth(d.getFullYear(), d.getMonth());
+
   const handleNavigation = (id: number) => {
     router.push(`/events/${id}`);
   };
+
   return (
     <>
       <EventHeadings />

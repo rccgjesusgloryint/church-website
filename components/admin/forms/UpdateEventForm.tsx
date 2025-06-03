@@ -62,7 +62,10 @@ const UpdateEventForm = ({ oldEvent, setRefresh, setClose }: Props) => {
     mode: "onSubmit",
     defaultValues: {
       event: oldEvent.event || "",
-      date: [oldEvent.date[0] || "", oldEvent.date[1] || ""],
+      date: [
+        (oldEvent.date && oldEvent.date[0]) || "",
+        (oldEvent.date && oldEvent.date[1]) || "",
+      ],
       location: oldEvent.location || "",
       description: {
         eventPosterImage: oldEvent.description.eventPosterImage || "",
