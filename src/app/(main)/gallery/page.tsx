@@ -10,6 +10,7 @@ import { EmblaOptionsType } from "embla-carousel";
 import { GetAllImages } from "@/lib/types";
 import EmblaCarousel from "../../../../components/gallery/gallery-carousel";
 import Loader from "../../../../components/Loader";
+import Footer from "../../../../components/Footer";
 
 type CategoryType = string[];
 
@@ -75,6 +76,7 @@ const Gallery = () => {
           )}
         </div>
       </main>
+      <Footer />
     </>
   );
 };

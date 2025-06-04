@@ -6,7 +6,7 @@ import React from "react";
 
 import Navbar2 from "../../../../components/navbar/Navbar2";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { getAllBlogs, getBlogCategories } from "@/lib/queries";
 import { Blog } from "@prisma/client";
@@ -18,6 +18,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import Footer from "../../../../components/Footer";
 
 const Blogs = () => {
   const [blogs, setBlogs] = React.useState<Blog[]>();
@@ -170,6 +171,7 @@ const Blogs = () => {
           </div>
         )}
       </div>
+      <Footer />
     </>
   );
 };

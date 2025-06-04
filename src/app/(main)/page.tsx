@@ -4,6 +4,7 @@ import Newsletter from "../../../components/Newsletter";
 
 import React from "react";
 import GalleryPreview from "../../../components/gallery/GalleryPreview";
+import Footer from "../../../components/Footer";
 
 export default async function Home() {
   return (
@@ -12,6 +13,7 @@ export default async function Home() {
       <GalleryPreview />
       <EventsPreview />
       <Newsletter />
+      <Footer />
     </main>
   );
 }

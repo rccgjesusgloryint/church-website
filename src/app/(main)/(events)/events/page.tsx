@@ -15,6 +15,7 @@ import { UpcomingEventCards } from "./UpcomingEvents";
 import { PastEvents } from "./PastEvents";
 import { MonthlyEvents } from "../MonthlyEvents";
 import { getLastSundayOfTheMonth } from "@/lib/actions";
+import Footer from "../../../../../components/Footer";
 
 const Events = () => {
   const useTitle = React.useRef<HTMLElement | any>();
@@ -121,6 +122,7 @@ const Events = () => {
           lastSunday={lastSunday}
         />
       </section>
+      <Footer />
     </>
   );
 };
