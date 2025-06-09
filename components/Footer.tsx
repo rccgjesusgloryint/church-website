@@ -102,6 +102,7 @@ const Footer = () => {
                     href={service.link}
                     target="_blank"
                     className="flex flex-row items-center cursor-pointer"
+                    key={service.name}
                   >
                     <TbPointFilled className="mr-4" color="grey" />
                     {service.name}
@@ -123,6 +124,7 @@ const Footer = () => {
                           href={`${blogBaseUrl}/${blog.id}`}
                           target="_blank"
                           className="flex flex-row items-center cursor-pointer"
+                          key={blog.id}
                         >
                           <TbPointFilled className="mr-4" color="grey" />
                           {blog.blogTitle}
@@ -133,6 +135,7 @@ const Footer = () => {
                           href={`${blogBaseUrl}/${blog.id}`}
                           target="_blank"
                           className="flex flex-row items-center cursor-pointer"
+                          key={blog.id}
                         >
                           <TbPointFilled className="mr-4" color="grey" />
                           {blog.blogTitle}
