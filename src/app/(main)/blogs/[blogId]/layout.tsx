@@ -10,7 +10,7 @@ const layout = async ({ children }: Props) => {
   if (!userRole) {
     return <Unauthorized />;
   }
-  return <div>{children}</div>;
+  return <section>{children}</section>;
 };
 
 export default layout;

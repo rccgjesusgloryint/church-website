@@ -59,9 +59,9 @@ const Navbar = () => {
                   className={`${
                     admin === null ||
                     (admin === false && label === "Admin") ||
-                    admin === null ||
-                    (userRole === undefined && label === "Blogs")
-                      ? "hidden"
+                    admin === null
+                      ? // (userRole === undefined && label === "Blogs")
+                        "hidden"
                       : ""
                   } hover:text-gray-700 duration-200`}
                 >

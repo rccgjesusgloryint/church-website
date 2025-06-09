@@ -170,8 +170,8 @@ const Blogs = () => {
             )}
           </div>
         )}
+        <Footer />
       </div>
-      <Footer />
     </>
   );
 };
