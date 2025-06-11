@@ -17,8 +17,19 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Jesus Glory Athy",
-  description: "Local Church Website in Athy Co.Kildare",
+  openGraph: {
+    type: "website",
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}.com`,
+    title: "Jesus Glory Athy",
+    countryName: "Ireland",
+    description: "Local Church Website in Athy Co.Kildare",
+    siteName: "Jesus Glory International",
+    images: [
+      {
+        url: "public/images/church-logo.svg",
+      },
+    ],
+  },
 };
 
 export const fetchCache = "default-no-store";
