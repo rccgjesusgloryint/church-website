@@ -12,17 +12,14 @@ import {
 
 import Image from "next/image";
 import Link from "next/link";
+import { CarosoulImageType } from "@/lib/types";
 
-const MobileView = () => {
-  const carouselImgs: string[] = [
-    "/images/carousel_img1.jpg",
-    "/images/carousel_img2.jpg",
-    "/images/carousel_img3.jpg",
-    "/images/carousel_img4.jpg",
-    "/images/carousel_img5.jpg",
-    "/images/carousel_img6.jpg",
-  ];
+type Props = {
+  images: CarosoulImageType[];
+  isLoading: boolean;
+};
 
+const MobileView = ({ images, isLoading }: Props) => {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
   return (
     <div className="sm:hidden my-20 relative">
@@ -33,18 +30,19 @@ const MobileView = () => {
         className="px-3"
       >
         <CarouselContent>
-          {carouselImgs.map((image: string, index: Key) => {
-            return (
-              <CarouselItem key={index}>
-                <Image
-                  src={image}
-                  alt={`carousel_img${1}`}
-                  width={500}
-                  height={500}
-                />
-              </CarouselItem>
-            );
-          })}
+          {!isLoading &&
+            images.map((image) => {
+              return (
+                <CarouselItem key={image.id}>
+                  <Image
+                    src={image.link}
+                    alt={image.name}
+                    width={500}
+                    height={500}
+                  />
+                </CarouselItem>
+              );
+            })}
         </CarouselContent>
       </Carousel>
     </div>

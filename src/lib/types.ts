@@ -18,6 +18,13 @@ export type CreateMediaType = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
+
+export type CarosoulImageType = {
+  id: string;
+  name: string;
+  link: string;
+};
+
 export type UploadMultipleFiles = {
   key?: string | undefined;
   type?: string | undefined;

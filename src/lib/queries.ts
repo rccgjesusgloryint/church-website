@@ -2,6 +2,7 @@
 
 import {
   BlogType,
+  CarosoulImageType,
   ContactFormType,
   CreateEventType,
   CreateSermon,
@@ -15,7 +16,7 @@ import { Resend } from "resend";
 import { auth } from "@/auth";
 import { prisma } from "./db";
 
-import { Blog, Role } from "@prisma/client";
+import { Blog, Media, Role } from "@prisma/client";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
@@ -133,6 +134,31 @@ export const getAllImages = async () => {
     },
   });
   return response;
+};
+
+export const getRandomImages = async (
+  amount: number
+): Promise<CarosoulImageType[]> => {
+  const response = await prisma.media.findMany({
+    select: {
+      id: true,
+      link: true,
+      name: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  let randomImages = response
+    .filter((image, index) => {
+      let randomNum = Math.random() * 15;
+      if (index < randomNum) return;
+      if (index % 2 == 0) return image;
+    })
+    .slice(0, amount);
+
+  return randomImages;
 };
 
 export const createEvent = async (eventObj: CreateEventType) => {
