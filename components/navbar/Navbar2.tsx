@@ -12,7 +12,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const Navbar2 = () => {
   const [admin, setAdmin] = React.useState<boolean | null>(null);
-  const [userRole, setUserRole] = React.useState<Role | undefined>();
   const [loaded, setIsLoaded] = React.useState(false);
 
   React.useEffect(() => {
@@ -20,8 +19,6 @@ const Navbar2 = () => {
     const navbarCheck = async () => {
       const res = await isAdmin();
       setAdmin(res);
-      const userRole = await accessCheck();
-      setUserRole(userRole);
       setIsLoaded(true);
     };
     navbarCheck();
@@ -56,8 +53,7 @@ const Navbar2 = () => {
                 className={`${
                   admin === null ||
                   (admin === false && label === "Admin") ||
-                  admin === null ||
-                  (userRole === undefined && label === "Blogs")
+                  admin === null
                     ? "hidden"
                     : ""
                 } hover:text-gray-700 duration-200`}

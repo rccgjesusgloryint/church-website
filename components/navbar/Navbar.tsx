@@ -17,7 +17,6 @@ import Loader from "../Loader";
 const Navbar = () => {
   const navbar = React.useRef<HTMLElement | any>();
   const [admin, setAdmin] = React.useState<boolean | null>(null);
-  const [userRole, setUserRole] = React.useState<Role | undefined>();
   const [loaded, setIsLoaded] = React.useState(false);
 
   React.useEffect(() => {
@@ -25,16 +24,10 @@ const Navbar = () => {
     const navbarCheck = async () => {
       const res = await isAdmin();
       setAdmin(res);
-      const userRole = await accessCheck();
-      setUserRole(userRole);
       setIsLoaded(true);
     };
     navbarCheck();
   }, []);
-
-  React.useEffect(() => {
-    console.log(loaded);
-  }, [loaded]);
 
   useGSAP(() => {
     gsap.from(navbar.current, {
@@ -47,7 +40,6 @@ const Navbar = () => {
   return (
     <>
       {loaded ? (
-        // setTimeout(()
         <div className="w-screen">
           <div className="relative">
             <MobileViewNavbar />
@@ -60,8 +52,7 @@ const Navbar = () => {
                     admin === null ||
                     (admin === false && label === "Admin") ||
                     admin === null
-                      ? // (userRole === undefined && label === "Blogs")
-                        "hidden"
+                      ? "hidden"
                       : ""
                   } hover:text-gray-700 duration-200`}
                 >

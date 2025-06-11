@@ -96,19 +96,14 @@ export const AuthButton2 = () => {
 
 export const MobileViewNavbar = () => {
   const [admin, setAdmin] = React.useState<boolean | null>(null);
-  const [userRole, setUserRole] = React.useState<Role | undefined>();
 
   React.useEffect(() => {
     const checkUserAdmin = async () => {
       const res = await isAdmin();
       setAdmin(res);
     };
-    const checkUserRole = async () => {
-      const userRole = await accessCheck();
-      setUserRole(userRole);
-    };
+
     checkUserAdmin();
-    checkUserRole();
   }, []);
   return (
     <Sheet>
@@ -129,8 +124,7 @@ export const MobileViewNavbar = () => {
                 className={`${
                   admin === null ||
                   (admin === false && label === "Admin") ||
-                  admin === null ||
-                  (userRole === undefined && label === "Blogs")
+                  admin === null
                     ? "hidden"
                     : ""
                 } active:bg-blue-300 bg-none w-full flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl`}
@@ -203,9 +197,9 @@ export const MobileViewNavbar2 = () => {
                   className={`${
                     admin === null ||
                     (admin === false && label === "Admin") ||
-                    admin === null ||
-                    (userRole === undefined && label === "Blogs")
-                      ? "hidden"
+                    admin === null
+                      ? // (userRole === undefined && label === "Blogs")
+                        "hidden"
                       : ""
                   } active:bg-blue-300 bg-none w-full flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl`}
                 >
