@@ -19,7 +19,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   openGraph: {
     type: "website",
-    url: `${process.env.NEXT_PUBLIC_BASE_URL}.com`,
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     title: "Jesus Glory Athy",
     countryName: "Ireland",
     description: "Local Church Website in Athy Co.Kildare",
