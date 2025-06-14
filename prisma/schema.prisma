@@ -106,6 +106,7 @@ model Sermon {
   sermonTitle     String
   tags            String[]
   likes           Int?
+  embedHTML       String?   @default("")
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
@@ -137,4 +138,13 @@ model Blog_Series{
   blogId              String?  @unique
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
+}
+
+model Notification {
+  id                          String  @default(uuid()) @id
+  notification                String
+  shouldNotify                Boolean
+  notificationDuration        String //how long should the notfication be visible for when triggered
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt   
 }
