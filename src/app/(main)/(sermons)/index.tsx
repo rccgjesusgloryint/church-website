@@ -42,6 +42,8 @@ export const Sermons = () => {
   };
 
   useEffect(() => {
+    getAllSermons();
+
     const getSermons = async () => {
       setIsLoading(true);
       const res = await getAllSermons();
@@ -147,9 +149,13 @@ const SermonTags = ({ sermon }: { sermon: Sermon }) => {
           </div>
         </HoverCard>
       ) : (
-        <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center border-2 border-black">
-          {sermon.tags.length !== 0 && sermon.tags[0]}
-        </span>
+        <>
+          {sermon.tags.length !== 0 ? (
+            <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center border-2 border-black">
+              {sermon.tags.length !== 0 && sermon.tags[0]}
+            </span>
+          ) : null}
+        </>
       )}
     </div>
   );

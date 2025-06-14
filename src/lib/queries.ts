@@ -505,6 +505,15 @@ export const createSermon = async (sermon: CreateSermon, tags: string[]) => {
 };
 
 export const getAllSermons = async (): Promise<Sermon[]> => {
+  //Check for new sermons in the youtube channel and add to db
+  const checkYTchannel = `${process.env.NEXT_PUBLIC_BASE_URL}/api/youtube`;
+  await fetch(checkYTchannel, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  // grap all sermons in db
   const response = await prisma.sermon.findMany({});
   return response as Sermon[];
 };
