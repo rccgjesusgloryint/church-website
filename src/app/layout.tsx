@@ -8,6 +8,7 @@ import ModalProvider from "@/providers/modal-provider";
 import { auth } from "@/auth";
 
 import { AuthProvider } from "../../components/AuthProvider";
+import { isLive } from "@/lib/queries";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -17,6 +18,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
   openGraph: {
     type: "website",
     url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
@@ -40,6 +42,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  const liveStreaming = (await isLive()) as boolean;
+  console.log("livestreaming: ", liveStreaming);
 
   return (
     <html lang="en">

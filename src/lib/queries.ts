@@ -688,3 +688,18 @@ export const deleteEvent = async (eventId: number) => {
     return { status: 400, message: "Error deleting event!" };
   }
 };
+
+export const isLive = async (): Promise<boolean> => {
+  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/youtube`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  let resJson = await response.json();
+
+  return resJson.isLivstreaming;
+};

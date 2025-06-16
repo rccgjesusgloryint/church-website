@@ -10,6 +10,7 @@ export async function GET(req: Request) {
   try {
     let playlistId;
     let sermonsToStoreFromYT = [] as any;
+    let streaming = false as boolean;
 
     // Get Channel by Handle
     await getRequest(
@@ -25,7 +26,14 @@ export async function GET(req: Request) {
       .catch((err) => console.log("🔴🔴🔴🔴WHOOPS!!!: ", err));
 
     if (!playlistId)
-      return "🔴🔴 Didnt get PLAYLISTID from CHANNEL DATA!! 🔴🔴";
+      return new Response(
+        JSON.stringify({
+          message: "🔴🔴 Didnt get PLAYLISTID from CHANNEL DATA!! 🔴🔴",
+        }),
+        {
+          status: 505,
+        }
+      );
 
     // Get List of Videos via playlistId from channelDetails
     await getRequest(
@@ -79,9 +87,32 @@ export async function GET(req: Request) {
       }
     );
 
+    //get channels video[liveStream] details
+    await getRequest(
+      "search?channelId=UCYeJhXbX98xvE1uHU5T9dXA&type=video&eventType=live",
+      process.env.YOUTUBE_API_KEY as string,
+      "snippet"
+    )
+      .then(async (data) => {
+        let dataJson = await data.json();
+        if (dataJson.items.length < 1) {
+          streaming = false;
+          return;
+        }
+        streaming = true;
+      })
+      .catch((err) =>
+        console.log("❌❌❌❌WHOOPS SOMETHING WENT WRONG❌❌❌❌: ", err)
+      );
+
     return new Response(
-      JSON.stringify({ message: "Uploaded Sermons added to db!" }),
-      { status: 200 }
+      JSON.stringify({
+        message: "SUCCESS YOUTUBE API CALLS!",
+        isLivstreaming: streaming,
+      }),
+      {
+        status: 200,
+      }
     );
   } catch (error) {
     console.error("Youtube API Error:", error);
@@ -91,9 +122,8 @@ export async function GET(req: Request) {
   }
 }
 
-export const getRequest = async (params: string, key: string, part: string) => {
+const getRequest = async (params: string, key: string, part: string) => {
   let fullYoutubeUrl = `${process.env.NEXT_PUBLIC_YOUTUBE_API_BASE_URL}/${params}&part=${part}&key=${key}`;
-
   const response = await fetch(fullYoutubeUrl, {
     method: "GET",
     headers: {
