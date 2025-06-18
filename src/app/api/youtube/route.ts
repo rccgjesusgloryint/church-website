@@ -88,6 +88,8 @@ export async function GET(req: Request) {
     );
 
     //get channels video[liveStream] details
+    // test isStreaming ChannelId: UCiGVX87jKIHRuQid_SC3ZQg
+    // UCYeJhXbX98xvE1uHU5T9dXA
     await getRequest(
       "search?channelId=UCYeJhXbX98xvE1uHU5T9dXA&type=video&eventType=live",
       process.env.YOUTUBE_API_KEY as string,
@@ -104,7 +106,6 @@ export async function GET(req: Request) {
       .catch((err) =>
         console.log("❌❌❌❌WHOOPS SOMETHING WENT WRONG❌❌❌❌: ", err)
       );
-
     return new Response(
       JSON.stringify({
         message: "SUCCESS YOUTUBE API CALLS!",

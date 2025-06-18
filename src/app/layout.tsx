@@ -8,7 +8,8 @@ import ModalProvider from "@/providers/modal-provider";
 import { auth } from "@/auth";
 
 import { AuthProvider } from "../../components/AuthProvider";
-import { isLive } from "@/lib/queries";
+
+import LiveStreamButton from "@/components/LiveStreamButton";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -42,8 +43,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  const liveStreaming = (await isLive()) as boolean;
-  console.log("livestreaming: ", liveStreaming);
 
   return (
     <html lang="en">
@@ -52,6 +51,11 @@ export default async function RootLayout({
       <body className={dmSans.className}>
         <AuthProvider session={session as any}>
           <ModalProvider>{children}</ModalProvider>
+          <LiveStreamButton
+            channelUrl={
+              "https://www.youtube.com/@rccgjesusgloryinternationa5350/live"
+            }
+          />
           <Toaster />
         </AuthProvider>
       </body>
