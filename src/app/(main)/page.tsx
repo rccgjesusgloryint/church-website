@@ -5,14 +5,16 @@ import Newsletter from "../../../components/Newsletter";
 import React from "react";
 import GalleryPreview from "../../../components/gallery/GalleryPreview";
 import Footer from "../../../components/Footer";
-import Head from "next/head";
+
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Jesus Glory Athy - Home",
+};
 
 export default async function Home() {
   return (
     <main>
-      <Head>
-        <title>Home</title>
-      </Head>
       <Hero />
       <GalleryPreview />
       <EventsPreview />
