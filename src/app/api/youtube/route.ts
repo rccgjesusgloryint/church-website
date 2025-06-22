@@ -90,26 +90,27 @@ export async function GET(req: Request) {
     //get channels video[liveStream] details
     // test isStreaming ChannelId: UCiGVX87jKIHRuQid_SC3ZQg
     // UCYeJhXbX98xvE1uHU5T9dXA
-    await getRequest(
+    const response = await getRequest(
       "search?channelId=UCYeJhXbX98xvE1uHU5T9dXA&type=video&eventType=live",
       process.env.YOUTUBE_API_KEY as string,
       "snippet"
-    )
-      .then(async (data) => {
-        let dataJson = await data.json();
-        if (dataJson.items.length < 1) {
-          streaming = false;
-          return;
-        }
-        streaming = true;
-      })
-      .catch((err) =>
-        console.log("❌❌❌❌WHOOPS SOMETHING WENT WRONG❌❌❌❌: ", err)
-      );
+    );
+
+    const data = await response.json();
+
+    const isLiveStreaming = data?.items?.length > 0;
+    // .then(async (data) => {
+    //   let dataJson = await data.json();
+    //   console.log("Data Json: ", dataJson);
+    //   streaming = dataJson?.items?.length > 0;
+    // })
+    // .catch((err) =>
+    //   console.log("❌❌❌❌WHOOPS SOMETHING WENT WRONG❌❌❌❌: ", err)
+    // );
     return new Response(
       JSON.stringify({
         message: "SUCCESS YOUTUBE API CALLS!",
-        isLivstreaming: streaming,
+        isLivstreaming: isLiveStreaming,
       }),
       {
         status: 200,
