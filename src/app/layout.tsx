@@ -22,10 +22,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
   openGraph: {
     type: "website",
+    emails: "rccgjesusgloryint@gmail.com",
     url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     title: "Jesus Glory Athy",
     countryName: "Ireland",
-    description: "Local Church Website in Athy Co.Kildare",
+    description: "Jesus Glory International, based in Athy Co.Kildare",
     siteName: "Jesus Glory International",
     images: [
       {
