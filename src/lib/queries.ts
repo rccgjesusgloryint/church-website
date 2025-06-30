@@ -690,16 +690,22 @@ export const deleteEvent = async (eventId: number) => {
 };
 
 export const isLive = async (): Promise<boolean> => {
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/youtube`;
+  try {
+    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/youtube`;
 
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+    const response = await fetch(url, {
+      cache: "no-store",
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  let resJson = await response.json();
-
-  return resJson.isLivstreaming;
+    const data = await response.json();
+    console.log("Live check API data:", data); // 👀
+    return data?.isLive;
+  } catch (error) {
+    console.error("Error fetching live status:", error);
+    return false;
+  }
 };

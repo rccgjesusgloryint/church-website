@@ -13,18 +13,14 @@ export default function LiveStreamButton({
   const [live, setIsLive] = useState(false);
 
   useEffect(() => {
-    const checkLiveStatus = async () => {
-      try {
-        const liveStreaming = await isLive();
-        console.log("livestreaming: ", liveStreaming);
-        setIsLive(liveStreaming);
-      } catch (error) {
-        console.error("Error checking live status:", error);
-      }
+    const check = async () => {
+      const result = await isLive();
+      console.log("🎥 isLive result: ", result);
+      setIsLive(result);
     };
 
-    checkLiveStatus();
-    const interval = setInterval(checkLiveStatus, 60000); // poll every 1 min
+    check();
+    const interval = setInterval(check, 60000);
     return () => clearInterval(interval);
   }, []);
 
