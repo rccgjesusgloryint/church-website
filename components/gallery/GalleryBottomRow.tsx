@@ -28,6 +28,8 @@ const GalleryBottomRow = ({ setOpen, images, isLoading }: Props) => {
                 className="bg-cover bg-center w-full h-full"
                 width={1500}
                 height={1200}
+                loading="lazy"
+                // priority (//TO DO: add this when gallery page is updated)
                 onClick={() =>
                   setOpen(
                     <CustomModal>
