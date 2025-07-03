@@ -36,6 +36,7 @@ const UpdateUser = ({ allUsers, setRefresh, setClose, user }: Props) => {
               setRefresh={setRefresh}
               setClose={setClose}
               user={user}
+              key={id.slice(0, 18)}
             />
           ))}
         </CardContent>
