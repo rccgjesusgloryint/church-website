@@ -1,6 +1,8 @@
 import Unauthorized from "@/components/unauthorized/AdminOnly";
-import { isAdmin } from "@/lib/queries";
+import { getAuthUserDetails, isAdmin } from "@/lib/queries";
 import { Metadata } from "next";
+import Navbar2 from "../../../../components/navbar/Navbar2";
+import { ThemeProvider } from "@/components/theme-provider";
 
 type Props = {
   children: React.ReactNode;
@@ -12,10 +14,25 @@ export const metadata: Metadata = {
 
 const layout = async ({ children }: Props) => {
   const admin = await isAdmin();
-  if (!admin) {
+  const authedUser = await getAuthUserDetails();
+  if (!authedUser) return;
+  if (authedUser.member === "MEMBER") {
     return <Unauthorized />;
   }
-  return <div>{children}</div>;
+
+  return (
+    <div className="h-screen">
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <Navbar2 />
+        {children}
+      </ThemeProvider>
+    </div>
+  );
 };
 
 export default layout;

@@ -38,7 +38,7 @@ export const MonthlyEvents = ({
           <Loader />
         </div>
       ) : (
-        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
+        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3 text-black">
           {monthlyEvents.length > 0 ? (
             monthlyEvents?.map((event, index) => {
               return (

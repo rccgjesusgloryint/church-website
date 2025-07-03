@@ -10,6 +10,7 @@ import { auth } from "@/auth";
 import { AuthProvider } from "../../components/AuthProvider";
 
 import LiveStreamButton from "@/components/LiveStreamButton";
+import { ThemeProvider } from "@/components/theme-provider";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -50,15 +51,22 @@ export default async function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={dmSans.className}>
-        <AuthProvider session={session as any}>
-          <ModalProvider>{children}</ModalProvider>
-          <LiveStreamButton
-            channelUrl={
-              "https://www.youtube.com/@rccgjesusgloryinternationa5350/live"
-            }
-          />
-          <Toaster />
-        </AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider session={session as any}>
+            <ModalProvider>{children}</ModalProvider>
+            <LiveStreamButton
+              channelUrl={
+                "https://www.youtube.com/@rccgjesusgloryinternationa5350/live"
+              }
+            />
+            <Toaster />
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

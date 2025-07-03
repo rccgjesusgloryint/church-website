@@ -10,9 +10,10 @@ import { useGSAP } from "@gsap/react";
 import Link from "next/link";
 
 import { AuthButton, MobileViewNavbar, navContent } from ".";
-import { accessCheck, isAdmin } from "@/lib/queries";
+import { accessCheck, getAuthUserDetails, isAdmin } from "@/lib/queries";
 import { Role } from "@prisma/client";
 import Loader from "../Loader";
+import { ModeToggle } from "@/components/toggle-mode";
 
 const Navbar = () => {
   const navbar = React.useRef<HTMLElement | any>();
@@ -22,8 +23,9 @@ const Navbar = () => {
   React.useEffect(() => {
     setIsLoaded(false);
     const navbarCheck = async () => {
-      const res = await isAdmin();
-      setAdmin(res);
+      const authedUser = await getAuthUserDetails();
+      const isAuthorized = authedUser?.member === "MEMBER" ? false : true;
+      setAdmin(isAuthorized);
       setIsLoaded(true);
     };
     navbarCheck();

@@ -31,7 +31,7 @@ const EditBlog = ({ blogs, setRefresh, handleBlogEdit }: Props) => {
       <CardContent>
         <div>
           <div className="flex flex-col items-start justify-center">
-            {blogs &&
+            {blogs ? (
               blogs?.map((b) => (
                 <div
                   className="flex items-center justify-center gap-2"
@@ -49,7 +49,12 @@ const EditBlog = ({ blogs, setRefresh, handleBlogEdit }: Props) => {
                     setRefresh={setRefresh}
                   />
                 </div>
-              ))}
+              ))
+            ) : (
+              <div className="flex flex-col items-start justify-center">
+                <h3 className="text-xl">You have posted no blogs yet!</h3>
+              </div>
+            )}
           </div>
         </div>
       </CardContent>

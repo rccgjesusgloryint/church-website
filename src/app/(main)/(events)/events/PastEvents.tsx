@@ -33,7 +33,7 @@ export const PastEvents = ({ pastEvents, isLoading, lastSunday }: Props) => {
           <Loader />
         </div>
       ) : (
-        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
+        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3 text-black">
           {pastEvents.length > 0 ? (
             pastEvents?.map((event, index) => {
               return (

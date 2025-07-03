@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 import { BiEdit } from "react-icons/bi";
 
-import { User } from "@prisma/client";
+import { Role, User } from "@prisma/client";
 
 import {
   Card,
@@ -11,36 +11,34 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import UpdateUserForm from "./forms/UpdateUserForm";
 
 type Props = {
   allUsers: User[];
-  handleEditClick: (id: string) => false | void;
+  // handleEditClick: (id: string) => false | void;
+  setRefresh: Dispatch<SetStateAction<boolean>>;
+  setClose: () => void;
+  user: string;
 };
 
-const UpdateUser = ({ allUsers, handleEditClick }: Props) => {
+const UpdateUser = ({ allUsers, setRefresh, setClose, user }: Props) => {
   return (
-    <section className="min-h-[500px]">
-      <Card className="sm:p-[10rem] min-h-[500px]">
+    <section className="min-h-[500px] h-auto sm:p-5">
+      <Card className="p-5">
         <CardHeader>
-          <CardTitle className="font-bold">
-            <CardDescription className="text-4xl">Users</CardDescription>
-          </CardTitle>
+          <CardTitle className="font-bold text-4xl">Edit Users</CardTitle>
         </CardHeader>
-        <CardContent></CardContent>
-        <h1 className="text-2xl">Edit Users</h1>
-        <div className="flex flex-col">
+        <CardContent>
           {allUsers?.map(({ name, member, id }) => (
-            <div className="flex items-center justify-center gap-2" key={id}>
-              <span>
-                {name}-{member}
-              </span>
-              <BiEdit
-                className="cursor-pointer"
-                onClick={() => handleEditClick(id)}
-              />
-            </div>
+            <UpdateUserForm
+              usersRole={member as Role}
+              userId={id}
+              setRefresh={setRefresh}
+              setClose={setClose}
+              user={user}
+            />
           ))}
-        </div>
+        </CardContent>
       </Card>
     </section>
   );

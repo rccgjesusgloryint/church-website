@@ -37,7 +37,7 @@ export const UpcomingEventCards = ({
           <Loader />
         </div>
       ) : (
-        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
+        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3 text-black">
           {events.length > 0 ? (
             events?.map((event, index) => {
               return (

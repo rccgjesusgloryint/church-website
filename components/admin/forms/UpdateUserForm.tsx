@@ -36,9 +36,16 @@ interface Props {
   userId: string;
   setRefresh: Dispatch<SetStateAction<boolean>>;
   setClose: () => void;
+  user: string;
 }
 
-const UpdateUserForm = ({ usersRole, userId, setRefresh, setClose }: Props) => {
+const UpdateUserForm = ({
+  usersRole,
+  userId,
+  setRefresh,
+  setClose,
+  user,
+}: Props) => {
   const roles = ["ADMIN", "MEMBER", "MINISTER", "OWNER"];
   // Define the schema
   const formSchema = z.object({
@@ -92,44 +99,51 @@ const UpdateUserForm = ({ usersRole, userId, setRefresh, setClose }: Props) => {
   }
 
   return (
-    <Card className="w-full h-full mt-5">
-      <CardHeader>
-        <CardTitle>
-          <CardDescription>Update A Users Role</CardDescription>
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="flex flex-col items-center justify-center gap-5">
+    <Card className="w-full h-full mt-5 border-none">
+      <CardHeader></CardHeader>
+      <CardContent className="flex flex-col items-start justify-center gap-5">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="role"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Role</FormLabel>
-                  <FormControl>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder={field.value} />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {roles.map((role) => (
-                          <SelectItem
-                            value={role}
-                            className="cursor-pointer"
-                            key={role}
-                          >
-                            {role}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit">Update!</Button>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex sm:flex-row flex-col gap-5 items-center justify-center sm:justify-start w-full"
+          >
+            <div>
+              <h3 className="text-2xl">{user}:</h3>
+            </div>
+            <div className="flex flex-col gap-1">
+              <FormField
+                control={form.control}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    {/* <FormLabel>Role</FormLabel> */}
+                    <FormControl>
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="sm:w-[180px] text-center sm:justify-between justify-center">
+                          <SelectValue placeholder={field.value} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {roles.map((role) => (
+                            <SelectItem
+                              value={role}
+                              className="cursor-pointer"
+                              key={role}
+                            >
+                              {role}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button type="submit">Update!</Button>
+            </div>
           </form>
         </Form>
       </CardContent>

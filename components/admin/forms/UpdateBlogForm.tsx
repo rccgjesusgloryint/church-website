@@ -123,7 +123,7 @@ const UpdateBlogForm = ({ blog, setRefresh, setClose }: Props) => {
 
   return (
     <>
-      <Card className="sm:p-[10rem] min-h-[500px]">
+      <Card className="sm:p-[10rem] min-h-[500px] max-w-[1000px]">
         <CardHeader>
           <CardTitle className="font-bold">
             <CardDescription className="text-4xl">

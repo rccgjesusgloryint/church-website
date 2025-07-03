@@ -9,6 +9,7 @@ import { AuthButton2, MobileViewNavbar2, navContent } from ".";
 import { accessCheck, isAdmin } from "@/lib/queries";
 import { Role } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ModeToggle } from "@/components/toggle-mode";
 
 const Navbar2 = () => {
   const [admin, setAdmin] = React.useState<boolean | null>(null);
@@ -25,7 +26,7 @@ const Navbar2 = () => {
   }, []);
 
   return (
-    <div className="bg-white h-[100px] shadow-md w-full flex items-center justify-center relative">
+    <div className="bg-transparent h-[100px] shadow-md w-full flex items-center justify-center relative">
       <Link
         href="/"
         className="hidden md:flex cursor-pointer absolute top-3 left-5"
@@ -37,7 +38,10 @@ const Navbar2 = () => {
           height={70}
         />
       </Link>
-      <div className="hidden md:flex absolute top-5 right-5">
+      <div className="hidden md:flex absolute top-5 right-5 sm:flex gap-3">
+        <span className="pt-2">
+          <ModeToggle />
+        </span>
         <AuthButton2 />
       </div>
       {loaded ? (

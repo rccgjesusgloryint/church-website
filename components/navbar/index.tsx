@@ -14,6 +14,7 @@ import Link from "next/link";
 import { accessCheck, isAdmin } from "@/lib/queries";
 import React from "react";
 import { Role } from "@prisma/client";
+import { ModeToggle } from "@/components/toggle-mode";
 
 export const navContent = [
   {
@@ -157,7 +158,7 @@ export const MobileViewNavbar2 = () => {
   }, []);
   return (
     <Sheet>
-      <SheetTrigger className="md:hidden absolute top-9 left-6">
+      <SheetTrigger className="md:hidden absolute top-9 left-5">
         <Image
           src="/images/Menu.png"
           alt="menu-logo"
@@ -166,6 +167,9 @@ export const MobileViewNavbar2 = () => {
           className=""
         />
       </SheetTrigger>
+      <div className="absolute right-5 top-8">
+        <ModeToggle />
+      </div>
       <div className="flex items-center justify-center">
         <Link href="/" className="cursor-pointer">
           <Image

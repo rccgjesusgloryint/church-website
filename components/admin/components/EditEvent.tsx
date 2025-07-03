@@ -22,16 +22,16 @@ const EditEvent = ({ events, setRefresh, handleEventEdit }: Props) => {
     await deleteEvent(id);
   };
   return (
-    <Card className="sm:p-[10rem] min-h-[500px]">
+    <Card className="sm:p-[10rem] min-h-[500px] w-full">
       <CardHeader>
         <CardTitle className="font-bold">
-          <CardDescription className="text-4xl">Edit Event</CardDescription>
+          <CardDescription className="text-4xl">Edit Events</CardDescription>
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div>
+        <div className="w-full">
           <h1>Events:</h1>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-start justify-center">
             {events?.map((e) => (
               <div
                 className="flex items-center justify-center gap-2"

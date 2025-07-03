@@ -124,16 +124,14 @@ const EventsForm = () => {
   return (
     <Card className="w-full h-full mt-5">
       <CardHeader>
-        <CardTitle>
-          <CardDescription>
-            Please enter the details for your file
-          </CardDescription>
-        </CardTitle>
+        <CardTitle>Add upcoming events!</CardTitle>
+        <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(validSubmissions, invalidSubmissions)}
+            className="flex flex-col gap-3"
           >
             <FormField
               control={form.control}
@@ -253,7 +251,9 @@ const EventsForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Create Event</Button>
+            <div>
+              <Button type="submit">Create Event</Button>
+            </div>
           </form>
         </Form>
       </CardContent>

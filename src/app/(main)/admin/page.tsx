@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaPage from "../../../../components/media";
 import CreateEvent from "../../../../components/events";
 import CreateSermonForm from "../../../../components/sermons/create-sermon-form";
@@ -26,7 +27,7 @@ import { BlogType, EventsType, Sermon } from "@/lib/types";
 import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
 
 const AdminPage = () => {
-  const [user, setUser] = React.useState<string>();
+  const [user, setUser] = React.useState<User>();
   const [allUsers, setAllUsers] = React.useState<User[]>();
   const [refresh, setRefresh] = React.useState(false);
   const { setOpen, setClose } = useModal();
@@ -35,7 +36,7 @@ const AdminPage = () => {
     // Fetch authenticated user details
     const getInfo = async () => {
       const response = (await getAuthUserDetails()) as User;
-      setUser(response.id);
+      setUser(response);
     };
 
     // Fetch all users
@@ -48,35 +49,19 @@ const AdminPage = () => {
     getInfo();
   }, [refresh]); // 🔄 Re-run effect when `refresh` changes
 
-  const handleEditClick = (id: string) => {
-    if (!allUsers) return false;
-    const user = allUsers.find((user) => user.id === id);
-    if (!user) return alert("NO user found");
-    setOpen(
-      <CustomModal>
-        <UpdateUserForm
-          usersRole={user.member as Role}
-          userId={user.id}
-          setRefresh={setRefresh}
-          setClose={setClose}
-        />
-      </CustomModal>
-    );
-  };
-
-  const handleSermonEdit = async (id: number) => {
-    const sermonFromDb = (await getSermonById(id)) as Sermon;
-    if (!sermonFromDb) return alert("No Sermon provided!");
-    setOpen(
-      <CustomModal>
-        <UpdateSermonForm
-          sermon={sermonFromDb}
-          setRefresh={setRefresh}
-          setClose={setClose}
-        />
-      </CustomModal>
-    );
-  };
+  // const handleSermonEdit = async (id: number) => {
+  //   const sermonFromDb = (await getSermonById(id)) as Sermon;
+  //   if (!sermonFromDb) return alert("No Sermon provided!");
+  //   setOpen(
+  //     <CustomModal>
+  //       <UpdateSermonForm
+  //         sermon={sermonFromDb}
+  //         setRefresh={setRefresh}
+  //         setClose={setClose}
+  //       />
+  //     </CustomModal>
+  //   );
+  // };
 
   const handleBlogEdit = async (id: string) => {
     const blogFromDb = (await getBlogWithId(id)) as BlogType;
@@ -107,36 +92,46 @@ const AdminPage = () => {
   };
 
   return (
-    <>
-      <Navbar2 />
+    <section className="w-full h-full px-10">
+      <h1 className="flex items-center justify-center text-xl mt-8">
+        Admin Page
+      </h1>
+      <Tabs defaultValue="media" className="w-full h-auto">
+        <TabsList>
+          <TabsTrigger value="media">Media</TabsTrigger>
+          <TabsTrigger value="events">Events</TabsTrigger>
+          <TabsTrigger value="users">Users</TabsTrigger>
+          <TabsTrigger value="blogs">Blogs</TabsTrigger>
+          <TabsTrigger value="edit">Edit</TabsTrigger>
+        </TabsList>
+        <TabsContent value="media">
+          <MediaPage />
+        </TabsContent>
+        <TabsContent value="events">
+          <CreateEvent />
+        </TabsContent>
+        <TabsContent value="blogs">
+          <BlogCreator userId={user?.id!!} />
+        </TabsContent>
 
-      <section className="w-full h-full px-10">
-        <h1 className="flex items-center justify-center text-xl mt-8">
-          Admin Page
-        </h1>
-        <MediaPage />
-        <CreateEvent />
-        <section className="h-auto border p-5">
-          <h1>Create Sermon Form</h1>
-          <CreateSermonForm />
-        </section>
-        <section>
-          <BlogCreator userId={user} />
-        </section>
-        {/* //TO DO: Add permission types to admin users */}
-        <UpdateUser
-          allUsers={allUsers as User[]}
-          handleEditClick={handleEditClick}
-        />
-        <EditPage
-          handleSermonEdit={handleSermonEdit}
-          handleEventEdit={handleEventEdit}
-          handleBlogEdit={handleBlogEdit}
-          refresh={refresh}
-          setRefresh={setRefresh}
-        />
-      </section>
-    </>
+        <TabsContent value="users">
+          <UpdateUser
+            allUsers={allUsers as User[]}
+            setRefresh={setRefresh}
+            setClose={setClose}
+            user={user?.name!!}
+          />
+        </TabsContent>
+        <TabsContent value="edit">
+          <EditPage
+            handleEventEdit={handleEventEdit}
+            handleBlogEdit={handleBlogEdit}
+            refresh={refresh}
+            setRefresh={setRefresh}
+          />
+        </TabsContent>
+      </Tabs>
+    </section>
   );
 };
 
