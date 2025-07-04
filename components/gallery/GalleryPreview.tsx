@@ -53,6 +53,7 @@ const GalleryPreview = () => {
             alt="arrow-icon"
             width={24}
             height={24}
+            className=""
           />
         </div>
       </Link>

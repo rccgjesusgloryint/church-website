@@ -61,6 +61,7 @@ const Navbar = () => {
                   {label}
                 </Link>
               ))}
+              <ModeToggle />
               <AuthButton />
             </div>
             <AuthButton />
