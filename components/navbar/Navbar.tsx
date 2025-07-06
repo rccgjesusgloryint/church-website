@@ -14,22 +14,11 @@ import { accessCheck, getAuthUserDetails, isAdmin } from "@/lib/queries";
 import { Role } from "@prisma/client";
 import Loader from "../Loader";
 import { ModeToggle } from "@/components/toggle-mode";
+import { useNavbarAuth } from "./hooks/useNavbarAuth";
 
 const Navbar = () => {
   const navbar = React.useRef<HTMLElement | any>();
-  const [admin, setAdmin] = React.useState<boolean | null>(null);
-  const [loaded, setIsLoaded] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsLoaded(false);
-    const navbarCheck = async () => {
-      const authedUser = await getAuthUserDetails();
-      const isAuthorized = authedUser?.member === "MEMBER" ? false : true;
-      setAdmin(isAuthorized);
-      setIsLoaded(true);
-    };
-    navbarCheck();
-  }, []);
+  const { admin, loaded } = useNavbarAuth();
 
   useGSAP(() => {
     gsap.from(navbar.current, {

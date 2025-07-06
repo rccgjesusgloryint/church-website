@@ -58,7 +58,10 @@ export const navContent = [
 export const AuthButton = () => {
   const { data: session, status } = useSession();
   return (
-    <div className=" w-[100px] h-[60px] absolute top-7 right-5">
+    <div
+      className=" w-[100px] h-[60px] absolute top-7 right-5"
+      data-testid="auth-button"
+    >
       {status === "authenticated" ? (
         <Link
           href="/api/auth/signout"
@@ -107,7 +110,7 @@ export const MobileViewNavbar = () => {
     checkUserAdmin();
   }, []);
   return (
-    <Sheet>
+    <Sheet data-testid="mobile-view-navbar">
       <SheetTrigger className="sm:hidden w-[100px] h-[100px]">
         <Image
           src={menu_icon}

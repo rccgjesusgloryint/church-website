@@ -27,7 +27,9 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/app/api/hello.js"
+    "src/app/api/hello.js",
+    "src/**/*",
+    "__tests__/**/*"
   ],
   "exclude": ["node_modules"]
 }
