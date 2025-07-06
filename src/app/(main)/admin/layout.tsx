@@ -14,9 +14,7 @@ export const metadata: Metadata = {
 
 const layout = async ({ children }: Props) => {
   const admin = await isAdmin();
-  const authedUser = await getAuthUserDetails();
-  if (!authedUser) return;
-  if (authedUser.member === "MEMBER") {
+  if (!admin) {
     return <Unauthorized />;
   }
 
