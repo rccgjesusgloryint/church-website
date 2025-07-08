@@ -11,15 +11,13 @@ import { useGSAP } from "@gsap/react";
 const Hero = () => {
   const text = React.useRef<HTMLElement | any>();
 
-  if (typeof window !== "undefined") {
-    useGSAP(() => {
-      gsap.from(text.current, {
-        y: 300,
-        duration: 1,
-        opacity: 0,
-      });
+  useGSAP(() => {
+    gsap.from(text.current, {
+      y: 300,
+      duration: 1,
+      opacity: 0,
     });
-  }
+  });
 
   return (
     <section className="h-screen w-screen bg-home-bg bg-center bg-cover text-white overflow-clip relative">

@@ -5,11 +5,13 @@ import Link from "next/link";
 
 import React from "react";
 
-import { AuthButton2, MobileViewNavbar2, navContent } from ".";
 import { accessCheck, isAdmin } from "@/lib/queries";
 import { Role } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ModeToggle } from "@/components/toggle-mode";
+import AuthButton2 from "./AuthButton2";
+import MobileViewNavbar2 from "./MobileViewNavbar2";
+import { navContent } from ".";
 
 const Navbar2 = () => {
   const [admin, setAdmin] = React.useState<boolean | null>(null);
