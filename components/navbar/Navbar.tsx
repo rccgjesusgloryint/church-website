@@ -2,19 +2,21 @@
 
 import React from "react";
 
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "../../src/components/ui/skeleton";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 import Link from "next/link";
 
-import { AuthButton, MobileViewNavbar, navContent } from ".";
 import { accessCheck, getAuthUserDetails, isAdmin } from "@/lib/queries";
 import { Role } from "@prisma/client";
 import Loader from "../Loader";
-import { ModeToggle } from "@/components/toggle-mode";
-import { useNavbarAuth } from "./hooks/useNavbarAuth";
+import { ModeToggle } from "../../src/components/toggle-mode";
+import { useNavbarAuth } from "../../src/hooks/useNavbarAuth";
+import MobileViewNavbar from "./MobileViewNavbar";
+import { navContent } from "@/lib/constants";
+import AuthButton from "./AuthButton";
 
 const Navbar = () => {
   const navbar = React.useRef<HTMLElement | any>();
