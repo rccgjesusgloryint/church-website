@@ -6,6 +6,7 @@ import path from "path";
 export default defineConfig({
   plugins: [tsconfigPaths(), react()],
   test: {
+    reporters: "verbose",
     setupFiles: ["./__tests__/setup.ts"],
     environment: "jsdom",
     globals: true,

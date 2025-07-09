@@ -1,7 +1,7 @@
+import { useNavbarAuth } from "@/hooks/useNavbarAuth";
 import { render, screen, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
-import Navbar from "../../components/navbar/Navbar";
-import { useNavbarAuth } from "../../src/hooks/useNavbarAuth";
+import Navbar from "../../../components/navbar/Navbar";
 
 // Mock next-auth
 vi.mock("next-auth", async () => {
@@ -40,17 +40,17 @@ vi.mock("next-themes", () => ({
 }));
 
 // Mock ModeToggle component
-vi.mock("../../src/components/toggle-mode", () => ({
+vi.mock("@/components/toggle-mode", () => ({
   ModeToggle: () => <div data-testid="mode-toggle">Mode Toggle</div>,
 }));
 
 // Mock MobileViewNavbar component
-vi.mock("../../components/navbar/MobileViewNavbar", () => ({
+vi.mock("../../../components/navbar/MobileViewNavbar", () => ({
   default: () => <div data-testid="mobile-navbar">Mock Mobile Navbar</div>,
 }));
 
 // Mock AuthButton component
-vi.mock("../../components/navbar/AuthButton", () => ({
+vi.mock("../../../components/navbar/AuthButton", () => ({
   default: () => <button data-testid="auth-button">Login</button>,
 }));
 
@@ -64,7 +64,7 @@ vi.mock("@/lib/constants", () => ({
 }));
 
 // Mock Skeleton component
-vi.mock("../../src/components/ui/skeleton", () => ({
+vi.mock("@/components/ui/skeleton", () => ({
   Skeleton: ({ className }: { className: string }) => (
     <div data-testid="skeleton" className={className}>
       Skeleton
@@ -73,7 +73,7 @@ vi.mock("../../src/components/ui/skeleton", () => ({
 }));
 
 // Mock useNavbarAuth hook
-vi.mock("../../src/hooks/useNavbarAuth", () => ({
+vi.mock("@/hooks/useNavbarAuth", () => ({
   useNavbarAuth: vi.fn(() => ({
     admin: null,
     loaded: false,
@@ -139,7 +139,6 @@ describe("Navbar", () => {
     });
 
     render(<Navbar />);
-
     expect(screen.getByTestId("mobile-navbar")).toBeDefined();
   });
 });

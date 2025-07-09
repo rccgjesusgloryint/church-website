@@ -26,8 +26,11 @@ const MobileViewNavbar = () => {
     checkUserAdmin();
   }, []);
   return (
-    <Sheet data-testid="mobile-view-navbar">
-      <SheetTrigger className="sm:hidden w-[100px] h-[100px]">
+    <Sheet>
+      <SheetTrigger
+        className="sm:hidden w-[100px] h-[100px]"
+        data-testid="mobile-view-navbar"
+      >
         <Image
           src={menu_icon}
           alt="menu"
