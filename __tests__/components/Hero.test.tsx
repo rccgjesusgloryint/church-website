@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { vi } from "vitest";
-import Hero from "../../components/Hero";
+import Hero from "../../components/landing-page/Hero";
 
 // Mock next-auth
 vi.mock("next-auth", async () => {

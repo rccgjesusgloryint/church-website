@@ -75,18 +75,6 @@ export const accessCheck = async (): Promise<Role | undefined> => {
 };
 
 export const getAuthUserDetails = async () => {
-  // if (process.env.NODE_ENV === "test") {
-  //   return {
-  //     member: "ADMIN",
-  //     data: {
-  //       id: "test-user-id",
-  //       name: "Test User",
-  //       email: "test@example.com",
-  //     },
-  //     status: "authenticated",
-  //   };
-  // }
-
   const session = await auth();
   if (!session) {
     return null;

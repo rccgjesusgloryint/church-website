@@ -1,9 +1,7 @@
 import React from "react";
 
 import Image from "next/image";
-import menu_icon from "../../public/menu-icon.svg";
-
-import { isAdmin } from "@/lib/queries";
+import menu_icon from "../../../public/menu-icon.svg";
 
 import {
   Sheet,
@@ -14,17 +12,11 @@ import {
 import { navContent } from "@/lib/constants";
 import Link from "next/link";
 
-const MobileViewNavbar = () => {
-  const [admin, setAdmin] = React.useState<boolean | null>(null);
+type Props = {
+  admin?: boolean | null;
+};
 
-  React.useEffect(() => {
-    const checkUserAdmin = async () => {
-      const res = await isAdmin();
-      setAdmin(res);
-    };
-
-    checkUserAdmin();
-  }, []);
+const MobileViewNavbar = ({ admin }: Props) => {
   return (
     <Sheet>
       <SheetTrigger
@@ -37,9 +29,9 @@ const MobileViewNavbar = () => {
           className="w-[50px] h-[50px] absolute top-7 left-5"
         />
       </SheetTrigger>
-      <SheetContent className="w-1/2">
+      <SheetContent className="w-2/3">
         <SheetDescription>
-          <div className="flex flex-col justify-start items-start pt-5 pl-5 gap-10 text-black active:text-light-gr">
+          <div className="flex flex-col justify-center items-center pt-5 pl-5 gap-10 text-black active:text-light-gr">
             {navContent.map(({ label, link }) => (
               <Link
                 href={link}

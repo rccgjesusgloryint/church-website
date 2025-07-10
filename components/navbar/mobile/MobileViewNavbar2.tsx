@@ -15,23 +15,10 @@ import { navContent } from "@/lib/constants";
 import Link from "next/link";
 import { Role } from "@prisma/client";
 import { ModeToggle } from "@/components/toggle-mode";
+import { useNavbarAuth } from "@/hooks/useNavbarAuth";
 
 const MobileViewNavbar2 = () => {
-  const [admin, setAdmin] = React.useState<boolean | null>(null);
-  const [userRole, setUserRole] = React.useState<Role | undefined>();
-
-  React.useEffect(() => {
-    const checkUserAdmin = async () => {
-      const res = await isAdmin();
-      setAdmin(res);
-    };
-    const checkUserRole = async () => {
-      const userRole = await accessCheck();
-      setUserRole(userRole);
-    };
-    checkUserRole();
-    checkUserAdmin();
-  }, []);
+  const { admin } = useNavbarAuth();
   return (
     <Sheet>
       <SheetTrigger className="md:hidden absolute top-9 left-5">
@@ -56,7 +43,7 @@ const MobileViewNavbar2 = () => {
           />
         </Link>
       </div>
-      <SheetContent className="w-3/5">
+      <SheetContent className="w-3/5" side="left">
         <SheetDescription>
           <div className="w-full h-full flex items-center sm:justify-center justify-center">
             <Link href="/" className="cursor-pointer">

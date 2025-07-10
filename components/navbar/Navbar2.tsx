@@ -5,27 +5,16 @@ import Link from "next/link";
 
 import React from "react";
 
-import { accessCheck, isAdmin } from "@/lib/queries";
-import { Role } from "@prisma/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ModeToggle } from "@/components/toggle-mode";
 import AuthButton2 from "./AuthButton2";
-import MobileViewNavbar2 from "./MobileViewNavbar2";
-import { navContent } from ".";
+import MobileViewNavbar2 from "./mobile/MobileViewNavbar2";
+
+import { useNavbarAuth } from "@/hooks/useNavbarAuth";
+import { navContent } from "@/lib/constants";
 
 const Navbar2 = () => {
-  const [admin, setAdmin] = React.useState<boolean | null>(null);
-  const [loaded, setIsLoaded] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsLoaded(false);
-    const navbarCheck = async () => {
-      const res = await isAdmin();
-      setAdmin(res);
-      setIsLoaded(true);
-    };
-    navbarCheck();
-  }, []);
+  const { admin, loaded } = useNavbarAuth();
 
   return (
     <div className="bg-transparent h-[100px] shadow-md w-full flex items-center justify-center relative">

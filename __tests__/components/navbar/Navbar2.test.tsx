@@ -1,7 +1,7 @@
 import { useNavbarAuth } from "@/hooks/useNavbarAuth";
 import { render, screen, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
-import Navbar from "../../../components/navbar/Navbar";
+import Navbar2 from "../../../components/navbar/Navbar2";
 
 // Mock next-auth
 vi.mock("next-auth", async () => {
@@ -39,18 +39,34 @@ vi.mock("next-themes", () => ({
   }),
 }));
 
+// Mock Next.js Image component
+vi.mock("next/image", () => ({
+  default: ({ src, alt, ...props }: any) => (
+    <img src={src} alt={alt} data-testid="next-image" {...props} />
+  ),
+}));
+
+// Mock Next.js Link component
+vi.mock("next/link", () => ({
+  default: ({ href, children, ...props }: any) => (
+    <a href={href} data-testid="next-link" {...props}>
+      {children}
+    </a>
+  ),
+}));
+
 // Mock ModeToggle component
 vi.mock("@/components/toggle-mode", () => ({
   ModeToggle: () => <div data-testid="mode-toggle">Mode Toggle</div>,
 }));
 
-// Mock MobileViewNavbar component
-vi.mock("../../../components/navbar/mobile/MobileViewNavbar", () => ({
+// Mock MobileViewNavbar2 component
+vi.mock("../../../components/navbar/mobile/MobileViewNavbar2", () => ({
   default: () => <div data-testid="mobile-navbar">Mock Mobile Navbar</div>,
 }));
 
-// Mock AuthButton component
-vi.mock("../../../components/navbar/AuthButton", () => ({
+// Mock AuthButton2 component
+vi.mock("../../../components/navbar/AuthButton2", () => ({
   default: () => <button data-testid="auth-button">Login</button>,
 }));
 
@@ -87,7 +103,7 @@ vi.mock("@/lib/queries", () => ({
   isAdmin: vi.fn(),
 }));
 
-describe("Navbar", () => {
+describe("Navbar2", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
@@ -98,7 +114,7 @@ describe("Navbar", () => {
       loaded: false,
     });
 
-    render(<Navbar />);
+    render(<Navbar2 />);
     expect(screen.getByTestId("skeleton")).toBeDefined();
   });
 
@@ -108,7 +124,7 @@ describe("Navbar", () => {
       loaded: true,
     });
 
-    render(<Navbar />);
+    render(<Navbar2 />);
 
     expect(await screen.findByText(/Home/i)).toBeDefined();
     expect(screen.getByText(/About/i)).toBeDefined();
@@ -123,7 +139,7 @@ describe("Navbar", () => {
       loaded: true,
     });
 
-    render(<Navbar />);
+    render(<Navbar2 />);
     const adminLink = screen.getByText(/Admin/i);
     expect(adminLink.classList.contains("hidden")).toBe(true); // This checks if element is actually visible
 
@@ -132,13 +148,13 @@ describe("Navbar", () => {
     expect(screen.getByText(/About/i)).toBeDefined();
   });
 
-  test("renders mobile view navbar", () => {
+  test("renders mobile view navbar2", () => {
     vi.mocked(useNavbarAuth).mockReturnValue({
       admin: true,
       loaded: true,
     });
 
-    render(<Navbar />);
+    render(<Navbar2 />);
     expect(screen.getByTestId("mobile-navbar")).toBeDefined();
   });
 });

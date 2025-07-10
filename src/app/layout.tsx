@@ -7,7 +7,7 @@ import ModalProvider from "@/providers/modal-provider";
 
 import { auth } from "@/auth";
 
-import { AuthProvider } from "../../components/AuthProvider";
+import { AuthProvider } from "../providers/AuthProvider";
 
 import LiveStreamButton from "@/components/LiveStreamButton";
 import { ThemeProvider } from "@/components/theme-provider";

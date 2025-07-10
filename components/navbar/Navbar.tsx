@@ -9,12 +9,9 @@ import { useGSAP } from "@gsap/react";
 
 import Link from "next/link";
 
-import { accessCheck, getAuthUserDetails, isAdmin } from "@/lib/queries";
-import { Role } from "@prisma/client";
-import Loader from "../Loader";
 import { ModeToggle } from "../../src/components/toggle-mode";
 import { useNavbarAuth } from "../../src/hooks/useNavbarAuth";
-import MobileViewNavbar from "./MobileViewNavbar";
+import MobileViewNavbar from "./mobile/MobileViewNavbar";
 import { navContent } from "@/lib/constants";
 import AuthButton from "./AuthButton";
 
@@ -35,7 +32,7 @@ const Navbar = () => {
       {loaded ? (
         <div className="w-screen">
           <div className="relative">
-            <MobileViewNavbar />
+            <MobileViewNavbar admin={admin} />
             <div className="hidden sm:flex flex-row font-normal gap-7 justify-center items-center cursor-pointer h-full pt-11 mb-[10rem]">
               {navContent.map(({ label, link }) => (
                 <Link

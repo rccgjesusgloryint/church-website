@@ -2,11 +2,11 @@
 
 import React from "react";
 
-import Navbar from "./navbar/Navbar";
 import Button from "./Button";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import Navbar from "../navbar/Navbar";
 
 const Hero = () => {
   const text = React.useRef<HTMLElement | any>();

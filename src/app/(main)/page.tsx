@@ -1,4 +1,3 @@
-import Hero from "../../../components/Hero";
 import EventsPreview from "../../../components/events/EventsPreview";
 import Newsletter from "../../../components/Newsletter";
 
@@ -7,6 +6,7 @@ import GalleryPreview from "../../../components/gallery/GalleryPreview";
 import Footer from "../../../components/Footer";
 
 import type { Metadata } from "next";
+import Hero from "@/../components/landing-page/Hero";
 
 export const metadata: Metadata = {
   title: "Jesus Glory Athy - Home",

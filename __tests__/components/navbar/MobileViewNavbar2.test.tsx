@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
-import MobileViewNavbar from "../../../components/navbar/mobile/MobileViewNavbar";
-import { isAdmin } from "@/lib/queries";
+import MobileViewNavbar2 from "../../../components/navbar/mobile/MobileViewNavbar2";
+import { useNavbarAuth } from "@/hooks/useNavbarAuth";
 
 // Mock Next.js Image component
 vi.mock("next/image", () => ({
@@ -57,45 +57,62 @@ vi.mock("@/components/ui/sheet", () => ({
   ),
 }));
 
-describe("MobileViewNavbar", () => {
+// Mock useNavbarAuth hook
+vi.mock("@/hooks/useNavbarAuth", () => ({
+  useNavbarAuth: vi.fn(() => ({
+    admin: null,
+    loaded: false,
+  })),
+}));
+
+// Mock lib/queries
+vi.mock("@/lib/queries", () => ({
+  accessCheck: vi.fn(),
+  getAuthUserDetails: vi.fn(),
+  isAdmin: vi.fn(),
+}));
+
+describe("MobileViewNavbar2", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Mock isAdmin to return true by default
-    vi.mocked(isAdmin).mockResolvedValue(true);
+    vi.mocked(useNavbarAuth).mockReturnValue({
+      admin: null,
+      loaded: false,
+    });
   });
 
   test("renders mobile navbar trigger with correct responsive classes", async () => {
-    const admin = true;
-
     await act(async () => {
-      render(<MobileViewNavbar admin={admin} />);
+      render(<MobileViewNavbar2 />);
     });
 
-    const trigger = screen.getByTestId("mobile-view-navbar");
+    const trigger = screen.getByTestId("sheet-trigger");
 
-    // Test that it has the sm:hidden class (visible on mobile, hidden on desktop)
-    expect(trigger.className).toContain("sm:hidden");
+    // Test that it has the md:hidden class (visible on mobile and tablets, hidden on desktop)
+    expect(trigger.className).toContain("md:hidden");
 
     // Test other classes are present
-    expect(trigger.className).toContain("w-[100px]");
-    expect(trigger.className).toContain("h-[100px]");
+    expect(trigger.className).toContain("absolute");
+    expect(trigger.className).toContain("top-9");
+    expect(trigger.className).toContain("left-5");
   });
 
   test("renders menu icon image", async () => {
     await act(async () => {
-      let admin = false;
-      render(<MobileViewNavbar admin={admin} />);
+      render(<MobileViewNavbar2 />);
     });
-    const menuIcon = screen.getByAltText("menu");
+    const menuIcon = screen.getByAltText("menu-logo");
     expect(menuIcon).toBeDefined();
-    expect(menuIcon.className).toContain("w-[50px]");
-    expect(menuIcon.className).toContain("h-[50px]");
   });
 
   test("renders navigation links when admin is true", async () => {
-    vi.mocked(isAdmin).mockResolvedValue(true);
-    let admin = true;
-    render(<MobileViewNavbar admin={admin} />);
+    vi.mocked(useNavbarAuth).mockReturnValue({
+      admin: null,
+      loaded: false,
+    });
+
+    render(<MobileViewNavbar2 />);
 
     // Wait for the useEffect to complete
     await waitFor(() => {
@@ -106,9 +123,11 @@ describe("MobileViewNavbar", () => {
   });
 
   test("hides admin link when admin is false", async () => {
-    vi.mocked(isAdmin).mockResolvedValue(false);
-    let admin = false;
-    render(<MobileViewNavbar admin={admin} />);
+    vi.mocked(useNavbarAuth).mockReturnValue({
+      admin: false,
+      loaded: true,
+    });
+    render(<MobileViewNavbar2 />);
 
     // Wait for the useEffect to complete
     await waitFor(() => {
@@ -124,9 +143,11 @@ describe("MobileViewNavbar", () => {
   });
 
   test("shows loading state when admin is false", async () => {
-    vi.mocked(isAdmin).mockResolvedValue(false);
-    let admin = false;
-    render(<MobileViewNavbar admin={admin} />);
+    vi.mocked(useNavbarAuth).mockReturnValue({
+      admin: null,
+      loaded: false,
+    });
+    render(<MobileViewNavbar2 />);
 
     // Wait for the useEffect to complete
     await waitFor(() => {
@@ -136,13 +157,11 @@ describe("MobileViewNavbar", () => {
   });
 
   test("mobile navbar is accessible via test id", async () => {
-    let admin = false;
-
     await act(async () => {
-      render(<MobileViewNavbar admin={admin} />);
+      render(<MobileViewNavbar2 />);
     });
 
-    const mobileNavbar = screen.getByTestId("mobile-view-navbar");
+    const mobileNavbar = screen.getByTestId("sheet-trigger");
     expect(mobileNavbar).toBeDefined();
   });
 });
