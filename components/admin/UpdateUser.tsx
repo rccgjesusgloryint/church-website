@@ -1,21 +1,12 @@
 import React, { Dispatch, SetStateAction } from "react";
 
-import { BiEdit } from "react-icons/bi";
-
 import { Role, User } from "@prisma/client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UpdateUserForm from "./forms/UpdateUserForm";
 
 type Props = {
   allUsers: User[];
-  // handleEditClick: (id: string) => false | void;
   setRefresh: Dispatch<SetStateAction<boolean>>;
   setClose: () => void;
   user: string;
