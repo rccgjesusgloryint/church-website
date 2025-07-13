@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
-import MobileViewNavbar2 from "../../../components/navbar/mobile/MobileViewNavbar2";
+import MobileViewNavbar2 from "../../../../components/navbar/mobile/MobileViewNavbar2";
 import { useNavbarAuth } from "@/hooks/useNavbarAuth";
 
 // Mock Next.js Image component

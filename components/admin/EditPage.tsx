@@ -1,16 +1,11 @@
 import React, { Dispatch, SetStateAction } from "react";
 
-import {
-  getAllBlogs,
-  getAllEvents,
-  getAuthUserDetails,
-  isAdmin,
-} from "@/lib/queries";
-import { BlogType, EventType } from "@/lib/types";
+import { BlogType } from "@/lib/types";
 
 import EditEvent from "./components/EditEvent";
 import EditBlog from "./components/EditBlog";
-import { User } from "@prisma/client";
+
+import { useEditPageData } from "@/hooks/useEditPageData";
 
 type Props = {
   handleEventEdit: (id: number) => Promise<void>;
@@ -25,27 +20,26 @@ const EditPage = ({
   refresh,
   setRefresh,
 }: Props) => {
-  const [events, setEvents] = React.useState<EventType>();
-  const [allBlogs, setAllBlogs] = React.useState<BlogType[]>();
-  const [usersBlogs, setUsersBlogs] = React.useState<BlogType[]>();
-  const [currentUser, setCurrentUser] = React.useState<User>();
+  const { allBlogs, currentUser, error, events, loading, usersBlogs } =
+    useEditPageData(refresh);
 
-  React.useEffect(() => {
-    const getData = async () => {
-      const eventsFromDb = await getAllEvents();
-      setEvents(eventsFromDb);
-      const blogsFromDb = await getAllBlogs();
-      setAllBlogs(blogsFromDb);
-      const currUser = await getAuthUserDetails();
-      setCurrentUser(currUser as User);
-    };
-    const filteredBlogs = allBlogs?.filter(
-      (blog) => blog.id === currentUser?.id
+  if (loading) {
+    return (
+      <div className="min-h-[500px] flex items-center justify-center">
+        Loading...
+      </div>
     );
-    setUsersBlogs(filteredBlogs);
+  }
 
-    getData();
-  }, [refresh]);
+  if (error) {
+    return (
+      <div className="min-h-[500px] flex items-center justify-center text-red-500">
+        Error: {error}
+      </div>
+    );
+  }
+
+  const blogsToShow = currentUser?.member === "ADMIN" ? allBlogs : usersBlogs;
 
   return (
     <section className="min-h-[500px]">
@@ -57,11 +51,7 @@ const EditPage = ({
 
       <EditBlog
         handleBlogEdit={handleBlogEdit}
-        blogs={
-          currentUser?.member === "ADMIN"
-            ? (allBlogs as BlogType[])
-            : usersBlogs!!
-        }
+        blogs={blogsToShow as BlogType[]}
         setRefresh={setRefresh}
       />
     </section>
