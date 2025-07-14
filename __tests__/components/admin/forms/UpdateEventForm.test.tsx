@@ -154,13 +154,6 @@ vi.mock("react-hook-form", () => ({
   })),
 }));
 
-// Mock next/dynamic properly
-vi.mock("next/dynamic", () => ({
-  default: vi.fn(() => () => (
-    <div data-testid="react-quill">Dynamic Component</div>
-  )),
-}));
-
 vi.mock("@/lib/queries", () => ({
   updateEvent: vi.fn(),
 }));

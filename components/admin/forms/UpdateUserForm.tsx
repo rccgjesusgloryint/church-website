@@ -1,17 +1,10 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -27,7 +20,7 @@ import React, { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Role, User } from "@prisma/client";
+import { Role } from "@prisma/client";
 import toast from "react-hot-toast";
 import { updateUsersRole } from "@/lib/queries";
 
@@ -100,7 +93,6 @@ const UpdateUserForm = ({
 
   return (
     <Card className="w-full h-full mt-5 border-none">
-      <CardHeader></CardHeader>
       <CardContent className="flex flex-col items-start justify-center gap-5">
         <Form {...form}>
           <form
