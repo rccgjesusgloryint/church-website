@@ -1,8 +1,8 @@
 import { describe, vi, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
-import { BlogType } from "@/lib/types";
+import { BlogType, EventsType } from "@/lib/types";
 import dynamic from "next/dynamic";
+import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
 
 // Mock UI components
 vi.mock("@/components/ui/card", () => ({
@@ -124,24 +124,6 @@ vi.mock("@/components/ui/textarea", () => ({
   ),
 }));
 
-vi.mock("@/components/ui/select", () => ({
-  Select: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="select">{children}</div>
-  ),
-  SelectContent: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="select-content">{children}</div>
-  ),
-  SelectItem: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="select-item">{children}</div>
-  ),
-  SelectTrigger: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="select-trigger">{children}</div>
-  ),
-  SelectValue: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="select-value">{children}</div>
-  ),
-}));
-
 vi.mock("../../../../components/media/file-upload", () => ({
   default: ({ className }: { className?: string; apiEndpoint?: string }) => (
     <div data-testid="file-upload" className={className}>
@@ -180,88 +162,109 @@ vi.mock("next/dynamic", () => ({
 }));
 
 vi.mock("@/lib/queries", () => ({
-  updateBlog: vi.fn(),
+  updateEvent: vi.fn(),
 }));
 
-describe("UpdateBlogForm", () => {
-  const blog = {
-    blogContent: "Test content",
-    blogDescription: "Test description",
-    blogTitle: "Test title",
-    blogImage: "test-image.jpg",
-    blogAuthor: "Test author",
-    category: "Test category",
-    id: "test-id",
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  } as BlogType;
+describe("UpdateEventForm: ", () => {
+  const oldEvent = {
+    id: 1,
+    event: "Test Event",
+    date: ["Test Date 1", "Test Date 2"],
+    location: "Test Location",
+    description: {
+      eventDescription:
+        "Test DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest Description",
+      eventPosterImage: "Test Image.png",
+    },
+    monthly: false,
+  } as EventsType;
 
   test("renders the 'Card Description' label", () => {
     render(
-      <UpdateBlogForm blog={blog} setRefresh={vi.fn()} setClose={vi.fn()} />
+      <UpdateEventForm
+        oldEvent={oldEvent}
+        setRefresh={vi.fn()}
+        setClose={vi.fn()}
+      />
     );
 
     const cardDescription = screen.getByTestId("card-description");
     expect(cardDescription).toBeDefined();
-    expect(cardDescription.innerHTML).toBe("Update Blog");
+    expect(cardDescription.innerHTML).toBe("Update Event");
   });
 
-  test("renders 3 input components in form component", () => {
+  test("renders 4 input components in form component", () => {
     render(
-      <UpdateBlogForm blog={blog} setRefresh={vi.fn()} setClose={vi.fn()} />
+      <UpdateEventForm
+        oldEvent={oldEvent}
+        setRefresh={vi.fn()}
+        setClose={vi.fn()}
+      />
     );
 
     const input = screen.getAllByTestId("input");
-    expect(input.length).toBe(3);
+    expect(input.length).toBe(4);
   });
 
   test("renders 'submit button' in form component", () => {
     render(
-      <UpdateBlogForm blog={blog} setRefresh={vi.fn()} setClose={vi.fn()} />
+      <UpdateEventForm
+        oldEvent={oldEvent}
+        setRefresh={vi.fn()}
+        setClose={vi.fn()}
+      />
     );
 
     const input = screen.getByTestId("button");
     expect(input).toBeDefined();
-    expect(input.innerHTML).toBe("Update Blog");
+    expect(input.innerHTML).toBe("Update Event");
   });
 
   test("renders 'FileUpload' component in form component", () => {
     render(
-      <UpdateBlogForm blog={blog} setRefresh={vi.fn()} setClose={vi.fn()} />
+      <UpdateEventForm
+        oldEvent={oldEvent}
+        setRefresh={vi.fn()}
+        setClose={vi.fn()}
+      />
     );
 
     const fileUploadComponent = screen.getByTestId("file-upload");
     expect(fileUploadComponent).toBeDefined();
   });
 
-  test("renders 'ReactQuill' component in form component", () => {
-    const mockDynamic = vi.mocked(dynamic);
+  test("renders 'textarea' component in form component", () => {
     render(
-      <UpdateBlogForm blog={blog} setRefresh={vi.fn()} setClose={vi.fn()} />
+      <UpdateEventForm
+        oldEvent={oldEvent}
+        setRefresh={vi.fn()}
+        setClose={vi.fn()}
+      />
     );
 
-    const reactQuillComponent = screen.getByTestId("react-quill");
-    expect(reactQuillComponent).toBeDefined();
-
-    expect(mockDynamic).toHaveBeenCalledWith(expect.any(Function), {
-      ssr: false,
-    });
+    const textArea = screen.getByTestId("textarea");
+    expect(textArea).toBeDefined();
   });
 
   test("renders all form labels", () => {
     render(
-      <UpdateBlogForm blog={blog} setRefresh={vi.fn()} setClose={vi.fn()} />
+      <UpdateEventForm
+        oldEvent={oldEvent}
+        setRefresh={vi.fn()}
+        setClose={vi.fn()}
+      />
     );
     const formLabelNames = [
-      "Blog Title",
-      "Blog Description",
-      "Blog Content",
-      "Blog Category",
-      "Poster Image",
+      "Event Name",
+      "From Date",
+      "To Date",
+      "Address",
+      "Event Poster Image",
+      "Event Description",
     ];
     const formLabels = screen.getAllByTestId("form-label");
 
-    expect(formLabels.length).toBe(5);
+    expect(formLabels.length).toBe(6);
 
     formLabels.forEach((element) => {
       formLabelNames.includes(element.innerHTML);
@@ -270,19 +273,23 @@ describe("UpdateBlogForm", () => {
 
   test("form has all fields rendered on page", () => {
     render(
-      <UpdateBlogForm blog={blog} setRefresh={vi.fn()} setClose={vi.fn()} />
+      <UpdateEventForm
+        oldEvent={oldEvent}
+        setRefresh={vi.fn()}
+        setClose={vi.fn()}
+      />
     );
     const form = screen.getByTestId("form");
     const input = screen.getAllByTestId("input");
     const btnInput = screen.getByTestId("button");
+    const textArea = screen.getByTestId("textarea");
     const fileUploadComponent = screen.getByTestId("file-upload");
-    const reactQuillComponent = screen.getByTestId("react-quill");
 
     input.forEach((element) => {
       expect(form).toContain(element);
     });
     expect(form).toContain(btnInput);
     expect(form).toContain(fileUploadComponent);
-    expect(form).toContain(reactQuillComponent);
+    expect(textArea).toContain(textArea);
   });
 });

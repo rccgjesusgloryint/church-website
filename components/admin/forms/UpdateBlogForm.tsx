@@ -126,9 +126,7 @@ const UpdateBlogForm = ({ blog, setRefresh, setClose }: Props) => {
       <Card className="sm:p-[10rem] min-h-[500px] max-w-[1000px]">
         <CardHeader>
           <CardTitle className="font-bold">
-            <CardDescription className="text-4xl">
-              Create a new blog
-            </CardDescription>
+            <CardDescription className="text-4xl">Update Blog</CardDescription>
           </CardTitle>
         </CardHeader>
         <CardContent>

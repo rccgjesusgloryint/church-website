@@ -14,22 +14,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { Dispatch, SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Role, User } from "@prisma/client";
 import toast from "react-hot-toast";
-import { updateEvent, updateUsersRole } from "@/lib/queries";
+import { updateEvent } from "@/lib/queries";
 import { EventsType } from "@/lib/types";
 import { Textarea } from "@/components/ui/textarea";
 import FileUpload from "../../media/file-upload";
