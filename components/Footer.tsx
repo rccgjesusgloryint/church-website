@@ -55,11 +55,6 @@ const Footer = () => {
     fetchData();
   }, []);
 
-  React.useEffect(() => {
-    console.log(blogs);
-    console.log("spliced, ", blogs.splice(0, 1));
-  }, [blogs]);
-
   return (
     <section className="h-auto w-full bg-med-gr pt-5">
       <div className="h-full w-full">

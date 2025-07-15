@@ -44,11 +44,6 @@ const Blogs = ({ params }: BlogProps) => {
     getBlog();
   }, [params.blogId]);
 
-  React.useEffect(() => {
-    console.log(blog);
-    console.log(author);
-  }, [blog, author]);
-
   return (
     <>
       {/* Hero Section */}

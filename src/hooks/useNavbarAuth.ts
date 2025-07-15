@@ -10,14 +10,12 @@ export function useNavbarAuth() {
     setLoaded(false);
     const navbarCheck = async () => {
       const authedUser = await getAuthUserDetails();
-      console.log("autherdUser: ", authedUser);
       if (authedUser === null) {
         setAdmin(false);
         setLoaded(true);
         return;
       }
       const isAuthorized = authedUser?.member === "MEMBER" ? false : true;
-      console.log("isAuthorized: ", isAuthorized);
       setAdmin(isAuthorized);
       setLoaded(true);
     };

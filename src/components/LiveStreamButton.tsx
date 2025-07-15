@@ -15,7 +15,7 @@ export default function LiveStreamButton({
   useEffect(() => {
     const check = async () => {
       const result = await isLive();
-      console.log("🎥 isLive result: ", result);
+      // console.log("🎥 isLive result: ", result);
       setIsLive(result);
     };
 

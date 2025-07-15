@@ -50,7 +50,6 @@ const ContactForm = () => {
         if (response.status === 400) {
           throw new Error("Something went wrong. Please try again. 🔄");
         }
-        console.log(response);
         return response;
       }),
       {
