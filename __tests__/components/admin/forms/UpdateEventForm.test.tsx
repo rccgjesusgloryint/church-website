@@ -1,7 +1,6 @@
 import { describe, vi, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { BlogType, EventsType } from "@/lib/types";
-import dynamic from "next/dynamic";
+import { EventsType } from "@/lib/types";
 import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
 
 // Mock UI components

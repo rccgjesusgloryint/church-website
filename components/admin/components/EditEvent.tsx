@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { EventsType, EventType } from "@/lib/types";
+import { EventType } from "@/lib/types";
 import React, { Dispatch, SetStateAction } from "react";
 import { BiEdit } from "react-icons/bi";
 import DeleteItems from "./DeleteItems";
