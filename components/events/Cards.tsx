@@ -23,7 +23,7 @@ const Cards = ({ events }: CardProps) => {
         <div
           className={`w-[300px] min-h-[420px] h-auto bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block ${
             index === 2 ? "hidden" : ""
-          }`}
+          } dark:text-black`}
           key={index}
         >
           <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
