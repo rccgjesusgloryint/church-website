@@ -1,7 +1,7 @@
 import { describe, vi, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { EventType } from "@/lib/types";
-import EditEvent from "../../../../components/admin/components/EditEvent";
+import EditBlog from "../../../../components/admin/components/EditBlog";
+import { BlogType } from "@/lib/types";
 
 // Mock UI components
 vi.mock("@/components/ui/card", () => ({
@@ -40,7 +40,7 @@ vi.mock("@/components/ui/card", () => ({
 }));
 
 vi.mock("@/lib/queries", () => ({
-  deleteEvent: vi.fn(),
+  deleteBlog: vi.fn(),
 }));
 
 vi.mock("../../../../components/admin/components/DeleteItems", () => ({
@@ -71,74 +71,46 @@ vi.mock(import("react-icons/bi"), async (importOriginal) => {
   };
 });
 
-describe("EditEvent Component: ", () => {
-  const events = [
+describe("EditBlog Component: ", () => {
+  const blogs = [
     {
-      id: 1,
-      event: "Test Event",
-      date: ["Test Date 1", "Test Date 2"],
-      location: "Test Location",
-      description: {
-        eventDescription:
-          "Test DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest Description",
-        eventPosterImage: "Test Image.png",
-      },
-      monthly: false,
+      blogContent: "Test content",
+      blogDescription: "Test description",
+      blogTitle: "Test title",
+      blogImage: "test-image.jpg",
+      blogAuthor: "Test author",
+      category: "Test category",
+      id: "test-id",
+      createdAt: new Date(),
+      updatedAt: new Date(),
     },
-  ] as EventType;
+  ] as BlogType[];
+  render(
+    <EditBlog blogs={blogs} setRefresh={vi.fn()} handleBlogEdit={vi.fn()} />
+  );
 
   test("renders 'Card Description' text", () => {
-    render(
-      <EditEvent
-        events={events}
-        handleEventEdit={vi.fn()}
-        setRefresh={vi.fn()}
-      />
-    );
-
     const cardDescription = screen.getByTestId("card-description");
     const cardDescriptionText = cardDescription.innerHTML;
 
     expect(cardDescription).toBeDefined();
-    expect(cardDescriptionText).toBe("Edit Events");
+    expect(cardDescriptionText).toBe("Edit Blog");
   });
 
-  test("renders events header", () => {
+  test("renders all blog titles if there are blogs", () => {
     render(
-      <EditEvent
-        events={events}
-        handleEventEdit={vi.fn()}
-        setRefresh={vi.fn()}
-      />
+      <EditBlog blogs={blogs} handleBlogEdit={vi.fn()} setRefresh={vi.fn()} />
     );
 
-    const header = screen.getByText("Events:");
-
-    expect(header).toBeDefined();
-  });
-
-  test("renders all event titles if there are events", () => {
-    render(
-      <EditEvent
-        events={events}
-        handleEventEdit={vi.fn()}
-        setRefresh={vi.fn()}
-      />
-    );
-
-    events.forEach((event) => {
-      const eventTitle = screen.getByText(event.event);
-      expect(eventTitle).toBeDefined();
+    blogs.forEach((blog) => {
+      const blogTitle = screen.getByText(blog.blogTitle);
+      expect(blogTitle).toBeDefined();
     });
   });
 
   test("renders both edit and delete icons", () => {
     render(
-      <EditEvent
-        events={events}
-        handleEventEdit={vi.fn()}
-        setRefresh={vi.fn()}
-      />
+      <EditBlog blogs={blogs} handleBlogEdit={vi.fn()} setRefresh={vi.fn()} />
     );
 
     const editIcon = screen.getByTestId("bi-edit");
