@@ -28,7 +28,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { postBlog } from "@/lib/queries";
 import toast from "react-hot-toast";
-import { UploadDropzone } from "@/lib/uploadthing";
 
 import { forwardRef } from "react";
 import { ControllerRenderProps } from "react-hook-form";
