@@ -1,7 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { vi } from "vitest";
 import DeleteItems from "../../../../components/admin/components/DeleteItems";
-import { BlogType } from "@/lib/types";
 
 // Mock UI components for 'Delete Items Component'
 vi.mock("@/components/ui/alert-dialog", () => ({
