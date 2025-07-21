@@ -1,7 +1,7 @@
 import { describe, vi, test } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import { EventsType } from "@/lib/types";
-import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
+import EventsForm from "../../../components/events/events-form";
 
 // Mock UI components
 vi.mock("@/components/ui/card", () => ({
@@ -117,13 +117,30 @@ vi.mock("@/components/ui/input", () => ({
   ),
 }));
 
+vi.mock("@/components/ui/select", () => ({
+  Select: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="select">{children}</div>
+  ),
+  SelectContent: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="select-content">{children}</div>
+  ),
+  SelectItem: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="select-item">{children}</div>
+  ),
+  SelectTrigger: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="select-trigger">{children}</div>
+  ),
+  SelectValue: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="select-value">{children}</div>
+  ),
+}));
+
 vi.mock("@/components/ui/textarea", () => ({
   Textarea: ({ className, ...props }: { className?: string }) => (
     <textarea data-testid="textarea" className={className} {...props} />
   ),
 }));
-
-vi.mock("../../../../components/media/file-upload", () => ({
+vi.mock("../../../components/media/file-upload", () => ({
   default: ({ className }: { className?: string; apiEndpoint?: string }) => (
     <div data-testid="file-upload" className={className}>
       File Upload Component
@@ -135,7 +152,8 @@ vi.mock("react-hot-toast", () => ({
   toast: vi.fn(),
 }));
 
-// Mock react-hook-form with proper structure
+const mockFormWatch = vi.fn();
+
 vi.mock("react-hook-form", () => ({
   useForm: vi.fn(() => ({
     handleSubmit: vi.fn((onSubmit) => (e: Event) => {
@@ -149,103 +167,89 @@ vi.mock("react-hook-form", () => ({
     },
     reset: vi.fn(),
     setValue: vi.fn(),
-    watch: vi.fn(),
+    watch: mockFormWatch,
   })),
 }));
 
 vi.mock("@/lib/queries", () => ({
-  updateEvent: vi.fn(),
+  createEvent: vi.fn(),
 }));
 
-describe("UpdateEventForm: ", () => {
-  const oldEvent = {
-    id: 1,
-    event: "Test Event",
-    date: ["Test Date 1", "Test Date 2"],
-    location: "Test Location",
-    description: {
-      eventDescription:
-        "Test DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest DescriptionTest Description",
-      eventPosterImage: "Test Image.png",
-    },
-    monthly: false,
-  } as EventsType;
+describe("EventForm: ", () => {
+  beforeEach(() => {
+    cleanup();
+    vi.clearAllMocks();
+  });
 
-  test("renders the 'Card Description' label", () => {
-    render(
-      <UpdateEventForm
-        oldEvent={oldEvent}
-        setRefresh={vi.fn()}
-        setClose={vi.fn()}
-      />
-    );
+  test("renders the 'Card Title' label", () => {
+    render(<EventsForm />);
 
-    const cardDescription = screen.getByTestId("card-description");
+    const cardDescription = screen.getByTestId("card-title");
     expect(cardDescription).toBeDefined();
-    expect(cardDescription.innerHTML).toBe("Update Event");
+    expect(cardDescription.innerHTML).toBe("Add upcoming events!");
   });
 
   test("renders 4 input components in form component", () => {
-    render(
-      <UpdateEventForm
-        oldEvent={oldEvent}
-        setRefresh={vi.fn()}
-        setClose={vi.fn()}
-      />
-    );
+    render(<EventsForm />);
 
     const input = screen.getAllByTestId("input");
     expect(input.length).toBe(4);
   });
 
   test("renders 'submit button' in form component", () => {
-    render(
-      <UpdateEventForm
-        oldEvent={oldEvent}
-        setRefresh={vi.fn()}
-        setClose={vi.fn()}
-      />
-    );
+    render(<EventsForm />);
 
     const input = screen.getByTestId("button");
     expect(input).toBeDefined();
-    expect(input.innerHTML).toBe("Update Event");
+    expect(input.innerHTML).toBe("Create Event");
   });
 
   test("renders 'FileUpload' component in form component", () => {
-    render(
-      <UpdateEventForm
-        oldEvent={oldEvent}
-        setRefresh={vi.fn()}
-        setClose={vi.fn()}
-      />
-    );
+    render(<EventsForm />);
 
     const fileUploadComponent = screen.getByTestId("file-upload");
     expect(fileUploadComponent).toBeDefined();
   });
 
   test("renders 'textarea' component in form component", () => {
-    render(
-      <UpdateEventForm
-        oldEvent={oldEvent}
-        setRefresh={vi.fn()}
-        setClose={vi.fn()}
-      />
-    );
+    render(<EventsForm />);
 
     const textArea = screen.getByTestId("textarea");
     expect(textArea).toBeDefined();
   });
 
-  test("renders all form labels", () => {
-    render(
-      <UpdateEventForm
-        oldEvent={oldEvent}
-        setRefresh={vi.fn()}
-        setClose={vi.fn()}
-      />
+  test("date input fields are present when event is NOT monthly", () => {
+    mockFormWatch.mockReturnValue(false);
+    render(<EventsForm />);
+
+    const fromDateInput = screen.getByPlaceholderText(
+      "From (eg. April 28, 2022)"
     );
+    const toDateInput = screen.getByPlaceholderText("To (eg. April 30, 2022)");
+
+    expect(fromDateInput).toBeDefined();
+    expect(toDateInput).toBeDefined();
+  });
+
+  test("date input fields are NOT present when event IS monthly", () => {
+    mockFormWatch.mockReturnValue(true);
+    render(<EventsForm />);
+
+    const fromDateInput = screen.queryByPlaceholderText(
+      "From (eg. April 28, 2022)"
+    );
+    const toDateInput = screen.queryByPlaceholderText(
+      "To (eg. April 30, 2022)"
+    );
+
+    expect(fromDateInput).toBeNull();
+    expect(toDateInput).toBeNull();
+  });
+
+  test("renders all 7/7 form labels when event is a monthly event", () => {
+    mockFormWatch.mockReturnValue(false);
+
+    render(<EventsForm />);
     const formLabelNames = [
       "Event Name",
       "From Date",
@@ -253,10 +257,34 @@ describe("UpdateEventForm: ", () => {
       "Address",
       "Event Poster Image",
       "Event Description",
+      "Is this a Monthly event?",
     ];
     const formLabels = screen.getAllByTestId("form-label");
 
-    expect(formLabels.length).toBe(6);
+    expect(formLabels.length).toBe(7);
+
+    formLabels.forEach((element) => {
+      formLabelNames.includes(element.innerHTML);
+    });
+  });
+
+  test("renders 5/7 labels when event is not a monthly event", () => {
+    vi.mocked(mockFormWatch).mockReturnValue(true);
+
+    render(<EventsForm />);
+
+    const formLabelNames = [
+      "Event Name",
+      "From Date",
+      "To Date",
+      "Address",
+      "Event Poster Image",
+      "Event Description",
+      "Is this a Monthly event?",
+    ];
+    const formLabels = screen.getAllByTestId("form-label");
+
+    expect(formLabels.length).toBe(5);
 
     formLabels.forEach((element) => {
       formLabelNames.includes(element.innerHTML);
@@ -264,17 +292,12 @@ describe("UpdateEventForm: ", () => {
   });
 
   test("form has all fields rendered on page", () => {
-    render(
-      <UpdateEventForm
-        oldEvent={oldEvent}
-        setRefresh={vi.fn()}
-        setClose={vi.fn()}
-      />
-    );
+    render(<EventsForm />);
     const form = screen.getByTestId("form");
     const input = screen.getAllByTestId("input");
     const btnInput = screen.getByTestId("button");
     const textArea = screen.getByTestId("textarea");
+    const select = screen.getByTestId("select");
     const fileUploadComponent = screen.getByTestId("file-upload");
 
     input.forEach((element) => {
@@ -283,5 +306,6 @@ describe("UpdateEventForm: ", () => {
     expect(form).toContain(btnInput);
     expect(form).toContain(fileUploadComponent);
     expect(form).toContain(textArea);
+    expect(form).toContain(select);
   });
 });
