@@ -2,7 +2,7 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MediaPage from "../../../../components/media";
-import CreateEvent from "../../../../components/events";
+import CreateEvent from "../../../../components/events/CreateEvent";
 import CreateSermonForm from "../../../../components/sermons/create-sermon-form";
 import Navbar2 from "../../../../components/navbar/Navbar2";
 
