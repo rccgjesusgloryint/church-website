@@ -11,7 +11,7 @@ const Unauthorized = () => {
       </div>
       <h1 className="text-3xl md:text-6xl">Unauthorized access!</h1>
       <p> Members only! Please sign in to access this page</p>
-      <Link href="/api/auth/signin" className="mt-4 bg-primary p-2 text-white">
+      <Link href="/api/auth/signin" className="mt-4 bg-black p-2 text-white">
         Sign in
       </Link>
     </div>

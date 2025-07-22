@@ -20,7 +20,7 @@ const Footer = () => {
   const [blogs, setBlogs] = React.useState<BlogType[]>([]);
   const [loaded, setLoaded] = React.useState(false);
 
-  const blogBaseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/blogs/`;
+  const blogBaseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/blogs`;
 
   const services = [
     {

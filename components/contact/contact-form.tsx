@@ -155,7 +155,10 @@ const ContactForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="bg-dark-gr hover:bg-dark-gr">
+            <Button
+              type="submit"
+              className="bg-dark-gr hover:bg-dark-gr text-white"
+            >
               SEND US A MESSAGE
             </Button>
           </form>

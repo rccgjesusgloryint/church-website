@@ -38,9 +38,8 @@ const GalleryComponent = (props: Props) => {
     fetchGalleryImages();
   }, []);
   return (
-    <main className="py-8 flex flex-col gap-11 relative">
-      <h1 className="text-black text-4xl text-center">Gallery</h1>
-      <div className="h-auto w-full">
+    <main className="flex flex-col gap-11 relative">
+      <div className="h-auto w-full mt-11">
         {isLoading ? (
           <div className="flex items-center justify-center mt-10">
             <Loader />
@@ -62,7 +61,7 @@ const GalleryComponent = (props: Props) => {
               })
             ) : (
               <div className="flex items-center justify-center">
-                <h1 className="font-bold text-3xl">
+                <h1 className="font-bold text-3xl text-center">
                   SORRY NO IMAGES IN GALLERY YET!
                 </h1>
               </div>
