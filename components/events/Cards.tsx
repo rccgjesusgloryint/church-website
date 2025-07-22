@@ -1,6 +1,7 @@
 import { EventType } from "@/lib/types";
 import React from "react";
 
+import { MdEventRepeat } from "react-icons/md";
 import { FaRegMap } from "react-icons/fa";
 import { LuClock3 } from "react-icons/lu";
 
@@ -26,18 +27,24 @@ const Cards = ({ events }: CardProps) => {
           } dark:text-black`}
           key={index}
         >
-          <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
-            <p className="text-[28px] text-center w-full mb-[3px] leading-6">
-              {event.date[0].split(" ")[1].length > 2
-                ? event.date[0].split(" ")[1].slice(0, 2)
-                : event.date[0].split(" ")[1].slice(0, 1)}
-            </p>
-            <p className="text-base mb-[10px]">
-              {event.date[0].length > 3
-                ? event.date[0].slice(0, 3)
-                : event.date[0]}
-            </p>
-          </div>
+          {event.date[0] ? (
+            <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+              <p className="text-[28px] text-center w-full mb-[3px] leading-6">
+                {event.date[0]?.split(" ")[1]?.length > 2
+                  ? event.date[0]?.split(" ")[1]?.slice(0, 2)
+                  : event.date[0]?.split(" ")[1]?.slice(0, 1)}
+              </p>
+              <p className="text-base mb-[10px]">
+                {event.date[0]?.length > 3
+                  ? event.date[0]?.slice(0, 3)
+                  : event.date[0]}
+              </p>
+            </div>
+          ) : (
+            <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+              <MdEventRepeat size={40} />
+            </div>
+          )}
 
           <h2 className="font-bold text-2xl w-[230px] mb-[20px]">
             {event?.event}
@@ -50,12 +57,18 @@ const Cards = ({ events }: CardProps) => {
               <span className=""></span>
             </div>
             <div className="font-bold text-base pl-10">
-              <div>
-                <p>{event.date[0]}</p>
-              </div>
-              <div>
-                <p>{event.date[1]}</p>
-              </div>
+              {event.date[0] ? (
+                <span>
+                  <div>
+                    <p>{event.date[0]}</p>
+                  </div>
+                  <div>
+                    <p>{event.date[1]}</p>
+                  </div>
+                </span>
+              ) : (
+                <p>Monthly</p>
+              )}
             </div>
             <div className="pt-[20px]">
               <span className="absolute mt-[5px]">
@@ -63,8 +76,8 @@ const Cards = ({ events }: CardProps) => {
               </span>
               <p className="font-bold text-base pl-10">
                 {event.location.length > 25
-                  ? // events[1].location.split(" ").slice(0, 3)
-                    event.location.slice(0, 25) + "..."
+                  ? // events[1].location?.split(" ")?.slice(0, 3)
+                    event.location?.slice(0, 25) + "..."
                   : event.location}
               </p>
             </div>

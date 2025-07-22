@@ -33,6 +33,7 @@ const EventsPreview = () => {
     setIsLoading(true);
     const fetchEvents = async () => {
       const response = await getAllEvents();
+
       const upcomingEvents = response
         .filter((e) => {
           if (e.date.length > 0) {
@@ -45,6 +46,9 @@ const EventsPreview = () => {
           (a, b) =>
             new Date(a.date[0]).getTime() - new Date(b.date[0]).getTime()
         );
+
+      let monthlyEvents = response.filter((e) => e.monthly);
+      upcomingEvents.push(...monthlyEvents);
       setEvents(Object(upcomingEvents));
       setIsLoading(false);
     };
