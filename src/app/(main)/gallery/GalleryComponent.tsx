@@ -7,7 +7,7 @@ import { getAllImages } from "@/lib/queries";
 import useEmblaCarousel from "embla-carousel-react";
 import { EmblaOptionsType } from "embla-carousel";
 import { GetAllImages } from "@/lib/types";
-import EmblaCarousel from "../../../../components/gallery/gallery-carousel";
+import EmblaCarousel from "../../../../components/gallery/EmblaCarousel";
 import Loader from "../../../../components/Loader";
 import Footer from "../../../../components/Footer";
 
