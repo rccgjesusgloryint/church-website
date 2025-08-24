@@ -29,7 +29,7 @@ export async function GET() {
 
     const isLive = data?.items?.length > 0;
 
-    return NextResponse.json({ isLive }); // 👈 clean and consistent key
+    return NextResponse.json({ isLive, data }); // 👈 clean and consistent key
   } catch (err) {
     console.error("YT live check failed:", err);
     return NextResponse.json({ isLive: false });
