@@ -16,16 +16,18 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { FaPhoneAlt } from "react-icons/fa";
-import { FaLocationDot } from "react-icons/fa6";
-import { IoMdMail } from "react-icons/io";
-import { FaClock } from "react-icons/fa6";
+import { contactInfo } from ".";
+import toast from "react-hot-toast";
+import { sendContactEmail } from "@/lib/queries";
 
 const ContactForm = () => {
   const formSchema = z.object({
-    name: z.string().min(2).max(50),
+    name: z
+      .string()
+      .min(5)
+      .max(25, { message: "Thats quite a long name, shorten for us please!" }),
     email: z.string().email(),
-    message: z.string().min(5),
+    message: z.string().min(10, { message: "This message is too short!" }),
   });
 
   const form = useForm<FormData>({
@@ -38,8 +40,44 @@ const ContactForm = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    alert("Hi");
+  async function onSubmit({
+    email,
+    message,
+    name,
+  }: z.infer<typeof formSchema>) {
+    await toast.promise(
+      sendContactEmail({ email, message, name }).then((response) => {
+        if (response.status === 400) {
+          throw new Error("Something went wrong. Please try again. 🔄");
+        }
+        return response;
+      }),
+      {
+        loading: "Loading...",
+        success:
+          "Email was sent, we'll get back to you as soon as possible! God bless!",
+        error: (err) => err.message, // ✅ Uses friendly toast error message
+      },
+      {
+        style: {
+          border: "1px solid #713200",
+          padding: "16px",
+          color: "#713200",
+        },
+        iconTheme: {
+          primary: "#713200",
+          secondary: "#FFFAEE",
+        },
+        success: {
+          duration: 2000,
+          icon: "🟢",
+        },
+        error: {
+          duration: 2000,
+          icon: "🔴",
+        },
+      }
+    );
     form.resetField("name");
     form.resetField("email");
     form.resetField("message");
@@ -51,30 +89,12 @@ const ContactForm = () => {
     <div className="flex flex-col justify-evenly h-full">
       <div className="flex flex-col gap-2 p-5">
         <h1 className="font-bold text-4xl mb-5 text-dark-gr">How To Find Us</h1>
-        <p className="flex gap-2 items-center text-[#BBBBBB]">
-          <span className="text-dark-gr">
-            <FaPhoneAlt />
-          </span>
-          Lorem ipsum dolor sit amet consectetur adipisicing
-        </p>
-        <p className="flex gap-2 items-center text-[#BBBBBB]">
-          <span className="text-dark-gr">
-            <FaLocationDot />
-          </span>
-          Lorem ipsum dolor sit amet consectetur adipisicing
-        </p>
-        <p className="flex gap-2 items-center text-[#BBBBBB]">
-          <span className="text-dark-gr">
-            <IoMdMail />
-          </span>
-          Lorem ipsum dolor sit amet consectetur adipisicing
-        </p>
-        <p className="flex gap-2 items-center text-[#BBBBBB]">
-          <span className="text-dark-gr">
-            <FaClock />
-          </span>
-          Lorem ipsum dolor sit amet consectetur adipisicing
-        </p>
+        {contactInfo.map(({ icon, text, label }, index) => (
+          <p className="flex gap-2 items-center text-[#BBBBBB]" key={label}>
+            <span className="text-dark-gr">{icon}</span>
+            {text}
+          </p>
+        ))}
       </div>
       <div className="">
         <Form {...form}>
@@ -135,7 +155,10 @@ const ContactForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="bg-dark-gr hover:bg-dark-gr">
+            <Button
+              type="submit"
+              className="bg-dark-gr hover:bg-dark-gr text-white"
+            >
               SEND US A MESSAGE
             </Button>
           </form>

@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,7 +25,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createEvent, getAuthUserDetails } from "@/lib/queries";
+import { createEvent } from "@/lib/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -28,15 +36,28 @@ import FileUpload from "../media/file-upload";
 
 const EventsForm = () => {
   // Define the schema
-  const formSchema = z.object({
-    event: z.string().min(2).max(50),
-    date: z.tuple([z.string().min(1), z.string().min(1)]),
-    location: z.string().min(15),
-    description: z.object({
-      eventPosterImage: z.string().min(1),
-      eventDescription: z.string().min(1),
-    }),
-  });
+  const formSchema = z
+    .object({
+      event: z.string().min(2).max(50),
+      date: z.tuple([z.string(), z.string()]).optional(),
+      location: z.string().min(15),
+      description: z.object({
+        eventPosterImage: z.string().min(1),
+        eventDescription: z.string().min(1),
+      }),
+      monthly: z.boolean(),
+    })
+    .refine(
+      (data) =>
+        data.monthly ||
+        (data.date && data.date[0].trim() && data.date[1].trim()),
+
+      {
+        path: ["date"],
+        message:
+          "From and To dates are required when the event is not monthly.",
+      }
+    );
 
   // Infer the form data type
   type FormData = z.infer<typeof formSchema>;
@@ -53,19 +74,13 @@ const EventsForm = () => {
         eventPosterImage: "",
         eventDescription: "",
       },
+      monthly: false,
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    if (
-      !values.date ||
-      !values.description ||
-      !values.event ||
-      !values.description.eventDescription ||
-      !values.description.eventPosterImage
-    ) {
-      return alert("INPUTS EMPTY!!");
-    }
+  const monthlyValue = form.watch("monthly"); // this will return "true", "false", or undefined
+
+  const validSubmissions = async (values: any) => {
     try {
       const response = await toast.promise(
         createEvent(values),
@@ -85,35 +100,39 @@ const EventsForm = () => {
             secondary: "#FFFAEE",
           },
           success: {
-            duration: 5000,
+            duration: 2000,
             icon: "🟢",
           },
         }
       );
       if (response.status === 200) {
-        form.resetField("date");
-        form.resetField("location");
-        form.resetField("event");
-        form.resetField("description.eventDescription");
-        form.resetField("description.eventPosterImage");
+        form.reset();
       }
     } catch (error) {
-      console.log("ERROR CREATING EVENT");
+      console.log("SOMETHING WENT WRONG! COULDNT CREATE EVENT");
+      toast.error("Please fix the form errors before submitting.");
     }
-  }
+  };
+
+  const invalidSubmissions = async (errors: typeof form.formState.errors) => {
+    if (errors.date) {
+      return toast.error("Please fill in the dates for the event");
+    }
+    toast.error("Please fix the form errors before submitting.");
+  };
 
   return (
     <Card className="w-full h-full mt-5">
       <CardHeader>
-        <CardTitle>
-          <CardDescription>
-            Please enter the details for your file
-          </CardDescription>
-        </CardTitle>
+        <CardTitle>Add upcoming events!</CardTitle>
+        <CardDescription></CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form
+            onSubmit={form.handleSubmit(validSubmissions, invalidSubmissions)}
+            className="flex flex-col gap-3"
+          >
             <FormField
               control={form.control}
               name="event"
@@ -129,30 +148,66 @@ const EventsForm = () => {
             />
             <FormField
               control={form.control}
-              name="date.0"
+              name="monthly"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>From Date</FormLabel>
+                  <FormLabel>Is this a Monthly event?</FormLabel>
                   <FormControl>
-                    <Input placeholder="From (eg. April 28, 2022)" {...field} />
+                    <Select
+                      onValueChange={(val) => field.onChange(val === "true")}
+                      value={String(field.value)}
+                    >
+                      <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Yes" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="true">Yes</SelectItem>
+                        <SelectItem value="false">No</SelectItem>
+                      </SelectContent>
+                    </Select>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="date.1"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>To Date</FormLabel>
-                  <FormControl>
-                    <Input placeholder="To (eg. April 30, 2022)" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
+            {/* Conditionally render date fields if monthly is "false" */}
+            {!monthlyValue && (
+              <>
+                <FormField
+                  control={form.control}
+                  name="date.0"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>From Date</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="From (eg. April 28, 2022)"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="date.1"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>To Date</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="To (eg. April 30, 2022)"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </>
+            )}
             <FormField
               control={form.control}
               name="location"
@@ -196,7 +251,9 @@ const EventsForm = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Create Event</Button>
+            <div>
+              <Button type="submit">Create Event</Button>
+            </div>
           </form>
         </Form>
       </CardContent>

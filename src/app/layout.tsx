@@ -7,7 +7,10 @@ import ModalProvider from "@/providers/modal-provider";
 
 import { auth } from "@/auth";
 
-import { AuthProvider } from "../../components/AuthProvider";
+import { AuthProvider } from "../providers/AuthProvider";
+
+import LiveStreamButton from "@/components/LiveStreamButton";
+import { ThemeProvider } from "@/components/theme-provider";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -17,8 +20,21 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Jesus Glory Athy",
-  description: "Local Church Website in Athy Co.Kildare",
+  metadataBase: new URL(`${process.env.NEXT_PUBLIC_BASE_URL}`),
+  openGraph: {
+    type: "website",
+    emails: "rccgjesusgloryint@gmail.com",
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
+    title: "Jesus Glory Athy",
+    countryName: "Ireland",
+    description: "Jesus Glory International, based in Athy Co.Kildare",
+    siteName: "Jesus Glory International",
+    images: [
+      {
+        url: "public/images/church-logo.svg",
+      },
+    ],
+  },
 };
 
 export const fetchCache = "default-no-store";
@@ -29,14 +45,28 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  console.log("status from layout: ", session);
+
   return (
     <html lang="en">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={dmSans.className}>
-        <AuthProvider session={session as any}>
-          <ModalProvider>{children}</ModalProvider>
-          <Toaster />
-        </AuthProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider session={session as any}>
+            <ModalProvider>{children}</ModalProvider>
+            <LiveStreamButton
+              channelUrl={
+                "https://www.youtube.com/@rccgjesusgloryinternationa5350/live"
+              }
+            />
+            <Toaster />
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -51,13 +51,7 @@ const TagCreator = ({ tags, setTags }: Props) => {
   };
 
   React.useEffect(() => {
-    console.log("TAGS: ", tags);
-    console.log("ALL TAGS: ", allTags);
-  }, [tags, allTags]);
-
-  React.useEffect(() => {
     getTags();
-    console.log(tags.includes("Faith"));
   }, []);
 
   const handleTagClick = (tag: string) => {
@@ -89,7 +83,7 @@ const TagCreator = ({ tags, setTags }: Props) => {
           </div>
         ))}
       </div>
-      <div className="relative w-1/2">
+      <div className="relative sm:w-3/4 w-full">
         <CommandInput
           placeholder="Create tag..."
           value={value}

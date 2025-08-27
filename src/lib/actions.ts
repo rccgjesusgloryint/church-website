@@ -1,5 +1,3 @@
-import { getTrackedEvent, trackEvent } from "./queries";
-
 export function getYoutubeVidId(youtubeUrl: string) {
   // Define regex patterns to extract the video ID
   const patterns = [
@@ -30,8 +28,18 @@ export function isMobile() {
   return regex.test(navigator.userAgent);
 }
 
-export const trackEventCall = async (events: string) => {
-  const event = await getTrackedEvent(events);
-  const event_calls = event ? event.event_calls : 0;
-  await trackEvent(events, event_calls);
-};
+export function getLastSundayOfTheMonth(
+  year: number,
+  month: number
+): [string, string] {
+  if (month < 0 || month > 11) {
+    throw new Error("Month must be between 0 (January) and 11 (December).");
+  }
+
+  const lastDay = new Date(year, month + 1, 0); // last day of the month
+  const dayOfWeek = lastDay.getDay(); // 0 = Sunday
+  const lastSundayDate = lastDay.getDate() - dayOfWeek;
+
+  const monthAbbr = lastDay.toLocaleString("default", { month: "short" }); // e.g., "Sep"
+  return [monthAbbr, String(lastSundayDate)];
+}

@@ -5,7 +5,7 @@ import Image from "next/image";
 import React from "react";
 
 type Props = {
-  apiEndpoint: "pictures" | "eventPosterImage";
+  apiEndpoint: "pictures" | "eventPosterImage" | "blogImage";
   value?: string;
   onChange: (url?: string) => void;
 };

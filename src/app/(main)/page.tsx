@@ -1,24 +1,25 @@
-import Hero from "../../../components/Hero";
-import AboutUsPreview from "../../../components/AboutUsPreview";
-import OurMinistries from "../../../components/OurMinistries";
-import GalleryPreview from "../../../components/GalleryPreview";
-import EventsPreview from "../../../components/EventsPreview";
+import EventsPreview from "../../../components/events/EventsPreview";
 import Newsletter from "../../../components/Newsletter";
 
 import React from "react";
-import { auth } from "@/auth";
-import Navbar from "../../../components/Navbar";
+import GalleryPreview from "../../../components/gallery/GalleryPreview";
+import Footer from "../../../components/Footer";
+
+import type { Metadata } from "next";
+import Hero from "@/../components/landing-page/Hero";
+
+export const metadata: Metadata = {
+  title: "Jesus Glory Athy - Home",
+};
 
 export default async function Home() {
   return (
     <main>
       <Hero />
-      {/* <AboutUsPreview /> */}
-      {/* <OurMinistries /> */}
       <GalleryPreview />
       <EventsPreview />
       <Newsletter />
-      {/* <Footer /> */}
+      <Footer />
     </main>
   );
 }

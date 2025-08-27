@@ -87,12 +87,11 @@ const MultiplFileUpload = ({ apiEndpoint, onChange }: Props) => {
           secondary: "#FFFAEE",
         },
         success: {
-          duration: 5000,
+          duration: 2000,
           icon: "🟢",
         },
       }
     );
-    console.log("RESPONSE : ", response);
 
     if (response.status === 200) {
       setLinks([]);
@@ -105,19 +104,23 @@ const MultiplFileUpload = ({ apiEndpoint, onChange }: Props) => {
   }
 
   return (
-    <div className="w-full bg-muted/30">
-      <UploadDropzone
-        endpoint={apiEndpoint}
-        onClientUploadComplete={(res) => {
-          setLinks(res as UploadMultipleFiles);
-        }}
-        onUploadError={(error: Error) => {
-          console.log(error);
-        }}
-      />
-
+    <div className="flex flex-col items-center justify-center">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-1/2 flex flex-col gap-3"
+        >
+          <UploadDropzone
+            endpoint={apiEndpoint}
+            onClientUploadComplete={(res) => {
+              setLinks(res as UploadMultipleFiles);
+            }}
+            onUploadError={(error: Error) => {
+              console.log(error);
+            }}
+            className="cursor-pointer bg-muted/30"
+          />
+
           <FormField
             control={form.control}
             name="name"

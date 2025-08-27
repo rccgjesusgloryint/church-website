@@ -18,6 +18,13 @@ export type CreateMediaType = {
   createdAt?: Date | string;
   updatedAt?: Date | string;
 };
+
+export type CarosoulImageType = {
+  id: string;
+  name: string;
+  link: string;
+};
+
 export type UploadMultipleFiles = {
   key?: string | undefined;
   type?: string | undefined;
@@ -30,12 +37,13 @@ export type UploadMultipleFiles = {
 export type CreateEventType = {
   id?: number;
   event: string;
-  date: string[];
+  date?: string[];
   location: string;
   description: {
     eventPosterImage: string;
-    eventDescription: string;
+    eventDescription?: string;
   };
+  monthly: boolean;
 };
 
 export type GalleryType = string[];
@@ -43,10 +51,25 @@ export type GalleryType = string[];
 export type EventType = {
   id: number;
   event: string;
-  date: string[];
+  date?: string[];
   location: string;
+  monthly?: boolean;
   description: object | JsonValue;
 }[];
+
+export type EventsType = {
+  id?: number;
+  event: string;
+  date?: string[];
+  location: string;
+  description: EventsDescription;
+  monthly?: boolean;
+};
+
+type EventsDescription = {
+  eventPosterImage: string;
+  eventDescription: string;
+};
 
 export type EventDetail = {
   eventId?: string;
@@ -57,8 +80,9 @@ export type EventDetail = {
 export type EventDescription = {
   description: {
     eventPosterImage: string;
-    eventDescription: string;
+    eventDescription?: string;
   };
+  location: string;
 };
 
 export type GetAllImages = {
@@ -121,4 +145,60 @@ export type EventTrack = {
   event_calls: number;
   createdAt: Date;
   updatedAt: Date;
+};
+
+export type BlogType = {
+  id?: string;
+  blogTitle: string;
+  blogDescription: string;
+  blogImage?: string | null;
+  blogContent: string;
+  blogAuthor?: string;
+  category: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type ContactFormType = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+export type YOUTUBE_playlistItem = {
+  kind: "youtube#playlistItem";
+  etag: string;
+  id: string;
+  snippet: {
+    publishedAt: Date;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: {
+      (key: {}): {
+        url: string;
+        width: number;
+        height: number;
+      };
+    };
+    channelTitle: string;
+    videoOwnerChannelTitle: string;
+    videoOwnerChannelId: string;
+    playlistId: string;
+    position: number;
+    resourceId: {
+      kind: string;
+      videoId: string;
+    };
+  };
+  contentDetails: {
+    videoId: string;
+    startAt: string;
+    endAt: string;
+    note: string;
+    videoPublishedAt: Date;
+  };
+  status: {
+    privacyStatus: string;
+  };
 };

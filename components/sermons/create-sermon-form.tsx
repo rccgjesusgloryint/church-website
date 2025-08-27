@@ -55,7 +55,6 @@ const CreateSermonForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log("SERMON: ", values, tags);
     if (tags.length < 1) {
       return alert("Please add a tag");
     }
@@ -78,12 +77,11 @@ const CreateSermonForm = () => {
             secondary: "#FFFAEE",
           },
           success: {
-            duration: 5000,
+            duration: 2000,
             icon: "🟢",
           },
         }
       );
-      console.log("RES: ", response);
       if (response.status === 200) {
         form.resetField("videoUrl");
         form.resetField("sermonTitle");
