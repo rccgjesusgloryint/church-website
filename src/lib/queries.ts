@@ -702,7 +702,7 @@ export const isLive = async (): Promise<boolean> => {
     });
 
     const data = await response.json();
-    console.log("Live check API data:", data.data); //
+    console.log("Live check API data:", data);
     return data?.isLive;
   } catch (error) {
     console.error("Error fetching live status:", error);
