@@ -20,7 +20,7 @@ export default function LiveStreamButton({
     };
 
     check();
-    const interval = setInterval(check, 60000);
+    const interval = setInterval(check, 900000);
     return () => clearInterval(interval);
   }, []);
 
