@@ -10,7 +10,7 @@ type SermonDetailsType = {
 import { NextResponse } from "next/server";
 
 const getRequest = async (params: string, key: string, part: string) => {
-  const fullYoutubeUrl = `${process.env.NEXT_PUBLIC_YOUTUBE_API_BASE_URL}/${params}&part=${part}&key=${key}`;
+  const fullYoutubeUrl = `${process.env.NEXT_PUBLIC_YOUTUBE_API_BASE_URL}/${params}&part=${part}&key=${key}&regionCode=IE`;
   const response = await fetch(fullYoutubeUrl);
   return response;
 };
