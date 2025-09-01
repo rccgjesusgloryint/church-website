@@ -85,10 +85,14 @@ export type EventDescription = {
   location: string;
 };
 
+export type GalleryCategoryType = string[];
+
 export type GetAllImages = {
+  id: string;
   link: string;
   name: string;
-}[];
+  date: Date;
+};
 
 export type SendNewsletterEmailType = {
   email: string;

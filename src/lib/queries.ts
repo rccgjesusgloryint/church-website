@@ -129,11 +129,22 @@ export const deleteMedia = async (mediaId: string) => {
 export const getAllImages = async () => {
   const response = await prisma.media.findMany({
     select: {
+      id: true,
       link: true,
       name: true,
+      createdAt: true,
     },
   });
-  return response;
+  const detailedResponse = response.map((res) => {
+    return {
+      id: res.id,
+      link: res.link,
+      name: res.name,
+      date: res.createdAt,
+    };
+  });
+
+  return detailedResponse;
 };
 
 export const getRandomImages = async (
@@ -702,7 +713,7 @@ export const isLive = async (): Promise<boolean> => {
     });
 
     const data = await response.json();
-    console.log("Live check API data:", data);
+    console.log("Live check API data:", data.items);
     return data?.isLive;
   } catch (error) {
     console.error("Error fetching live status:", error);

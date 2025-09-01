@@ -28,7 +28,7 @@ export async function GET() {
     const data = await res.json();
 
     const isLive = data?.items?.length > 0;
-    console.log("isLive: ", data.data);
+    console.log("isLive items: ", data.data?.items);
 
     return NextResponse.json({ isLive, data }); // 👈 clean and consistent key
   } catch (err) {
