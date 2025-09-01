@@ -42,43 +42,44 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
   }, [emblaApi]);
 
   return (
-    <div className="embla">
-      <div className="embla__viewport" ref={emblaRef}>
-        <div className="embla__container">
-          {slides &&
-            slides.map((link, index) => (
-              <div className="embla__slide" key={index}>
-                <div className="embla__slide__number">
-                  <Image
-                    src={link.link}
-                    alt={`carousel-img-${index}`}
-                    width={300}
-                    height={300}
-                    onClick={() =>
-                      setOpen(
-                        <CustomModal title={link.name}>
-                          <Image
-                            src={link.link}
-                            alt="fullImage"
-                            width={500}
-                            height={500}
-                          />
-                        </CustomModal>
-                      )
-                    }
-                  />
-                </div>
-              </div>
-            ))}
-        </div>
-      </div>
+    // <div className="embla">
+    //   <div className="embla__viewport" ref={emblaRef}>
+    //     <div className="embla__container">
+    //       {slides &&
+    //         slides.map((link, index) => (
+    //           <div className="embla__slide" key={index}>
+    //             <div className="embla__slide__number">
+    //               <Image
+    //                 src={link.link}
+    //                 alt={`carousel-img-${index}`}
+    //                 width={300}
+    //                 height={300}
+    //                 onClick={() =>
+    //                   setOpen(
+    //                     <CustomModal title={link.name}>
+    //                       <Image
+    //                         src={link.link}
+    //                         alt="fullImage"
+    //                         width={500}
+    //                         height={500}
+    //                       />
+    //                     </CustomModal>
+    //                   )
+    //                 }
+    //               />
+    //             </div>
+    //           </div>
+    //         ))}
+    //     </div>
+    //   </div>
 
-      <div className="embla__controls">
-        <button className="embla__play" onClick={toggleAutoplay} type="button">
-          {isPlaying ? "Stop" : "Start"}
-        </button>
-      </div>
-    </div>
+    //   <div className="embla__controls">
+    //     <button className="embla__play" onClick={toggleAutoplay} type="button">
+    //       {isPlaying ? "Stop" : "Start"}
+    //     </button>
+    //   </div>
+    // </div>
+    <div></div>
   );
 };
 
