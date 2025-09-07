@@ -87,7 +87,7 @@ const Events = () => {
       setIsLoading(false);
     };
     fetchEvents();
-  }, [today]);
+  }, []);
 
   return (
     <>
