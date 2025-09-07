@@ -54,7 +54,7 @@ describe("useCheckIsLive hook", () => {
       mins: new Date("2025-08-31T05:00:00Z").getMinutes(),
       dayOfMonth: new Date("2025-08-31T09:30:00Z").getDate(),
       dayOfWeek: new Date("2025-08-31T09:30:00Z").getDay(),
-      hours: new Date("2025-08-31T17:00:00Z").getHours(),
+      hours: new Date("2025-08-31T18:00:00Z").getHours(),
       lastSunday: getLastSundayOfTheMonthNumber(
         new Date("2025-08-31T09:30:00Z").getFullYear(),
         new Date("2025-08-31T09:30:00Z").getMonth()
