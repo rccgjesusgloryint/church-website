@@ -91,7 +91,7 @@ const Gallery = () => {
           <div className="text-center py-16">
             <Camera className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2">
-              No photos in the church's Gallery
+              No photos in the church&apos;s Gallery
             </h3>
           </div>
         )}

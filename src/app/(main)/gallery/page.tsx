@@ -13,8 +13,8 @@ const Gallery = () => {
   return (
     <>
       <Navbar2 />
-      <GalleryComponent />
-      {/* <ComingSoon /> */}
+      {/* <GalleryComponent /> */}
+      <ComingSoon />
     </>
   );
 };

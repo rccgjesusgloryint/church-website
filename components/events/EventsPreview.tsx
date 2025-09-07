@@ -53,7 +53,7 @@ const EventsPreview = () => {
       setIsLoading(false);
     };
     fetchEvents();
-  }, [month]); // Empty dependency array ensures this runs only once
+  }, []); // Empty dependency array ensures this runs only once
 
   return (
     <section className="h-auto flex items-center overflow-hidden w-screen">

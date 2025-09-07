@@ -17,16 +17,14 @@ export function useCheckIsLive({
     // check if its either Sunday at 10:30am or its praise night last sunday of the month at 6pm
     // check its greater than or equal to the time it starts and less than or equal to the time it finishes
     // - 10:30am -> 13:30pm - 18:00 -> 20:10
-    if (
+    const isLiveNow =
       (dayOfWeek === 0 && hours >= 10 && hours < 14) ||
       (dayOfWeek === 0 &&
         hours >= 18 &&
         hours < 21 &&
-        dayOfMonth === lastSunday)
-    ) {
-      setIsLive(true);
-    }
-  }, [pathname, searchParams.toString()]);
+        dayOfMonth === lastSunday);
+    setIsLive(isLiveNow);
+  }, [dayOfWeek, dayOfMonth, hours, lastSunday]);
 
   return { live };
 }
