@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 const Gallery = () => {
   return (
     <>
-      {/* <Navbar2 />
-      <GalleryComponent /> */}
-      <ComingSoon />
+      <Navbar2 />
+      <GalleryComponent />
+      {/* <ComingSoon /> */}
     </>
   );
 };

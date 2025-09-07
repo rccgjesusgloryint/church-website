@@ -11,6 +11,7 @@ import { AuthProvider } from "../providers/AuthProvider";
 
 import LiveStreamButton from "@/components/LiveStreamButton";
 import { ThemeProvider } from "@/components/theme-provider";
+import { getLastSundayOfTheMonth } from "@/lib/actions";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({

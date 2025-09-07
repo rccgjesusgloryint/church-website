@@ -77,6 +77,14 @@ export type EventDetail = {
   eventDescription: string;
 };
 
+export type checkIsLiveParams = {
+  dayOfWeek: number;
+  dayOfMonth: number;
+  hours: number;
+  mins: number;
+  lastSunday: number;
+};
+
 export type EventDescription = {
   description: {
     eventPosterImage: string;

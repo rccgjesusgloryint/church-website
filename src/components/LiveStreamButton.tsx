@@ -1,28 +1,34 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
-import { isLive } from "@/lib/queries";
+import { useCheckIsLive } from "@/hooks/useCheckLive";
+import { getLastSundayOfTheMonthNumber } from "@/lib/actions";
 
 export default function LiveStreamButton({
   channelUrl,
 }: {
   channelUrl: string;
 }) {
-  const [live, setIsLive] = useState(false);
+  const date = new Date();
+  const dayOfWeek = date.getDay();
+  const dayOfMonth = date.getDate();
 
-  useEffect(() => {
-    const check = async () => {
-      const result = await isLive();
-      console.log("🎥 isLive result: ", result);
-      setIsLive(result);
-    };
+  const hours = date.getHours();
+  const mins = date.getMinutes();
 
-    check();
-    const interval = setInterval(check, 900000);
-    return () => clearInterval(interval);
-  }, []);
+  const lastSunday = getLastSundayOfTheMonthNumber(
+    date.getFullYear(),
+    date.getMonth()
+  );
+
+  const { live } = useCheckIsLive({
+    dayOfWeek,
+    dayOfMonth,
+    hours,
+    mins,
+    lastSunday,
+  });
 
   if (!live) return null;
 
