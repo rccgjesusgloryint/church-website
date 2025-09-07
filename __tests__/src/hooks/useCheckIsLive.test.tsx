@@ -33,13 +33,13 @@ describe("useCheckIsLive hook", () => {
 
   it("live is true when its a Sunday and the time is at 10:30am", () => {
     const initialProps = {
-      mins: new Date("2025-08-31T09:30:00Z").getMinutes(),
-      dayOfMonth: new Date("2025-08-31T09:30:00Z").getDate(),
-      dayOfWeek: new Date("2025-08-31T09:30:00Z").getDay(),
-      hours: new Date("2025-08-31T09:30:00Z").getHours(),
+      mins: new Date("2025-08-31T10:30:00Z").getMinutes(),
+      dayOfMonth: new Date("2025-08-31T10:30:00Z").getDate(),
+      dayOfWeek: new Date("2025-08-31T10:30:00Z").getDay(),
+      hours: new Date("2025-08-31T10:30:00Z").getHours(),
       lastSunday: getLastSundayOfTheMonthNumber(
-        new Date("2025-08-31T09:30:00Z").getFullYear(),
-        new Date("2025-08-31T09:30:00Z").getMonth()
+        new Date("2025-08-31T10:30:00Z").getFullYear(),
+        new Date("2025-08-31T10:30:00Z").getMonth()
       ),
     } as checkIsLiveParams;
 
