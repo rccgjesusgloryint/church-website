@@ -92,7 +92,7 @@ export function GalleryModal({
           {/* Image */}
           <div className="flex-1 relative flex items-center justify-center bg-muted/20">
             <Image
-              src={image.link || "/placeholder.svg"}
+              src={image?.link || "/placeholder.svg"}
               alt={image.name}
               fill
               className="object-contain"

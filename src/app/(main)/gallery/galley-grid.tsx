@@ -56,7 +56,9 @@ export function GalleryGrid({
             <div className="relative">
               <div className="relative overflow-hidden">
                 <Image
-                  src={getPlaceholderImage(category).link || "/placeholder.svg"}
+                  src={
+                    getPlaceholderImage(category)?.link || "/placeholder.svg"
+                  }
                   alt={getPlaceholderImage(category).name}
                   width={400}
                   height={300}
