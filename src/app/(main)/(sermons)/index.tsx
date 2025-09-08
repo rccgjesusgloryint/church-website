@@ -79,7 +79,7 @@ export const Sermons = () => {
 
   return (
     <div className="flex flex-col sm:items-start items-center w-full mt-11 relative">
-      {displaySermons && displaySermons.length > 0 && (
+      {/* {displaySermons && displaySermons.length > 0 && (
         <Filter
           allSermons={allSermons!!}
           allTags={allTags}
@@ -87,7 +87,7 @@ export const Sermons = () => {
           search={search}
           setDisplaySermons={setDisplaySermons}
         />
-      )}
+      )} */}
       <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
         {displaySermons && displaySermons.length > 0 ? (
           displaySermons.map((sermon, index) => (

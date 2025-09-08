@@ -153,7 +153,7 @@ const EventHeadings = () => {
           ref={useSubTitle1}
         >
           <h3 className="tracking-widest">PAST EVENTS</h3>
-          <div className="bg-black opacity-55 w-[114px] h-[1px] mt-1 mb-0"></div>
+          <div className="bg-primary opacity-55 w-[114px] h-[1px] mt-1 mb-0"></div>
         </div>
       </div>
     </div>

@@ -158,7 +158,7 @@ const EventHeadings = () => {
           ref={useSubTitle1}
         >
           <h3 className="tracking-widest">MONTHLY EVENTS</h3>
-          <div className="bg-black opacity-55 w-[163px] h-[1px] mt-1 mb-0"></div>
+          <div className="bg-primary opacity-55 w-[163px] h-[1px] mt-1 mb-0"></div>
         </div>
         {/* <div
           className="flex flex-row items-center justify-center w-full relative mt-11"
