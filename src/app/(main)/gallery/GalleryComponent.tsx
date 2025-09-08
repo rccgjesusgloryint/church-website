@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
-import { Camera, Heart, Users } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GalleryGrid } from "./galley-grid";
-import { getAllImages } from "@/lib/queries";
-import { GetAllImages } from "@/lib/types";
 import { useGalleryImages } from "@/hooks/useGalleryImages";
+import { GalleryModal } from "./GalleryModal";
 
 const Gallery = () => {
   const { images, categories, loaded } = useGalleryImages();
@@ -98,14 +97,14 @@ const Gallery = () => {
       </main>
 
       {/* Lightbox */}
-      {/* <GalleryLightbox
+      <GalleryModal
         image={selectedImage}
         images={images}
         isOpen={isLightboxOpen}
         onClose={handleLightboxClose}
         onNext={handleNext}
         onPrevious={handlePrevious}
-      /> */}
+      />
     </div>
   );
 };

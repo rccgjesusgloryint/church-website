@@ -51,7 +51,7 @@ export function GalleryGrid({
           <Card
             key={category}
             className="break-inside-avoid cursor-pointer group hover:shadow-lg transition-all duration-300 overflow-hidden"
-            // onClick={() => onImageClick(image)}
+            onClick={() => onImageClick(getPlaceholderImage(category))}
           >
             <div className="relative">
               <div className="relative overflow-hidden">
