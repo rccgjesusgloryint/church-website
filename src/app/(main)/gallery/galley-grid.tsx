@@ -63,17 +63,17 @@ export function GalleryGrid({
                   width={400}
                   height={300}
                   className={`w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105 ${
-                    loadedImages.has(getPlaceholderImage(category).id)
+                    loadedImages.has(getPlaceholderImage(category)?.id)
                       ? "opacity-100"
                       : "opacity-0"
                   }`}
                   onLoad={() =>
-                    handleImageLoad(getPlaceholderImage(category).id)
+                    handleImageLoad(getPlaceholderImage(category)?.id)
                   }
                   loading="lazy"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                 />
-                {!loadedImages.has(getPlaceholderImage(category).id) && (
+                {!loadedImages.has(getPlaceholderImage(category)?.id) && (
                   <div className="absolute inset-0 bg-muted animate-pulse" />
                 )}
               </div>
