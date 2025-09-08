@@ -39,7 +39,7 @@ export function GalleryGrid({
   };
 
   const getPlaceholderImage = (category: string) => {
-    const fileredImages = images.filter((image) => image.name === category);
+    const fileredImages = images.filter((image) => image?.name === category);
 
     return fileredImages[0];
   };
@@ -59,7 +59,7 @@ export function GalleryGrid({
                   src={
                     getPlaceholderImage(category)?.link || "/placeholder.svg"
                   }
-                  alt={getPlaceholderImage(category).name}
+                  alt={getPlaceholderImage(category)?.name}
                   width={400}
                   height={300}
                   className={`w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105 ${
@@ -87,14 +87,14 @@ export function GalleryGrid({
 
             <div className="p-4">
               <h3 className="font-semibold text-sm mb-2 text-balance">
-                {getPlaceholderImage(category).name}
+                {getPlaceholderImage(category)?.name}
               </h3>
 
               <div className="space-y-1 text-xs text-muted-foreground">
                 <div className="flex items-center gap-1">
                   <Calendar className="h-3 w-3" />
                   <span>
-                    {getPlaceholderImage(category).date.toISOString()}
+                    {getPlaceholderImage(category)?.date.toISOString()}
                   </span>
                 </div>
               </div>
