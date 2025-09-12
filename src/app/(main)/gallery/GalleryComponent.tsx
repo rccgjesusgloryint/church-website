@@ -6,25 +6,30 @@ import { Button } from "@/components/ui/button";
 import { GalleryGrid } from "./galley-grid";
 import { useGalleryImages } from "@/hooks/useGalleryImages";
 import { GalleryModal } from "./GalleryModal";
+import { GetAllImages } from "@/lib/types";
+import { getCatImages } from "@/lib/actions";
+
+// type CategorisedImages = {}[];
 
 const Gallery = () => {
-  const { images, categories, loaded } = useGalleryImages();
+  const { images, catImages, categories, loaded } = useGalleryImages();
 
   const [selectedImage, setSelectedImage] = useState<(typeof images)[0] | null>(
     null
   );
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [visibleCount, setVisibleCount] = useState(12);
+  const [filteredImages, setFilteredImages] = useState<GetAllImages[]>([]);
+  const [isLightboxOpen, setIsGalleryModalOpen] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(8);
 
-  const visibleImages = images.slice(0, visibleCount);
-
-  const handleImageClick = (image: any) => {
-    setSelectedImage(image);
-    setIsLightboxOpen(true);
+  const handleImageClick = (category: string) => {
+    const newFilteredImages = getCatImages(category, catImages.fullArray);
+    setSelectedImage(newFilteredImages[0]);
+    setFilteredImages(newFilteredImages);
+    setIsGalleryModalOpen(true);
   };
 
-  const handleLightboxClose = () => {
-    setIsLightboxOpen(false);
+  const handleModalClose = () => {
+    setIsGalleryModalOpen(false);
     setSelectedImage(null);
   };
 
@@ -73,15 +78,17 @@ const Gallery = () => {
           <>
             <GalleryGrid
               categories={categories}
-              images={visibleImages}
+              images={catImages}
               onImageClick={handleImageClick}
+              visibleCount={visibleCount}
             />
 
             {/* Load More Button */}
-            {visibleCount < images.length && (
+            {visibleCount < Array.from(catImages.keys).length && (
               <div className="text-center py-8">
                 <Button onClick={loadMore} variant="outline" size="lg">
-                  Load More Photos ({images.length - visibleCount} remaining)
+                  Load More Photos (
+                  {Array.from(catImages.keys).length - visibleCount} remaining)
                 </Button>
               </div>
             )}
@@ -99,9 +106,9 @@ const Gallery = () => {
       {/* Lightbox */}
       <GalleryModal
         image={selectedImage}
-        images={images}
+        filteredImages={filteredImages}
         isOpen={isLightboxOpen}
-        onClose={handleLightboxClose}
+        onClose={handleModalClose}
         onNext={handleNext}
         onPrevious={handlePrevious}
       />

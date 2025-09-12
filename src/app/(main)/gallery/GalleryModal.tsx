@@ -2,7 +2,12 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
   X,
@@ -16,7 +21,7 @@ import { GetAllImages } from "@/lib/types";
 
 interface GalleryModalProps {
   image: GetAllImages | null;
-  images: GetAllImages[];
+  filteredImages: GetAllImages[];
   isOpen: boolean;
   onClose: () => void;
   onNext: () => void;
@@ -25,7 +30,7 @@ interface GalleryModalProps {
 
 export function GalleryModal({
   image,
-  images,
+  filteredImages,
   isOpen,
   onClose,
   onNext,
@@ -54,9 +59,9 @@ export function GalleryModal({
 
   if (!image) return null;
 
-  const currentIndex = images.findIndex((img) => img.id === image.id);
+  const currentIndex = filteredImages.findIndex((img) => img.id === image.id);
   const isFirst = currentIndex === 0;
-  const isLast = currentIndex === images.length - 1;
+  const isLast = currentIndex === filteredImages.length - 1;
 
   const getEventTypeColor = (eventType: string) => {
     const colors = {
@@ -77,23 +82,23 @@ export function GalleryModal({
       <DialogContent className="max-w-4xl w-full h-[90vh] p-0 overflow-hidden">
         <div className="relative h-full flex flex-col">
           {/* Header */}
-          <div className="absolute top-0 left-0 right-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 flex items-center justify-between">
+          <DialogTitle className="absolute top-0 left-0 right-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">
-                {currentIndex + 1} of {images.length}
+                {currentIndex + 1} of {filteredImages.length}
               </span>
             </div>
             <Button variant="ghost" size="icon" onClick={onClose}>
               <X className="h-4 w-4" />
               <span className="sr-only">Close</span>
             </Button>
-          </div>
+          </DialogTitle>
 
           {/* Image */}
           <div className="flex-1 relative flex items-center justify-center bg-muted/20">
             <Image
               src={image?.link || "/placeholder.svg"}
-              alt={image.name}
+              alt={image?.name}
               fill
               className="object-contain"
               sizes="(max-width: 768px) 100vw, 80vw"
@@ -141,7 +146,11 @@ export function GalleryModal({
             <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-1">
                 <Calendar className="h-4 w-4" />
-                <span>{String(image.date)}</span>
+                <span>
+                  {image?.date
+                    .toUTCString()
+                    .slice(0, image?.date.toUTCString().length - 13)}
+                </span>
               </div>
 
               {/* {image.location && (

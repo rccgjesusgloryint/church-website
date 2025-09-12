@@ -1,3 +1,6 @@
+import { CategorisedImages } from "@/hooks/useGalleryImages";
+import { GetAllImages } from "./types";
+
 export function getYoutubeVidId(youtubeUrl: string) {
   // Define regex patterns to extract the video ID
   const patterns = [
@@ -58,3 +61,14 @@ export function getLastSundayOfTheMonthNumber(
 
   return lastSundayDate;
 }
+
+export const getCatImages = (category: string, fullArray: GetAllImages[]) => {
+  const temp = [] as GetAllImages[];
+  fullArray.map((image) => {
+    if (image.name === category) {
+      temp.push(image);
+    }
+  });
+
+  return temp;
+};
