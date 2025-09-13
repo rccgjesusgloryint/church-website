@@ -31,13 +31,13 @@ const Newsletter = () => {
       opacity: 0,
       ease: "power2.out",
     });
-    gsap.from(btn.current, {
-      scrollTrigger: btn.current,
-      y: 100,
-      duration: 1.5,
-      opacity: 0,
-      ease: "power2.out",
-    });
+    // gsap.from(btn.current, {
+    //   scrollTrigger: btn.current,
+    //   y: 100,
+    //   duration: 1.5,
+    //   opacity: 0,
+    //   ease: "power2.out",
+    // });
     gsap.from(chuchIcon.current, {
       scrollTrigger: chuchIcon.current,
       y: -100,
@@ -53,7 +53,7 @@ const Newsletter = () => {
           <Image
             src="/church-iconpng.png"
             alt="church-icon"
-            className="mb-8"
+            className="mb-8 w-auto h-auto"
             ref={chuchIcon}
             width={50}
             height={50}

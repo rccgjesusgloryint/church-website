@@ -24,6 +24,7 @@ export function useCheckIsLive({
         hours < 21 &&
         dayOfMonth === lastSunday);
     setIsLive(isLiveNow);
+    console.log("CHECK IS LIVE!!");
   }, [dayOfWeek, dayOfMonth, hours, lastSunday]);
 
   return { live };

@@ -47,9 +47,7 @@ export function useGalleryImages() {
         }
         return cat;
       });
-      console.log("CATE: ", cat);
       setCatImages(cat);
-      console.log("Cat Images - 2: ", cat);
     };
 
     getGalleryImages();

@@ -25,7 +25,7 @@ const page = () => {
         </div>
       </section>
       <Newsletter />
-      <Footer />
+      {/* <Footer /> */}
     </section>
   );
 };

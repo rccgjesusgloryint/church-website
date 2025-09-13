@@ -62,7 +62,10 @@ export function GalleryGrid({
               <div className="relative">
                 <div className="relative overflow-hidden">
                   <Image
-                    src={getCatImages(category)?.link || "/placeholder.svg"}
+                    src={
+                      getCatImages(category)?.link ||
+                      "https://preview-church-gallery-design-kzmm4h729y5io3uypyzz.vusercontent.net/placeholder.svg"
+                    }
                     alt={getCatImages(category)?.name}
                     width={400}
                     height={300}

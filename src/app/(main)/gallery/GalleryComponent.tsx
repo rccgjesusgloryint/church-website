@@ -52,10 +52,6 @@ const Gallery = () => {
     setVisibleCount((prev) => Math.min(prev + 12, images.length));
   };
 
-  useEffect(() => {
-    console.log("Images: ", images);
-  }, [images]);
-
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
