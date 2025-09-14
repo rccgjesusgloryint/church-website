@@ -25,7 +25,7 @@ export function useCheckIsLive({
         dayOfMonth === lastSunday);
     setIsLive(isLiveNow);
     console.log("CHECK IS LIVE!!");
-  }, [dayOfWeek, dayOfMonth, hours, lastSunday]);
+  }, [pathname, searchParams.toString()]);
 
   return { live };
 }
