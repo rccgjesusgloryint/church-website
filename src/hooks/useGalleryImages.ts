@@ -12,7 +12,7 @@ export type CategorisedImages = {
 export function useGalleryImages() {
   const [images, setImages] = useState<GetAllImages[]>([]);
   const [categories, setCategories] = useState<GalleryCategoryType>([]);
-  const [loaded, setLoaded] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [catImages, setCatImages] = useState<CategorisedImages>({
     fullArray: [],
     keys: [],
@@ -20,7 +20,6 @@ export function useGalleryImages() {
   });
 
   useEffect(() => {
-    setLoaded(false);
     const getGalleryImages = async () => {
       const response = await getAllImages();
       setImages(response);
@@ -51,7 +50,8 @@ export function useGalleryImages() {
     };
 
     getGalleryImages();
+    setIsLoading(false);
   }, []);
 
-  return { images, catImages, categories, loaded };
+  return { images, catImages, categories, isLoading };
 }

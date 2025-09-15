@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GalleryGrid } from "./galley-grid";
@@ -12,45 +12,62 @@ import { getCatImages } from "@/lib/actions";
 // type CategorisedImages = {}[];
 
 const Gallery = () => {
-  const { images, catImages, categories, loaded } = useGalleryImages();
+  const { images, catImages, categories } = useGalleryImages();
 
   const [selectedImage, setSelectedImage] = useState<(typeof images)[0] | null>(
     null
   );
   const [filteredImages, setFilteredImages] = useState<GetAllImages[]>([]);
-  const [isLightboxOpen, setIsGalleryModalOpen] = useState(false);
+  const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
   const [visibleCount, setVisibleCount] = useState(8);
 
+  const [index, setIndex] = useState(0);
+  const loaded = useRef(new Set<number>()); // which slide URLs are fully loaded
+
+  // 🔑 Track index within the *filtered* list the user is viewing
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const currentImage = filteredImages[currentIndex] ?? null;
+
   const handleImageClick = (category: string) => {
-    const newFilteredImages = getCatImages(category, catImages.fullArray);
-    setSelectedImage(newFilteredImages[0]);
-    setFilteredImages(newFilteredImages);
+    const list = getCatImages(category, catImages.fullArray);
+    setFilteredImages(list);
+    setCurrentIndex(0);
     setIsGalleryModalOpen(true);
   };
 
   const handleModalClose = () => {
     setIsGalleryModalOpen(false);
+    setFilteredImages([]);
     setSelectedImage(null);
   };
 
-  const handleNext = () => {
-    if (!selectedImage) return;
-    const currentIndex = images.findIndex((img) => img.id === selectedImage.id);
-    const nextIndex = (currentIndex + 1) % images.length;
-    setSelectedImage(images[nextIndex]);
-  };
-
-  const handlePrevious = () => {
-    if (!selectedImage) return;
-    const currentIndex = images.findIndex((img) => img.id === selectedImage.id);
-    const previousIndex =
-      currentIndex === 0 ? images.length - 1 : currentIndex - 1;
-    setSelectedImage(images[previousIndex]);
-  };
+  // ✅ Next/Prev operate on filteredImages, not the global images array
+  const handleNext = () =>
+    setCurrentIndex((i) => (i + 1) % (filteredImages.length || 1));
+  const handlePrevious = () =>
+    setCurrentIndex(
+      (i) =>
+        (i - 1 + (filteredImages.length || 1)) % (filteredImages.length || 1)
+    );
 
   const loadMore = () => {
     setVisibleCount((prev) => Math.min(prev + 12, images.length));
   };
+
+  // 🎯 SIMPLE preload: warm the next & previous slide in the filtered set
+  useEffect(() => {
+    if (!isGalleryModalOpen || filteredImages.length === 0) return;
+    const len = filteredImages.length;
+    const next = filteredImages[(currentIndex + 1) % len]?.link;
+    const prev = filteredImages[(currentIndex - 1 + len) % len]?.link;
+    [next, prev].forEach((url) => {
+      if (!url) return;
+      const img = new Image();
+      img.decoding = "async";
+      img.src = url;
+    });
+  }, [isGalleryModalOpen, filteredImages, currentIndex]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -101,9 +118,9 @@ const Gallery = () => {
 
       {/* Lightbox */}
       <GalleryModal
-        image={selectedImage}
+        image={currentImage}
         filteredImages={filteredImages}
-        isOpen={isLightboxOpen}
+        isOpen={isGalleryModalOpen}
         onClose={handleModalClose}
         onNext={handleNext}
         onPrevious={handlePrevious}
