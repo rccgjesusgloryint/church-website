@@ -97,7 +97,9 @@ export const createMedia = async (
       try {
         await prisma.media.create({
           data: {
-            link: link.url,
+            link: String(
+              `https://${process.env.UPLOADTHING_APP_ID}.ufs.sh/f/${link.key}`
+            ),
             name: name,
           },
         });

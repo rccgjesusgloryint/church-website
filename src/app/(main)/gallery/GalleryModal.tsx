@@ -53,29 +53,45 @@ export function GalleryModal({
       }
     };
 
+    let urlBreakDown = image?.link.split("/");
+    if (urlBreakDown?.includes("kwt4fjtfgo")) {
+      console.log("NEW IMAGE LINK: ", image?.link.slice(0, 29));
+    } else {
+      console.log(image?.link.slice(0, 18));
+    }
+
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose, onNext, onPrevious]);
 
   if (!image) return null;
 
-  const currentIndex = filteredImages.findIndex((img) => img.id === image.id);
-  const isFirst = currentIndex === 0;
-  const isLast = currentIndex === filteredImages.length - 1;
+  const idx = Math.max(
+    0,
+    filteredImages.findIndex((img) => img.id === image.id)
+  );
+  const len = filteredImages.length;
 
-  const getEventTypeColor = (eventType: string) => {
-    const colors = {
-      worship: "bg-primary/10 text-primary border-primary/20",
-      community: "bg-secondary/10 text-secondary border-secondary/20",
-      youth: "bg-accent/10 text-accent border-accent/20",
-      outreach: "bg-chart-4/10 text-chart-4 border-chart-4/20",
-      special: "bg-chart-5/10 text-chart-5 border-chart-5/20",
-    };
-    return (
-      colors[eventType as keyof typeof colors] ||
-      "bg-muted text-muted-foreground"
-    );
-  };
+  // Non-circular (like your UI): only render neighbor if it exists
+  const prev = idx > 0 ? filteredImages[idx - 1] : null;
+  const next = idx < len - 1 ? filteredImages[idx + 1] : null;
+
+  // Keep sizes stable so the same optimizer variant is reused
+  const sizes = "100vw";
+
+  // const getEventTypeColor = (eventType: string) => {
+  //   const colors = {
+  //     worship: "bg-primary/10 text-primary border-primary/20",
+  //     community: "bg-secondary/10 text-secondary border-secondary/20",
+  //     youth: "bg-accent/10 text-accent border-accent/20",
+  //     outreach: "bg-chart-4/10 text-chart-4 border-chart-4/20",
+  //     special: "bg-chart-5/10 text-chart-5 border-chart-5/20",
+  //   };
+  //   return (
+  //     colors[eventType as keyof typeof colors] ||
+  //     "bg-muted text-muted-foreground"
+  //   );
+  // };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -85,7 +101,7 @@ export function GalleryModal({
           <DialogTitle className="absolute top-0 left-0 right-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <span className="text-sm text-muted-foreground">
-                {currentIndex + 1} of {filteredImages.length}
+                {idx + 1} of {len}
               </span>
             </div>
             <Button variant="ghost" size="icon" onClick={onClose}>
@@ -93,46 +109,85 @@ export function GalleryModal({
               <span className="sr-only">Close</span>
             </Button>
           </DialogTitle>
+          {/* PREV (hidden but fetched by next/image) */}
+          {prev && (
+            <div
+              className="absolute inset-0 opacity-0 pointer-events-none"
+              aria-hidden
+            >
+              <Image
+                src={prev.link}
+                alt={prev.name ?? ""}
+                fill
+                sizes={sizes}
+                loading="eager" // force fetch now
+                fetchPriority="low"
+                style={{ objectFit: "contain" }}
+                unoptimized
+              />
+            </div>
+          )}
 
-          {/* Image */}
-          <div className="flex-1 relative flex items-center justify-center bg-muted/20">
+          {/* CURRENT */}
+          <div className="absolute inset-0">
             <Image
               src={
-                image?.link ||
+                image.link ||
                 "https://preview-church-gallery-design-kzmm4h729y5io3uypyzz.vusercontent.net/placeholder.svg"
               }
-              alt={image?.name}
+              alt={image.name ?? ""}
               fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, 80vw"
-              priority
+              sizes={sizes}
+              priority // preload current
+              fetchPriority="high"
+              loading="eager"
+              style={{ objectFit: "contain" }}
+              // unoptimized
             />
-
-            {/* Navigation buttons */}
-            {!isFirst && (
-              <Button
-                variant="secondary"
-                size="icon"
-                className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
-                onClick={onPrevious}
-              >
-                <ChevronLeft className="h-4 w-4" />
-                <span className="sr-only">Previous image</span>
-              </Button>
-            )}
-
-            {!isLast && (
-              <Button
-                variant="secondary"
-                size="icon"
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
-                onClick={onNext}
-              >
-                <ChevronRight className="h-4 w-4" />
-                <span className="sr-only">Next image</span>
-              </Button>
-            )}
           </div>
+
+          {/* NEXT (hidden but fetched by next/image) */}
+          {next && (
+            <div
+              className="absolute inset-0 opacity-0 pointer-events-none"
+              aria-hidden
+            >
+              <Image
+                src={next.link}
+                alt={next.name ?? ""}
+                fill
+                sizes={sizes}
+                loading="eager" // force fetch now
+                fetchPriority="low"
+                style={{ objectFit: "contain" }}
+                unoptimized
+              />
+            </div>
+          )}
+          {/* Navigation buttons */}
+          {idx > 0 && (
+            <Button
+              variant="secondary"
+              size="icon"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
+              onClick={onPrevious}
+            >
+              <ChevronLeft className="h-4 w-4" />
+              <span className="sr-only">Previous image</span>
+            </Button>
+          )}
+
+          {idx < len - 1 && (
+            <Button
+              variant="secondary"
+              size="icon"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
+              onClick={onNext}
+            >
+              <ChevronRight className="h-4 w-4" />
+              <span className="sr-only">Next image</span>
+            </Button>
+          )}
 
           {/* Footer */}
           <div className="bg-card border-t border-border p-4">

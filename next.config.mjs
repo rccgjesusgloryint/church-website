@@ -14,6 +14,11 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: `${process.env.UPLOADTHING_APP_ID}.ufs.sh`,
+        pathname: "/f/*" || "/a/*",
+      },
+      {
+        protocol: "https",
         hostname: "res.cloudinary.com",
         pathname: "**",
       },
