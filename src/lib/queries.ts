@@ -7,7 +7,7 @@ import {
   CreateEventType,
   CreateSermon,
   EventsType,
-  NewletterEmail,
+  NewsletterEmail,
   Sermon,
   UploadMultipleFiles,
 } from "./types";
@@ -43,7 +43,7 @@ export const isAdmin = async () => {
     where: { id: session.user?.id },
   });
 
-  if (res?.member === "ADMIN") {
+  if (res?.member === "ADMIN" || res?.member === "OWNER") {
     return true;
   } else {
     return false;
@@ -59,7 +59,7 @@ export const isUserOwner = async () => {
     where: { id: session.user?.id },
   })!!;
 
-  return res?.member;
+  return res?.member === "OWNER";
 };
 
 export const accessCheck = async (): Promise<Role | undefined> => {
@@ -251,7 +251,7 @@ export const sendWelcomeEmail = async (email: string) => {
     const { data, error } = await resend.emails.send({
       from: "Jesus Glory Athy <onboarding@jesusgloryintl.com>",
       to: email,
-      subject: "Welcome to Jesus Glory Athy! 🌟",
+      subject: "Welcome to Jesus Glory Athy Newsletter! 🌟",
       html: `<!DOCTYPE html>
               <html>
               <head>
@@ -371,6 +371,7 @@ export const addEmailToNewsletter = async (newEmail: string) => {
     console.log("email already exists!");
     return { message: "email already exists!", status: 305 };
   }
+
   try {
     await prisma.newsletterEmail.create({
       data: { email: newEmail },
@@ -388,12 +389,8 @@ export const sendContactEmail = async ({
   message,
 }: ContactFormType) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
-  try {
-    const { data, error } = await resend.emails.send({
-      from: `${name} <contact@jesusgloryintl.com>`,
-      to: "rccgjesusgloryint@gmail.com",
-      subject: `From contact form`,
-      html: `<!DOCTYPE html>
+
+  const emailHtml = `<!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
@@ -437,7 +434,14 @@ export const sendContactEmail = async ({
                     </div>
                 </div>
             </body>
-            </html>`,
+            </html>`;
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: `${name} <contact@jesusgloryintl.com>`,
+      to: "rccgjesusgloryint@gmail.com",
+      subject: `From contact form`,
+      html: emailHtml,
     });
 
     if (error) {
@@ -456,29 +460,119 @@ export const sendContactEmail = async ({
   }
 };
 
+// export const sendBulkNewsletterEmail = async (
+//   newsletterEmails: NewsletterEmail
+// ) => {
+//   const resend = new Resend(process.env.PROD_RESEND_API_KEY);
+
+//   if (!newsletterEmails) {
+//     return null;
+//   }
+
+//   try {
+//     await resend.batch.send(
+//       newsletterEmails.map(({ subject, email, content }) => {
+//         return {
+//           from: "Jesus Glory Athy Newsletter <onboarding@resend.dev>",
+//           to: [email],
+//           subject,
+//           text: content,
+//           // html: "<h1>it works!</h1>",
+//         };
+//       })
+//     );
+//   } catch (error) {
+//     console.log("ERROR: ", error);
+//   }
+// };
+
 export const sendBulkNewsletterEmail = async (
-  newsletterEmails: NewletterEmail
+  newsletterEmails: NewsletterEmail
 ) => {
   const resend = new Resend(process.env.PROD_RESEND_API_KEY);
 
-  if (!newsletterEmails) {
+  const emailHtml = `<!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>Message from contact form</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .container {
+                        max-width: 1100px;
+                        margin: 20px auto;
+                        background: #ffffff;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                    }
+                    h1 {
+                        margin: 0;
+                        font-size: 24px;
+                    }
+                    .content {
+                        padding: 20px;
+                        color: #333333;
+                        font-size: 16px;
+                        line-height: 1;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                  <div>
+                    <h1>${newsletterEmails.subject}</h1>
+                  </div>
+                    <div class="content">
+                        <p>${newsletterEmails.content}</p>
+                    </div>
+                </div>
+            </body>
+            </html>`;
+
+  const emailsFromDb = (await prisma.newsletterEmail.findMany({
+    select: { email: true },
+  })) as [];
+
+  if (!newsletterEmails || !emailsFromDb) {
     return null;
   }
 
-  try {
-    const response = await resend.batch.send(
-      newsletterEmails.map((email) => {
-        return {
-          from: "Jesus Glory Athy Newsletter <onboarding@resend.dev>",
-          to: [email.email],
-          subject: "TEST",
-          html: "<h1>it works!</h1>",
-        };
-      })
+  const isOwner = await isUserOwner();
+  if (isOwner === false) {
+    console.log({
+      error: 500,
+      message:
+        "User is not autherised, must have 'Owner' credentials to send newsletters",
+    });
+    throw new Error(
+      "User is not autherised, must have 'Owner' credentials to send newsletters"
     );
-  } catch (error) {
-    console.log("ERROR: ", error);
   }
+
+  console.log("Error continued!");
+
+  // try {
+  //   await resend.batch.send(
+  //     emailsFromDb.map(({ email }) => {
+  //       return {
+  //         from: "Jesus Glory Athy Newsletter <contact@jesusgloryintl.com>",
+  //         to: [String(email)],
+  //         subject: newsletterEmails.subject,
+  //         html: emailHtml,
+  //       };
+  //     })
+  //   );
+  // } catch (error) {
+  //   console.log("ERROR: ", error);
+  // }
 };
 
 export const deleteSermon = async (sermonId: number) => {

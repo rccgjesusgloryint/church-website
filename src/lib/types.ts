@@ -106,9 +106,10 @@ export type SendNewsletterEmailType = {
   email: string;
 }[];
 
-export type NewletterEmail = {
-  email: string;
-}[];
+export type NewsletterEmail = {
+  subject: string;
+  content: string;
+};
 
 // export type CreateSermon = Prisma.SermonCreateInput;
 export type CreateSermon = {

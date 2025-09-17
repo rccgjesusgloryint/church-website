@@ -25,10 +25,12 @@ import UpdateSermonForm from "../../../../components/admin/forms/UpdateSermonFor
 import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
 import { BlogType, EventsType, Sermon } from "@/lib/types";
 import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
+import Newsletter from "../../../../components/admin/components/Newsletter";
 
 const AdminPage = () => {
   const [user, setUser] = React.useState<User>();
   const [allUsers, setAllUsers] = React.useState<User[]>();
+  const [isOwner, setIsOwner] = React.useState<boolean>(false);
   const [refresh, setRefresh] = React.useState(false);
   const { setOpen, setClose } = useModal();
 
@@ -37,15 +39,12 @@ const AdminPage = () => {
     const getInfo = async () => {
       const response = (await getAuthUserDetails()) as User;
       setUser(response);
-    };
-
-    // Fetch all users
-    const getData = async () => {
       const users = await getAllUsers();
       setAllUsers(users);
+      const checkIsOwner = await isUserOwner();
+      setIsOwner(checkIsOwner);
     };
 
-    getData();
     getInfo();
   }, [refresh]); // 🔄 Re-run effect when `refresh` changes
 
@@ -103,6 +102,7 @@ const AdminPage = () => {
           <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="blogs">Blogs</TabsTrigger>
           <TabsTrigger value="edit">Edit</TabsTrigger>
+          {isOwner && <TabsTrigger value="newsletter">Newsletter</TabsTrigger>}
         </TabsList>
         <TabsContent value="media">
           <MediaPage />
@@ -129,6 +129,9 @@ const AdminPage = () => {
             refresh={refresh}
             setRefresh={setRefresh}
           />
+        </TabsContent>
+        <TabsContent value="newsletter">
+          <Newsletter />
         </TabsContent>
       </Tabs>
     </section>
