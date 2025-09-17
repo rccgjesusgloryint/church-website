@@ -1,13 +1,5 @@
 "use client";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,19 +17,31 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createEvent, sendBulkNewsletterEmail } from "@/lib/queries";
+import { sendBulkNewsletterEmail } from "@/lib/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { forwardRef } from "react";
+import { ControllerRenderProps, useForm } from "react-hook-form";
 import { z } from "zod";
-import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+
+interface NewsletterFormProps {
+  field: ControllerRenderProps<any, string>;
+}
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+// Wrap ReactQuill in forwardRef to prevent ref warnings
+const QuillEditor = forwardRef(({ field }: NewsletterFormProps, ref) => (
+  <ReactQuill
+    value={field.value}
+    onChange={(content) => field.onChange(content)}
+  />
+));
+QuillEditor.displayName = "QuillEditor"; // Required for React dev tools
 
 const CreateNewsletterForm = () => {
   // Define the schema
   const formSchema = z.object({
-    // event: z.string().min(2).max(50),
     subject: z.string().min(5).max(50),
     content: z.string().min(5),
   });
@@ -56,9 +60,9 @@ const CreateNewsletterForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    // if )) return alert("No event Id provided!");
+    // if )) retur n alert("No event Id provided!");
     try {
-      const response = await toast.promise(
+      await toast.promise(
         sendBulkNewsletterEmail(values),
         {
           loading: "Loading",
