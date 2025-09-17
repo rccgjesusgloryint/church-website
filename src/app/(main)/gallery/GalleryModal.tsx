@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import {
   Dialog,
@@ -36,6 +36,9 @@ export function GalleryModal({
   onNext,
   onPrevious,
 }: GalleryModalProps) {
+  const urlBreakDown = image?.link.split("/");
+  const imageLength = image?.link.length;
+  const APP_ID = "kwt4fjtfgo";
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!isOpen) return;
@@ -52,14 +55,6 @@ export function GalleryModal({
           break;
       }
     };
-
-    let urlBreakDown = image?.link.split("/");
-    if (urlBreakDown?.includes("kwt4fjtfgo")) {
-      console.log("NEW IMAGE LINK: ", image?.link.slice(0, 29));
-    } else {
-      console.log(image?.link.slice(0, 18));
-    }
-
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose, onNext, onPrevious]);
@@ -132,7 +127,11 @@ export function GalleryModal({
           <div className="absolute inset-0">
             <Image
               src={
-                image.link ||
+                `https://${APP_ID}.ufs.sh/f/${
+                  urlBreakDown?.includes(APP_ID)
+                    ? image?.link.slice(29, imageLength)
+                    : image?.link.slice(18, imageLength)
+                }` ||
                 "https://preview-church-gallery-design-kzmm4h729y5io3uypyzz.vusercontent.net/placeholder.svg"
               }
               alt={image.name ?? ""}

@@ -90,7 +90,7 @@ const SubscribeToNewsLetterForm = (props: Props) => {
               </FormControl>
               <Button
                 type="submit"
-                className="sm:absolute right-[4.95rem] bottom-0 h-[70px]"
+                className="sm:absolute right-[5.35rem] bottom-0 h-[70px] rounded-none"
               >
                 SUBSCRIBE
               </Button>
