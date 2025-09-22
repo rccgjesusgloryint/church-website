@@ -18,10 +18,8 @@ import {
 import { Events, Role, User } from "@prisma/client";
 import { useModal } from "@/providers/modal-provider";
 import CustomModal from "../../../../components/global/custom-modal";
-import UpdateUserForm from "../../../../components/admin/forms/UpdateUserForm";
 import EditPage from "../../../../components/admin/EditPage";
 import UpdateUser from "../../../../components/admin/UpdateUser";
-import UpdateSermonForm from "../../../../components/admin/forms/UpdateSermonForm";
 import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
 import { BlogType, EventsType, Sermon } from "@/lib/types";
 import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
