@@ -34,6 +34,7 @@ const Gallery = () => {
     setFilteredImages(list);
     setCurrentIndex(0);
     setIsGalleryModalOpen(true);
+    console.log("onCLick: ", list);
   };
 
   const handleModalClose = () => {

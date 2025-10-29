@@ -127,11 +127,7 @@ export function GalleryModal({
           <div className="absolute inset-0">
             <Image
               src={
-                `https://${APP_ID}.ufs.sh/f/${
-                  urlBreakDown?.includes(APP_ID)
-                    ? image?.link.slice(29, imageLength)
-                    : image?.link.slice(18, imageLength)
-                }` ||
+                image.link ||
                 "https://preview-church-gallery-design-kzmm4h729y5io3uypyzz.vusercontent.net/placeholder.svg"
               }
               alt={image.name ?? ""}

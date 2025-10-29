@@ -1,64 +1,82 @@
 "use client";
 
-import React from "react";
-
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import { useModal } from "@/providers/modal-provider";
-
 import MobileView from "./MobileView";
 import GalleryTopRow from "./GalleryTopRow";
 import GalleryBottomRow from "./GalleryBottomRow";
 import ViewAllBtn from "./ViewAllBtn";
-import Link from "next/link";
-import Image from "next/image";
 import { CarosoulImageType } from "@/lib/types";
 import { getRandomImages } from "@/lib/queries";
 
-const GalleryPreview = () => {
-  const [images, setImages] = React.useState<CarosoulImageType[]>();
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+const FALLBACK = "/images/placeholder.svg"; // keep a local tiny svg/png
 
-  React.useEffect(() => {
-    setIsLoading(true);
-    const getData = async () => {
-      const resImages = await getRandomImages(6);
-      setImages(resImages);
-      setIsLoading(false);
+export default function GalleryPreview() {
+  const [images, setImages] = useState<CarosoulImageType[] | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { setOpen } = useModal();
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        setIsLoading(true);
+        const res = await getRandomImages(6);
+        if (mounted) setImages(res ?? []);
+      } catch {
+        if (mounted) setImages([]);
+      } finally {
+        if (mounted) setIsLoading(false);
+      }
+    })();
+    return () => {
+      mounted = false;
     };
-    getData();
   }, []);
 
-  const { setOpen } = useModal();
-  if (!images) return false;
+  // Normalize & guard: always 0–6 items
+  const top = useMemo(() => images?.slice(0, 3) ?? [], [images]);
+  const bottom = useMemo(() => images?.slice(3, 6) ?? [], [images]);
+
+  console.log("top", top);
+  console.log("bottom", bottom);
+
   return (
-    <section className="h-full w-screen relative py-10">
-      <div className="py-[10%] p-0 m-0 sm:flex flex-col hidden">
+    <section className="relative py-10 w-screen">
+      {/* Desktop / Tablet */}
+      <div className="hidden sm:flex flex-col py-[10%]">
         <GalleryTopRow
           setOpen={setOpen}
-          images={images.slice(0, 3)}
+          images={top}
           isLoading={isLoading}
+          fallback={FALLBACK}
         />
         <GalleryBottomRow
           setOpen={setOpen}
-          images={images.slice(3, images.length)}
+          images={bottom}
           isLoading={isLoading}
+          fallback={FALLBACK}
         />
         <ViewAllBtn />
       </div>
-      <MobileView images={images} isLoading={isLoading} />
-      <Link href="/gallery">
-        <div className="sm:hidden flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute right-5 py-20 bottom-3 mt-1">
+
+      {/* Mobile */}
+      <MobileView images={images ?? []} isLoading={isLoading} />
+
+      {/* Mobile "View all" CTA */}
+      <Link href="/gallery" className="sm:hidden">
+        <div className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute right-5 py-20 bottom-3 mt-1">
           <h2>VIEW ALL</h2>
           <Image
-            src={"/images/arrow-icon.png"}
-            alt="arrow-icon"
+            src="/images/arrow-icon.png"
+            alt="arrow icon"
             width={24}
             height={24}
-            className=""
           />
         </div>
       </Link>
     </section>
   );
-};
-
-export default GalleryPreview;
+}

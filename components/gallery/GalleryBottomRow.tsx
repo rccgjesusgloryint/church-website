@@ -1,53 +1,73 @@
 import Image from "next/image";
-import React from "react";
 import CustomModal from "../global/custom-modal";
-import { getRandomImages } from "@/lib/queries";
+import { shimmerDataURL, ImageSkeleton } from "./_placeholders";
 import { CarosoulImageType } from "@/lib/types";
 
 type Props = {
   setOpen: (modal: React.JSX.Element) => void;
   images: CarosoulImageType[];
   isLoading: boolean;
+  fallback: string;
 };
 
-const GalleryBottomRow = ({ setOpen, images, isLoading }: Props) => {
+export default function GalleryBottomRow({
+  setOpen,
+  images,
+  isLoading,
+  fallback,
+}: Props) {
+  const skeletons = Array.from({ length: 3 });
+
   return (
-    <div className="flex flex-rows w-full h-[500px] gap-10">
-      {!isLoading &&
-        images.map((image, index) => (
-          <>
-            <div
-              className={`${
-                index == 0 ? "w-2/4" : "w-1/4"
-              } cursor-pointer h-full`}
-              key={image.id}
-            >
-              <Image
-                src={image.link}
-                alt={image.name}
-                className="bg-cover bg-center w-full h-full"
-                width={1500}
-                height={1200}
-                loading="lazy"
-                // priority (//TO DO: add this when gallery page is updated)
+    <div className="flex w-full h-[500px] gap-10">
+      {isLoading
+        ? skeletons.map((_, i) => <ImageSkeleton key={i} aspect="4/3" />)
+        : images.map((image, index) => {
+            const wide = index === 0; // first one wide (matches your layout)
+            const widthClass = wide ? "w-2/4" : "w-1/4";
+
+            return (
+              <button
+                key={image.id ?? `${image.link}-${index}`}
+                className={`${widthClass} h-full relative overflow-hidden group rounded-md`}
                 onClick={() =>
                   setOpen(
                     <CustomModal>
                       <Image
-                        src={image.link}
-                        alt={image.name}
+                        src={image.link || fallback}
+                        alt={image.name || "Gallery image"}
                         width={1500}
                         height={1200}
+                        className="object-contain"
                       />
                     </CustomModal>
                   )
                 }
-              />
-            </div>
-          </>
-        ))}
+                aria-label={`Open ${image.name ?? "image"} in modal`}
+              >
+                <div className="relative w-full h-full">
+                  <div className="absolute inset-0">
+                    <Image
+                      src={image.link || fallback}
+                      alt={image.name || "Gallery image"}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 1024px) 50vw, 33vw"
+                      loading="lazy"
+                      fetchPriority="auto"
+                      decoding="async"
+                      placeholder="blur"
+                      blurDataURL={shimmerDataURL()}
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = fallback;
+                      }}
+                    />
+                  </div>
+                  <div className="invisible" style={{ aspectRatio: "4/3" }} />
+                </div>
+              </button>
+            );
+          })}
     </div>
   );
-};
-
-export default GalleryBottomRow;
+}
