@@ -16,7 +16,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createMedia, getAuthUserDetails } from "@/lib/queries";
+import { getAuthUserDetails } from "@/lib/queries";
 import { UploadMultipleFiles } from "@/lib/types";
 import { UploadDropzone } from "@/lib/uploadthing";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -69,34 +69,34 @@ const MultiplFileUpload = ({ apiEndpoint, onChange }: Props) => {
     if (!links) {
       return alert("NO LINKS");
     }
-    const response = await toast.promise(
-      createMedia(values.name, links),
-      {
-        loading: "Loading",
-        success: (data) => `Successfully uploaded files`,
-        error: (err) => `This just happened: ${err.toString()}`,
-      },
-      {
-        style: {
-          border: "1px solid #713200",
-          padding: "16px",
-          color: "#713200",
-        },
-        iconTheme: {
-          primary: "#713200",
-          secondary: "#FFFAEE",
-        },
-        success: {
-          duration: 2000,
-          icon: "🟢",
-        },
-      }
-    );
+    // const response = await toast.promise(
+    //   createMedia(values.name, links),
+    //   {
+    //     loading: "Loading",
+    //     success: (data) => `Successfully uploaded files`,
+    //     error: (err) => `This just happened: ${err.toString()}`,
+    //   },
+    //   {
+    //     style: {
+    //       border: "1px solid #713200",
+    //       padding: "16px",
+    //       color: "#713200",
+    //     },
+    //     iconTheme: {
+    //       primary: "#713200",
+    //       secondary: "#FFFAEE",
+    //     },
+    //     success: {
+    //       duration: 2000,
+    //       icon: "🟢",
+    //     },
+    //   }
+    // );
 
-    if (response.status === 200) {
-      setLinks([]);
-      form.resetField("name");
-    }
+    // if (response.status === 200) {
+    //   setLinks([]);
+    //   form.resetField("name");
+    // }
 
     if (onChange) {
       onChange(links);

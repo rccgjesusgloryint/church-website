@@ -178,6 +178,17 @@ export type ContactFormType = {
   message: string;
 };
 
+export interface S3Image {
+  id?: string;
+  type: string;
+  filename: string;
+  event: string;
+  bucket: string;
+  url?: string;
+}
+
+export type DbImage = S3Image;
+
 export type YOUTUBE_playlistItem = {
   kind: "youtube#playlistItem";
   etag: string;

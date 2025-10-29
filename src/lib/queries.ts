@@ -6,6 +6,7 @@ import {
   ContactFormType,
   CreateEventType,
   CreateSermon,
+  DbImage,
   EventsType,
   NewsletterEmail,
   Sermon,
@@ -16,7 +17,9 @@ import { Resend } from "resend";
 import { auth } from "@/auth";
 import { prisma } from "./db";
 
-import { Blog, Media, Role } from "@prisma/client";
+import { Blog, Image, Media, Role } from "@prisma/client";
+import { C } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
+import { shuffle } from "./actions";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
@@ -88,58 +91,51 @@ export const getAuthUserDetails = async () => {
   return userData;
 };
 
-export const createMedia = async (
-  name: string,
-  mediaFile: UploadMultipleFiles
-) => {
-  try {
-    for (const link of mediaFile) {
-      try {
-        await prisma.media.create({
-          data: {
-            link: String(`https://kwt4fjtfgo.ufs.sh/f/${link.key}`),
-            name: name,
-          },
-        });
+// export const createMedia = async (
+//   name: string,
+//   mediaFile: UploadMultipleFiles
+// ) => {
+//   try {
+//     for (const link of mediaFile) {
+//       try {
+//         await prisma.media.create({
+//           data: {
+//             link: String(`https://kwt4fjtfgo.ufs.sh/f/${link.key}`),
+//             name: name,
+//           },
+//         });
 
-        // Small delay to prevent overwhelming DB (optional but helps on low limits)
-        await new Promise((resolve) => setTimeout(resolve, 50));
-      } catch (error) {
-        console.error("Error creating media record:", error);
-        return { message: "OOPS COULDN'T UPLOAD SOME FILES", status: 400 };
-      }
-    }
+//         // Small delay to prevent overwhelming DB (optional but helps on low limits)
+//         await new Promise((resolve) => setTimeout(resolve, 50));
+//       } catch (error) {
+//         console.error("Error creating media record:", error);
+//         return { message: "OOPS COULDN'T UPLOAD SOME FILES", status: 400 };
+//       }
+//     }
 
-    return { message: "SUCCESSFULLY UPLOADED FILES", status: 200 };
-  } catch (error) {
-    console.error("Fatal error in createMedia:", error);
-    return { message: "FATAL ERROR UPLOADING FILES", status: 500 };
-  }
-};
+//     return { message: "SUCCESSFULLY UPLOADED FILES", status: 200 };
+//   } catch (error) {
+//     console.error("Fatal error in createMedia:", error);
+//     return { message: "FATAL ERROR UPLOADING FILES", status: 500 };
+//   }
+// };
 
-export const deleteMedia = async (mediaId: string) => {
-  const response = await prisma.media.delete({
-    where: {
-      id: mediaId,
-    },
-  });
-  return response;
-};
+// export const deleteMedia = async (mediaId: string) => {
+//   const response = await prisma.media.delete({
+//     where: {
+//       id: mediaId,
+//     },
+//   });
+//   return response;
+// };
 
 export const getAllImages = async () => {
-  const response = await prisma.media.findMany({
-    select: {
-      id: true,
-      link: true,
-      name: true,
-      createdAt: true,
-    },
-  });
+  const response = await prisma.image.findMany({});
   const detailedResponse = response.map((res) => {
     return {
       id: res.id,
-      link: res.link,
-      name: res.name,
+      link: res.url!,
+      name: res.event,
       date: res.createdAt,
     };
   });
@@ -150,26 +146,23 @@ export const getAllImages = async () => {
 export const getRandomImages = async (
   amount: number
 ): Promise<CarosoulImageType[]> => {
-  const response = await prisma.media.findMany({
-    select: {
-      id: true,
-      link: true,
-      name: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
+  // Pull a larger window (tune `take` as you like)
+  const response = await prisma.image.findMany({
+    select: { id: true, url: true, event: true },
+    where: { url: { not: null } },
+    orderBy: { createdAt: "desc" },
+    take: 60, // recent 60
   });
 
-  let randomImages = response
-    .filter((image, index) => {
-      let randomNum = Math.random() * 15;
-      if (index < randomNum) return;
-      if (index % 2 == 0) return image;
-    })
-    .slice(0, amount);
+  const cleaned = response.filter((r) => r.url && r.url.trim() !== "");
 
-  return randomImages;
+  const randomized = shuffle(cleaned).slice(0, amount);
+
+  return randomized.map((r) => ({
+    id: r.id,
+    link: r.url!, // safe due to filter above
+    name: r.event ?? "",
+  }));
 };
 
 export const createEvent = async (eventObj: CreateEventType) => {
@@ -812,5 +805,27 @@ export const isLive = async (): Promise<boolean> => {
   } catch (error) {
     console.error("Error fetching live status:", error);
     return false;
+  }
+};
+
+export const saveImage = async (file: DbImage) => {
+  try {
+    const response = await prisma.image.create({
+      data: {
+        ...file,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+export const getImages = async (): Promise<Image[] | undefined> => {
+  try {
+    const dbImages = await prisma.image.findMany({});
+    return dbImages;
+  } catch (error) {
+    console.log("Error: ", error);
   }
 };
