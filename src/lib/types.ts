@@ -185,6 +185,8 @@ export interface S3Image {
   event: string;
   bucket: string;
   url?: string;
+  description?: string;
+  createdAt?: Date;
 }
 
 export type DbImage = S3Image;

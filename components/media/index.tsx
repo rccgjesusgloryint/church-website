@@ -1,10 +1,10 @@
 import React from "react";
-import UploadMediaForm from "./upload-media";
+import FileUpload from "./file-upload";
 
 const MediaPage = () => {
   return (
     <section className="h-auto w-full p-5">
-      <UploadMediaForm />
+      <FileUpload />
     </section>
   );
 };

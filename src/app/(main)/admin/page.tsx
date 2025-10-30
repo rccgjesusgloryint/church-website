@@ -25,7 +25,6 @@ import { BlogType, EventsType, Sermon } from "@/lib/types";
 import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
 import Newsletter from "../../../../components/admin/components/Newsletter";
 import Testing from ".";
-import ImagesTest from "./ImagesTest";
 
 const AdminPage = () => {
   const [user, setUser] = React.useState<User>();
@@ -102,7 +101,6 @@ const AdminPage = () => {
           <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="blogs">Blogs</TabsTrigger>
           <TabsTrigger value="edit">Edit</TabsTrigger>
-          <TabsTrigger value="images">Images</TabsTrigger>
           {isOwner && <TabsTrigger value="newsletter">Newsletter</TabsTrigger>}
         </TabsList>
         <TabsContent value="media">
@@ -112,11 +110,8 @@ const AdminPage = () => {
           <CreateEvent />
         </TabsContent>
         <TabsContent value="blogs">
-          {/* <BlogCreator userId={user?.id!!} /> */}
-          <Testing />
-        </TabsContent>
-        <TabsContent value="images">
-          <ImagesTest />
+          <BlogCreator userId={user?.id!!} />
+          {/* <Testing /> */}
         </TabsContent>
 
         <TabsContent value="users">
