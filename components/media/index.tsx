@@ -1,10 +1,10 @@
 import React from "react";
-import FileUpload from "./file-upload";
+import MultipleFileUpload from "./multiple-file-uploads";
 
 const MediaPage = () => {
   return (
     <section className="h-auto w-full p-5">
-      <FileUpload />
+      <MultipleFileUpload />
     </section>
   );
 };

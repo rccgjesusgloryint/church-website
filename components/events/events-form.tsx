@@ -32,7 +32,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
-import FileUpload from "../media/file-upload";
+import FileUpload from "../media/multiple-file-uploads";
 
 const EventsForm = () => {
   // Define the schema
@@ -42,7 +42,7 @@ const EventsForm = () => {
       date: z.tuple([z.string(), z.string()]).optional(),
       location: z.string().min(15),
       description: z.object({
-        eventPosterImage: z.string().min(1),
+        eventPosterImage: z.string().min(1).optional(),
         eventDescription: z.string().min(1),
       }),
       monthly: z.boolean(),
@@ -221,7 +221,7 @@ const EventsForm = () => {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="description.eventPosterImage"
               render={({ field }) => (
@@ -237,7 +237,7 @@ const EventsForm = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <FormField
               control={form.control}
               name="description.eventDescription"

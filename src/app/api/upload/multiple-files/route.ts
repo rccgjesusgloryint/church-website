@@ -20,6 +20,7 @@ export async function POST(req: NextRequest) {
   const event = formData.get("event") as string;
   const date = formData.get("date") as string;
   const description = formData.get("description") as string;
+  const urlArray = [];
 
   files.map(async (file) => {
     const arrayBuffer = await file.arrayBuffer();

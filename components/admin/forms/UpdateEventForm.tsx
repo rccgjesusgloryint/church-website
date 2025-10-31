@@ -24,7 +24,7 @@ import toast from "react-hot-toast";
 import { updateEvent } from "@/lib/queries";
 import { EventsType } from "@/lib/types";
 import { Textarea } from "@/components/ui/textarea";
-import FileUpload from "../../media/file-upload";
+import FileUpload from "../../media/multiple-file-uploads";
 import { Input } from "@/components/ui/input";
 
 interface Props {
@@ -40,7 +40,7 @@ const UpdateEventForm = ({ oldEvent, setRefresh, setClose }: Props) => {
     date: z.tuple([z.string().min(1), z.string()]),
     location: z.string().min(15),
     description: z.object({
-      eventPosterImage: z.string().min(1),
+      eventPosterImage: z.string().min(1).optional(),
       eventDescription: z.string().min(1),
     }),
   });
@@ -163,7 +163,7 @@ const UpdateEventForm = ({ oldEvent, setRefresh, setClose }: Props) => {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="description.eventPosterImage"
               render={({ field }) => (
@@ -179,7 +179,7 @@ const UpdateEventForm = ({ oldEvent, setRefresh, setClose }: Props) => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <FormField
               control={form.control}
               name="description.eventDescription"

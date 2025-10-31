@@ -29,8 +29,6 @@ import dynamic from "next/dynamic";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-import FileUpload from "../../media/file-upload";
-
 interface Props {
   blog: BlogType;
   setRefresh: Dispatch<SetStateAction<boolean>>;
@@ -199,23 +197,19 @@ const UpdateBlogForm = ({ blog, setRefresh, setClose }: Props) => {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="blogImage"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Poster Image</FormLabel>
                     <FormControl>
-                      <FileUpload
-                        apiEndpoint="blogImage"
-                        onChange={field.onChange}
-                        value={field.value}
-                      />
+                      <FileUpload onChange={field.onChange} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <Button type="submit" className="mt-5">
                 Update Blog
               </Button>

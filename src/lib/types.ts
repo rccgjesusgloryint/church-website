@@ -40,7 +40,7 @@ export type CreateEventType = {
   date?: string[];
   location: string;
   description: {
-    eventPosterImage: string;
+    eventPosterImage?: string;
     eventDescription?: string;
   };
   monthly: boolean;

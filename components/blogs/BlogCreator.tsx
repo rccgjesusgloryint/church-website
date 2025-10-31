@@ -71,7 +71,7 @@ const BlogCreator = ({ userId }: Props) => {
       .max(450, {
         message: "Your description cant be longer than 450 characters!",
       }),
-    blogImage: z.string().optional(),
+    blogImage: z.any().optional(),
     blogContent: z
       .string()
       .min(2, { message: "This is not enough content for a Blog!" }),
@@ -92,6 +92,7 @@ const BlogCreator = ({ userId }: Props) => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log("Form Data: ", values.blogImage);
     try {
       await toast.promise(
         postBlog(
@@ -213,23 +214,19 @@ const BlogCreator = ({ userId }: Props) => {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="blogImage"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Poster Image</FormLabel>
                     <FormControl>
-                      <FileUpload
-                        apiEndpoint="pictures"
-                        onChange={field.onChange}
-                        value={field.value}
-                      />
+                      <FileUpload onChange={field.onChange} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <Button type="submit" className="mt-5">
                 Post Blog
               </Button>

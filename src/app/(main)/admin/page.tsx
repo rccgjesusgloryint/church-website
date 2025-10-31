@@ -24,7 +24,6 @@ import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm"
 import { BlogType, EventsType, Sermon } from "@/lib/types";
 import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
 import Newsletter from "../../../../components/admin/components/Newsletter";
-import Testing from ".";
 
 const AdminPage = () => {
   const [user, setUser] = React.useState<User>();
