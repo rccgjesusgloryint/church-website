@@ -68,5 +68,3 @@ const AboutUsPreview = () => {
 };
 
 export default AboutUsPreview;
-tUsPreview;
- AboutUsPreview;

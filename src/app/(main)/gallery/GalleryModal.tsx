@@ -19,7 +19,7 @@ interface GalleryModalProps {
   date?: string | Date;
 }
 
-const FALLBACK =
+export const FALLBACK =
   "https://preview-church-gallery-design-kzmm4h729y5io3uypyzz.vusercontent.net/placeholder.svg";
 
 export function GalleryModal({
@@ -75,7 +75,12 @@ export function GalleryModal({
             <DialogTitle className="m-0 p-0 text-sm font-normal text-muted-foreground">
               {idx + 1} of {len}
             </DialogTitle>
-            <Button variant="ghost" size="icon" onClick={onClose} className="text-foreground">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onClose}
+              className="text-foreground"
+            >
               <X className="h-4 w-4" />
               <span className="sr-only">Close</span>
             </Button>
@@ -99,10 +104,24 @@ export function GalleryModal({
 
             {/* Preload neighbors (hidden, no layout impact) */}
             {prev && (
-              <Image src={prev} alt="" width={1} height={1} className="hidden" priority />
+              <Image
+                src={prev}
+                alt=""
+                width={1}
+                height={1}
+                className="hidden"
+                priority
+              />
             )}
             {next && (
-              <Image src={next} alt="" width={1} height={1} className="hidden" priority />
+              <Image
+                src={next}
+                alt=""
+                width={1}
+                height={1}
+                className="hidden"
+                priority
+              />
             )}
 
             {/* Arrows stay inside the media row */}
@@ -154,7 +173,9 @@ export function GalleryModal({
               </div>
             )}
             {description && (
-              <p className="text-sm text-muted-foreground line-clamp-3">{description}</p>
+              <p className="text-sm text-muted-foreground line-clamp-3">
+                {description}
+              </p>
             )}
           </footer>
         </div>

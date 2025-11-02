@@ -12,6 +12,7 @@ import { useModal } from "@/providers/modal-provider";
 
 import Image from "next/image";
 import CustomModal from "../../../../../../components/global/custom-modal";
+import { FALLBACK } from "@/app/(main)/gallery/GalleryModal";
 
 interface EventProps {
   event: EventDescription;
@@ -44,7 +45,7 @@ export const Event = ({ event }: EventProps) => {
       {event?.description.eventPosterImage ? (
         <div>
           <Image
-            src={event.description.eventPosterImage}
+            src={FALLBACK}
             alt="poster-image"
             width={500}
             height={500}
@@ -52,7 +53,7 @@ export const Event = ({ event }: EventProps) => {
               setOpen(
                 <CustomModal title="" subheading="">
                   <Image
-                    src={event.description.eventPosterImage}
+                    src={FALLBACK}
                     alt="poster-image"
                     width={1000}
                     height={1500}
@@ -63,7 +64,7 @@ export const Event = ({ event }: EventProps) => {
             className={"hidden sm:flex"}
           />
           <Image
-            src={event.description.eventPosterImage}
+            src={FALLBACK}
             alt="poster-image"
             width={300}
             height={300}

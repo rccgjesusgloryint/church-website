@@ -19,6 +19,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import Footer from "../../../../components/Footer";
+import { FALLBACK } from "../gallery/GalleryModal";
 
 const Blogs = () => {
   const [blogs, setBlogs] = React.useState<Blog[]>();
@@ -98,10 +99,7 @@ const Blogs = () => {
                 </div>
                 <Image
                   alt="poster-image"
-                  src={
-                    blogs[0]?.blogImage ||
-                    "https://www.1689designs.com/cdn/shop/files/all-over-print-flag-white-front-6604d51e7e80c.png?v=1711592746"
-                  }
+                  src={blogs[0]?.blogImage || FALLBACK}
                   width={500}
                   height={500}
                   className="cursor-pointer hover:opacity-80 max-h-[500px] object-contain"
@@ -139,10 +137,7 @@ const Blogs = () => {
 
                     <Image
                       alt="poster-image"
-                      src={
-                        blog.blogImage ||
-                        "https://www.1689designs.com/cdn/shop/files/all-over-print-flag-white-front-6604d51e7e80c.png?v=1711592746"
-                      }
+                      src={blog.blogImage || FALLBACK}
                       width={500}
                       height={150}
                       className="cursor-pointer hover:opacity-80 sm:w-[200px]"

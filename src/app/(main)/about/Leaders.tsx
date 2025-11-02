@@ -56,4 +56,3 @@ const Leaders = () => {
 };
 
 export default Leaders;
-s;
