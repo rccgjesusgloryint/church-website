@@ -863,3 +863,13 @@ export const reportFeedback = async (form: FeedbackNoId) => {
     throw err;
   }
 };
+
+export const getAllReports = async () => {
+  try {
+    const response = await prisma.feedback.findMany({});
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

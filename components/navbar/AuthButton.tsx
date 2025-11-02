@@ -12,14 +12,14 @@ const AuthButton = () => {
       {status === "authenticated" ? (
         <Link
           href="/api/auth/signout"
-          className="w-full h-full flex justify-center items-center bg-primary border-primary hover:bg-opacity-75 cursor-pointer duration-500 text-primary-foreground"
+          className="w-full h-full flex justify-center items-center bg-primary border-primary hover:bg-opacity-75 cursor-pointer duration-500 text-primary-foreground "
         >
           Sign Out
         </Link>
       ) : status === "unauthenticated" ? (
         <Link
           href="/api/auth/signin"
-          className="w-full h-full flex justify-center items-center bg-gray-700 border-gray-700 hover:bg-opacity-75 cursor-pointer duration-500 text-primary-foreground"
+          className="w-full h-full flex justify-center items-center bg-primary border-primary hover:bg-opacity-75 cursor-pointer duration-500 text-primary-foreground "
         >
           Sign In
         </Link>

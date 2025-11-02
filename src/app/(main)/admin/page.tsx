@@ -24,6 +24,7 @@ import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm"
 import { BlogType, EventsType, Sermon } from "@/lib/types";
 import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
 import Newsletter from "../../../../components/admin/components/Newsletter";
+import ReportList from "../../../../components/admin/feedback/report-list";
 
 const AdminPage = () => {
   const [user, setUser] = React.useState<User>();
@@ -100,6 +101,7 @@ const AdminPage = () => {
           <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="blogs">Blogs</TabsTrigger>
           <TabsTrigger value="edit">Edit</TabsTrigger>
+          {isOwner && <TabsTrigger value="report">Report</TabsTrigger>}
           {isOwner && <TabsTrigger value="newsletter">Newsletter</TabsTrigger>}
         </TabsList>
         <TabsContent value="media">
@@ -131,6 +133,9 @@ const AdminPage = () => {
         </TabsContent>
         <TabsContent value="newsletter">
           <Newsletter />
+        </TabsContent>
+        <TabsContent value="report">
+          <ReportList />
         </TabsContent>
       </Tabs>
     </section>
