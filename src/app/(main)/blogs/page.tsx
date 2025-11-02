@@ -129,10 +129,10 @@ const Blogs = () => {
                           />
                         </HoverCardTrigger>
                         <HoverCardContent
-                          className="w-auto bg-black !border-black"
+                          className="w-auto bg-card !border-border"
                           style={{ padding: "3px" }}
                         >
-                          <span className="text-white">Share Blog</span>
+                          <span className="text-foreground">Share Blog</span>
                         </HoverCardContent>
                       </HoverCard>
                     </span>

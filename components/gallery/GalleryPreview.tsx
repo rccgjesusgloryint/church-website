@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useModal } from "@/providers/modal-provider";
 import MobileView from "./MobileView";
 import GalleryTopRow from "./GalleryTopRow";
@@ -10,6 +9,7 @@ import GalleryBottomRow from "./GalleryBottomRow";
 import ViewAllBtn from "./ViewAllBtn";
 import { CarosoulImageType } from "@/lib/types";
 import { getRandomImages } from "@/lib/queries";
+import Arrow from "../icons/Arrow";
 
 const FALLBACK = "/images/placeholder.svg"; // keep a local tiny svg/png
 
@@ -69,14 +69,17 @@ export default function GalleryPreview() {
       <Link href="/gallery" className="sm:hidden">
         <div className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute right-5 py-20 bottom-3 mt-1">
           <h2>VIEW ALL</h2>
-          <Image
-            src="/images/arrow-icon.png"
-            alt="arrow icon"
-            width={24}
-            height={24}
-          />
+          <Arrow className="w-6 h-6" />
         </div>
       </Link>
     </section>
   );
 }
+//             width={24}
+//             height={24}
+//           />
+//         </div>
+//       </Link>
+//     </section>
+//   );
+// }

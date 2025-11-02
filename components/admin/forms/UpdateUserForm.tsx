@@ -68,13 +68,14 @@ const UpdateUserForm = ({
         },
         {
           style: {
-            border: "1px solid #713200",
+            border: "1px solid hsl(var(--border))",
             padding: "16px",
-            color: "#713200",
+            color: "hsl(var(--foreground))",
+            background: "hsl(var(--background))",
           },
           iconTheme: {
-            primary: "#713200",
-            secondary: "#FFFAEE",
+            primary: "hsl(var(--primary))",
+            secondary: "hsl(var(--primary-foreground))",
           },
           success: {
             duration: 2000,

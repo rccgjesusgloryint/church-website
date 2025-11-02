@@ -60,13 +60,14 @@ const ContactForm = () => {
       },
       {
         style: {
-          border: "1px solid #713200",
+          border: "1px solid hsl(var(--border))",
           padding: "16px",
-          color: "#713200",
+          color: "hsl(var(--foreground))",
+          background: "hsl(var(--background))",
         },
         iconTheme: {
-          primary: "#713200",
-          secondary: "#FFFAEE",
+          primary: "hsl(var(--primary))",
+          secondary: "hsl(var(--primary-foreground))",
         },
         success: {
           duration: 2000,
@@ -102,9 +103,7 @@ const ContactForm = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col space-y-2 p-5 "
           >
-            <h2 className="mb-5 font-medium text-xl text-dark-gr">
-              Contact Us
-            </h2>
+            <h2 className="mb-5 font-medium text-xl">Contact Us</h2>
             <div className="w-full flex gap-2">
               <FormField
                 control={form.control}
@@ -114,7 +113,7 @@ const ContactForm = () => {
                     <FormControl>
                       <Input
                         placeholder="Your Name"
-                        className="ring-0 border-none"
+                        className="ring-0"
                         {...field}
                       />
                     </FormControl>
@@ -155,10 +154,7 @@ const ContactForm = () => {
                 </FormItem>
               )}
             />
-            <Button
-              type="submit"
-              className="bg-dark-gr hover:bg-dark-gr text-white"
-            >
+            <Button type="submit" className="">
               SEND US A MESSAGE
             </Button>
           </form>

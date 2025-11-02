@@ -44,7 +44,7 @@ const Navbar = () => {
                     admin === null
                       ? "hidden"
                       : ""
-                  } hover:text-gray-700 duration-200`}
+                  } hover:text-primary duration-200`}
                 >
                   {label}
                 </Link>

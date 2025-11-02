@@ -26,7 +26,7 @@ const Button = () => {
         <button
           onClick={() => setDisabledBtn(true)}
           disabled={disabledBtn}
-          className="flex justify-center items-center bg-gray-700 w-[210px] h-[60px] border-gray-700 hover:bg-transparent hover:border-2 hover:text-gray-700 duration-500 disabled:bg-gray-900"
+          className="flex justify-center items-center bg-primary w-[210px] h-[60px] border-primary hover:bg-transparent hover:border-2 hover:text-primary duration-500 disabled:bg-primary/50 text-primary-foreground"
         >
           LEARN MORE NOW
         </button>

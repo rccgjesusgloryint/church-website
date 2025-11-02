@@ -22,10 +22,10 @@ const EventsIntro = () => {
   return (
     <section className="h-full w-auto xl:pl-[50px] xl:pt-0 pt-5">
       <div className="sm:text-left sm:block flex flex-col items-center">
-        <h3 className="tracking-widest mb-1 text-light-gr text-left">
+        <h3 className="tracking-widest mb-1 text-muted-foreground text-left">
           THIS {month.toUpperCase()}
         </h3>
-        <div className="bg-dark-gr opacity-50 h-[2px] w-1/2"></div>
+        <div className="bg-muted-foreground opacity-50 h-[2px] w-1/2"></div>
       </div>
       <h1 className="font-bold sm:text-4xl text-3xl sm:text-left text-center pt-[30px] mb-[30px] sm:w-[300px]">
         Become a part of something great

@@ -22,13 +22,13 @@ const Cards = ({ events }: CardProps) => {
     events?.slice(0, 3).map((event: any, index: any) => {
       return (
         <div
-          className={`w-[300px] min-h-[420px] h-auto bg-white px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block ${
+          className={`w-[300px] min-h-[420px] h-auto bg-card px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block ${
             index === 2 ? "hidden" : ""
-          } dark:text-black`}
+          }`}
           key={index}
         >
           {event.date[0] ? (
-            <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+            <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
               <p className="text-[28px] text-center w-full mb-[3px] leading-6">
                 {event.date[0]?.split(" ")[1]?.length > 2
                   ? event.date[0]?.split(" ")[1]?.slice(0, 2)
@@ -41,7 +41,7 @@ const Cards = ({ events }: CardProps) => {
               </p>
             </div>
           ) : (
-            <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+            <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
               <MdEventRepeat size={40} />
             </div>
           )}

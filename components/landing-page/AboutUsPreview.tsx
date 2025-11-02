@@ -46,15 +46,15 @@ const AboutUsPreview = () => {
         </div>
       </div>
       <div
-        className="flex flex-col dark-gr sm:w-[567px] h-[220px] px-2.5 pt-2.5"
+        className="flex flex-col sm:w-[567px] h-[220px] px-2.5 pt-2.5"
         ref={AboutTxtR}
       >
         <div>
-          <h3 className="font-bold text-xl text-dark-gr mb-5">
+          <h3 className="font-bold text-xl mb-5">
             Lifes is a contemporary Christian church. Overwhelmed by the gift of
             salvation we have found in Jesus.
           </h3>
-          <h4 className="w-full font-sans font-normal text-sm text-light-gr">
+          <h4 className="w-full font-sans font-normal text-sm text-muted-foreground">
             We have a heart for authentic worship, are passionate about the
             local church, and are on mission to see Gods kingdom established
             across the earth. Lifes Church was founded by Dylan and Stacy Johnes
@@ -68,3 +68,5 @@ const AboutUsPreview = () => {
 };
 
 export default AboutUsPreview;
+tUsPreview;
+ AboutUsPreview;

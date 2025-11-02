@@ -89,7 +89,10 @@ export const Sermons = () => {
       <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
         {displaySermons.length > 0 ? (
           displaySermons.map((sermon, index) => (
-            <div className="w-auto h-auto p-6 pb-6 bg-slate-400" key={index}>
+            <div
+              className="w-auto h-auto p-6 pb-6 bg-card shadow-xl"
+              key={index}
+            >
               <div className="h-[315px] sm:w-[560px] w-full">
                 <iframe
                   src={`https://www.youtube.com/embed/${getYoutubeVidId(

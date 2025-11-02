@@ -33,7 +33,7 @@ const GridLayout = ({ cls, sides, fill, color, type }: GridLayout) => {
             className={
               fill
                 ? `grid-${type}-1 ${defaultColor} opacity-30 w-full`
-                : `grid-${type}-1 border-x-[1px] border-red-700 w-full`
+                : `grid-${type}-1 border-x-[1px] border-primary w-full`
             }
           ></div>
         ))}

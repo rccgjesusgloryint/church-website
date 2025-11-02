@@ -32,27 +32,28 @@ const Leaders = () => {
           </div>
         </div>
         <div className="flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11">
-          <div className="sm:w-[273px] w-full h-[400px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-4">
+          <div className="sm:w-[273px] w-full h-[400px] bg-muted flex flex-col justify-end items-start pb-14 pl-10 gap-4">
             <h1>Full Name</h1>
             <h3>Title</h3>
           </div>
-          <div className="sm:w-[273px] w-full h-[400px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-4">
+          <div className="sm:w-[273px] w-full h-[400px] bg-muted flex flex-col justify-end items-start pb-14 pl-10 gap-4">
             <h1>Full Name</h1>
             <h3>Title</h3>
           </div>
-          <div className="sm:w-[273px] w-full h-[400px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-4">
+          <div className="sm:w-[273px] w-full h-[400px] bg-muted flex flex-col justify-end items-start pb-14 pl-10 gap-4">
             <h1>Full Name</h1>
             <h3>Title</h3>
           </div>
-          <div className="sm:w-[273px] w-full h-[400px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-4">
+          <div className="sm:w-[273px] w-full h-[400px] bg-muted flex flex-col justify-end items-start pb-14 pl-10 gap-4">
             <h1>Full Name</h1>
             <h3>Title</h3>
           </div>
         </div>
       </div>
-      <div className="absolute w-full h-[200px] bg-dark-gr z-[-10] bottom-0"></div>
+      <div className="absolute w-full h-[200px] bg-secondary z-[-10] bottom-0"></div>
     </section>
   );
 };
 
 export default Leaders;
+s;

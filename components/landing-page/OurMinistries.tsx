@@ -33,8 +33,8 @@ const OurMinistries = () => {
     <section className="h-[230vh] sm:h-[125vh] 2xl:h-screen bg-our-ministries bg-center bg-cover overflow-clip w-screen">
       <div className="flex flex-col justify-center items-center sm:pt-[127px] pt-9 sm:mb-20 mb-8">
         <div className="mb-8" ref={ourMinistriesSubHeading}>
-          <h3 className="text-light-gr">OUR MINISTRIES</h3>
-          <div className="bg-light-gr opacity-50 h-[2px] w-[7.5rem]"></div>
+          <h3 className="text-muted-foreground">OUR MINISTRIES</h3>
+          <div className="bg-muted-foreground opacity-50 h-[2px] w-[7.5rem]"></div>
         </div>
 
         <h1
@@ -46,7 +46,7 @@ const OurMinistries = () => {
       </div>
       <div className="flex sm:flex-row flex-col justify-center items-center">
         <div className="w-96 h-[523px] px-4 sm:pb-0 pb-8 ">
-          <div className="bg-white h-full shadow-md">
+          <div className="bg-card h-full shadow-md">
             <Image
               src="/images/our-ministries-pic2.jpg"
               alt="our-ministries-pic1"
@@ -66,7 +66,7 @@ const OurMinistries = () => {
           </div>
         </div>
         <div className="w-96 h-[523px] px-4 sm:pb-0 pb-8 ">
-          <div className="bg-white h-full shadow-md">
+          <div className="bg-card h-full shadow-md">
             <Image
               src="/images/our-ministries-pic3.jpg"
               alt="our-ministries-pic1"
@@ -86,7 +86,7 @@ const OurMinistries = () => {
           </div>
         </div>
         <div className="w-96 h-[523px] px-4 sm:pb-0 pb-8 ">
-          <div className="bg-white h-full shadow-md">
+          <div className="bg-card h-full shadow-md">
             <Image
               src="/images/our-ministries-pic1.jpg"
               alt="our-ministries-pic1"

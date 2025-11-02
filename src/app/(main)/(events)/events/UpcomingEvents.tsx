@@ -37,16 +37,16 @@ export const UpcomingEventCards = ({
           <Loader />
         </div>
       ) : (
-        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3 text-primary">
+        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
           {events.length > 0 ? (
             events?.map((event, index) => {
               return (
                 <div
-                  className="sm:w-[290px] w-[390px] 2xl:w-[390px] min-h-[420px] h-auto bg-primary px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl"
+                  className="w-[300px] min-h-[420px] h-auto bg-card px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block "
                   key={index}
                 >
                   {event.monthly ? (
-                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary drop-shadow-custom">
+                    <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
                       <>
                         <p className="text-[28px] text-center w-full mb-[3px] leading-6">
                           {lastSunday[1]}
@@ -57,7 +57,7 @@ export const UpcomingEventCards = ({
                       </>
                     </div>
                   ) : (
-                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary drop-shadow-custom">
+                    <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
                       {event.date && (
                         <>
                           <p className="text-[28px] text-center w-full mb-[3px] leading-6">

@@ -56,7 +56,7 @@ const Footer = () => {
   }, []);
 
   return (
-    <section className="h-auto w-full bg-med-gr">
+    <section className="h-auto w-full bg-secondary">
       <div className="w-full h-full sm:flex gap-2">
         <div className="sm:w-1/3 w-auto">
           <div className="w-auto p-10">

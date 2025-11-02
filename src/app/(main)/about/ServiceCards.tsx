@@ -51,7 +51,7 @@ const ServiceCards = (props: Props) => {
       <div className="hidden sm:flex flex-row justify-between items-center flex-wrap gap-5 mt-[100px] w-full mb-11 ">
         {serviceCards.map(({ category, icon, service, style }) => (
           <div
-            className={`sm:w-[331px] w-full h-[460px] bg-slate-400 flex flex-col justify-end items-start pb-14 pl-10 gap-1 ${style} bg-center bg-cover`}
+            className={`sm:w-[331px] w-full h-[460px] bg-muted flex flex-col justify-end items-start pb-14 pl-10 gap-1 ${style} bg-center bg-cover`}
             key={style}
           >
             <HoverCard>

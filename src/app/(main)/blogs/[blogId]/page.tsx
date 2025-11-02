@@ -51,7 +51,7 @@ const Blogs = ({ params }: BlogProps) => {
         <Navbar2 />
         <div className="h-full flex justify-center" ref={useTitle}>
           <div className="flex flex-col items-center justify-center text-white">
-            <span className="bg-[#5B5966] w-auto h-auto rounded flex items-center justify-center p-3 text-center">
+            <span className="bg-primary/50 w-auto h-auto rounded flex items-center justify-center p-3 text-center">
               {blog?.category}
             </span>
             <h1 className="font-bold text-[25px] m-5">{blog?.blogTitle}</h1>

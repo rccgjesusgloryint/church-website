@@ -54,7 +54,7 @@ const MobileViewNavbar = ({ admin }: Props) => {
                       ? // (userRole === undefined && label === "Blogs")
                         "hidden"
                       : ""
-                  } active:bg-blue-300 bg-none w-full flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl`}
+                  } active:bg-primary/10 bg-none w-full flex justify-start items-center pl-4 rounded-sm transition ease-in text-xl`}
                 >
                   {label}
                 </Link>

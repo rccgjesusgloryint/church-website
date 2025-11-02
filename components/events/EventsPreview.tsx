@@ -57,7 +57,7 @@ const EventsPreview = () => {
 
   return (
     <section className="h-auto flex items-center overflow-hidden w-screen">
-      <div className="bg-gray-400 bg-opacity-70 w-full h-full flex xl:flex-nowrap flex-wrap items-center justify-center px-5">
+      <div className="bg-secondary w-full h-full flex xl:flex-nowrap flex-wrap items-center justify-center px-5">
         <EventsIntro />
         <EventCards isLoading={isLoading} events={events} />
         <div className="hidden absolute bottom-20 right-[450px] 3xl:flex gap-1.5">

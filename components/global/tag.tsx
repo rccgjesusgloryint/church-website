@@ -8,7 +8,7 @@ interface TagComponentProps {
 
 const TagComponent: React.FC<TagComponentProps> = ({ title, id }) => {
   return (
-    <div className="p-2 rounded-sm flex-shrink-0 text-xs cursor-pointer bg-[#ffac7e]/10 text-[#ffac7e]">
+    <div className="p-2 rounded-sm flex-shrink-0 text-xs cursor-pointer bg-primary/10 text-primary">
       {title}
     </div>
   );

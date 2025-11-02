@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { FaArrowRight } from "react-icons/fa6";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -28,12 +29,7 @@ const ViewAllBtn = () => {
         ref={viewAllBtn}
       >
         <h2>VIEW ALL</h2>
-        <Image
-          src={"/images/arrow-icon.png"}
-          alt="arrow-icon"
-          width={24}
-          height={24}
-        />
+        <FaArrowRight className="text-secondary-foreground" />
       </div>
     </Link>
   );
