@@ -9,6 +9,7 @@ import {
   DbImage,
   EventMediaNoId,
   EventsType,
+  FeedbackNoId,
   NewsletterEmail,
   Sermon,
   UploadMultipleFiles,
@@ -18,7 +19,7 @@ import { Resend } from "resend";
 import { auth } from "@/auth";
 import { prisma } from "./db";
 
-import { Blog, EventMedia, Image, Media, Role } from "@prisma/client";
+import { Blog, EventMedia, Feedback, Image, Media, Role } from "@prisma/client";
 import { C } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 import { shuffle } from "./actions";
 
@@ -844,4 +845,21 @@ export const getAllImagesv2 = async () => {
   const response = await prisma.eventMedia.findMany({});
 
   return response;
+};
+
+export const reportFeedback = async (form: FeedbackNoId) => {
+  try {
+    return await prisma.feedback.create({
+      data: {
+        name: form.name ?? null,
+        email: form.email ?? null,
+        category: form.category ?? null,
+        message: form.message,
+        feedbackFrom: form.feedbackFrom ?? null,
+      },
+    });
+  } catch (err) {
+    console.error("Error: ", err);
+    throw err;
+  }
 };

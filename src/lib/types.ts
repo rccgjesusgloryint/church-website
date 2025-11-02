@@ -213,6 +213,16 @@ export type EventMediaNoId = {
   updatedAt?: Date;
 };
 
+export type FeedbackNoId = {
+  id?: number;
+  name: string;
+  email?: string;
+  category?: string;
+  message: string;
+  feedbackFrom?: string;
+  createdAt?: Date;
+};
+
 export type YOUTUBE_playlistItem = {
   kind: "youtube#playlistItem";
   etag: string;

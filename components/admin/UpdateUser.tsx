@@ -26,7 +26,7 @@ const UpdateUser = ({ allUsers, setRefresh, setClose, user }: Props) => {
               userId={id}
               setRefresh={setRefresh}
               setClose={setClose}
-              user={user}
+              user={name!}
               key={id.slice(0, 18)}
             />
           ))}

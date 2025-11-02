@@ -171,3 +171,14 @@ model Notification {
   createdAt                   DateTime @default(now())
   updatedAt                   DateTime @updatedAt   
 }
+
+model Feedback {
+  id           Int      @id @default(autoincrement())
+  name         String?  // optional
+  email        String?  // optional
+  category     String?  // 'bug', 'suggestion', 'improvement', etc.
+  message      String
+  feedbackFrom String?  // NEW: where they’re reporting from
+  createdAt    DateTime @default(now())
+}
+
