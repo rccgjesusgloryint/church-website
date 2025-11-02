@@ -7,6 +7,7 @@ import {
   CreateEventType,
   CreateSermon,
   DbImage,
+  EventMediaNoId,
   EventsType,
   NewsletterEmail,
   Sermon,
@@ -17,7 +18,7 @@ import { Resend } from "resend";
 import { auth } from "@/auth";
 import { prisma } from "./db";
 
-import { Blog, Image, Media, Role } from "@prisma/client";
+import { Blog, EventMedia, Image, Media, Role } from "@prisma/client";
 import { C } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 import { shuffle } from "./actions";
 
@@ -128,20 +129,6 @@ export const getAuthUserDetails = async () => {
 //   });
 //   return response;
 // };
-
-export const getAllImages = async () => {
-  const response = await prisma.image.findMany({});
-  const detailedResponse = response.map((res) => {
-    return {
-      id: res.id,
-      link: res.url || "",
-      name: res.event,
-      date: res.createdAt,
-    };
-  });
-
-  return detailedResponse;
-};
 
 export const getRandomImages = async (
   amount: number
@@ -821,6 +808,15 @@ export const saveImage = async (file: DbImage) => {
   }
 };
 
+export const saveEventImages = async (file: EventMediaNoId) => {
+  try {
+    return await prisma.eventMedia.create({ data: file });
+  } catch (err) {
+    console.error("saveEventImages error:", err);
+    throw err; // IMPORTANT
+  }
+};
+
 export const getImages = async (): Promise<Image[] | undefined> => {
   try {
     const dbImages = await prisma.image.findMany({});
@@ -828,4 +824,24 @@ export const getImages = async (): Promise<Image[] | undefined> => {
   } catch (error) {
     console.log("Error: ", error);
   }
+};
+
+export const getAllImages = async () => {
+  const response = await prisma.image.findMany({});
+  const detailedResponse = response.map((res) => {
+    return {
+      id: res.id,
+      link: res.url || "",
+      name: res.event,
+      date: res.createdAt,
+    };
+  });
+
+  return detailedResponse;
+};
+
+export const getAllImagesv2 = async () => {
+  const response = await prisma.eventMedia.findMany({});
+
+  return response;
 };

@@ -1,4 +1,3 @@
-import { CategorisedImages } from "@/hooks/useGalleryImages";
 import { GetAllImages } from "./types";
 
 export function getYoutubeVidId(youtubeUrl: string) {

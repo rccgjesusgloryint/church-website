@@ -14,7 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Upload, X, ImageIcon, Calendar, FileText } from "lucide-react";
+import { Upload, X, ImageIcon, Calendar, FileText, MapPin } from "lucide-react"; // NEW
 import { cn } from "@/lib/utils";
 
 interface UploadedFile {
@@ -29,6 +29,7 @@ export function GalleryUploadForm() {
   const [eventDate, setEventDate] = useState("");
   const [eventTitle, setEventTitle] = useState("");
   const [eventDescription, setEventDescription] = useState("");
+  const [eventLocation, setEventLocation] = useState(""); // NEW
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -36,23 +37,18 @@ export function GalleryUploadForm() {
     e.preventDefault();
     setIsDragging(true);
   };
-
   const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
   };
-
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-
     const droppedFiles = Array.from(e.dataTransfer.files).filter((file) =>
       file.type.startsWith("image/")
     );
-
     processFiles(droppedFiles);
   };
-
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const selectedFiles = Array.from(e.target.files).filter((file) =>
@@ -61,23 +57,18 @@ export function GalleryUploadForm() {
       processFiles(selectedFiles);
     }
   };
-
   const processFiles = (newFiles: File[]) => {
     const uploadedFiles: UploadedFile[] = newFiles.map((file) => ({
       file,
       preview: URL.createObjectURL(file),
       id: Math.random().toString(36).substring(7),
     }));
-
     setFiles((prev) => [...prev, ...uploadedFiles]);
   };
-
   const removeFile = (id: string) => {
     setFiles((prev) => {
       const fileToRemove = prev.find((f) => f.id === id);
-      if (fileToRemove) {
-        URL.revokeObjectURL(fileToRemove.preview);
-      }
+      if (fileToRemove) URL.revokeObjectURL(fileToRemove.preview);
       return prev.filter((f) => f.id !== id);
     });
   };
@@ -85,53 +76,57 @@ export function GalleryUploadForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (files.length === 0) {
-      alert("Please select at least one image");
-      return;
-    }
-
-    if (!eventDate || !eventTitle) {
-      alert("Please fill in all required fields");
-      return;
-    }
+    if (files.length === 0) return alert("Please select at least one image");
+    if (!eventDate || !eventTitle)
+      return alert("Please fill in all required fields");
 
     setIsUploading(true);
 
     const formData = new FormData();
-    for (const file of Array.from(files)) {
-      formData.append("files", file.file);
-    }
+    files.forEach((f) => formData.append("files", f.file));
     formData.append("event", eventTitle);
     formData.append("date", eventDate);
     formData.append("description", eventDescription);
+    formData.append("location", eventLocation); // NEW
 
     try {
       const res = await fetch(`/api/upload/multiple-files`, {
         method: "POST",
         body: formData,
       });
-      if (res.ok) {
-        alert("Images uploaded successfully!");
-      }
-    } catch (error) {
-      alert(`Whoops ${error}`);
-    }
-    // console.log("[v0] Upload data:", {
-    //   eventDate,
-    //   eventTitle,
-    //   eventDescription,
-    //   filesCount: files.length,
-    // });
-    // console.log("formData: ", formData);
-    // Reset form
-    files.forEach((file) => URL.revokeObjectURL(file.preview));
-    setFiles([]);
-    setEventDate("");
-    setEventTitle("");
-    setEventDescription("");
-    setIsUploading(false);
 
-    // alert("Images uploaded successfully!");
+      let payload: any = null;
+      try {
+        payload = await res.json();
+      } catch {}
+
+      if (!res.ok) {
+        const msg =
+          payload?.error ??
+          payload?.message ??
+          `Upload failed with status ${res.status}`;
+        console.error("Upload failed:", { status: res.status, payload });
+        alert(msg);
+        return;
+      }
+
+      const msg = payload?.message ?? "Images uploaded successfully!";
+      console.log("Upload success:", payload);
+      alert(msg);
+
+      // Reset ONLY on success
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
+      setFiles([]);
+      setEventDate("");
+      setEventTitle("");
+      setEventDescription("");
+      setEventLocation(""); // NEW
+    } catch (err: any) {
+      console.error("Network/Unexpected error:", err);
+      alert(err?.message ?? "Unexpected error while uploading.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -181,6 +176,25 @@ export function GalleryUploadForm() {
                   required
                 />
               </div>
+            </div>
+
+            {/* NEW: Location (optional) */}
+            <div className="space-y-2">
+              <Label
+                htmlFor="event-location"
+                className="flex items-center gap-2"
+              >
+                <MapPin className="h-4 w-4 text-primary" />
+                Location{" "}
+                <span className="text-muted-foreground">(optional)</span>
+              </Label>
+              <Input
+                id="event-location"
+                type="text"
+                placeholder="e.g., St. Mark’s Church Hall"
+                value={eventLocation}
+                onChange={(e) => setEventLocation(e.target.value)}
+              />
             </div>
 
             <div className="space-y-2">
@@ -285,6 +299,7 @@ export function GalleryUploadForm() {
                 setEventDate("");
                 setEventTitle("");
                 setEventDescription("");
+                setEventLocation(""); // NEW
               }}
               disabled={isUploading}
             >

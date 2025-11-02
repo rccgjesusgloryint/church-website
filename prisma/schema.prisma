@@ -106,6 +106,17 @@ model Events {
   updatedAt   DateTime @updatedAt
 }
 
+model EventMedia {
+  id          Int       @id @default(autoincrement())
+  event       String    @unique
+  date        DateTime
+  location    String?   // optional
+  description String?   // optional
+  images      String[]  // array of image URLs
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
 
 model NewsletterEmail {
   email String @id // Email as the primary key (unique identifier)

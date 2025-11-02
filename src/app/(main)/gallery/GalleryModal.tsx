@@ -1,32 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import {
-  X,
-  ChevronLeft,
-  ChevronRight,
-  Calendar,
-  MapPin,
-  User,
-} from "lucide-react";
-import { GetAllImages } from "@/lib/types";
+import { X, ChevronLeft, ChevronRight, Calendar, MapPin } from "lucide-react";
 
 interface GalleryModalProps {
-  image: GetAllImages | null;
-  filteredImages: GetAllImages[];
+  /** Current image URL (from the selected event’s images[]) */
+  image: string | null;
+  /** All image URLs for the selected event */
+  filteredImages: string[];
   isOpen: boolean;
   onClose: () => void;
   onNext: () => void;
   onPrevious: () => void;
+
+  /** Optional metadata for footer */
+  title?: string; // event name
+  description?: string | null;
+  subtitle?: string | null; // e.g., location
+  date?: string | Date; // event date
 }
+
+const FALLBACK =
+  "https://preview-church-gallery-design-kzmm4h729y5io3uypyzz.vusercontent.net/placeholder.svg";
 
 export function GalleryModal({
   image,
@@ -35,14 +33,15 @@ export function GalleryModal({
   onClose,
   onNext,
   onPrevious,
+  title,
+  description,
+  subtitle,
+  date,
 }: GalleryModalProps) {
-  const urlBreakDown = image?.link.split("/");
-  const imageLength = image?.link.length;
-  const APP_ID = "kwt4fjtfgo";
+  // Keyboard navigation
   useEffect(() => {
+    if (!isOpen) return;
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (!isOpen) return;
-
       switch (event.key) {
         case "Escape":
           onClose();
@@ -59,34 +58,45 @@ export function GalleryModal({
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose, onNext, onPrevious]);
 
-  if (!image) return null;
+  if (!isOpen || !image) return null;
 
-  const idx = Math.max(
-    0,
-    filteredImages.findIndex((img) => img.id === image.id)
-  );
+  // Figure out current index by URL (works for your images:string[])
+  const idx = Math.max(0, filteredImages.indexOf(image));
   const len = filteredImages.length;
 
-  // Non-circular (like your UI): only render neighbor if it exists
   const prev = idx > 0 ? filteredImages[idx - 1] : null;
   const next = idx < len - 1 ? filteredImages[idx + 1] : null;
 
-  // Keep sizes stable so the same optimizer variant is reused
+  // Keep sizes stable so Next/Image reuses optimizer variants
   const sizes = "100vw";
 
-  // const getEventTypeColor = (eventType: string) => {
-  //   const colors = {
-  //     worship: "bg-primary/10 text-primary border-primary/20",
-  //     community: "bg-secondary/10 text-secondary border-secondary/20",
-  //     youth: "bg-accent/10 text-accent border-accent/20",
-  //     outreach: "bg-chart-4/10 text-chart-4 border-chart-4/20",
-  //     special: "bg-chart-5/10 text-chart-5 border-chart-5/20",
-  //   };
-  //   return (
-  //     colors[eventType as keyof typeof colors] ||
-  //     "bg-muted text-muted-foreground"
-  //   );
-  // };
+  // Preload prev/next via hidden Image components
+  const PreloadImage = ({ src }: { src: string }) => (
+    <div className="absolute inset-0 opacity-0 pointer-events-none" aria-hidden>
+      <Image
+        src={src}
+        alt=""
+        fill
+        sizes={sizes}
+        loading="eager"
+        fetchPriority="low"
+        style={{ objectFit: "contain" }}
+        unoptimized
+      />
+    </div>
+  );
+
+  const dateLabel = (() => {
+    if (!date) return "";
+    const d = date instanceof Date ? date : new Date(date);
+    return isNaN(d.getTime())
+      ? ""
+      : d.toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+        });
+  })();
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -104,62 +114,26 @@ export function GalleryModal({
               <span className="sr-only">Close</span>
             </Button>
           </DialogTitle>
-          {/* PREV (hidden but fetched by next/image) */}
-          {prev && (
-            <div
-              className="absolute inset-0 opacity-0 pointer-events-none"
-              aria-hidden
-            >
-              <Image
-                src={prev.link}
-                alt={prev.name ?? ""}
-                fill
-                sizes={sizes}
-                loading="eager" // force fetch now
-                fetchPriority="low"
-                style={{ objectFit: "contain" }}
-                unoptimized
-              />
-            </div>
-          )}
 
-          {/* CURRENT */}
+          {/* Preload neighbors */}
+          {prev && <PreloadImage src={prev} />}
+          {next && <PreloadImage src={next} />}
+
+          {/* Current */}
           <div className="absolute inset-0">
             <Image
-              src={
-                image.link ||
-                "https://preview-church-gallery-design-kzmm4h729y5io3uypyzz.vusercontent.net/placeholder.svg"
-              }
-              alt={image.name ?? ""}
+              src={image || FALLBACK}
+              alt={title || "Gallery image"}
               fill
               sizes={sizes}
-              priority // preload current
+              priority
               fetchPriority="high"
               loading="eager"
               style={{ objectFit: "contain" }}
-              // unoptimized
             />
           </div>
 
-          {/* NEXT (hidden but fetched by next/image) */}
-          {next && (
-            <div
-              className="absolute inset-0 opacity-0 pointer-events-none"
-              aria-hidden
-            >
-              <Image
-                src={next.link}
-                alt={next.name ?? ""}
-                fill
-                sizes={sizes}
-                loading="eager" // force fetch now
-                fetchPriority="low"
-                style={{ objectFit: "contain" }}
-                unoptimized
-              />
-            </div>
-          )}
-          {/* Navigation buttons */}
+          {/* Navigation */}
           {idx > 0 && (
             <Button
               variant="secondary"
@@ -171,7 +145,6 @@ export function GalleryModal({
               <span className="sr-only">Previous image</span>
             </Button>
           )}
-
           {idx < len - 1 && (
             <Button
               variant="secondary"
@@ -185,41 +158,33 @@ export function GalleryModal({
           )}
 
           {/* Footer */}
-          <div className="bg-card border-t border-border p-4">
-            <h2 className="font-semibold text-lg mb-2 text-balance">
-              {image.name}
-            </h2>
+          <div className="mt-auto bg-card border-t border-border p-4 space-y-2">
+            {title && (
+              <h2 className="font-semibold text-lg text-balance">{title}</h2>
+            )}
 
-            {/* {image.caption && (
-              <p className="text-sm text-muted-foreground mb-3 text-pretty">
-                {image.caption}
-              </p>
-            )} */}
-
-            <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-              <div className="flex items-center gap-1">
-                <Calendar className="h-4 w-4" />
-                <span>
-                  {image?.date
-                    .toUTCString()
-                    .slice(0, image?.date.toUTCString().length - 13)}
-                </span>
+            {(description || dateLabel || subtitle) && (
+              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+                {dateLabel && (
+                  <div className="flex items-center gap-1">
+                    <Calendar className="h-4 w-4" />
+                    <span>{dateLabel}</span>
+                  </div>
+                )}
+                {subtitle && (
+                  <div className="flex items-center gap-1">
+                    <MapPin className="h-4 w-4" />
+                    <span>{subtitle}</span>
+                  </div>
+                )}
               </div>
+            )}
 
-              {/* {image.location && (
-                <div className="flex items-center gap-1">
-                  <MapPin className="h-4 w-4" />
-                  <span>{image.location}</span>
-                </div>
-              )} */}
-
-              {/* {image.photographer && (
-                <div className="flex items-center gap-1">
-                  <User className="h-4 w-4" />
-                  <span>Photo by {image.photographer}</span>
-                </div>
-              )} */}
-            </div>
+            {description && (
+              <p className="text-sm text-muted-foreground text-pretty">
+                {description}
+              </p>
+            )}
           </div>
         </div>
       </DialogContent>

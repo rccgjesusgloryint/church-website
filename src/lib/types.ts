@@ -191,6 +191,28 @@ export interface S3Image {
 
 export type DbImage = S3Image;
 
+export type EventsMedia = {
+  id?: number | null;
+  event: string;
+  date: Date;
+  location?: string | null;
+  description?: string | null;
+  images: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
+export type EventMediaNoId = {
+  id?: number;
+  event: string;
+  date: Date;
+  location?: string;
+  description?: string;
+  images: string[];
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
 export type YOUTUBE_playlistItem = {
   kind: "youtube#playlistItem";
   etag: string;

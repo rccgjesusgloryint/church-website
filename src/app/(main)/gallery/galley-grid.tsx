@@ -4,14 +4,12 @@ import { useMemo, useState } from "react";
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
-import { GalleryCategoryType, GetAllImages } from "@/lib/types";
-import { CategorisedImages } from "@/hooks/useGalleryImages";
+import { EventsMedia } from "@/lib/types";
 
 interface GalleryGridProps {
   visibleCount: number;
-  categories: GalleryCategoryType;
-  images: CategorisedImages;
-  onImageClick: (category: string) => void;
+  events: EventsMedia[]; // ← NEW: pass EventMedia[]
+  onEventClick: (eventName: string) => void; // ← renamed for clarity
 }
 
 const PREVIEW_FALLBACK =
@@ -35,73 +33,57 @@ const shimmer = (w: number, h: number) =>
   ).toString("base64")}`;
 
 export function GalleryGrid({
-  images,
-  onImageClick,
+  events,
+  onEventClick,
   visibleCount,
 }: GalleryGridProps) {
   const [loaded, setLoaded] = useState<Set<string>>(new Set());
   const [errored, setErrored] = useState<Set<string>>(new Set());
 
-  // Build a single array once; avoids repeated filtering and multiple lookups.
+  // Build items once: one card per event with a cover image
   const items = useMemo(() => {
-    const arr: Array<{
-      category: string;
-      id: string;
-      name: string;
-      date: Date | null;
-      link: string;
-    }> = [];
-
-    Array.from(images.keys)
-      .slice(0, visibleCount)
-      .forEach((category) => {
-        const first = images.fullArray.find((img) => img?.name === category);
-        if (!first) return;
-        arr.push({
-          category,
-          id: first.id ?? category,
-          name: first.name ?? category,
-          date: first.date ?? null,
-          link: first.link || PREVIEW_FALLBACK,
-        });
-      });
-
-    return arr;
-  }, [images, visibleCount]);
+    return events.slice(0, visibleCount).map((ev) => {
+      const cover = ev.images?.[0] || PREVIEW_FALLBACK;
+      const dateObj = ev.date instanceof Date ? ev.date : new Date(ev.date);
+      return {
+        id: String(ev.id ?? ev.event),
+        event: ev.event,
+        date: isNaN(dateObj.getTime()) ? null : dateObj,
+        cover,
+      };
+    });
+  }, [events, visibleCount]);
 
   return (
     <div className="max-w-6xl mx-auto p-4">
       <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-        {items?.map((item, i) => {
-          const isAboveFold = i < 6; // eager-load just a few
+        {items.map((item, i) => {
+          const isAboveFold = i < 6;
           const isLoaded = loaded.has(item.id);
           const isErrored = errored.has(item.id);
 
-          // Choose src: if image errored, show fallback
-          const src = isErrored ? PREVIEW_FALLBACK : item.link;
+          const src = isErrored ? PREVIEW_FALLBACK : item.cover;
 
           return (
             <Card
               key={item.id}
               className="break-inside-avoid cursor-pointer group hover:shadow-lg transition-all duration-300 overflow-hidden"
-              onClick={() => onImageClick(item.category)}
+              onClick={() => onEventClick(item.event)}
             >
               <div className="relative">
-                {/* Aspect-ratio wrapper to prevent CLS (change ratio to match your images) */}
+                {/* Aspect ratio wrapper */}
                 <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
-                  {/* Skeleton overlay (visible until loaded) */}
                   {!isLoaded && (
                     <div className="absolute inset-0 bg-muted animate-pulse" />
                   )}
 
                   <Image
                     src={src}
-                    alt={item.name}
+                    alt={item.event}
                     fill
                     className={`object-cover transition-transform duration-300 group-hover:scale-105 ${
                       isLoaded ? "opacity-100" : "opacity-0"
                     }`}
-                    // Next/Image performance knobs:
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     priority={isAboveFold}
                     loading={isAboveFold ? "eager" : "lazy"}
@@ -121,13 +103,19 @@ export function GalleryGrid({
                 {/* Meta */}
                 <div className="p-4">
                   <h3 className="font-semibold text-sm mb-2 text-balance">
-                    {item.name}
+                    {item.event}
                   </h3>
                   <div className="space-y-1 text-xs text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       <span>
-                        {item.date ? item.date.toUTCString().slice(0, -13) : ""}
+                        {item.date
+                          ? item.date.toLocaleDateString(undefined, {
+                              year: "numeric",
+                              month: "short",
+                              day: "numeric",
+                            })
+                          : ""}
                       </span>
                     </div>
                   </div>
