@@ -72,7 +72,7 @@ export function GalleryGrid({
   return (
     <div className="max-w-6xl mx-auto p-4">
       <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-        {items.map((item, i) => {
+        {items?.map((item, i) => {
           const isAboveFold = i < 6; // eager-load just a few
           const isLoaded = loaded.has(item.id);
           const isErrored = errored.has(item.id);

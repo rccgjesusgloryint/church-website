@@ -134,7 +134,7 @@ export const getAllImages = async () => {
   const detailedResponse = response.map((res) => {
     return {
       id: res.id,
-      link: res.url!,
+      link: res.url || "",
       name: res.event,
       date: res.createdAt,
     };
