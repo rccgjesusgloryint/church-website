@@ -7,20 +7,16 @@ import { Button } from "@/components/ui/button";
 import { X, ChevronLeft, ChevronRight, Calendar, MapPin } from "lucide-react";
 
 interface GalleryModalProps {
-  /** Current image URL (from the selected event’s images[]) */
   image: string | null;
-  /** All image URLs for the selected event */
   filteredImages: string[];
   isOpen: boolean;
   onClose: () => void;
   onNext: () => void;
   onPrevious: () => void;
-
-  /** Optional metadata for footer */
-  title?: string; // event name
+  title?: string;
   description?: string | null;
-  subtitle?: string | null; // e.g., location
-  date?: string | Date; // event date
+  subtitle?: string | null;
+  date?: string | Date;
 }
 
 const FALLBACK =
@@ -38,53 +34,24 @@ export function GalleryModal({
   subtitle,
   date,
 }: GalleryModalProps) {
-  // Keyboard navigation
+  // keyboard nav
   useEffect(() => {
     if (!isOpen) return;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      switch (event.key) {
-        case "Escape":
-          onClose();
-          break;
-        case "ArrowLeft":
-          onPrevious();
-          break;
-        case "ArrowRight":
-          onNext();
-          break;
-      }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft") onPrevious();
+      if (e.key === "ArrowRight") onNext();
     };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
   }, [isOpen, onClose, onNext, onPrevious]);
 
   if (!isOpen || !image) return null;
 
-  // Figure out current index by URL (works for your images:string[])
   const idx = Math.max(0, filteredImages.indexOf(image));
   const len = filteredImages.length;
-
   const prev = idx > 0 ? filteredImages[idx - 1] : null;
   const next = idx < len - 1 ? filteredImages[idx + 1] : null;
-
-  // Keep sizes stable so Next/Image reuses optimizer variants
-  const sizes = "100vw";
-
-  // Preload prev/next via hidden Image components
-  const PreloadImage = ({ src }: { src: string }) => (
-    <div className="absolute inset-0 opacity-0 pointer-events-none" aria-hidden>
-      <Image
-        src={src}
-        alt=""
-        fill
-        sizes={sizes}
-        loading="eager"
-        fetchPriority="low"
-        style={{ objectFit: "contain" }}
-        unoptimized
-      />
-    </div>
-  );
 
   const dateLabel = (() => {
     if (!date) return "";
@@ -100,92 +67,96 @@ export function GalleryModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl w-full h-[90vh] p-0 overflow-hidden">
-        <div className="relative h-full flex flex-col">
-          {/* Header */}
-          <DialogTitle className="absolute top-0 left-0 right-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-4 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">
-                {idx + 1} of {len}
-              </span>
-            </div>
-            <Button variant="ghost" size="icon" onClick={onClose}>
+      {/* Give the content a real layout instead of absolute stacking */}
+      <DialogContent className="w-[min(92vw,1200px)] h-[90vh] p-0 overflow-hidden bg-background">
+        <div className="grid h-full grid-rows-[auto,1fr,auto]">
+          {/* Header row */}
+          <header className="row-start-1 flex items-center justify-between px-4 py-3 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/70">
+            <DialogTitle className="m-0 p-0 text-sm font-normal text-muted-foreground">
+              {idx + 1} of {len}
+            </DialogTitle>
+            <Button variant="ghost" size="icon" onClick={onClose} className="text-foreground">
               <X className="h-4 w-4" />
               <span className="sr-only">Close</span>
             </Button>
-          </DialogTitle>
+          </header>
 
-          {/* Preload neighbors */}
-          {prev && <PreloadImage src={prev} />}
-          {next && <PreloadImage src={next} />}
+          {/* Media row */}
+          <section className="row-start-2 relative">
+            {/* Centered image with padding so it never touches edges */}
+            <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-4">
+              <div className="relative h-full w-full">
+                <Image
+                  src={image || FALLBACK}
+                  alt={title || "Gallery image"}
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 92vw, 1200px"
+                  className="object-contain"
+                />
+              </div>
+            </div>
 
-          {/* Current */}
-          <div className="absolute inset-0">
-            <Image
-              src={image || FALLBACK}
-              alt={title || "Gallery image"}
-              fill
-              sizes={sizes}
-              priority
-              fetchPriority="high"
-              loading="eager"
-              style={{ objectFit: "contain" }}
-            />
-          </div>
-
-          {/* Navigation */}
-          {idx > 0 && (
-            <Button
-              variant="secondary"
-              size="icon"
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
-              onClick={onPrevious}
-            >
-              <ChevronLeft className="h-4 w-4" />
-              <span className="sr-only">Previous image</span>
-            </Button>
-          )}
-          {idx < len - 1 && (
-            <Button
-              variant="secondary"
-              size="icon"
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background"
-              onClick={onNext}
-            >
-              <ChevronRight className="h-4 w-4" />
-              <span className="sr-only">Next image</span>
-            </Button>
-          )}
-
-          {/* Footer */}
-          <div className="mt-auto bg-card border-t border-border p-4 space-y-2">
-            {title && (
-              <h2 className="font-semibold text-lg text-balance">{title}</h2>
+            {/* Preload neighbors (hidden, no layout impact) */}
+            {prev && (
+              <Image src={prev} alt="" width={1} height={1} className="hidden" priority />
+            )}
+            {next && (
+              <Image src={next} alt="" width={1} height={1} className="hidden" priority />
             )}
 
+            {/* Arrows stay inside the media row */}
+            {idx > 0 && (
+              <Button
+                variant="secondary"
+                size="icon"
+                className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background text-foreground"
+                onClick={onPrevious}
+              >
+                <ChevronLeft className="h-4 w-4" />
+                <span className="sr-only">Previous image</span>
+              </Button>
+            )}
+            {idx < len - 1 && (
+              <Button
+                variant="secondary"
+                size="icon"
+                className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background text-foreground"
+                onClick={onNext}
+              >
+                <ChevronRight className="h-4 w-4" />
+                <span className="sr-only">Next image</span>
+              </Button>
+            )}
+          </section>
+
+          {/* Footer row */}
+          <footer className="row-start-3 px-4 py-3 bg-card border-t border-border space-y-1">
+            {title && (
+              <h2 className="font-semibold text-base leading-snug text-foreground line-clamp-2">
+                {title}
+              </h2>
+            )}
             {(description || dateLabel || subtitle) && (
-              <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
                 {dateLabel && (
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>{dateLabel}</span>
-                  </div>
+                  <span className="inline-flex items-center gap-1">
+                    <Calendar className="h-3.5 w-3.5" />
+                    {dateLabel}
+                  </span>
                 )}
                 {subtitle && (
-                  <div className="flex items-center gap-1">
-                    <MapPin className="h-4 w-4" />
-                    <span>{subtitle}</span>
-                  </div>
+                  <span className="inline-flex items-center gap-1">
+                    <MapPin className="h-3.5 w-3.5" />
+                    {subtitle}
+                  </span>
                 )}
               </div>
             )}
-
             {description && (
-              <p className="text-sm text-muted-foreground text-pretty">
-                {description}
-              </p>
+              <p className="text-sm text-muted-foreground line-clamp-3">{description}</p>
             )}
-          </div>
+          </footer>
         </div>
       </DialogContent>
     </Dialog>
