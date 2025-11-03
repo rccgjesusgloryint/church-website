@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useRef, type DragEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Upload, X, ImageIcon, Calendar, FileText, MapPin } from "lucide-react"; // NEW
+import { Upload, X, ImageIcon, Calendar, FileText, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface UploadedFile {
@@ -23,15 +22,22 @@ interface UploadedFile {
   id: string;
 }
 
+/** ---- Client-side limits ---- */
+const MAX_FILES_PER_REQUEST = 3; // 👈 adjust
+const MAX_FILE_SIZE_MB = 8; // 👈 adjust
+
 export function GalleryUploadForm() {
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [eventDate, setEventDate] = useState("");
   const [eventTitle, setEventTitle] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [eventLocation, setEventLocation] = useState(""); // NEW
+  const [eventLocation, setEventLocation] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [warning, setWarning] = useState<string>(""); // 👈 inline feedback
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const remainingSlots = Math.max(0, MAX_FILES_PER_REQUEST - files.length);
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -44,41 +50,83 @@ export function GalleryUploadForm() {
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-    const droppedFiles = Array.from(e.dataTransfer.files).filter((file) =>
-      file.type.startsWith("image/")
-    );
-    processFiles(droppedFiles);
+    if (!e.dataTransfer.files?.length) return;
+    addFiles(Array.from(e.dataTransfer.files));
   };
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const selectedFiles = Array.from(e.target.files).filter((file) =>
-        file.type.startsWith("image/")
-      );
-      processFiles(selectedFiles);
-    }
+    if (!e.target.files?.length) return;
+    addFiles(Array.from(e.target.files));
+    // reset input so same files can be reselected if removed
+    e.currentTarget.value = "";
   };
-  const processFiles = (newFiles: File[]) => {
-    const uploadedFiles: UploadedFile[] = newFiles.map((file) => ({
+
+  /** Validate and add files respecting limits */
+  const addFiles = (incoming: File[]) => {
+    setWarning("");
+    // only images
+    let candidates = incoming.filter((f) => f.type.startsWith("image/"));
+
+    // enforce size
+    const tooBig = candidates.filter(
+      (f) => f.size > MAX_FILE_SIZE_MB * 1024 * 1024
+    );
+    if (tooBig.length) {
+      setWarning(
+        `Skipped ${tooBig.length} file(s) over ${MAX_FILE_SIZE_MB}MB: ` +
+          tooBig.map((f) => f.name).join(", ")
+      );
+    }
+    candidates = candidates.filter(
+      (f) => f.size <= MAX_FILE_SIZE_MB * 1024 * 1024
+    );
+
+    // enforce count
+    if (candidates.length > remainingSlots) {
+      setWarning(
+        (prev) =>
+          (prev ? prev + " • " : "") +
+          `You can only add ${remainingSlots} more file(s) (max ${MAX_FILES_PER_REQUEST} per upload).`
+      );
+      candidates = candidates.slice(0, remainingSlots);
+    }
+
+    if (!candidates.length) return;
+
+    const toAdd: UploadedFile[] = candidates.map((file) => ({
       file,
       preview: URL.createObjectURL(file),
-      id: Math.random().toString(36).substring(7),
+      id: crypto.randomUUID?.() ?? Math.random().toString(36).slice(2),
     }));
-    setFiles((prev) => [...prev, ...uploadedFiles]);
+
+    setFiles((prev) => [...prev, ...toAdd]);
   };
+
   const removeFile = (id: string) => {
     setFiles((prev) => {
-      const fileToRemove = prev.find((f) => f.id === id);
-      if (fileToRemove) URL.revokeObjectURL(fileToRemove.preview);
-      return prev.filter((f) => f.id !== id);
+      const f = prev.find((x) => x.id === id);
+      if (f) URL.revokeObjectURL(f.preview);
+      return prev.filter((x) => x.id !== id);
     });
+    setWarning(""); // clear warnings so user can add more
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (files.length === 0) return alert("Please select at least one image");
+    // final guard
+    if (!files.length) return alert("Please select at least one image.");
     if (!eventDate || !eventTitle)
-      return alert("Please fill in all required fields");
+      return alert("Please fill in all required fields.");
+    if (files.length > MAX_FILES_PER_REQUEST) {
+      return alert(
+        `Please keep it to ${MAX_FILES_PER_REQUEST} files per upload.`
+      );
+    }
+    for (const f of files) {
+      if (f.file.size > MAX_FILE_SIZE_MB * 1024 * 1024) {
+        return alert(`"${f.file.name}" exceeds ${MAX_FILE_SIZE_MB}MB.`);
+      }
+    }
 
     setIsUploading(true);
 
@@ -87,14 +135,13 @@ export function GalleryUploadForm() {
     formData.append("event", eventTitle);
     formData.append("date", eventDate);
     formData.append("description", eventDescription);
-    formData.append("location", eventLocation); // NEW
+    formData.append("location", eventLocation);
 
     try {
       const res = await fetch(`/api/upload/multiple-files`, {
         method: "POST",
         body: formData,
       });
-
       let payload: any = null;
       try {
         payload = await res.json();
@@ -102,25 +149,22 @@ export function GalleryUploadForm() {
 
       if (!res.ok) {
         const msg =
-          payload?.error ??
-          payload?.message ??
-          `Upload failed with status ${res.status}`;
+          payload?.error ?? payload?.message ?? `Upload failed (${res.status})`;
         console.error("Upload failed:", { status: res.status, payload });
         alert(msg);
         return;
       }
 
-      const msg = payload?.message ?? "Images uploaded successfully!";
-      console.log("Upload success:", payload);
-      alert(msg);
+      alert(payload?.message ?? "Images uploaded successfully!");
 
-      // Reset ONLY on success
-      files.forEach((file) => URL.revokeObjectURL(file.preview));
+      // Reset on success
+      files.forEach((f) => URL.revokeObjectURL(f.preview));
       setFiles([]);
       setEventDate("");
       setEventTitle("");
       setEventDescription("");
-      setEventLocation(""); // NEW
+      setEventLocation("");
+      setWarning("");
     } catch (err: any) {
       console.error("Network/Unexpected error:", err);
       alert(err?.message ?? "Unexpected error while uploading.");
@@ -136,7 +180,8 @@ export function GalleryUploadForm() {
           Upload Event Photos
         </CardTitle>
         <CardDescription className="text-muted-foreground">
-          Add photos from church events to share with the community
+          Max <strong>{MAX_FILES_PER_REQUEST}</strong> images per upload, up to{" "}
+          <strong>{MAX_FILE_SIZE_MB}MB</strong> each.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -155,10 +200,8 @@ export function GalleryUploadForm() {
                   value={eventDate}
                   onChange={(e) => setEventDate(e.target.value)}
                   required
-                  className="w-full"
                 />
               </div>
-
               <div className="space-y-2">
                 <Label
                   htmlFor="event-title"
@@ -178,7 +221,6 @@ export function GalleryUploadForm() {
               </div>
             </div>
 
-            {/* NEW: Location (optional) */}
             <div className="space-y-2">
               <Label
                 htmlFor="event-location"
@@ -211,7 +253,7 @@ export function GalleryUploadForm() {
           </div>
 
           {/* File Upload Area */}
-          <div className="space-y-4">
+          <div className="space-y-3">
             <Label className="flex items-center gap-2">
               <ImageIcon className="h-4 w-4 text-primary" />
               Photos <span className="text-destructive">*</span>
@@ -237,7 +279,6 @@ export function GalleryUploadForm() {
                 onChange={handleFileSelect}
                 className="hidden"
               />
-
               <div className="flex flex-col items-center gap-3">
                 <div className="rounded-full bg-primary/10 p-4">
                   <Upload className="h-8 w-8 text-primary" />
@@ -247,17 +288,26 @@ export function GalleryUploadForm() {
                     Drop images here or click to browse
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    Supports: JPG, PNG, WebP (max 10MB per file)
+                    Max {MAX_FILES_PER_REQUEST} files per upload,{" "}
+                    {MAX_FILE_SIZE_MB}MB each.
                   </p>
+                  {remainingSlots !== MAX_FILES_PER_REQUEST && (
+                    <p className="text-xs text-muted-foreground">
+                      You can add <strong>{remainingSlots}</strong> more file(s)
+                      this upload.
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
+
+            {!!warning && <p className="text-xs text-amber-600">{warning}</p>}
 
             {/* Preview Grid */}
             {files.length > 0 && (
               <div className="space-y-2">
                 <p className="text-sm font-medium text-foreground">
-                  Selected Images ({files.length})
+                  Selected Images ({files.length}/{MAX_FILES_PER_REQUEST})
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {files.map((file) => (
@@ -288,24 +338,32 @@ export function GalleryUploadForm() {
             )}
           </div>
 
-          {/* Submit Button */}
+          {/* Submit */}
           <div className="flex justify-end gap-3 pt-4 border-t border-border">
             <Button
               type="button"
               variant="outline"
               onClick={() => {
-                files.forEach((file) => URL.revokeObjectURL(file.preview));
+                files.forEach((f) => URL.revokeObjectURL(f.preview));
                 setFiles([]);
                 setEventDate("");
                 setEventTitle("");
                 setEventDescription("");
-                setEventLocation(""); // NEW
+                setEventLocation("");
+                setWarning("");
               }}
               disabled={isUploading}
             >
               Clear All
             </Button>
-            <Button type="submit" disabled={isUploading || files.length === 0}>
+            <Button
+              type="submit"
+              disabled={
+                isUploading ||
+                files.length === 0 ||
+                files.length > MAX_FILES_PER_REQUEST
+              }
+            >
               {isUploading ? (
                 <>
                   <span className="animate-spin mr-2">⏳</span>

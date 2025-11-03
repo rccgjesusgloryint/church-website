@@ -811,7 +811,23 @@ export const saveImage = async (file: DbImage) => {
 
 export const saveEventImages = async (file: EventMediaNoId) => {
   try {
-    return await prisma.eventMedia.create({ data: file });
+    return await prisma.eventMedia.upsert({
+      where: { event: file.event },
+      update: {
+        // keep latest date/metadata if you want:
+        date: file.date,
+        location: file.location ?? undefined,
+        description: file.description ?? undefined,
+        images: { push: file.images }, // append to the array
+      },
+      create: {
+        event: file.event,
+        date: file.date,
+        location: file.location ?? null,
+        description: file.description ?? null,
+        images: file.images,
+      },
+    });
   } catch (err) {
     console.error("saveEventImages error:", err);
     throw err; // IMPORTANT
