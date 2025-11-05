@@ -65,7 +65,7 @@ export const UpcomingEventCards = ({
                               ? event.date[0].split(" ")[1].slice(0, 2)
                               : event.date[0].split(" ")[1].slice(0, 1)}
                           </p>
-                          <p className="text-primary mb-[10px]">
+                          <p className="text-base mb-[10px]">
                             {event.date[0].length > 3
                               ? event.date[0].slice(0, 3)
                               : event.date[0]}

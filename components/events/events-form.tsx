@@ -42,7 +42,7 @@ const EventsForm = () => {
       date: z.tuple([z.string(), z.string()]).optional(),
       location: z.string().min(15),
       description: z.object({
-        eventPosterImage: z.string().min(1).optional(),
+        eventPosterImage: z.string().optional(),
         eventDescription: z.string().min(1),
       }),
       monthly: z.boolean(),
@@ -119,7 +119,25 @@ const EventsForm = () => {
     if (errors.date) {
       return toast.error("Please fill in the dates for the event");
     }
-    toast.error("Please fix the form errors before submitting.");
+    if (errors.event) {
+      return toast.error("event: " + errors.event.message!);
+    }
+    if (errors.location) {
+      return toast.error("location: " + errors.location.message!);
+    }
+    if (errors.monthly) {
+      return toast.error("isMonthly: " + errors.monthly.message!);
+    }
+    if (errors.description?.eventDescription) {
+      return toast.error(
+        "description: " + errors.description?.eventDescription.message!
+      );
+    }
+    if (errors.description?.eventPosterImage) {
+      return toast.error(
+        "poster image: " + errors.description?.eventPosterImage.message!
+      );
+    }
   };
 
   return (
