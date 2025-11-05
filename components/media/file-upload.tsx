@@ -1,12 +1,15 @@
 "use client";
+import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import React, { FormEvent, FormEventHandler, useEffect, useState } from "react";
+import { SingleImageInput } from "./single-image-upload";
 
 type Props = {
-  onChange: (file: File) => void;
+  onChange: (file: File | null) => void;
+  value: File | null;
 };
 
-const FileUpload = ({ onChange }: Props) => {
+const FileUpload = ({ onChange, value }: Props) => {
   const [url, setUrl] = useState<string>("");
   const [previewUrl, setPreviewUrl] = useState<string>("");
 
@@ -29,33 +32,11 @@ const FileUpload = ({ onChange }: Props) => {
     }
   };
   return (
-    <div>
-      <form onSubmit={(e) => onSubmit(e)} className="flex flex-col gap-5">
-        <input
-          id="file"
-          name="file"
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            const file = e.target.files![0];
-            const url = URL.createObjectURL(file);
-            onChange(file);
-            setPreviewUrl(url);
-            console.log("file: ", file);
-          }}
-          required
-        />
-        {/* <input
-          id="filename"
-          name="filename"
-          type="text"
-          placeholder="filename"
-        /> */}
-        {/* <button type="submit">Upload File</button> */}
-      </form>
-      {previewUrl && (
-        <Image src={previewUrl} alt="preview-image" width={500} height={500} />
-      )}
+    <div className="space-y-2">
+      <Label htmlFor="post-image">
+        Cover Image <span className="text-destructive">*</span>
+      </Label>
+      <SingleImageInput value={value} onChange={onChange} />
     </div>
   );
 };

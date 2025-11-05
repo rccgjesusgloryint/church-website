@@ -45,7 +45,7 @@ export const Event = ({ event }: EventProps) => {
       {event?.description.eventPosterImage ? (
         <div>
           <Image
-            src={FALLBACK}
+            src={event.description.eventPosterImage || FALLBACK}
             alt="poster-image"
             width={500}
             height={500}
@@ -53,7 +53,7 @@ export const Event = ({ event }: EventProps) => {
               setOpen(
                 <CustomModal title="" subheading="">
                   <Image
-                    src={FALLBACK}
+                    src={event.description.eventPosterImage || FALLBACK}
                     alt="poster-image"
                     width={1000}
                     height={1500}
@@ -64,7 +64,7 @@ export const Event = ({ event }: EventProps) => {
             className={"hidden sm:flex"}
           />
           <Image
-            src={FALLBACK}
+            src={event.description.eventPosterImage || FALLBACK}
             alt="poster-image"
             width={300}
             height={300}

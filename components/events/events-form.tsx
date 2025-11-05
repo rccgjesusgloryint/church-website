@@ -27,14 +27,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { createEvent } from "@/lib/queries";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
-import FileUpload from "../media/multiple-file-uploads";
+import FileUpload from "../media/file-upload";
 
 const EventsForm = () => {
+  const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   // Define the schema
   const formSchema = z
     .object({
@@ -81,9 +83,55 @@ const EventsForm = () => {
   const monthlyValue = form.watch("monthly"); // this will return "true", "false", or undefined
 
   const validSubmissions = async (values: any) => {
+    if (!coverImage) return alert("Please select a cover image");
+    setIsUploading(true);
+    // 1) Ask server for *one* presigned URL
+    const presignRes = await fetch("/api/upload/file-presign", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: coverImage.name,
+        type: coverImage.type,
+        prefix: `posts/${coverImage.name}`,
+      }),
+    });
+    const { key, uploadUrl, publicUrl, contentType } = await presignRes.json();
+
+    if (!uploadUrl) throw new Error("Failed to get presigned URL.");
+
+    // 2) Upload the file directly to R2
+    const put = await fetch(uploadUrl, {
+      method: "PUT",
+      headers: { "Content-Type": contentType },
+      body: coverImage,
+    });
+
+    if (!put.ok) throw new Error(`Upload failed: ${coverImage.name}`);
+
+    // 3) Commit metadata (including the *one* URL) to your DB
+    const imageUrl = publicUrl;
+
+    // --- IMPORTANT ---
+    // Here you would call your *new* server action to save
+    // the post data and the single image URL.
+    //
+    // await savePostToDatabase({
+    //   title: title,
+    //   description: description,
+    //   imageUrl: imageUrl,
+    // });
+    //
+    // For this example, we'll just log it:
+
     try {
       const response = await toast.promise(
-        createEvent(values),
+        createEvent({
+          ...values,
+          description: {
+            eventPosterImage: imageUrl,
+            eventDescription: values.description.eventDescription!,
+          },
+        }),
         {
           loading: "Loading",
           success: (data) => `Successfully created ${data.message}`,
@@ -113,6 +161,9 @@ const EventsForm = () => {
       console.log("SOMETHING WENT WRONG! COULDNT CREATE EVENT");
       toast.error("Please fix the form errors before submitting.");
     }
+
+    // Reset form on success
+    setCoverImage(null);
   };
 
   const invalidSubmissions = async (errors: typeof form.formState.errors) => {
@@ -240,23 +291,19 @@ const EventsForm = () => {
                 </FormItem>
               )}
             />
-            {/* <FormField
+            <FormField
               control={form.control}
               name="description.eventPosterImage"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Event Poster Image</FormLabel>
                   <FormControl>
-                    <FileUpload
-                      apiEndpoint="eventPosterImage"
-                      onChange={field.onChange}
-                      value={field.value}
-                    />
+                    <FileUpload value={coverImage} onChange={setCoverImage} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
-            /> */}
+            />
             <FormField
               control={form.control}
               name="description.eventDescription"
