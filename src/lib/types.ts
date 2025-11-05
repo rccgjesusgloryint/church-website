@@ -20,7 +20,7 @@ export type CreateMediaType = {
 };
 
 export type CarosoulImageType = {
-  id: string;
+  id: string | number;
   name: string;
   link: string;
 };

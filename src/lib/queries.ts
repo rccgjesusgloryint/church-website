@@ -134,17 +134,49 @@ export const getAuthUserDetails = async () => {
 export const getRandomImages = async (
   amount: number
 ): Promise<CarosoulImageType[]> => {
-  // Pull a larger window (tune `take` as you like)
-  const response = await prisma.image.findMany({
-    select: { id: true, url: true, event: true },
-    where: { url: { not: null } },
-    orderBy: { createdAt: "desc" },
-    take: 60, // recent 60
+  const takeImages = 60; // tune
+  const takeEventSets = 3; // tune
+
+  // Run queries in parallel
+  const [images, eventMedia] = await Promise.all([
+    prisma.image.findMany({
+      select: { id: true, url: true, event: true },
+      where: { url: { not: null } },
+      orderBy: { createdAt: "desc" },
+      take: takeImages,
+    }),
+    prisma.eventMedia.findMany({
+      select: { id: true, images: true, event: true },
+      orderBy: { createdAt: "desc" },
+      take: takeEventSets,
+    }),
+  ]);
+
+  // Normalize both sources to a single shape and clean once
+  type Raw = { id: number | string; event: string; url: string | null };
+
+  const fromImage: Raw[] = images.map((r) => ({
+    id: r.id,
+    event: r.event ?? null,
+    url: r.url,
+  }));
+
+  // Flatten eventMedia.images safely
+  const fromEventMedia: Raw[] = eventMedia.flatMap((em) => {
+    const imgs = Array.isArray(em.images) ? em.images : [];
+    return imgs.map((u) => ({ id: em.id, event: em.event ?? null, url: u }));
   });
 
-  const cleaned = response.filter((r) => r.url && r.url.trim() !== "");
+  // Clean & de-dupe by URL (drop null/empty)
+  const deduped: Raw[] = Array.from(
+    new Map(
+      [...fromImage, ...fromEventMedia]
+        .filter((r) => r.url && r.url.trim() !== "")
+        .map((r) => [r.url as string, r]) // key: url
+    ).values()
+  );
 
-  const randomized = shuffle(cleaned).slice(0, amount);
+  const randomized = shuffle(deduped).slice(0, amount);
 
   return randomized.map((r) => ({
     id: r.id,
