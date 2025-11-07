@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Sermon } from "@/lib/types";
 import { getAllSermons, getExistingTags } from "@/lib/queries";
 import Loader from "../../../../components/Loader";
+import { syncYouTubeDb } from "@/lib/syncYouTubeDb";
 
 interface SermonsProps {
   displaySermons: Sermon[];

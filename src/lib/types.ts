@@ -116,6 +116,7 @@ export type CreateSermon = {
   id?: number;
   videoUrl: string;
   sermonTitle: string;
+  thumbnail: string;
   tags?: string[];
   createdAt?: Date;
   updatedAt?: Date;
@@ -223,21 +224,29 @@ export type FeedbackNoId = {
   createdAt?: Date;
 };
 
+type YTThumb = {
+  url: string;
+  width: number;
+  height: number;
+};
+
 export type YOUTUBE_playlistItem = {
   kind: "youtube#playlistItem";
   etag: string;
   id: string;
   snippet: {
-    publishedAt: Date;
+    // YouTube API returns ISO strings, not Date objects:
+    publishedAt: string;
     channelId: string;
     title: string;
     description: string;
     thumbnails: {
-      (key: {}): {
-        url: string;
-        width: number;
-        height: number;
-      };
+      default?: YTThumb;
+      medium?: YTThumb;
+      high?: YTThumb;
+      standard?: YTThumb;
+      maxres?: YTThumb;
+      [quality: string]: YTThumb | undefined; // keep flexible
     };
     channelTitle: string;
     videoOwnerChannelTitle: string;
@@ -251,10 +260,10 @@ export type YOUTUBE_playlistItem = {
   };
   contentDetails: {
     videoId: string;
-    startAt: string;
-    endAt: string;
-    note: string;
-    videoPublishedAt: Date;
+    startAt?: string;
+    endAt?: string;
+    note?: string;
+    videoPublishedAt: string; // also string from API
   };
   status: {
     privacyStatus: string;

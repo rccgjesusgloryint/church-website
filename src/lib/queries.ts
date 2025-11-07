@@ -22,6 +22,7 @@ import { prisma } from "./db";
 import { Blog, EventMedia, Feedback, Image, Media, Role } from "@prisma/client";
 import { C } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 import { shuffle } from "./actions";
+import { syncYouTubeDb } from "./syncYouTubeDb";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
@@ -602,13 +603,14 @@ export const deleteSermon = async (sermonId: number) => {
   }
 };
 
-export const createSermon = async (sermon: CreateSermon, tags: string[]) => {
+export const createSermon = async (sermon: CreateSermon, tags?: string[]) => {
   try {
     await prisma.sermon.create({
       data: {
         videoUrl: sermon.videoUrl,
         sermonTitle: sermon.sermonTitle,
-        tags: [...tags],
+        thumbnail: sermon.thumbnail,
+        tags: tags && [...tags],
       },
     });
     console.log("SUCCESS CREATING SERMON 🟢🟢");
@@ -623,17 +625,11 @@ export const createSermon = async (sermon: CreateSermon, tags: string[]) => {
 };
 
 export const getAllSermons = async (): Promise<Sermon[]> => {
-  //Check for new sermons in the youtube channel and add to db
-  const checkYTchannel = `${process.env.NEXT_PUBLIC_BASE_URL}/api/youtube`;
-  await fetch(checkYTchannel, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  // grap all sermons in db
-  const response = await prisma.sermon.findMany({});
-  return response as Sermon[];
+  await syncYouTubeDb();
+  return prisma.sermon.findMany({});
+};
+export const getAllSermonsInServer = async (): Promise<Sermon[]> => {
+  return prisma.sermon.findMany({});
 };
 
 export const getSermonById = async (id: number): Promise<Sermon> => {
