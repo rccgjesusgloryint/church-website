@@ -128,8 +128,9 @@ model Sermon {
   videoUrl        String
   sermonTitle     String
   tags            String[]
-  thumbnail       String?   @default("")
   likes           Int?
+  pastorsNotes    String    @default("")
+  thumbnail       String?   @default("")
   summary         String    @default("")
   aiBreakdown     String    @default("")
   hasPastorNotes  Boolean   @default(false)
