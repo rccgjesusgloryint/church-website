@@ -5,9 +5,9 @@ import React from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import { Sermons } from "..";
 import Footer from "@/components/Footer";
 import Navbar2 from "@/components/navbar/Navbar2";
+import SermonsPage from "..";
 
 const Page = () => {
   const useTitle = React.useRef<HTMLElement | any>();
@@ -37,7 +37,7 @@ const Page = () => {
       </section>
       <section className="h-auto w-full relative">
         <div className="flex flex-col w-full">
-          <Sermons />
+          <SermonsPage />
         </div>
       </section>
       <Footer />

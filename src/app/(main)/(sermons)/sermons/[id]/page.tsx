@@ -63,11 +63,13 @@ export default async function SermonPage({
               />
             </div>
 
-            {/* Sidebar - AI Features */}
-            <div className="lg:col-span-1">
+            {/* Right Column - AI Features */}
+            <div className="lg:sticky lg:top-8 lg:self-start">
               <SermonAIFeatures
-                sermonId={Number(sermon.id)}
+                sermonId={sermon.id!}
                 sermonTitle={sermon.sermonTitle}
+                summary={sermon.summary}
+                aiBreakdown={sermon.aiBreakdown}
               />
             </div>
           </div>

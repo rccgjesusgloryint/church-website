@@ -41,7 +41,6 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
     aiBreakdown: z.string().min(2),
     summary: z.string().min(20),
     pastorsNotes: z.string().min(2),
-    // aiBreakdown, summary, pastorsNotes, hasPastorNotes
   });
 
   type FormData = z.infer<typeof formSchema>;
