@@ -110,7 +110,8 @@ export function SermonAIFeatures({
               <div className="flex-1 space-y-1">
                 <h3 className="font-semibold text-foreground">AI Summary</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Get a quick overview of the sermon's key points and takeaways
+                  Get a quick overview of the sermon&apos;s key points and
+                  takeaways
                 </p>
               </div>
             </div>
@@ -194,7 +195,8 @@ export function SermonAIFeatures({
               <div className="flex-1 space-y-1">
                 <h3 className="font-semibold text-foreground">AI Summary</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Get a quick overview of the sermon's key points and takeaways
+                  Get a quick overview of the sermon&apos;s key points and
+                  takeaways
                 </p>
               </div>
             </div>
