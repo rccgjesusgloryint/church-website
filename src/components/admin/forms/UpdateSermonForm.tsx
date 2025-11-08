@@ -38,6 +38,10 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
     videoUrl: z.string().min(2).max(50),
     sermonTitle: z.string().min(2).max(50),
     thumbnail: z.string().min(2),
+    aiBreakdown: z.string().min(2),
+    summary: z.string().min(20),
+    pastorsNotes: z.string().min(2),
+    // aiBreakdown, summary, pastorsNotes, hasPastorNotes
   });
 
   type FormData = z.infer<typeof formSchema>;
@@ -49,19 +53,22 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
       videoUrl: sermon.videoUrl || "",
       sermonTitle: sermon.sermonTitle || "",
       thumbnail: sermon.thumbnail || "",
+      pastorsNotes: sermon.pastorsNotes || "",
+      aiBreakdown: sermon.aiBreakdown || "",
+      summary: sermon.summary || "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!sermon.id) return alert("No sermon provided!");
     let tempSermon = {
-      videoUrl: values.videoUrl,
-      sermonTitle: values.sermonTitle,
+      ...values,
+      hasPastorNotes: values.pastorsNotes === "",
       tags,
     };
     try {
       const response = await toast.promise(
-        updateSermon(sermon.id, tempSermon),
+        updateSermon(sermon.id, { ...tempSermon }),
         {
           loading: "Loading",
           success: (data) => `Successfully created ${data.message}`,
