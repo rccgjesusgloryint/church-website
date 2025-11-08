@@ -1,8 +1,7 @@
+import ContactForm from "@/components/contact/contact-form";
+import Navbar2 from "@/components/navbar/Navbar2";
+import Newsletter from "@/components/Newsletter";
 import React from "react";
-import Navbar2 from "../../../../components/navbar/Navbar2";
-import Newsletter from "../../../../components/Newsletter";
-import ContactForm from "../../../../components/contact/contact-form";
-import Footer from "../../../../components/Footer";
 
 const page = () => {
   return (

@@ -1,7 +1,7 @@
 import { describe, vi, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { EventType } from "@/lib/types";
-import EditEvent from "../../../../components/admin/components/EditEvent";
+import EditEvent from "../../../../src/components/admin/components/EditEvent";
 
 // Mock UI components
 vi.mock("@/components/ui/card", () => ({

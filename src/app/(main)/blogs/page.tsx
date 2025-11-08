@@ -4,13 +4,10 @@ import { FaShareFromSquare } from "react-icons/fa6";
 
 import React from "react";
 
-import Navbar2 from "../../../../components/navbar/Navbar2";
-
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { getAllBlogs, getBlogCategories } from "@/lib/queries";
 import { Blog } from "@prisma/client";
-import Loader from "../../../../components/Loader";
 import { BlogType } from "@/lib/types";
 
 import {
@@ -18,8 +15,10 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import Footer from "../../../../components/Footer";
 import { FALLBACK } from "../gallery/GalleryModal";
+import Navbar2 from "@/components/navbar/Navbar2";
+import Loader from "@/components/Loader";
+import Footer from "@/components/Footer";
 
 const Blogs = () => {
   const [blogs, setBlogs] = React.useState<Blog[]>();

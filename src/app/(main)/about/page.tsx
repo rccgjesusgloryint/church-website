@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar2 from "../../../../components/navbar/Navbar2";
 
 import Services from "./Services";
 import Leaders from "./Leaders";
-import Newsletter from "../../../../components/Newsletter";
-import Footer from "../../../../components/Footer";
 import { Metadata } from "next";
 import Title from "./Title";
+import Newsletter from "@/components/Newsletter";
+import Footer from "@/components/Footer";
+import Navbar2 from "@/components/navbar/Navbar2";
 
 export const metadata: Metadata = {
   title: "Jesus Glory Athy - About",

@@ -1,6 +1,6 @@
+import Arrow from "@/components/icons/Arrow";
 import Link from "next/link";
 import React from "react";
-import Arrow from "../../../../components/icons/Arrow";
 
 const Leaders = () => {
   const subTitle1 = React.useRef<HTMLElement | any>();

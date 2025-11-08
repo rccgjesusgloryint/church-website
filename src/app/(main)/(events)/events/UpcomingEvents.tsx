@@ -1,7 +1,6 @@
 import React from "react";
 
 import { EventType } from "@/lib/types";
-import Loader from "../../../../../components/Loader";
 
 import { LuClock3 } from "react-icons/lu";
 import { FaRegMap } from "react-icons/fa6";
@@ -11,6 +10,7 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import Loader from "@/components/Loader";
 
 interface EventCardsProps {
   isLoading: boolean;

@@ -1,8 +1,8 @@
 import Unauthorized from "@/components/unauthorized/AdminOnly";
 import { getAuthUserDetails, isAdmin, isUserOwner } from "@/lib/queries";
 import { Metadata } from "next";
-import Navbar2 from "../../../../components/navbar/Navbar2";
 import { ThemeProvider } from "@/components/theme-provider";
+import Navbar2 from "@/components/navbar/Navbar2";
 
 type Props = {
   children: React.ReactNode;

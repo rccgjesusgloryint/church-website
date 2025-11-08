@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import Navbar2 from "../../../../../components/navbar/Navbar2";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
 import { Sermons } from "..";
-import Footer from "../../../../../components/Footer";
+import Footer from "@/components/Footer";
+import Navbar2 from "@/components/navbar/Navbar2";
 
 const Page = () => {
   const useTitle = React.useRef<HTMLElement | any>();

@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MediaPage from "../../../../components/media";
-import CreateEvent from "../../../../components/events/CreateEvent";
-import CreateSermonForm from "../../../../components/sermons/create-sermon-form";
-import Navbar2 from "../../../../components/navbar/Navbar2";
+import MediaPage from "../../../components/media";
+import CreateEvent from "../../../components/events/CreateEvent";
+import CreateSermonForm from "../../../components/sermons/create-sermon-form";
+import Navbar2 from "../../../components/navbar/Navbar2";
 
-import BlogCreator from "../../../../components/blogs/BlogCreator";
+import BlogCreator from "../../../components/blogs/BlogCreator";
 import {
   getAllUsers,
   getAuthUserDetails,
@@ -17,14 +17,14 @@ import {
 } from "@/lib/queries";
 import { Events, Role, User } from "@prisma/client";
 import { useModal } from "@/providers/modal-provider";
-import CustomModal from "../../../../components/global/custom-modal";
-import EditPage from "../../../../components/admin/EditPage";
-import UpdateUser from "../../../../components/admin/UpdateUser";
-import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
+import CustomModal from "../../../components/global/custom-modal";
+import EditPage from "../../../components/admin/EditPage";
+import UpdateUser from "../../../components/admin/UpdateUser";
+import UpdateEventForm from "../../../components/admin/forms/UpdateEventForm";
 import { BlogType, EventsType, Sermon } from "@/lib/types";
-import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
-import Newsletter from "../../../../components/admin/components/Newsletter";
-import ReportList from "../../../../components/admin/feedback/report-list";
+import UpdateBlogForm from "../../../components/admin/forms/UpdateBlogForm";
+import Newsletter from "../../../components/admin/components/Newsletter";
+import ReportList from "../../../components/admin/feedback/report-list";
 
 const AdminPage = () => {
   const [user, setUser] = React.useState<User>();

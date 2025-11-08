@@ -1,7 +1,7 @@
 import { describe, vi } from "vitest";
-import UpdateUserForm from "../../../components/admin/forms/UpdateUserForm";
+import UpdateUserForm from "../../../src/components/admin/forms/UpdateUserForm";
 import { render, screen } from "@testing-library/react";
-import UpdateUser from "../../../components/admin/UpdateUser";
+import UpdateUser from "../../../src/components/admin/UpdateUser";
 import { Role, User } from "@prisma/client";
 
 vi.mock("@/components/ui/card", () => ({

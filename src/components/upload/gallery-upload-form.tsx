@@ -17,6 +17,7 @@ import {
 import { Upload, X, ImageIcon, Calendar, FileText, MapPin } from "lucide-react"; // NEW
 import { cn } from "@/lib/utils";
 import { saveEventImages } from "@/lib/queries";
+import Image from "next/image";
 
 interface UploadedFile {
   file: File;
@@ -277,7 +278,9 @@ export function GalleryUploadForm() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {files.map((file) => (
                     <div key={file.id} className="relative group aspect-square">
-                      <img
+                      <Image
+                        width={500}
+                        height={500}
                         src={file.preview || "/placeholder.svg"}
                         alt={file.file.name}
                         className="w-full h-full object-cover rounded-lg border border-border"

@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Navbar2 from "../../../../../components/navbar/Navbar2";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -9,6 +8,7 @@ import { ScrollTrigger } from "gsap/all";
 import { Blog } from "@prisma/client";
 import { findUser, getBlogWithId } from "@/lib/queries";
 import DOMPurify from "dompurify"; // Import DOMPurify for sanitization
+import Navbar2 from "@/components/navbar/Navbar2";
 
 type BlogProps = {
   params: {

@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import Loader from "../../../../components/Loader";
 import { getLastSundayOfTheMonth } from "@/lib/actions";
+import Loader from "@/components/Loader";
 
 interface EventCardsProps {
   isLoading: boolean;

@@ -104,7 +104,6 @@ export async function GET(req: Request) {
       )
     );
 
-    console.log("SUCCESS YOUTUBE API CALLS! streaming:", streaming);
     return new Response(
       JSON.stringify({
         message: "SUCCESS YOUTUBE API CALLS!",
@@ -129,7 +128,7 @@ const getRequest = async (params: string, key: string, part: string) => {
     headers: {
       "Content-Type": "application/json",
     },
-    cache: "no-store", // optional if you want to ensure fresh data
+    // cache: "no-store", // optional if you want to ensure fresh data
   });
 
   return response;

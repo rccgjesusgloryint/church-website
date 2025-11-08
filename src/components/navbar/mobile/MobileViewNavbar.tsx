@@ -1,7 +1,7 @@
 import React from "react";
 
 import Image from "next/image";
-import menu_icon from "../../../public/menu-icon.svg";
+import menu_icon from "../../../../public/menu-icon.svg";
 
 import {
   Sheet,

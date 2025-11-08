@@ -2,18 +2,17 @@
 
 import React from "react";
 
-import { Skeleton } from "../../src/components/ui/skeleton";
-
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 import Link from "next/link";
 
-import { ModeToggle } from "../../src/components/toggle-mode";
-import { useNavbarAuth } from "../../src/hooks/useNavbarAuth";
 import MobileViewNavbar from "./mobile/MobileViewNavbar";
 import { navContent } from "@/lib/constants";
 import AuthButton from "./AuthButton";
+import { useNavbarAuth } from "@/hooks/useNavbarAuth";
+import { ModeToggle } from "../toggle-mode";
+import { Skeleton } from "../ui/skeleton";
 
 const Navbar = () => {
   const navbar = React.useRef<HTMLElement | any>();

@@ -8,9 +8,10 @@ import { getYoutubeVidId } from "@/lib/actions";
 import { Input } from "@/components/ui/input";
 import { Sermon } from "@/lib/types";
 import { getAllSermons, getExistingTags } from "@/lib/queries";
-import Loader from "../../../../components/Loader";
 import { syncYouTubeDb } from "@/lib/syncYouTubeDb";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader";
+import Image from "next/image";
 
 interface SermonsProps {
   displaySermons: Sermon[];
@@ -88,9 +89,11 @@ export const Sermons = () => {
               onClick={() => handleSermonClick(sermon.id)}
             >
               <div className="h-[315px] sm:max-w-[560px] w-full">
-                <img
+                <Image
                   src={sermon.thumbnail!}
                   alt={sermon.sermonTitle}
+                  width={500}
+                  height={500}
                   className="w-full h-full object-contain"
                 />
               </div>

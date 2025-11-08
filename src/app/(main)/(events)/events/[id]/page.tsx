@@ -6,7 +6,7 @@ import React from "react";
 import { MapPin, Users } from "lucide-react";
 import { ImageCard } from ".";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import Navbar2 from "../../../../../../components/navbar/Navbar2";
+import Navbar2 from "@/components/navbar/Navbar2";
 
 type Props = {
   params: { id: number };
@@ -71,7 +71,13 @@ const Page = ({ params }: Props) => {
           <div className="space-y-12">
             {/* Image Component */}
             <div className="border-b border-border pb-12">
-              <ImageCard image={event.description.eventPosterImage} />
+              <ImageCard
+                image={{
+                  src: event.description.eventPosterImage,
+                  width: 400,
+                  height: 400,
+                }}
+              />
             </div>
 
             {/* Location Section */}

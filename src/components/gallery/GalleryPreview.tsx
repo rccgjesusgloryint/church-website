@@ -10,6 +10,7 @@ import ViewAllBtn from "./ViewAllBtn";
 import { CarosoulImageType } from "@/lib/types";
 import { getRandomImages } from "@/lib/queries";
 import Arrow from "../icons/Arrow";
+import { FaArrowRight } from "react-icons/fa6";
 
 const FALLBACK = "/images/placeholder.svg"; // keep a local tiny svg/png
 
@@ -67,9 +68,9 @@ export default function GalleryPreview() {
 
       {/* Mobile "View all" CTA */}
       <Link href="/gallery" className="sm:hidden">
-        <div className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute right-5 py-20 bottom-3 mt-1">
+        <div className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute right-5 bottom-60 sm:bottom-3 bg-red-500">
           <h2>VIEW ALL</h2>
-          <Arrow className="w-6 h-6" />
+          <FaArrowRight className="text-secondary-foreground" />
         </div>
       </Link>
     </section>

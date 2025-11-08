@@ -145,6 +145,9 @@ export type Sermon = {
   videoUrl: string;
   sermonTitle: string;
   tags: string[];
+  aiBreakdown: string;
+  summary: string;
+  hasPastorNotes: boolean;
   thumbnail?: string | null;
   likes?: number | null;
   comments?: Comment[];

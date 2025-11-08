@@ -130,7 +130,9 @@ model Sermon {
   tags            String[]
   thumbnail       String?   @default("")
   likes           Int?
-  embedHTML       String?   @default("")
+  summary         String    @default("")
+  aiBreakdown     String    @default("")
+  hasPastorNotes  Boolean   @default(false)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }

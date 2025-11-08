@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 import { EventType } from "@/lib/types";
-import Loader from "../../../../../components/Loader";
+import Loader from "@/components/Loader";
 
 type Props = {
   pastEvents: EventType;

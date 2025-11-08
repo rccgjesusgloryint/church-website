@@ -1,28 +1,78 @@
-"use client";
-
+import Navbar2 from "@/components/navbar/Navbar2";
+import { SermonActions } from "@/components/sermons/sermon-actions";
+import { SermonAIFeatures } from "@/components/sermons/sermon-ai-features";
+import { SermonHeader } from "@/components/sermons/sermon-header";
+import { SermonVideo } from "@/components/sermons/sermon-video";
+import { ShareButtons } from "@/components/sermons/share-buttons";
 import { getSermonById } from "@/lib/queries";
-import type { Sermon } from "@/lib/types";
-import React, { useEffect, useState } from "react";
 
-type Props = {
-  params: { id: number | undefined };
-};
+// // Mock data - replace with actual database query
+async function getSermon(id: string) {
+  // Simulate database query
+  return {
+    id: Number.parseInt(id),
+    sermonTitle: "Walking in Faith Through Uncertain Times",
+    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    tags: ["Faith", "Trust", "Guidance", "Hope"],
+    thumbnail: "/church-sermon.jpg",
+    likes: 234,
+    embedHTML: `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
+    createdAt: new Date("2024-01-15"),
+    updatedAt: new Date("2024-01-15"),
+    hasPastorNotes: true,
+  };
+}
 
-const Sermon = ({ params }: Props) => {
-  const [sermon, setSermon] = useState<Sermon>();
+export default async function SermonPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const sermon = await getSermonById(Number(id));
 
-  useEffect(() => {
-    const getData = async () => {
-      const response = await getSermonById(Number(params.id!));
-      setSermon(response);
-    };
-    getData();
-  }, []);
   return (
-    <div>
-      <div>{sermon?.sermonTitle}</div>
-    </div>
-  );
-};
+    <>
+      <Navbar2 />
+      <div className="min-h-screen bg-background">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          {/* Header Section */}
+          <SermonHeader sermon={sermon} />
 
-export default Sermon;
+          <div className="mt-8 grid gap-8 lg:grid-cols-3">
+            {/* Main Content - Video and Actions */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Video Player */}
+              <SermonVideo
+                videoUrl={sermon.videoUrl}
+                title={sermon.sermonTitle}
+              />
+
+              {/* Action Buttons */}
+              {sermon.hasPastorNotes && (
+                <SermonActions
+                  sermonId={Number(sermon.id)}
+                  hasPastorNotes={sermon.hasPastorNotes}
+                />
+              )}
+
+              {/* Share Section */}
+              <ShareButtons
+                title={sermon.sermonTitle}
+                url={`${process.env.NEXT_PUBLIC_BASE_URL}/sermons/${sermon.id}`}
+              />
+            </div>
+
+            {/* Sidebar - AI Features */}
+            <div className="lg:col-span-1">
+              <SermonAIFeatures
+                sermonId={Number(sermon.id)}
+                sermonTitle={sermon.sermonTitle}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

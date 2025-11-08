@@ -5,6 +5,7 @@ import type React from "react";
 import { useState, useRef, type DragEvent, useEffect } from "react";
 import { Upload, X, ImageIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface UploadedFile {
   file: File;
@@ -94,9 +95,11 @@ export function SingleImageInput({
       {/* STATE 1: File is Selected (Show Preview) */}
       {value && preview ? (
         <div className="relative group aspect-square w-full max-w-xs mx-auto">
-          <img
+          <Image
             src={preview}
             alt={value.name}
+            width={500}
+            height={500}
             className="w-full h-full object-cover rounded-lg border border-border"
           />
           <button

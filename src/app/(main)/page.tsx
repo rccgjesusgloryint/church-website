@@ -1,12 +1,11 @@
-import EventsPreview from "../../../components/events/EventsPreview";
-import Newsletter from "../../../components/Newsletter";
-
 import React from "react";
-import GalleryPreview from "../../../components/gallery/GalleryPreview";
-import Footer from "../../../components/Footer";
 
 import type { Metadata } from "next";
-import Hero from "@/../components/landing-page/Hero";
+import Hero from "@/components/landing-page/Hero";
+import GalleryPreview from "@/components/gallery/GalleryPreview";
+import EventsPreview from "@/components/events/EventsPreview";
+import Newsletter from "@/components/Newsletter";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Jesus Glory Athy - Home",
