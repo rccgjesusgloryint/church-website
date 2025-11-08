@@ -10,6 +10,7 @@ import { Sermon } from "@/lib/types";
 import { getAllSermons, getExistingTags } from "@/lib/queries";
 import Loader from "../../../../components/Loader";
 import { syncYouTubeDb } from "@/lib/syncYouTubeDb";
+import { useRouter } from "next/navigation";
 
 interface SermonsProps {
   displaySermons: Sermon[];
@@ -35,11 +36,10 @@ export const Sermons = () => {
   const [allTags, setAllTags] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const filterSermonByTags = (tag: string) => {
-    const filteredSermon = allSermons?.filter((sermon) =>
-      sermon.tags.includes(tag)
-    );
-    setDisplaySermons(filteredSermon!);
+  const router = useRouter();
+
+  const handleSermonClick = (id: number | undefined) => {
+    return router.push("sermons/" + id);
   };
 
   useEffect(() => {
@@ -59,14 +59,6 @@ export const Sermons = () => {
     getSermons();
     getTags();
   }, []);
-
-  const filterBySearch = (search: string) => {
-    setSearch(search);
-    const filteredSearch = allSermons?.filter((sermon) =>
-      sermon.sermonTitle.toLowerCase().includes(search.toLowerCase())
-    );
-    setDisplaySermons(filteredSearch!);
-  };
 
   if (isLoading) {
     return (
@@ -91,24 +83,19 @@ export const Sermons = () => {
         {displaySermons.length > 0 ? (
           displaySermons.map((sermon, index) => (
             <div
-              className="w-auto h-auto p-6 pb-6 bg-card shadow-xl"
+              className="w-auto h-auto p-6 pb-6 bg-card border-2 border-black border-opacity-10 shadow-xl cursor-pointer"
               key={index}
+              onClick={() => handleSermonClick(sermon.id)}
             >
-              <div className="h-[315px] sm:w-[560px] w-full">
-                <iframe
-                  src={`https://www.youtube.com/embed/${getYoutubeVidId(
-                    sermon.videoUrl
-                  )!!}`}
-                  title="YouTube video player"
-                  allow="web-share;"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="w-full h-full"
+              <div className="h-[315px] sm:max-w-[560px] w-full">
+                <img
+                  src={sermon.thumbnail!}
+                  alt={sermon.sermonTitle}
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div className="flex flex-col gap-3">
                 <h1 className="font-bold text-2xl">{sermon.sermonTitle}</h1>
-                {/* <SermonTags sermon={sermon} /> */}
               </div>
             </div>
           ))

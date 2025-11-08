@@ -37,6 +37,7 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
   const formSchema = z.object({
     videoUrl: z.string().min(2).max(50),
     sermonTitle: z.string().min(2).max(50),
+    thumbnail: z.string().min(2),
   });
 
   type FormData = z.infer<typeof formSchema>;
@@ -47,6 +48,7 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
     defaultValues: {
       videoUrl: sermon.videoUrl || "",
       sermonTitle: sermon.sermonTitle || "",
+      thumbnail: sermon.thumbnail || "",
     },
   });
 

@@ -41,6 +41,7 @@ const CreateSermonForm = () => {
     id: z.number().min(2).optional(),
     videoUrl: z.string().min(2).max(50),
     sermonTitle: z.string().min(2).max(50),
+    thumbnail: z.string().min(2),
   });
 
   type FormData = z.infer<typeof formSchema>;
@@ -51,6 +52,7 @@ const CreateSermonForm = () => {
     defaultValues: {
       videoUrl: "",
       sermonTitle: "",
+      thumbnail: "",
     },
   });
 

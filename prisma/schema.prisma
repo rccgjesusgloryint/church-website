@@ -128,7 +128,7 @@ model Sermon {
   videoUrl        String
   sermonTitle     String
   tags            String[]
-  thumbnail       String
+  thumbnail       String?   @default("")
   likes           Int?
   embedHTML       String?   @default("")
   createdAt       DateTime  @default(now())
