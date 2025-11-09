@@ -132,7 +132,7 @@ model Sermon {
   pastorsNotes    String    @default("")
   thumbnail       String?   @default("")
   summary         String    @default("")
-  aiBreakdown     String    @default("")
+  aiBreakdown     String    @default("") // breakdown of the summary via the transcript
   videoTranscript String    @default("")
   hasPastorNotes  Boolean   @default(false)
   createdAt       DateTime  @default(now())
