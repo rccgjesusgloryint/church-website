@@ -626,7 +626,7 @@ export const createSermon = async (sermon: CreateSermon, tags?: string[]) => {
 
 export const getAllSermons = async (): Promise<Sermon[]> => {
   await syncYouTubeDb();
-  return prisma.sermon.findMany({});
+  return prisma.sermon.findMany({ orderBy: { createdAt: "asc" } });
 };
 export const getAllSermonsInServer = async (): Promise<Sermon[]> => {
   return prisma.sermon.findMany({});
