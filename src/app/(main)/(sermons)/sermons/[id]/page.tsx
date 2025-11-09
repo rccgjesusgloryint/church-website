@@ -6,23 +6,6 @@ import { SermonVideo } from "@/components/sermons/sermon-video";
 import { ShareButtons } from "@/components/sermons/share-buttons";
 import { getSermonById } from "@/lib/queries";
 
-// // Mock data - replace with actual database query
-async function getSermon(id: string) {
-  // Simulate database query
-  return {
-    id: Number.parseInt(id),
-    sermonTitle: "Walking in Faith Through Uncertain Times",
-    videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    tags: ["Faith", "Trust", "Guidance", "Hope"],
-    thumbnail: "/church-sermon.jpg",
-    likes: 234,
-    embedHTML: `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`,
-    createdAt: new Date("2024-01-15"),
-    updatedAt: new Date("2024-01-15"),
-    hasPastorNotes: true,
-  };
-}
-
 export default async function SermonPage({
   params,
 }: {
@@ -39,39 +22,41 @@ export default async function SermonPage({
           {/* Header Section */}
           <SermonHeader sermon={sermon} />
 
-          <div className="mt-8 grid gap-8 lg:grid-cols-3">
-            {/* Main Content - Video and Actions */}
-            <div className="lg:col-span-2 space-y-6">
+          <div className="mt-8 space-y-6">
+            {/* Video and AI Features Side by Side */}
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
               {/* Video Player */}
-              <SermonVideo
-                videoUrl={sermon.videoUrl}
-                title={sermon.sermonTitle}
-              />
-
-              {/* Action Buttons */}
-              {sermon.hasPastorNotes && (
-                <SermonActions
-                  sermonId={Number(sermon.id)}
-                  hasPastorNotes={sermon.hasPastorNotes}
+              <div className="w-full lg:w-1/2">
+                <SermonVideo
+                  videoUrl={sermon.videoUrl}
+                  title={sermon.sermonTitle}
                 />
-              )}
+              </div>
 
-              {/* Share Section */}
-              <ShareButtons
-                title={sermon.sermonTitle}
-                url={`${process.env.NEXT_PUBLIC_BASE_URL}/sermons/${sermon.id}`}
-              />
+              {/* AI Features - Same width as video */}
+              <div className="w-full lg:w-1/2">
+                <SermonAIFeatures
+                  sermonId={Number(sermon.id)}
+                  sermonTitle={sermon.sermonTitle}
+                  summary={sermon.summary}
+                  aiBreakdown={sermon.aiBreakdown}
+                />
+              </div>
             </div>
 
-            {/* Right Column - AI Features */}
-            <div className="lg:sticky lg:top-8 lg:self-start">
-              <SermonAIFeatures
-                sermonId={sermon.id!}
-                sermonTitle={sermon.sermonTitle}
-                summary={sermon.summary}
-                aiBreakdown={sermon.aiBreakdown}
+            {/* Action Buttons */}
+            {sermon.hasNotes && (
+              <SermonActions
+                sermonId={Number(sermon.id)}
+                hasPastorNotes={sermon.hasNotes}
               />
-            </div>
+            )}
+
+            {/* Share Section */}
+            <ShareButtons
+              title={sermon.sermonTitle}
+              url={`${process.env.NEXT_PUBLIC_BASE_URL}/sermons/${sermon.id}`}
+            />
           </div>
         </div>
       </div>

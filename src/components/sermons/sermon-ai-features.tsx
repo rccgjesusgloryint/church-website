@@ -77,6 +77,67 @@ export function SermonAIFeatures({
             ul, ol { margin: 0.75rem 0; padding-left: 2rem; }
             li { margin: 0.5rem 0; }
             strong { font-weight: 600; }
+            .sermon-breakdown {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        .sermon-section {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+        }
+        .sermon-section:last-child {
+            border-bottom: none;
+        }
+        .sermon-section__header {
+            font-size: 1.75rem;
+            color: #1a1a1a;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .sermon-section__content {
+            font-size: 1rem;
+            color: #444;
+        }
+        .sermon-section__list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .sermon-list-item {
+            margin-bottom: 25px;
+        }
+        .sermon-list-item__title {
+            font-size: 1.2rem;
+            color: #111;
+            margin-bottom: 8px;
+        }
+        .sermon-list-item__description {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .sermon-list-item__nested-list {
+            list-style-type: disc;
+            padding-left: 30px;
+            margin-top: 10px;
+        }
+        .sermon-list-item__nested-list li {
+            margin-bottom: 8px;
+        }
+        .timestamp-link {
+            color: #0056b3;
+            text-decoration: none;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .timestamp-link:hover {
+            text-decoration: underline;
+        }
           </style>
         </head>
         <body>
@@ -262,9 +323,15 @@ export function SermonAIFeatures({
 
   // If AI content is available and user is logged in, then show interactive component
   return (
-    <Card className="border-border bg-card overflow-hidden">
-      {/* Header */}
-      <div className="border-b border-border bg-muted/50 p-4">
+    <Card className="border-border bg-card overflow-hidden flex flex-col">
+      {/* CHANGED */}
+      {/* Make header sticky so controls are always visible */}
+      <div
+        className={cn(
+          "border-b border-border bg-muted/50 p-4 flex-shrink-0", // base
+          "sticky top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-muted/30" // CHANGED
+        )}
+      >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Badge variant="secondary" className="gap-1">
@@ -278,6 +345,8 @@ export function SermonAIFeatures({
             size="sm"
             onClick={() => setIsExpanded(!isExpanded)}
             className="gap-2"
+            aria-expanded={isExpanded} /* CHANGED: a11y */
+            aria-controls="ai-content" /* CHANGED: a11y */
           >
             {isExpanded ? (
               <>
@@ -291,7 +360,6 @@ export function SermonAIFeatures({
           </Button>
         </div>
 
-        {/* Toggle Tabs - Only show if expanded */}
         {isExpanded && hasSummary && hasBreakdown && (
           <div className="mt-4 flex gap-2">
             <Button
@@ -315,11 +383,15 @@ export function SermonAIFeatures({
           </div>
         )}
       </div>
-
-      {/* Content */}
+      {/* Content area constrained to half the viewport height */}
       {isExpanded && (
-        <div className="p-6 space-y-4">
-          {/* Print Button */}
+        <div
+          id="ai-content"
+          className={cn(
+            "min-h-0 overflow-y-auto p-6 space-y-4", // keep scrolling
+            "max-h-[50vh]" // CHANGED: cap height to 50vh
+          )}
+        >
           <div className="flex justify-end">
             <Button
               variant="outline"
@@ -332,7 +404,6 @@ export function SermonAIFeatures({
             </Button>
           </div>
 
-          {/* AI Content */}
           <div className="prose prose-sm max-w-none dark:prose-invert">
             <div
               dangerouslySetInnerHTML={{
@@ -341,7 +412,6 @@ export function SermonAIFeatures({
               }}
               className={cn(
                 "text-foreground leading-relaxed",
-                // Typography styles for HTML content
                 "[&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-3 [&_h1]:mt-6",
                 "[&_h2]:text-lg [&_h2]:font-bold [&_h2]:mb-2 [&_h2]:mt-5",
                 "[&_h3]:text-base [&_h3]:font-semibold [&_h3]:mb-2 [&_h3]:mt-4",
@@ -357,7 +427,6 @@ export function SermonAIFeatures({
             />
           </div>
 
-          {/* Premium Member Badge */}
           <div className="pt-4 border-t border-border">
             <Badge variant="secondary" className="gap-1">
               Premium Member Feature
@@ -365,10 +434,8 @@ export function SermonAIFeatures({
           </div>
         </div>
       )}
-
-      {/* Collapsed State Preview */}
       {!isExpanded && (
-        <div className="p-4">
+        <div className="flex items-center justify-center p-4">
           <p className="text-sm text-muted-foreground text-center">
             {hasSummary && hasBreakdown
               ? "View AI-generated summary and detailed breakdown"

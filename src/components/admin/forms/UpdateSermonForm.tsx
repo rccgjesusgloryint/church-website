@@ -40,7 +40,7 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
     thumbnail: z.string().min(2),
     aiBreakdown: z.string().min(2),
     summary: z.string().min(20),
-    pastorsNotes: z.string().min(2),
+    sermonNotes: z.string().min(2),
   });
 
   type FormData = z.infer<typeof formSchema>;
@@ -52,7 +52,7 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
       videoUrl: sermon.videoUrl || "",
       sermonTitle: sermon.sermonTitle || "",
       thumbnail: sermon.thumbnail || "",
-      pastorsNotes: sermon.pastorsNotes || "",
+      sermonNotes: sermon.sermonNotes || "",
       aiBreakdown: sermon.aiBreakdown || "",
       summary: sermon.summary || "",
     },
@@ -62,7 +62,7 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
     if (!sermon.id) return alert("No sermon provided!");
     let tempSermon = {
       ...values,
-      hasPastorNotes: values.pastorsNotes === "",
+      hasNotes: values.sermonNotes === "",
       tags,
     };
     try {

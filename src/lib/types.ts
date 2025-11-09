@@ -147,8 +147,8 @@ export type Sermon = {
   tags: string[];
   aiBreakdown: string;
   summary: string;
-  pastorsNotes: string;
-  hasPastorNotes: boolean;
+  sermonNotes: string;
+  hasNotes: boolean;
   thumbnail?: string | null;
   likes?: number | null;
   comments?: Comment[];
