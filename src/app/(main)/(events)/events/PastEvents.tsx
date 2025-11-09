@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 import React from "react";
 import { EventType } from "@/lib/types";
-import Loader from "../../../../../components/Loader";
+import Loader from "@/components/Loader";
 
 type Props = {
   pastEvents: EventType;
@@ -33,16 +33,16 @@ export const PastEvents = ({ pastEvents, isLoading, lastSunday }: Props) => {
           <Loader />
         </div>
       ) : (
-        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3 text-black">
+        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
           {pastEvents.length > 0 ? (
             pastEvents?.map((event, index) => {
               return (
                 <div
-                  className="sm:w-[290px] w-[390px] 2xl:w-[390px] min-h-[420px] h-auto bg-white px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl"
+                  className="w-[300px] min-h-[420px] h-auto bg-card px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block "
                   key={index}
                 >
                   {event.monthly ? (
-                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+                    <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
                       <>
                         <p className="text-[28px] text-center w-full mb-[3px] leading-6">
                           {lastSunday[1]}
@@ -51,7 +51,7 @@ export const PastEvents = ({ pastEvents, isLoading, lastSunday }: Props) => {
                       </>
                     </div>
                   ) : (
-                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+                    <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
                       {event.date && (
                         <>
                           <p className="text-[28px] text-center w-full mb-[3px] leading-6">
@@ -153,7 +153,7 @@ const EventHeadings = () => {
           ref={useSubTitle1}
         >
           <h3 className="tracking-widest">PAST EVENTS</h3>
-          <div className="bg-black opacity-55 w-[114px] h-[1px] mt-1 mb-0"></div>
+          <div className="bg-primary opacity-55 w-[114px] h-[1px] mt-1 mb-0"></div>
         </div>
       </div>
     </div>

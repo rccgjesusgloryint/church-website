@@ -1,52 +1,119 @@
 "use client";
 
 import { getEvent } from "@/lib/queries";
-import { EventDescription } from "@/lib/types";
-
+import type { EventDescription } from "@/lib/types";
 import React from "react";
-
-import { BreadCrumb, Event } from ".";
+import { MapPin, Users } from "lucide-react";
+import { ImageCard } from ".";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
+import Navbar2 from "@/components/navbar/Navbar2";
 
 type Props = {
   params: { id: number };
 };
 
 const Page = ({ params }: Props) => {
-  const [event, setEvent] = React.useState<EventDescription>();
+  const [event, setEvent] = React.useState<EventDescription | null>(null);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const fetchEventDescription = async () => {
-      const event = await getEvent(Number(params.id));
-      setEvent(Object(event));
+      try {
+        setIsLoading(true);
+        setError(null);
+        const eventData = await getEvent(Number(params.id));
+
+        if (!eventData) {
+          setError("Event not found");
+        } else {
+          setEvent(eventData as EventDescription);
+        }
+      } catch (err) {
+        setError("Failed to load event");
+        console.error("[v0] Error fetching event:", err);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchEventDescription();
   }, [params.id]);
 
-  if (!event) {
-    return <div>No event provided</div>;
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <div className="text-muted-foreground">Loading event details...</div>
+      </div>
+    );
+  }
+
+  if (error || !event) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <div className="text-center">
+          <p className="text-destructive text-lg mb-2">
+            {error || "Event not found"}
+          </p>
+          <p className="text-muted-foreground">
+            Please check the event ID and try again.
+          </p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <section className="flex flex-col items-center sm:justify-center sm:h-auto w-full pt-11 bg-white [background:radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)]">
-      <BreadCrumb />
-      <h1 className="font-bold sm:text-4xl text-2xl my-5 sm:mb-11">EVENT</h1>
-      <Event event={event} />
-      <div className="flex flex-col items-center">
-        <h3 className="font-bold text-xl sm:mb-6 mt-4">Location</h3>
-        <div>{event?.location}</div>
-      </div>
-      <div className="w-full flex flex-col items-center justify-center sm:m-6 p-4 mb-5">
-        <h3 className="font-bold text-xl sm:mb-6">Description</h3>
-        <p className="sm:w-1/2 text-center">
-          {event?.description.eventDescription ? (
-            event.description.eventDescription
-          ) : (
-            <h1>Loading...</h1>
-          )}
-        </p>
-      </div>
-    </section>
+    <>
+      <Navbar2 />
+      <main className="min-h-screen bg-background">
+        <div className="max-w-5xl mx-auto px-6 py-12">
+          <div className="space-y-12">
+            {/* Image Component */}
+            <div className="border-b border-border pb-12">
+              <ImageCard
+                image={{
+                  src: event.description.eventPosterImage,
+                  width: 400,
+                  height: 400,
+                }}
+              />
+            </div>
+
+            {/* Location Section */}
+            <div className="grid md:grid-cols-[auto_1fr] gap-6 items-start border-b border-border pb-12">
+              <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-accent">
+                <MapPin className="w-6 h-6 text-accent-foreground" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-semibold mb-3 text-foreground">
+                  Location
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  {event.location}
+                </p>
+              </div>
+            </div>
+
+            {/* Description Section */}
+            <div className="grid md:grid-cols-[auto_1fr] gap-6 items-start">
+              <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-accent">
+                <Users className="w-6 h-6 text-accent-foreground" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-semibold mb-3 text-foreground">
+                  About This Event
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  {event.description.eventDescription}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
   );
 };
+
 export default Page;

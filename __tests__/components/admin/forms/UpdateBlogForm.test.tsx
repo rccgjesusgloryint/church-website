@@ -1,6 +1,6 @@
 import { describe, vi, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
+import UpdateBlogForm from "../../../../src/components/admin/forms/UpdateBlogForm";
 import { BlogType } from "@/lib/types";
 import dynamic from "next/dynamic";
 

@@ -1,7 +1,6 @@
 import React from "react";
 
 import { EventType } from "@/lib/types";
-import Loader from "../../../../../components/Loader";
 
 import { LuClock3 } from "react-icons/lu";
 import { FaRegMap } from "react-icons/fa6";
@@ -11,6 +10,7 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import Loader from "@/components/Loader";
 
 interface EventCardsProps {
   isLoading: boolean;
@@ -37,25 +37,27 @@ export const UpcomingEventCards = ({
           <Loader />
         </div>
       ) : (
-        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3 text-black">
+        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
           {events.length > 0 ? (
             events?.map((event, index) => {
               return (
                 <div
-                  className="sm:w-[290px] w-[390px] 2xl:w-[390px] min-h-[420px] h-auto bg-white px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl"
+                  className="w-[300px] min-h-[420px] h-auto bg-card px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block "
                   key={index}
                 >
                   {event.monthly ? (
-                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+                    <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
                       <>
                         <p className="text-[28px] text-center w-full mb-[3px] leading-6">
                           {lastSunday[1]}
                         </p>
-                        <p className="text-base mb-[10px]">{lastSunday[0]}</p>
+                        <p className="text-primary mb-[10px]">
+                          {lastSunday[0]}
+                        </p>
                       </>
                     </div>
                   ) : (
-                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+                    <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
                       {event.date && (
                         <>
                           <p className="text-[28px] text-center w-full mb-[3px] leading-6">
@@ -83,7 +85,7 @@ export const UpcomingEventCards = ({
                       </span>
                       <span className=""></span>
                     </div>
-                    <div className="font-bold text-base pl-10">
+                    <div className="font-bold text-primary pl-10">
                       {event.monthly ? (
                         <div>End of the Month</div>
                       ) : (
@@ -101,13 +103,13 @@ export const UpcomingEventCards = ({
                       <span className="absolute mt-[5px]">
                         <FaRegMap />
                       </span>
-                      <p className="font-bold text-base pl-10">
+                      <p className="font-bold text-primary pl-10">
                         {event.location}
                       </p>
                     </div>
                   </div>
                   <div
-                    className="border-2 border-light-gr mt-[56px] w-[160px] h-[60px] flex justify-center items-center hover:bg-light-gr hover:text-white cursor-pointer transition ease-in-out"
+                    className="border-2 border-light-gr mt-[56px] w-[160px] h-[60px] flex justify-center items-center hover:bg-light-gr hover:text-primary cursor-pointer transition ease-in-out"
                     onClick={() => handleNavigation(event.id)}
                   >
                     <h3 className="font-bold text-sm tracking-wider">
@@ -157,7 +159,7 @@ const EventHeadings = () => {
           ref={useSubTitle1}
         >
           <h3 className="tracking-widest">UPCOMING EVENTS</h3>
-          <div className="bg-black opacity-55 w-[163px] h-[1px] mt-1 mb-0"></div>
+          <div className="bg-primary opacity-55 w-[163px] h-[1px] mt-1 mb-0"></div>
         </div>
         <div
           className="flex flex-row items-center justify-center w-full relative mt-11"

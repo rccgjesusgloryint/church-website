@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MediaPage from "../../../../components/media";
-import CreateEvent from "../../../../components/events/CreateEvent";
-import CreateSermonForm from "../../../../components/sermons/create-sermon-form";
-import Navbar2 from "../../../../components/navbar/Navbar2";
+import MediaPage from "../../../components/media";
+import CreateEvent from "../../../components/events/CreateEvent";
+import CreateSermonForm from "../../../components/sermons/create-sermon-form";
+import Navbar2 from "../../../components/navbar/Navbar2";
 
-import BlogCreator from "../../../../components/blogs/BlogCreator";
+import BlogCreator from "../../../components/blogs/BlogCreator";
 import {
   getAllUsers,
   getAuthUserDetails,
@@ -17,18 +17,19 @@ import {
 } from "@/lib/queries";
 import { Events, Role, User } from "@prisma/client";
 import { useModal } from "@/providers/modal-provider";
-import CustomModal from "../../../../components/global/custom-modal";
-import UpdateUserForm from "../../../../components/admin/forms/UpdateUserForm";
-import EditPage from "../../../../components/admin/EditPage";
-import UpdateUser from "../../../../components/admin/UpdateUser";
-import UpdateSermonForm from "../../../../components/admin/forms/UpdateSermonForm";
-import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
+import CustomModal from "../../../components/global/custom-modal";
+import EditPage from "../../../components/admin/EditPage";
+import UpdateUser from "../../../components/admin/UpdateUser";
+import UpdateEventForm from "../../../components/admin/forms/UpdateEventForm";
 import { BlogType, EventsType, Sermon } from "@/lib/types";
-import UpdateBlogForm from "../../../../components/admin/forms/UpdateBlogForm";
+import UpdateBlogForm from "../../../components/admin/forms/UpdateBlogForm";
+import Newsletter from "../../../components/admin/components/Newsletter";
+import ReportList from "../../../components/admin/feedback/report-list";
 
 const AdminPage = () => {
   const [user, setUser] = React.useState<User>();
   const [allUsers, setAllUsers] = React.useState<User[]>();
+  const [isOwner, setIsOwner] = React.useState<boolean>(false);
   const [refresh, setRefresh] = React.useState(false);
   const { setOpen, setClose } = useModal();
 
@@ -37,15 +38,12 @@ const AdminPage = () => {
     const getInfo = async () => {
       const response = (await getAuthUserDetails()) as User;
       setUser(response);
-    };
-
-    // Fetch all users
-    const getData = async () => {
       const users = await getAllUsers();
       setAllUsers(users);
+      const checkIsOwner = await isUserOwner();
+      setIsOwner(checkIsOwner);
     };
 
-    getData();
     getInfo();
   }, [refresh]); // 🔄 Re-run effect when `refresh` changes
 
@@ -103,6 +101,8 @@ const AdminPage = () => {
           <TabsTrigger value="users">Users</TabsTrigger>
           <TabsTrigger value="blogs">Blogs</TabsTrigger>
           <TabsTrigger value="edit">Edit</TabsTrigger>
+          {isOwner && <TabsTrigger value="report">Report</TabsTrigger>}
+          {isOwner && <TabsTrigger value="newsletter">Newsletter</TabsTrigger>}
         </TabsList>
         <TabsContent value="media">
           <MediaPage />
@@ -112,6 +112,7 @@ const AdminPage = () => {
         </TabsContent>
         <TabsContent value="blogs">
           <BlogCreator userId={user?.id!!} />
+          {/* <Testing /> */}
         </TabsContent>
 
         <TabsContent value="users">
@@ -129,6 +130,12 @@ const AdminPage = () => {
             refresh={refresh}
             setRefresh={setRefresh}
           />
+        </TabsContent>
+        <TabsContent value="newsletter">
+          <Newsletter />
+        </TabsContent>
+        <TabsContent value="report">
+          <ReportList />
         </TabsContent>
       </Tabs>
     </section>

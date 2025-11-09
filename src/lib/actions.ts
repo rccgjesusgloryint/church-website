@@ -1,3 +1,5 @@
+import { GetAllImages } from "./types";
+
 export function getYoutubeVidId(youtubeUrl: string) {
   // Define regex patterns to extract the video ID
   const patterns = [
@@ -42,4 +44,39 @@ export function getLastSundayOfTheMonth(
 
   const monthAbbr = lastDay.toLocaleString("default", { month: "short" }); // e.g., "Sep"
   return [monthAbbr, String(lastSundayDate)];
+}
+
+export function getLastSundayOfTheMonthNumber(
+  year: number,
+  month: number
+): number {
+  if (month < 0 || month > 11) {
+    throw new Error("Month must be between 0 (January) and 11 (December).");
+  }
+
+  const lastDay = new Date(year, month + 1, 0); // last day of the month
+  const dayOfWeek = lastDay.getDay(); // 0 = Sunday
+  const lastSundayDate = lastDay.getDate() - dayOfWeek;
+
+  return lastSundayDate;
+}
+
+export const getCatImages = (category: string, fullArray: GetAllImages[]) => {
+  const temp = [] as GetAllImages[];
+  fullArray.map((image) => {
+    if (image.name === category) {
+      temp.push(image);
+    }
+  });
+
+  return temp;
+};
+
+export function shuffle<T>(arr: T[]): T[] {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }

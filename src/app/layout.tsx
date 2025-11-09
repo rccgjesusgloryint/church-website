@@ -11,6 +11,8 @@ import { AuthProvider } from "../providers/AuthProvider";
 
 import LiveStreamButton from "@/components/LiveStreamButton";
 import { ThemeProvider } from "@/components/theme-provider";
+import { getLastSundayOfTheMonth } from "@/lib/actions";
+import FeedbackComponent from "@/components/feedback/page";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -47,7 +49,7 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={dmSans.className}>
@@ -59,6 +61,7 @@ export default async function RootLayout({
         >
           <AuthProvider session={session as any}>
             <ModalProvider>{children}</ModalProvider>
+            <FeedbackComponent />
             <LiveStreamButton
               channelUrl={
                 "https://www.youtube.com/@rccgjesusgloryinternationa5350/live"

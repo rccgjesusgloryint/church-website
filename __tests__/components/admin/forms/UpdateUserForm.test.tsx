@@ -1,7 +1,7 @@
 import { describe, vi, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import dynamic from "next/dynamic";
-import UpdateUserForm from "../../../../components/admin/forms/UpdateUserForm";
+import UpdateUserForm from "../../../../src/components/admin/forms/UpdateUserForm";
 
 // Mock UI components
 vi.mock("@/components/ui/card", () => ({

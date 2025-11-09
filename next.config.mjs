@@ -9,7 +9,20 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "utfs.io",
+        hostname: "i.ytimg.com",
+        pathname: "**",
+      },
+      {
+        protocol: "https",
+        hostname: "img.jesusgloryintl.com",
+      },
+      {
+        protocol: "https",
+        hostname: "test.jesusgloryintl.com",
+      },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
         pathname: "**",
       },
       {

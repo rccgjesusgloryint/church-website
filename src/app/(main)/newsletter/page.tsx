@@ -1,13 +1,14 @@
+import Newsletter from "@/components/Newsletter";
 import React from "react";
-import SendNewsletterEmail from "../../../../components/newsletter/send-newsletter-email";
 
-const page = () => {
+type Props = {};
+
+const NewsletterPage = (props: Props) => {
   return (
-    <section>
-      <h1>Newletter Page</h1>
-      <SendNewsletterEmail />
-    </section>
+    <div>
+      <Newsletter />
+    </div>
   );
 };
 
-export default page;
+export default NewsletterPage;

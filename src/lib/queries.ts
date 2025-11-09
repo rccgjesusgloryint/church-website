@@ -6,8 +6,11 @@ import {
   ContactFormType,
   CreateEventType,
   CreateSermon,
+  DbImage,
+  EventMediaNoId,
   EventsType,
-  NewletterEmail,
+  FeedbackNoId,
+  NewsletterEmail,
   Sermon,
   UploadMultipleFiles,
 } from "./types";
@@ -16,7 +19,10 @@ import { Resend } from "resend";
 import { auth } from "@/auth";
 import { prisma } from "./db";
 
-import { Blog, Media, Role } from "@prisma/client";
+import { Blog, EventMedia, Feedback, Image, Media, Role } from "@prisma/client";
+import { C } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
+import { shuffle } from "./actions";
+import { syncYouTubeDb } from "./syncYouTubeDb";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
@@ -43,7 +49,7 @@ export const isAdmin = async () => {
     where: { id: session.user?.id },
   });
 
-  if (res?.member === "ADMIN") {
+  if (res?.member === "ADMIN" || res?.member === "OWNER") {
     return true;
   } else {
     return false;
@@ -59,7 +65,7 @@ export const isUserOwner = async () => {
     where: { id: session.user?.id },
   })!!;
 
-  return res?.member;
+  return res?.member === "OWNER";
 };
 
 export const accessCheck = async (): Promise<Role | undefined> => {
@@ -88,77 +94,96 @@ export const getAuthUserDetails = async () => {
   return userData;
 };
 
-export const createMedia = async (
-  name: string,
-  mediaFile: UploadMultipleFiles
-) => {
-  try {
-    for (const link of mediaFile) {
-      try {
-        await prisma.media.create({
-          data: {
-            link: link.url,
-            name: name,
-          },
-        });
+// export const createMedia = async (
+//   name: string,
+//   mediaFile: UploadMultipleFiles
+// ) => {
+//   try {
+//     for (const link of mediaFile) {
+//       try {
+//         await prisma.media.create({
+//           data: {
+//             link: String(`https://kwt4fjtfgo.ufs.sh/f/${link.key}`),
+//             name: name,
+//           },
+//         });
 
-        // Small delay to prevent overwhelming DB (optional but helps on low limits)
-        await new Promise((resolve) => setTimeout(resolve, 50));
-      } catch (error) {
-        console.error("Error creating media record:", error);
-        return { message: "OOPS COULDN'T UPLOAD SOME FILES", status: 400 };
-      }
-    }
+//         // Small delay to prevent overwhelming DB (optional but helps on low limits)
+//         await new Promise((resolve) => setTimeout(resolve, 50));
+//       } catch (error) {
+//         console.error("Error creating media record:", error);
+//         return { message: "OOPS COULDN'T UPLOAD SOME FILES", status: 400 };
+//       }
+//     }
 
-    return { message: "SUCCESSFULLY UPLOADED FILES", status: 200 };
-  } catch (error) {
-    console.error("Fatal error in createMedia:", error);
-    return { message: "FATAL ERROR UPLOADING FILES", status: 500 };
-  }
-};
+//     return { message: "SUCCESSFULLY UPLOADED FILES", status: 200 };
+//   } catch (error) {
+//     console.error("Fatal error in createMedia:", error);
+//     return { message: "FATAL ERROR UPLOADING FILES", status: 500 };
+//   }
+// };
 
-export const deleteMedia = async (mediaId: string) => {
-  const response = await prisma.media.delete({
-    where: {
-      id: mediaId,
-    },
-  });
-  return response;
-};
-
-export const getAllImages = async () => {
-  const response = await prisma.media.findMany({
-    select: {
-      link: true,
-      name: true,
-    },
-  });
-  return response;
-};
+// export const deleteMedia = async (mediaId: string) => {
+//   const response = await prisma.media.delete({
+//     where: {
+//       id: mediaId,
+//     },
+//   });
+//   return response;
+// };
 
 export const getRandomImages = async (
   amount: number
 ): Promise<CarosoulImageType[]> => {
-  const response = await prisma.media.findMany({
-    select: {
-      id: true,
-      link: true,
-      name: true,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
+  const takeImages = 60; // tune
+  const takeEventSets = 3; // tune
+
+  // Run queries in parallel
+  const [images, eventMedia] = await Promise.all([
+    prisma.image.findMany({
+      select: { id: true, url: true, event: true },
+      where: { url: { not: null } },
+      orderBy: { createdAt: "desc" },
+      take: takeImages,
+    }),
+    prisma.eventMedia.findMany({
+      select: { id: true, images: true, event: true },
+      orderBy: { createdAt: "desc" },
+      take: takeEventSets,
+    }),
+  ]);
+
+  // Normalize both sources to a single shape and clean once
+  type Raw = { id: number | string; event: string; url: string | null };
+
+  const fromImage: Raw[] = images.map((r) => ({
+    id: r.id,
+    event: r.event ?? null,
+    url: r.url,
+  }));
+
+  // Flatten eventMedia.images safely
+  const fromEventMedia: Raw[] = eventMedia.flatMap((em) => {
+    const imgs = Array.isArray(em.images) ? em.images : [];
+    return imgs.map((u) => ({ id: em.id, event: em.event ?? null, url: u }));
   });
 
-  let randomImages = response
-    .filter((image, index) => {
-      let randomNum = Math.random() * 15;
-      if (index < randomNum) return;
-      if (index % 2 == 0) return image;
-    })
-    .slice(0, amount);
+  // Clean & de-dupe by URL (drop null/empty)
+  const deduped: Raw[] = Array.from(
+    new Map(
+      [...fromImage, ...fromEventMedia]
+        .filter((r) => r.url && r.url.trim() !== "")
+        .map((r) => [r.url as string, r]) // key: url
+    ).values()
+  );
 
-  return randomImages;
+  const randomized = shuffle(deduped).slice(0, amount);
+
+  return randomized.map((r) => ({
+    id: r.id,
+    link: r.url!, // safe due to filter above
+    name: r.event ?? "",
+  }));
 };
 
 export const createEvent = async (eventObj: CreateEventType) => {
@@ -238,7 +263,7 @@ export const sendWelcomeEmail = async (email: string) => {
     const { data, error } = await resend.emails.send({
       from: "Jesus Glory Athy <onboarding@jesusgloryintl.com>",
       to: email,
-      subject: "Welcome to Jesus Glory Athy! 🌟",
+      subject: "Welcome to Jesus Glory Athy Newsletter! 🌟",
       html: `<!DOCTYPE html>
               <html>
               <head>
@@ -358,6 +383,7 @@ export const addEmailToNewsletter = async (newEmail: string) => {
     console.log("email already exists!");
     return { message: "email already exists!", status: 305 };
   }
+
   try {
     await prisma.newsletterEmail.create({
       data: { email: newEmail },
@@ -375,12 +401,8 @@ export const sendContactEmail = async ({
   message,
 }: ContactFormType) => {
   const resend = new Resend(process.env.RESEND_API_KEY);
-  try {
-    const { data, error } = await resend.emails.send({
-      from: `${name} <contact@jesusgloryintl.com>`,
-      to: "rccgjesusgloryint@gmail.com",
-      subject: `From contact form`,
-      html: `<!DOCTYPE html>
+
+  const emailHtml = `<!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
@@ -424,7 +446,14 @@ export const sendContactEmail = async ({
                     </div>
                 </div>
             </body>
-            </html>`,
+            </html>`;
+
+  try {
+    const { data, error } = await resend.emails.send({
+      from: `${name} <contact@jesusgloryintl.com>`,
+      to: "rccgjesusgloryint@gmail.com",
+      subject: `From contact form`,
+      html: emailHtml,
     });
 
     if (error) {
@@ -443,29 +472,119 @@ export const sendContactEmail = async ({
   }
 };
 
+// export const sendBulkNewsletterEmail = async (
+//   newsletterEmails: NewsletterEmail
+// ) => {
+//   const resend = new Resend(process.env.PROD_RESEND_API_KEY);
+
+//   if (!newsletterEmails) {
+//     return null;
+//   }
+
+//   try {
+//     await resend.batch.send(
+//       newsletterEmails.map(({ subject, email, content }) => {
+//         return {
+//           from: "Jesus Glory Athy Newsletter <onboarding@resend.dev>",
+//           to: [email],
+//           subject,
+//           text: content,
+//           // html: "<h1>it works!</h1>",
+//         };
+//       })
+//     );
+//   } catch (error) {
+//     console.log("ERROR: ", error);
+//   }
+// };
+
 export const sendBulkNewsletterEmail = async (
-  newsletterEmails: NewletterEmail
+  newsletterEmails: NewsletterEmail
 ) => {
   const resend = new Resend(process.env.PROD_RESEND_API_KEY);
 
-  if (!newsletterEmails) {
+  const emailHtml = `<!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>Message from contact form</title>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f4f4;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    .container {
+                        max-width: 1100px;
+                        margin: 20px auto;
+                        background: #ffffff;
+                        padding: 20px;
+                        border-radius: 8px;
+                        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                    }
+                    h1 {
+                        margin: 0;
+                        font-size: 24px;
+                    }
+                    .content {
+                        padding: 20px;
+                        color: #333333;
+                        font-size: 16px;
+                        line-height: 1;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                  <div>
+                    <h1>${newsletterEmails.subject}</h1>
+                  </div>
+                    <div class="content">
+                        <p>${newsletterEmails.content}</p>
+                    </div>
+                </div>
+            </body>
+            </html>`;
+
+  const emailsFromDb = (await prisma.newsletterEmail.findMany({
+    select: { email: true },
+  })) as [];
+
+  if (!newsletterEmails || !emailsFromDb) {
     return null;
   }
 
-  try {
-    const response = await resend.batch.send(
-      newsletterEmails.map((email) => {
-        return {
-          from: "Jesus Glory Athy Newsletter <onboarding@resend.dev>",
-          to: [email.email],
-          subject: "TEST",
-          html: "<h1>it works!</h1>",
-        };
-      })
+  const isOwner = await isUserOwner();
+  if (isOwner === false) {
+    console.log({
+      error: 500,
+      message:
+        "User is not autherised, must have 'Owner' credentials to send newsletters",
+    });
+    throw new Error(
+      "User is not autherised, must have 'Owner' credentials to send newsletters"
     );
-  } catch (error) {
-    console.log("ERROR: ", error);
   }
+
+  console.log("Error continued!");
+
+  // try {
+  //   await resend.batch.send(
+  //     emailsFromDb.map(({ email }) => {
+  //       return {
+  //         from: "Jesus Glory Athy Newsletter <contact@jesusgloryintl.com>",
+  //         to: [String(email)],
+  //         subject: newsletterEmails.subject,
+  //         html: emailHtml,
+  //       };
+  //     })
+  //   );
+  // } catch (error) {
+  //   console.log("ERROR: ", error);
+  // }
 };
 
 export const deleteSermon = async (sermonId: number) => {
@@ -484,13 +603,14 @@ export const deleteSermon = async (sermonId: number) => {
   }
 };
 
-export const createSermon = async (sermon: CreateSermon, tags: string[]) => {
+export const createSermon = async (sermon: CreateSermon, tags?: string[]) => {
   try {
     await prisma.sermon.create({
       data: {
         videoUrl: sermon.videoUrl,
         sermonTitle: sermon.sermonTitle,
-        tags: [...tags],
+        thumbnail: sermon.thumbnail,
+        tags: tags && [...tags],
       },
     });
     console.log("SUCCESS CREATING SERMON 🟢🟢");
@@ -505,17 +625,11 @@ export const createSermon = async (sermon: CreateSermon, tags: string[]) => {
 };
 
 export const getAllSermons = async (): Promise<Sermon[]> => {
-  //Check for new sermons in the youtube channel and add to db
-  const checkYTchannel = `${process.env.NEXT_PUBLIC_BASE_URL}/api/youtube`;
-  await fetch(checkYTchannel, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  // grap all sermons in db
-  const response = await prisma.sermon.findMany({});
-  return response as Sermon[];
+  await syncYouTubeDb();
+  return prisma.sermon.findMany({ orderBy: { createdAt: "desc" } });
+};
+export const getAllSermonsInServer = async (): Promise<Sermon[]> => {
+  return prisma.sermon.findMany({});
 };
 
 export const getSermonById = async (id: number): Promise<Sermon> => {
@@ -702,10 +816,104 @@ export const isLive = async (): Promise<boolean> => {
     });
 
     const data = await response.json();
-    console.log("Live check API data:", data.data); //
+    console.log("Live check API data:", data.items);
     return data?.isLive;
   } catch (error) {
     console.error("Error fetching live status:", error);
     return false;
+  }
+};
+
+export const saveImage = async (file: DbImage) => {
+  try {
+    const response = await prisma.image.create({
+      data: {
+        ...file,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+export const saveEventImages = async (file: EventMediaNoId) => {
+  try {
+    return await prisma.eventMedia.upsert({
+      where: { event: file.event },
+      update: {
+        // keep latest date/metadata if you want:
+        date: file.date,
+        location: file.location ?? undefined,
+        description: file.description ?? undefined,
+        images: { push: file.images }, // append to the array
+      },
+      create: {
+        event: file.event,
+        date: file.date,
+        location: file.location ?? null,
+        description: file.description ?? null,
+        images: file.images,
+      },
+    });
+  } catch (err) {
+    console.error("saveEventImages error:", err);
+    throw err; // IMPORTANT
+  }
+};
+
+export const getImages = async (): Promise<Image[] | undefined> => {
+  try {
+    const dbImages = await prisma.image.findMany({});
+    return dbImages;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+export const getAllImages = async () => {
+  const response = await prisma.image.findMany({});
+  const detailedResponse = response.map((res) => {
+    return {
+      id: res.id,
+      link: res.url || "",
+      name: res.event,
+      date: res.createdAt,
+    };
+  });
+
+  return detailedResponse;
+};
+
+export const getAllImagesv2 = async () => {
+  const response = await prisma.eventMedia.findMany({});
+
+  return response;
+};
+
+export const reportFeedback = async (form: FeedbackNoId) => {
+  try {
+    return await prisma.feedback.create({
+      data: {
+        name: form.name ?? null,
+        email: form.email ?? null,
+        category: form.category ?? null,
+        message: form.message,
+        feedbackFrom: form.feedbackFrom ?? null,
+      },
+    });
+  } catch (err) {
+    console.error("Error: ", err);
+    throw err;
+  }
+};
+
+export const getAllReports = async () => {
+  try {
+    const response = await prisma.feedback.findMany({});
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };

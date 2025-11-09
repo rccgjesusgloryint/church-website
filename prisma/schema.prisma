@@ -11,7 +11,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 enum Role {
@@ -83,6 +83,18 @@ model Media {
   updatedAt  DateTime @updatedAt
 }
 
+model Image {
+  id         String   @id @default(uuid())
+  type       String
+  filename    String
+  event      String
+  bucket     String
+  url        String?
+  description String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
 model Events {
   id          Int      @id @default(autoincrement())
   event       String
@@ -92,6 +104,17 @@ model Events {
   monthly     Boolean @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model EventMedia {
+  id          Int       @id @default(autoincrement())
+  event       String    @unique
+  date        DateTime
+  location    String?   // optional
+  description String?   // optional
+  images      String[]  // array of image URLs
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 
@@ -106,7 +129,12 @@ model Sermon {
   sermonTitle     String
   tags            String[]
   likes           Int?
-  embedHTML       String?   @default("")
+  sermonNotes     String    @default("")
+  thumbnail       String?   @default("")
+  summary         String    @default("")
+  aiBreakdown     String    @default("") // breakdown of the summary via the transcript
+  videoTranscript String    @default("")
+  hasNotes        Boolean   @default(false)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 }
@@ -148,3 +176,14 @@ model Notification {
   createdAt                   DateTime @default(now())
   updatedAt                   DateTime @updatedAt   
 }
+
+model Feedback {
+  id           Int      @id @default(autoincrement())
+  name         String?  // optional
+  email        String?  // optional
+  category     String?  // 'bug', 'suggestion', 'improvement', etc.
+  message      String
+  feedbackFrom String?  // NEW: where they’re reporting from
+  createdAt    DateTime @default(now())
+}
+

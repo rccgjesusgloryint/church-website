@@ -1,205 +1,149 @@
-import { useState, useEffect } from "react";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { getYoutubeVidId } from "@/lib/actions";
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Search, Calendar, Clock, Heart } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { getAllSermons } from "@/lib/queries";
 import { Sermon } from "@/lib/types";
-import { getAllSermons, getExistingTags } from "@/lib/queries";
-import Loader from "../../../../components/Loader";
 
-interface SermonsProps {
-  displaySermons: Sermon[];
-}
+export default function SermonsPage() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [allSermons, setAllSermons] = useState<Sermon[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-interface FilterProps {
-  allSermons: Sermon[];
-  setDisplaySermons: (variable: Sermon[]) => void;
-  filterBySearch: (variable: string) => void;
-  search: string;
-  allTags: string[];
-}
-
-interface DisplayTagsProps {
-  allTags: string[];
-  filterSermonByTags: (tag: string) => void;
-}
-
-export const Sermons = () => {
-  const [allSermons, setAllSermons] = useState<Sermon[]>();
-  const [search, setSearch] = useState("");
-  const [displaySermons, setDisplaySermons] = useState<Sermon[]>();
-  const [allTags, setAllTags] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const filterSermonByTags = (tag: string) => {
-    const filteredSermon = allSermons?.filter((sermon) =>
-      sermon.tags.includes(tag)
+  const filteredSermons = allSermons.filter((sermon) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      sermon.sermonTitle.toLowerCase().includes(searchLower) ||
+      sermon.tags.some((tag) => tag.toLowerCase().includes(searchLower))
     );
-    setDisplaySermons(filteredSermon);
-  };
+  });
 
   useEffect(() => {
-    getAllSermons();
-
     const getSermons = async () => {
       setIsLoading(true);
       const res = await getAllSermons();
       setAllSermons(res);
-      setDisplaySermons(res);
       setIsLoading(false);
     };
-
-    const getTags = async () => {
-      const data = await getExistingTags();
-      setAllTags(data);
-    };
-
-    getTags();
     getSermons();
   }, []);
 
-  const filterBySearch = (search: string) => {
-    setSearch(search);
-    const filteredSearch = allSermons?.filter((sermon) =>
-      sermon.sermonTitle.toLowerCase().includes(search.toLowerCase())
-    );
-    setDisplaySermons(filteredSearch);
+  const formatDate = (date: Date) => {
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - date.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0) return "Today";
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) return `${diffDays} days ago`;
+    if (diffDays < 30) return `${Math.floor(diffDays / 7)} weeks ago`;
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   };
 
-  if (isLoading) {
-    return (
-      <div className="h-screen flex items-center justify-center">
-        <Loader />
-      </div>
-    );
-  }
-
   return (
-    <div className="flex flex-col sm:items-start items-center w-full mt-11 relative">
-      {displaySermons && displaySermons.length > 0 && (
-        <Filter
-          allSermons={allSermons!!}
-          allTags={allTags}
-          filterBySearch={filterBySearch}
-          search={search}
-          setDisplaySermons={setDisplaySermons}
-        />
-      )}
-      <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
-        {displaySermons && displaySermons.length > 0 ? (
-          displaySermons.map((sermon, index) => (
-            <div className="w-auto h-auto p-6 pb-6 bg-slate-400" key={index}>
-              <div className="h-[315px] sm:w-[560px] w-full">
-                <iframe
-                  src={`https://www.youtube.com/embed/${getYoutubeVidId(
-                    sermon.videoUrl
-                  )}`}
-                  title="YouTube video player"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerPolicy="strict-origin-when-cross-origin"
-                  allowFullScreen
-                  className="w-full h-full"
-                />
-              </div>
-              <div className="flex flex-col gap-3">
-                <h1 className="font-bold text-2xl">{sermon.sermonTitle}</h1>
-                <SermonTags sermon={sermon} />
-              </div>
-            </div>
-          ))
+    <div className="min-h-screen bg-background">
+      <div className="border-b bg-gradient-to-b from-muted/30 to-background">
+        <div className="container mx-auto px-4 py-12">
+          <h1 className="text-4xl font-bold tracking-tight text-balance mb-3">
+            Sermons
+          </h1>
+          <p className="text-muted-foreground text-lg max-w-2xl text-pretty">
+            Watch and listen to our latest messages from Sunday services
+          </p>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-8 max-w-xl">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search sermons by title or topic..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+        </div>
+
+        {filteredSermons.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredSermons.map((sermon) => (
+              <Link
+                key={sermon.id}
+                href={`/sermons/${sermon.id}`}
+                className="group block"
+              >
+                <div className="relative h-full overflow-hidden rounded-lg border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1">
+                  <div className="relative aspect-video overflow-hidden bg-muted">
+                    <Image
+                      src={sermon.thumbnail || "/placeholder.svg"}
+                      alt={sermon.sermonTitle}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                    {/* <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-md bg-black/80 text-white text-xs font-medium">
+                      <Clock className="size-3" />
+                      {sermon.duration}
+                    </div> */}
+                  </div>
+
+                  <div className="p-5">
+                    <h3 className="font-semibold text-lg leading-tight line-clamp-2 mb-3 text-balance group-hover:text-primary transition-colors">
+                      {sermon.sermonTitle}
+                    </h3>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {sermon.tags.slice(0, 2).map((tag) => (
+                        <Badge
+                          key={tag}
+                          variant="secondary"
+                          className="text-xs"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                      {sermon.tags.length > 2 && (
+                        <Badge variant="outline" className="text-xs">
+                          +{sermon.tags.length - 2}
+                        </Badge>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t">
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="size-3.5" />
+                        <span>{formatDate(sermon.createdAt!)}</span>
+                      </div>
+                      {/* <div className="flex items-center gap-1.5">
+                        <Heart className="size-3.5" />
+                        <span>{sermon.likes}</span>
+                      </div> */}
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         ) : (
-          <div className="h-1/2">
-            <h1 className="text-2xl font-bold">No sermons posted yet!</h1>
+          <div className="text-center py-12">
+            <p className="text-muted-foreground text-lg">
+              No sermons found matching your search.
+            </p>
           </div>
         )}
       </div>
     </div>
   );
-};
-
-const SermonTags = ({ sermon }: { sermon: Sermon }) => {
-  return (
-    <div className="flex flex-row">
-      {sermon.tags.length !== 0 && sermon.tags.length > 1 ? (
-        <HoverCard>
-          <div className="flex flex-row gap-1">
-            <span className="bg-[#5B5966] bg-opacity-50 w-[100px] -[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center border-2 border-black">
-              {sermon.tags[0]}
-            </span>
-            <HoverCardTrigger className="cursor-pointer">
-              <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center border-2 border-black">
-                +1
-              </span>
-            </HoverCardTrigger>
-            <HoverCardContent className="w-auto">
-              <div className="flex flex-row gap-2">
-                {sermon.tags.map((tag, index) => (
-                  <span
-                    className="bg-[#5B5966] bg-opacity-50 w-auto p-2 h-[40px] rounded flex items-center justify-center border-2 border-black"
-                    key={index}
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </HoverCardContent>
-          </div>
-        </HoverCard>
-      ) : (
-        <>
-          {sermon.tags.length !== 0 ? (
-            <span className="bg-[#5B5966] bg-opacity-50 w-[100px] h-auto rounded cursor-pointer flex items-center justify-center text-center border-2 border-black">
-              {sermon.tags.length !== 0 && sermon.tags[0]}
-            </span>
-          ) : null}
-        </>
-      )}
-    </div>
-  );
-};
-
-const DisplayTags = ({ allTags, filterSermonByTags }: DisplayTagsProps) => {
-  return (
-    <div className="flex flex-row gap-2 items-center justify-start overflow-x-auto snap-x snap-mandatory py-3">
-      {allTags.length > 0 &&
-        allTags.map((tag, index) => (
-          <span
-            key={index}
-            className="bg-[#5B5966] bg-opacity-50 min-w-[100px] min-h-[50px] h-auto rounded cursor-pointer flex items-center justify-center text-center px-3 whitespace-nowrap shrink-0"
-            onClick={() => filterSermonByTags(tag)}
-          >
-            {tag}
-          </span>
-        ))}
-    </div>
-  );
-};
-
-const Filter = ({
-  allSermons,
-  setDisplaySermons,
-  filterBySearch,
-  search,
-  allTags,
-}: FilterProps) => {
-  const filterSermonByTags = (tag: string) => {
-    const filteredSermon = allSermons?.filter((sermon) =>
-      sermon.tags.includes(tag)
-    );
-    setDisplaySermons(filteredSermon);
-  };
-  return (
-    <div className="flex flex-col gap-2 sm:w-1/2 w-full sm:pl-[180px] px-3">
-      <Input
-        value={search}
-        onChange={(e) => filterBySearch(e.target.value)}
-        className="sm:w-[140%] w-full border-black"
-        placeholder="Search sermon title..."
-      />
-      <DisplayTags allTags={allTags} filterSermonByTags={filterSermonByTags} />
-    </div>
-  );
-};
+}

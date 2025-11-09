@@ -4,13 +4,10 @@ import { FaShareFromSquare } from "react-icons/fa6";
 
 import React from "react";
 
-import Navbar2 from "../../../../components/navbar/Navbar2";
-
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { getAllBlogs, getBlogCategories } from "@/lib/queries";
 import { Blog } from "@prisma/client";
-import Loader from "../../../../components/Loader";
 import { BlogType } from "@/lib/types";
 
 import {
@@ -18,7 +15,10 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
-import Footer from "../../../../components/Footer";
+import { FALLBACK } from "../gallery/GalleryModal";
+import Navbar2 from "@/components/navbar/Navbar2";
+import Loader from "@/components/Loader";
+import Footer from "@/components/Footer";
 
 const Blogs = () => {
   const [blogs, setBlogs] = React.useState<Blog[]>();
@@ -98,10 +98,7 @@ const Blogs = () => {
                 </div>
                 <Image
                   alt="poster-image"
-                  src={
-                    blogs[0]?.blogImage ||
-                    "https://www.1689designs.com/cdn/shop/files/all-over-print-flag-white-front-6604d51e7e80c.png?v=1711592746"
-                  }
+                  src={blogs[0]?.blogImage || FALLBACK}
                   width={500}
                   height={500}
                   className="cursor-pointer hover:opacity-80 max-h-[500px] object-contain"
@@ -129,20 +126,17 @@ const Blogs = () => {
                           />
                         </HoverCardTrigger>
                         <HoverCardContent
-                          className="w-auto bg-black !border-black"
+                          className="w-auto bg-card !border-border"
                           style={{ padding: "3px" }}
                         >
-                          <span className="text-white">Share Blog</span>
+                          <span className="text-foreground">Share Blog</span>
                         </HoverCardContent>
                       </HoverCard>
                     </span>
 
                     <Image
                       alt="poster-image"
-                      src={
-                        blog.blogImage ||
-                        "https://www.1689designs.com/cdn/shop/files/all-over-print-flag-white-front-6604d51e7e80c.png?v=1711592746"
-                      }
+                      src={blog.blogImage || FALLBACK}
                       width={500}
                       height={150}
                       className="cursor-pointer hover:opacity-80 sm:w-[200px]"

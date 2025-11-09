@@ -42,9 +42,6 @@ export default withUt({
         custom: "0 6px 20px rgba(94,94,94,0.5)",
       },
       colors: {
-        "light-gr": "#5e5e5e",
-        "dark-gr": "#222222",
-        "med-gr": "#333333",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

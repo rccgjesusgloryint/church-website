@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Navbar2 from "../../../../../components/navbar/Navbar2";
 
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -9,6 +8,7 @@ import { ScrollTrigger } from "gsap/all";
 import { Blog } from "@prisma/client";
 import { findUser, getBlogWithId } from "@/lib/queries";
 import DOMPurify from "dompurify"; // Import DOMPurify for sanitization
+import Navbar2 from "@/components/navbar/Navbar2";
 
 type BlogProps = {
   params: {
@@ -51,7 +51,7 @@ const Blogs = ({ params }: BlogProps) => {
         <Navbar2 />
         <div className="h-full flex justify-center" ref={useTitle}>
           <div className="flex flex-col items-center justify-center text-white">
-            <span className="bg-[#5B5966] w-auto h-auto rounded flex items-center justify-center p-3 text-center">
+            <span className="bg-primary/50 w-auto h-auto rounded flex items-center justify-center p-3 text-center">
               {blog?.category}
             </span>
             <h1 className="font-bold text-[25px] m-5">{blog?.blogTitle}</h1>

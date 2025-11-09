@@ -28,9 +28,9 @@ const Services = () => {
 
   return (
     <section className="h-auto w-full relative">
-      <div className="absolute w-full h-[380px] bg-dark-gr z-[-10] top-0"></div>
+      <div className="absolute w-full h-[380px] bg-secondary z-[-10] top-0"></div>
       <div className="flex flex-col items-start px-5 mb-9">
-        <div className="flex flex-col w-full mt-11 text-white">
+        <div className="flex flex-col w-full mt-11">
           <div
             className="flex flex-col items-start justify-end"
             ref={subTitle2}

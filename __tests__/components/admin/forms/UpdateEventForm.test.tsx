@@ -1,7 +1,7 @@
 import { describe, vi, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { EventsType } from "@/lib/types";
-import UpdateEventForm from "../../../../components/admin/forms/UpdateEventForm";
+import UpdateEventForm from "../../../../src/components/admin/forms/UpdateEventForm";
 
 // Mock UI components
 vi.mock("@/components/ui/card", () => ({

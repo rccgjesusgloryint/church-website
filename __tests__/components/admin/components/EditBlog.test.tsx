@@ -1,6 +1,6 @@
 import { describe, vi, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import EditBlog from "../../../../components/admin/components/EditBlog";
+import EditBlog from "../../../../src/components/admin/components/EditBlog";
 import { BlogType } from "@/lib/types";
 
 // Mock UI components

@@ -1,6 +1,6 @@
 import { describe, vi, test } from "vitest";
 import { render, screen } from "@testing-library/react";
-import BlogCreator from "../../../components/blogs/BlogCreator";
+import BlogCreator from "../../../src/components/blogs/BlogCreator";
 import { BlogType } from "@/lib/types";
 import dynamic from "next/dynamic";
 

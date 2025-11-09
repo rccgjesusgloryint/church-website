@@ -1,7 +1,7 @@
 import { useEditPageData } from "@/hooks/useEditPageData";
 import { render, screen } from "@testing-library/react";
 import { vi } from "vitest";
-import EditPage from "../../../components/admin/EditPage";
+import EditPage from "../../../src/components/admin/EditPage";
 import { BlogType, EventType } from "@/lib/types";
 import { User } from "@prisma/client";
 

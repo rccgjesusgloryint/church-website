@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import Loader from "../../../../components/Loader";
 import { getLastSundayOfTheMonth } from "@/lib/actions";
+import Loader from "@/components/Loader";
 
 interface EventCardsProps {
   isLoading: boolean;
@@ -38,16 +38,16 @@ export const MonthlyEvents = ({
           <Loader />
         </div>
       ) : (
-        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3 text-black">
+        <div className="flex flex-row flex-wrap w-full items-center justify-center gap-11 gap-y-[80px] mt-[80px] mb-11 p-3">
           {monthlyEvents.length > 0 ? (
             monthlyEvents?.map((event, index) => {
               return (
                 <div
-                  className="sm:w-[290px] w-[390px] 2xl:w-[390px] min-h-[420px] h-auto bg-white px-[30px] pt-[74px] pb-[40px] text-left relative sm:shadow-xl shadow-2xl"
+                  className="w-[300px] min-h-[420px] h-auto bg-card px-[30px] pt-[74px] pb-[40px] text-left relative shadow-xl xl:mb-0 mb-10 lg:block "
                   key={index}
                 >
                   {event.monthly ? (
-                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+                    <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
                       <>
                         <p className="text-[28px] text-center w-full mb-[3px] leading-6">
                           {lastSunday[1]}
@@ -56,7 +56,7 @@ export const MonthlyEvents = ({
                       </>
                     </div>
                   ) : (
-                    <div className="absolute bg-light-gr flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-white drop-shadow-custom">
+                    <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
                       {event.date && (
                         <>
                           <p className="text-[28px] text-center w-full mb-[3px] leading-6">
@@ -74,7 +74,7 @@ export const MonthlyEvents = ({
                     </div>
                   )}
 
-                  <h2 className="font-bold text-2xl w-[230px] 2xl:w-[337px] mb-[20px]">
+                  <h2 className="font-bold text-2xl w-[230px] 2xl:w-[337px] mb-[20px] flex-wrap">
                     {event?.event}
                   </h2>
                   <div className="relative">
@@ -108,7 +108,7 @@ export const MonthlyEvents = ({
                     </div>
                   </div>
                   <div
-                    className="border-2 border-light-gr mt-[56px] w-[160px] h-[60px] flex justify-center items-center hover:bg-light-gr hover:text-white cursor-pointer transition ease-in-out"
+                    className="border-2 border-primary mt-[56px] w-[160px] h-[60px] flex justify-center items-center hover:bg-primary hover:text-primary-foreground cursor-pointer transition ease-in-out"
                     onClick={() => handleNavigation(event.id)}
                   >
                     <h3 className="font-bold text-sm tracking-wider">
@@ -158,7 +158,7 @@ const EventHeadings = () => {
           ref={useSubTitle1}
         >
           <h3 className="tracking-widest">MONTHLY EVENTS</h3>
-          <div className="bg-black opacity-55 w-[163px] h-[1px] mt-1 mb-0"></div>
+          <div className="bg-primary opacity-55 w-[163px] h-[1px] mt-1 mb-0"></div>
         </div>
         {/* <div
           className="flex flex-row items-center justify-center w-full relative mt-11"
