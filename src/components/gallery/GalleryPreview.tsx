@@ -68,7 +68,7 @@ export default function GalleryPreview() {
 
       {/* Mobile "View all" CTA */}
       <Link href="/gallery" className="sm:hidden">
-        <div className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute right-5 bottom-60 sm:bottom-3 bg-red-500">
+        <div className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute right-5 bottom-60 sm:bottom-3">
           <h2>VIEW ALL</h2>
           <FaArrowRight className="text-secondary-foreground" />
         </div>
@@ -76,11 +76,3 @@ export default function GalleryPreview() {
     </section>
   );
 }
-//             width={24}
-//             height={24}
-//           />
-//         </div>
-//       </Link>
-//     </section>
-//   );
-// }
