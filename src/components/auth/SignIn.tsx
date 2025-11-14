@@ -1,15 +1,16 @@
+"use client";
 import { signIn } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import React from "react";
 
-type Props = {
-  redirect: string;
-};
+type Props = {};
 
-const SignInButton = ({ redirect }: Props) => {
+const SignInButton = () => {
+  const pathname = usePathname();
   return (
     <button
-      onClick={() => signIn("google", { redirectTo: redirect })}
-      className="w-full h-full flex justify-center items-center bg-primary border-primary hover:bg-opacity-75 cursor-pointer duration-500 text-primary-foreground "
+      onClick={() => signIn("google", { redirectTo: pathname })}
+      className="w-full h-full flex justify-center items-center bg-primary border-primary hover:bg-opacity-75 cursor-pointer duration-500 text-primary-foreground"
     >
       Sign In
     </button>

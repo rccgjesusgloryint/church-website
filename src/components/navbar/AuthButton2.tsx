@@ -17,7 +17,7 @@ const AuthButton2 = () => {
         </div>
       ) : status === "unauthenticated" ? (
         <div className="flex justify-center items-center bg-primary w-[100px] h-[60px] border-primary hover:bg-opacity-75 cursor-pointer duration-500 text-primary-foreground">
-          <SignInButton redirect={pathname} />
+          <SignInButton />
         </div>
       ) : null}
       {/* <div className="flex items-center justify-center p-3"></div> */}

@@ -18,7 +18,7 @@ const AuthButton = () => {
       {status === "authenticated" ? (
         <SignOutButton />
       ) : status === "unauthenticated" ? (
-        <SignInButton redirect={pathname} />
+        <SignInButton />
       ) : null}
     </div>
   );
