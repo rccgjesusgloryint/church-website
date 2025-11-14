@@ -6,10 +6,12 @@ import EditEvent from "./components/EditEvent";
 import EditBlog from "./components/EditBlog";
 
 import { useEditPageData } from "@/hooks/useEditPageData";
+import EditSermon from "./components/EditSermon";
 
 type Props = {
   handleEventEdit: (id: number) => Promise<void>;
   handleBlogEdit: (id: string) => Promise<void>;
+  handleSermonEdit: (id: number) => Promise<void>;
   refresh: boolean;
   setRefresh: Dispatch<SetStateAction<boolean>>;
 };
@@ -17,10 +19,11 @@ type Props = {
 const EditPage = ({
   handleEventEdit,
   handleBlogEdit,
+  handleSermonEdit,
   refresh,
   setRefresh,
 }: Props) => {
-  const { allBlogs, currentUser, error, events, loading, usersBlogs } =
+  const { allBlogs, currentUser, error, events, loading, usersBlogs, sermons } =
     useEditPageData(refresh);
 
   if (loading) {
@@ -53,6 +56,12 @@ const EditPage = ({
         handleBlogEdit={handleBlogEdit}
         blogs={blogsToShow as BlogType[]}
         setRefresh={setRefresh}
+      />
+
+      <EditSermon
+        sermons={sermons}
+        setRefresh={setRefresh}
+        handleSermonEdit={handleSermonEdit}
       />
     </section>
   );

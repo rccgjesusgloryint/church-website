@@ -25,6 +25,7 @@ import { updateSermon } from "@/lib/queries";
 import { Sermon } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import TagCreator from "../../global/tag-creator";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Props {
   sermon: Sermon;
@@ -108,7 +109,7 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center gap-5">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
             <FormField
               control={form.control}
               name="videoUrl"
@@ -136,18 +137,44 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
               )}
             />
             <FormField
-              name="tags"
+              name="aiBreakdown"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sermon Tags</FormLabel>
+                  <FormLabel>AI Breakdown</FormLabel>
                   <FormControl>
-                    <TagCreator tags={tags} setTags={setTags} />
+                    <Textarea placeholder="AI Breakdown" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Update Sermon</Button>
+            <FormField
+              name="summary"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Summary</FormLabel>
+                  <FormControl>
+                    <Textarea placeholder="Summary" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="thumbnail"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Thumbnail</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Thumbnail url" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button type="submit" className="mt-4">
+              Update Sermon
+            </Button>
           </form>
         </Form>
       </CardContent>
