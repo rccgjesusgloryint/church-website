@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Facebook, Twitter, Link2, Mail } from "lucide-react";
 import toast from "react-hot-toast";
+import { FaWhatsapp } from "react-icons/fa";
 
 interface ShareButtonsProps {
   title: string;
@@ -19,6 +20,12 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
       case "facebook":
         window.open(
           `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+          "_blank"
+        );
+        break;
+      case "whatsapp":
+        window.open(
+          `whatsapp://send?text=Check out this sermon: ${encodedUrl}`,
           "_blank"
         );
         break;
@@ -53,6 +60,14 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
           aria-label="Share on Facebook"
         >
           <Facebook className="h-4 w-4" />
+        </Button>
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={() => handleShare("whatsapp")}
+          aria-label="Share on Facebook"
+        >
+          <FaWhatsapp className="h-4 w-4" />
         </Button>
         <Button
           variant="outline"
