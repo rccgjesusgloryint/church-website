@@ -25,6 +25,8 @@ import { BlogType, EventsType, Sermon } from "@/lib/types";
 import UpdateBlogForm from "../../../components/admin/forms/UpdateBlogForm";
 import Newsletter from "../../../components/admin/components/Newsletter";
 import ReportList from "../../../components/admin/feedback/report-list";
+import EditSermon from "@/components/admin/components/EditSermon";
+import UpdateSermonForm from "@/components/admin/forms/UpdateSermonForm";
 
 const AdminPage = () => {
   const [user, setUser] = React.useState<User>();
@@ -47,19 +49,19 @@ const AdminPage = () => {
     getInfo();
   }, [refresh]); // 🔄 Re-run effect when `refresh` changes
 
-  // const handleSermonEdit = async (id: number) => {
-  //   const sermonFromDb = (await getSermonById(id)) as Sermon;
-  //   if (!sermonFromDb) return alert("No Sermon provided!");
-  //   setOpen(
-  //     <CustomModal>
-  //       <UpdateSermonForm
-  //         sermon={sermonFromDb}
-  //         setRefresh={setRefresh}
-  //         setClose={setClose}
-  //       />
-  //     </CustomModal>
-  //   );
-  // };
+  const handleSermonEdit = async (id: number) => {
+    const sermonFromDb = (await getSermonById(id)) as Sermon;
+    if (!sermonFromDb) return alert("No Sermon provided!");
+    setOpen(
+      <CustomModal>
+        <UpdateSermonForm
+          sermon={sermonFromDb}
+          setRefresh={setRefresh}
+          setClose={setClose}
+        />
+      </CustomModal>
+    );
+  };
 
   const handleBlogEdit = async (id: string) => {
     const blogFromDb = (await getBlogWithId(id)) as BlogType;
@@ -98,11 +100,15 @@ const AdminPage = () => {
         <TabsList>
           <TabsTrigger value="media">Media</TabsTrigger>
           <TabsTrigger value="events">Events</TabsTrigger>
-          <TabsTrigger value="users">Users</TabsTrigger>
-          <TabsTrigger value="blogs">Blogs</TabsTrigger>
-          <TabsTrigger value="edit">Edit</TabsTrigger>
-          {isOwner && <TabsTrigger value="report">Report</TabsTrigger>}
-          {isOwner && <TabsTrigger value="newsletter">Newsletter</TabsTrigger>}
+          {isOwner && (
+            <>
+              <TabsTrigger value="blogs">Blogs</TabsTrigger>
+              <TabsTrigger value="edit">Edit</TabsTrigger>
+              <TabsTrigger value="users">Users</TabsTrigger>
+              <TabsTrigger value="report">Report</TabsTrigger>
+              <TabsTrigger value="newsletter">Newsletter</TabsTrigger>
+            </>
+          )}
         </TabsList>
         <TabsContent value="media">
           <MediaPage />
@@ -127,6 +133,7 @@ const AdminPage = () => {
           <EditPage
             handleEventEdit={handleEventEdit}
             handleBlogEdit={handleBlogEdit}
+            handleSermonEdit={handleSermonEdit}
             refresh={refresh}
             setRefresh={setRefresh}
           />
@@ -137,6 +144,9 @@ const AdminPage = () => {
         <TabsContent value="report">
           <ReportList />
         </TabsContent>
+        {/* <TabsContent value="sermon">
+          <EditSermon />
+        </TabsContent> */}
       </Tabs>
     </section>
   );

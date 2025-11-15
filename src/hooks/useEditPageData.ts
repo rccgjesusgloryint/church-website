@@ -1,13 +1,19 @@
 // hooks/useEditPageData.ts
 import { useState, useEffect } from "react";
-import { getAllBlogs, getAllEvents, getAuthUserDetails } from "@/lib/queries";
-import { BlogType, EventType } from "@/lib/types";
+import {
+  getAllBlogs,
+  getAllEvents,
+  getAllSermons,
+  getAuthUserDetails,
+} from "@/lib/queries";
+import { BlogType, EventType, Sermon } from "@/lib/types";
 import { User } from "@prisma/client";
 
 interface UseEditPageDataReturn {
   events: EventType | undefined;
   allBlogs: BlogType[] | undefined;
   usersBlogs: BlogType[] | undefined;
+  sermons: Sermon[];
   currentUser: User | undefined;
   loading: boolean;
   error: string | null;
@@ -18,6 +24,7 @@ export const useEditPageData = (refresh: boolean): UseEditPageDataReturn => {
   const [allBlogs, setAllBlogs] = useState<BlogType[]>();
   const [usersBlogs, setUsersBlogs] = useState<BlogType[]>();
   const [currentUser, setCurrentUser] = useState<User>();
+  const [sermons, setSermons] = useState<Sermon[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,15 +35,18 @@ export const useEditPageData = (refresh: boolean): UseEditPageDataReturn => {
         setError(null);
 
         // Fetch all data in parallel for better performance
-        const [eventsFromDb, blogsFromDb, currUser] = await Promise.all([
-          getAllEvents(),
-          getAllBlogs(),
-          getAuthUserDetails(),
-        ]);
+        const [eventsFromDb, blogsFromDb, currUser, sermonsFromDb] =
+          await Promise.all([
+            getAllEvents(),
+            getAllBlogs(),
+            getAuthUserDetails(),
+            getAllSermons(),
+          ]);
 
         setEvents(eventsFromDb);
         setAllBlogs(blogsFromDb);
         setCurrentUser(currUser as User);
+        setSermons(sermonsFromDb);
 
         // Filter blogs for current user
         const filteredBlogs = blogsFromDb?.filter(
@@ -60,5 +70,6 @@ export const useEditPageData = (refresh: boolean): UseEditPageDataReturn => {
     currentUser,
     loading,
     error,
+    sermons,
   };
 };

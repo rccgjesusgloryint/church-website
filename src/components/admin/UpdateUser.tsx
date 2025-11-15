@@ -1,9 +1,15 @@
-import React, { Dispatch, SetStateAction } from "react";
+"use client";
 
-import { Role, User } from "@prisma/client";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+
+import { $Enums, Role, User } from "@prisma/client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UpdateUserForm from "./forms/UpdateUserForm";
+import { useSession } from "next-auth/react";
+import { getAuthUserDetails, isUserOwner } from "@/lib/queries";
+import Unauthorized from "../unauthorized/AdminOnly";
+import { useMemberCheck } from "@/hooks/useMemberCheck";
 
 type Props = {
   allUsers: User[];
@@ -13,6 +19,11 @@ type Props = {
 };
 
 const UpdateUser = ({ allUsers, setRefresh, setClose, user }: Props) => {
+  const { role, isLoading } = useMemberCheck();
+
+  if (role !== "OWNER") {
+    return <Unauthorized />;
+  }
   return (
     <section className="min-h-[500px] h-auto sm:p-5">
       <Card className="p-5">

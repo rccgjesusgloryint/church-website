@@ -36,7 +36,7 @@ export function SermonActions({
         </div>
       );
     }
-    alert("downloaded!");
+    alert("Coming Soon!");
   };
 
   return (
