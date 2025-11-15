@@ -1,5 +1,5 @@
 "use client";
-import { signIn } from "next-auth/react";
+import { signIn } from "@/auth";
 import { usePathname } from "next/navigation";
 import React from "react";
 
