@@ -1,4 +1,4 @@
-import { signOut } from "@/auth";
+import { signOut } from "next-auth/react";
 import React from "react";
 
 type Props = {};
