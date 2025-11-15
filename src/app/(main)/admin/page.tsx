@@ -100,11 +100,15 @@ const AdminPage = () => {
         <TabsList>
           <TabsTrigger value="media">Media</TabsTrigger>
           <TabsTrigger value="events">Events</TabsTrigger>
-          <TabsTrigger value="blogs">Blogs</TabsTrigger>
-          <TabsTrigger value="edit">Edit</TabsTrigger>
-          {isOwner && <TabsTrigger value="users">Users</TabsTrigger>}
-          {isOwner && <TabsTrigger value="report">Report</TabsTrigger>}
-          {isOwner && <TabsTrigger value="newsletter">Newsletter</TabsTrigger>}
+          {isOwner && (
+            <>
+              <TabsTrigger value="blogs">Blogs</TabsTrigger>
+              <TabsTrigger value="edit">Edit</TabsTrigger>
+              <TabsTrigger value="users">Users</TabsTrigger>
+              <TabsTrigger value="report">Report</TabsTrigger>
+              <TabsTrigger value="newsletter">Newsletter</TabsTrigger>
+            </>
+          )}
         </TabsList>
         <TabsContent value="media">
           <MediaPage />
