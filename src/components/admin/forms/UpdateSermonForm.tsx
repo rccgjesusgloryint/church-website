@@ -65,7 +65,6 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!sermon.id) return alert("No sermon provided!");
-    alert("Update!");
     let tempSermon = {
       ...values,
       hasNotes: values.sermonNotes === "",
