@@ -146,6 +146,7 @@ export type Sermon = {
   sermonTitle: string;
   tags: string[];
   aiBreakdown: string;
+  videoTranscript: string;
   summary: string;
   sermonNotes: string;
   hasNotes: boolean;

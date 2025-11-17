@@ -40,6 +40,7 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
     sermonTitle: z.string().min(2).max(50),
     thumbnail: z.string().min(2),
     aiBreakdown: z.string().min(2),
+    videoTranscript: z.string().min(2),
     summary: z.string().min(20),
     sermonNotes: z.string().min(2),
   });
@@ -55,6 +56,7 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
       thumbnail: sermon.thumbnail || "",
       sermonNotes: sermon.sermonNotes || "",
       aiBreakdown: sermon.aiBreakdown || "",
+      videoTranscript: sermon.videoTranscript || "",
       summary: sermon.summary || "",
     },
   });
@@ -142,7 +144,25 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                 <FormItem>
                   <FormLabel>AI Breakdown</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="AI Breakdown" {...field} />
+                    <Textarea
+                      placeholder="Paste the ai breakdown here..."
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="videoTranscript"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Video Transcript</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Paste the video transcript here..."
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -154,7 +174,10 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                 <FormItem>
                   <FormLabel>Summary</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Summary" {...field} />
+                    <Textarea
+                      placeholder="Paste the ai summary here..."
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
