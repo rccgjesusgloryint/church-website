@@ -150,6 +150,7 @@ export type Sermon = {
   summary: string;
   sermonNotes: string;
   hasNotes: boolean;
+  speaker: string;
   thumbnail?: string | null;
   likes?: number | null;
   comments?: Comment[];

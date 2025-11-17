@@ -134,6 +134,7 @@ model Sermon {
   summary         String    @default("")
   aiBreakdown     String    @default("") // breakdown of the summary via the transcript
   videoTranscript String    @default("")
+  speaker         String    @default("")
   hasNotes        Boolean   @default(false)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt

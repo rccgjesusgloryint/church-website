@@ -39,10 +39,11 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
     videoUrl: z.string().min(2).max(50),
     sermonTitle: z.string().min(2).max(50),
     thumbnail: z.string().min(2),
-    aiBreakdown: z.string().min(2),
-    videoTranscript: z.string().min(2),
-    summary: z.string().min(20),
-    sermonNotes: z.string().min(2),
+    aiBreakdown: z.string().optional().default(""),
+    videoTranscript: z.string().optional().default(""),
+    summary: z.string().optional().default(""),
+    sermonNotes: z.string().optional().default(""),
+    speaker: z.string().optional().default(""),
   });
 
   type FormData = z.infer<typeof formSchema>;
@@ -58,11 +59,13 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
       aiBreakdown: sermon.aiBreakdown || "",
       videoTranscript: sermon.videoTranscript || "",
       summary: sermon.summary || "",
+      speaker: sermon.speaker || "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!sermon.id) return alert("No sermon provided!");
+    alert("Update!");
     let tempSermon = {
       ...values,
       hasNotes: values.sermonNotes === "",
@@ -190,6 +193,18 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                   <FormLabel>Thumbnail</FormLabel>
                   <FormControl>
                     <Input placeholder="Thumbnail url" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="speaker"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Speaker</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Speaker" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
