@@ -17,7 +17,7 @@ import {
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { Dispatch, SetStateAction } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { z } from "zod";
 
 import toast from "react-hot-toast";
@@ -26,6 +26,7 @@ import { Sermon } from "@/lib/types";
 import { Input } from "@/components/ui/input";
 import TagCreator from "../../global/tag-creator";
 import { Textarea } from "@/components/ui/textarea";
+import { Plus, X } from "lucide-react";
 
 interface Props {
   sermon: Sermon;
@@ -35,6 +36,7 @@ interface Props {
 
 const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
   const [tags, setTags] = React.useState<string[]>([]);
+
   const formSchema = z.object({
     videoUrl: z.string().min(2).max(50),
     sermonTitle: z.string().min(2).max(50),
@@ -42,7 +44,10 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
     aiBreakdown: z.string().optional().default(""),
     videoTranscript: z.string().optional().default(""),
     summary: z.string().optional().default(""),
-    sermonNotes: z.string().optional().default(""),
+    sermonResources: z
+      .array(z.object({ value: z.string() }))
+      .optional()
+      .default([]),
     speaker: z.string().optional().default(""),
   });
 
@@ -55,7 +60,9 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
       videoUrl: sermon.videoUrl || "",
       sermonTitle: sermon.sermonTitle || "",
       thumbnail: sermon.thumbnail || "",
-      sermonNotes: sermon.sermonNotes || "",
+      sermonResources: sermon.sermonResources?.map((r) => ({ value: r })) || [
+        { value: "" },
+      ],
       aiBreakdown: sermon.aiBreakdown || "",
       videoTranscript: sermon.videoTranscript || "",
       summary: sermon.summary || "",
@@ -63,19 +70,32 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "sermonResources",
+  });
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (!sermon.id) return alert("No sermon provided!");
+
+    const filteredResources =
+      values.sermonResources
+        ?.map((r) => r.value)
+        .filter((resource) => resource.trim() !== "") || [];
+
     let tempSermon = {
       ...values,
-      hasNotes: values.sermonNotes === "",
+      sermonResources: filteredResources,
+      hasNotes: filteredResources.length !== 0,
       tags,
     };
+
     try {
       const response = await toast.promise(
         updateSermon(sermon.id, { ...tempSermon }),
         {
           loading: "Loading",
-          success: (data) => `Successfully created ${data.message}`,
+          success: (data) => `Successfully updated ${data.message}`,
           error: (err) => `This just happened: ${err.toString()}`,
         },
         {
@@ -96,11 +116,11 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
         }
       );
       if (response.status === 200) {
-        setRefresh((prev) => !prev); // 🔄 Toggle state to trigger rerender
+        setRefresh((prev) => !prev);
         setClose();
       }
     } catch (error) {
-      console.log("ERROR Updating User");
+      console.log("ERROR Updating Sermon:", error);
     }
   }
 
@@ -113,7 +133,10 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
       </CardHeader>
       <CardContent className="flex flex-col items-center justify-center gap-5">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-4"
+          >
             <FormField
               control={form.control}
               name="videoUrl"
@@ -127,6 +150,7 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="sermonTitle"
@@ -140,7 +164,9 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                 </FormItem>
               )}
             />
+
             <FormField
+              control={form.control}
               name="aiBreakdown"
               render={({ field }) => (
                 <FormItem>
@@ -155,7 +181,9 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                 </FormItem>
               )}
             />
+
             <FormField
+              control={form.control}
               name="videoTranscript"
               render={({ field }) => (
                 <FormItem>
@@ -170,7 +198,9 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                 </FormItem>
               )}
             />
+
             <FormField
+              control={form.control}
               name="summary"
               render={({ field }) => (
                 <FormItem>
@@ -185,7 +215,9 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                 </FormItem>
               )}
             />
+
             <FormField
+              control={form.control}
               name="thumbnail"
               render={({ field }) => (
                 <FormItem>
@@ -197,7 +229,9 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                 </FormItem>
               )}
             />
+
             <FormField
+              control={form.control}
               name="speaker"
               render={({ field }) => (
                 <FormItem>
@@ -209,6 +243,52 @@ const UpdateSermonForm = ({ sermon, setRefresh, setClose }: Props) => {
                 </FormItem>
               )}
             />
+
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <FormLabel>Sermon Resources</FormLabel>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => append({ value: "" })}
+                  className="h-8 gap-1"
+                >
+                  <Plus className="h-4 w-4" />
+                  Add Resource
+                </Button>
+              </div>
+
+              {fields.map((field, index) => (
+                <FormField
+                  key={field.id}
+                  control={form.control}
+                  name={`sermonResources.${index}.value`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <div className="flex gap-2">
+                          <Textarea placeholder="Paste here..." {...field} />
+                          {fields.length > 1 && (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="icon"
+                              onClick={() => remove(index)}
+                              className="shrink-0"
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
+            </div>
+
             <Button type="submit" className="mt-4">
               Update Sermon
             </Button>

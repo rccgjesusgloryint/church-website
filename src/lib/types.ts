@@ -148,9 +148,9 @@ export type Sermon = {
   aiBreakdown: string;
   videoTranscript: string;
   summary: string;
-  sermonNotes: string;
   hasNotes: boolean;
   speaker: string;
+  sermonResources?: string[];
   thumbnail?: string | null;
   likes?: number | null;
   comments?: Comment[];

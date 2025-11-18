@@ -26,7 +26,7 @@ export default async function SermonPage({
             {/* Video and AI Features Side by Side */}
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
               {/* Video Player */}
-              <div className="w-full lg:w-1/2">
+              <div className="w-full lg:w-1/2 relative">
                 <SermonVideo
                   videoUrl={sermon.videoUrl}
                   title={sermon.sermonTitle}
@@ -45,12 +45,7 @@ export default async function SermonPage({
             </div>
 
             {/* Action Buttons */}
-            {sermon.hasNotes && (
-              <SermonActions
-                sermonId={Number(sermon.id)}
-                hasPastorNotes={sermon.hasNotes}
-              />
-            )}
+            {true && <SermonActions sermon={sermon} />}
 
             {/* Share Section */}
             <ShareButtons

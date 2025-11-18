@@ -11,7 +11,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  // directUrl = env("DIRECT_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 enum Role {
@@ -129,7 +129,7 @@ model Sermon {
   sermonTitle     String
   tags            String[]
   likes           Int?
-  sermonNotes     String    @default("")
+  sermonResources String[]  @default([])
   thumbnail       String?   @default("")
   summary         String    @default("")
   aiBreakdown     String    @default("") // breakdown of the summary via the transcript

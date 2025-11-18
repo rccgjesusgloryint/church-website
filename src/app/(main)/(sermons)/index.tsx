@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, Calendar, Clock, Heart } from "lucide-react";
+import { Search, Calendar, Clock, Heart, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { getAllSermons } from "@/lib/queries";
@@ -121,15 +121,21 @@ export default function SermonsPage() {
                       )}
                     </div>
 
-                    <div className="flex items-center justify-between text-sm text-muted-foreground pt-4 border-t">
+                    <div className="flex flex-col gap-2 pt-4 border-t text-sm text-muted-foreground">
                       <div className="flex items-center gap-1.5">
-                        <Calendar className="size-3.5" />
-                        <span>{formatDate(sermon.createdAt!)}</span>
+                        <User className="size-3.5" />
+                        <span className="font-medium">{sermon.speaker}</span>
                       </div>
-                      {/* <div className="flex items-center gap-1.5">
-                        <Heart className="size-3.5" />
-                        <span>{sermon.likes}</span>
-                      </div> */}
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5">
+                          <Calendar className="size-3.5" />
+                          <span>{formatDate(sermon.createdAt!)}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <Heart className="size-3.5" />
+                          <span>{sermon.likes}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
