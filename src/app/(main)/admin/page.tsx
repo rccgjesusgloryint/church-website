@@ -92,12 +92,12 @@ const AdminPage = () => {
   };
 
   return (
-    <section className="w-full h-full px-10">
+    <section className="w-screen h-full px-2">
       <h1 className="flex items-center justify-center text-xl mt-8">
         Admin Page
       </h1>
       <Tabs defaultValue="media" className="w-full h-auto">
-        <TabsList>
+        <TabsList className="flex overflow-x-scroll">
           <TabsTrigger value="media">Media</TabsTrigger>
           <TabsTrigger value="events">Events</TabsTrigger>
           {isOwner && (

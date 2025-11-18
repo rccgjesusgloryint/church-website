@@ -30,7 +30,7 @@ const UpdateUser = ({ allUsers, setRefresh, setClose, user }: Props) => {
         <CardHeader>
           <CardTitle className="font-bold text-4xl">Edit Users</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="w-full h-full">
           {allUsers?.map(({ name, member, id }) => (
             <UpdateUserForm
               usersRole={member as Role}

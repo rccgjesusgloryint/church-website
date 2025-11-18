@@ -3,7 +3,7 @@ import EventsForm from "./events-form";
 
 const CreateEvent = () => {
   return (
-    <section className="h-auto p-5">
+    <section className="h-auto">
       <EventsForm />
     </section>
   );

@@ -192,7 +192,7 @@ const EventsForm = () => {
   };
 
   return (
-    <Card className="w-full h-full mt-5">
+    <Card className="w-full h-full">
       <CardHeader>
         <CardTitle>Add upcoming events!</CardTitle>
         <CardDescription></CardDescription>

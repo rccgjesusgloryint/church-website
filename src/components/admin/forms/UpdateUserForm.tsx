@@ -103,7 +103,7 @@ const UpdateUserForm = ({
             <div>
               <h3 className="text-2xl">{user}:</h3>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 w-full">
               <FormField
                 control={form.control}
                 name="role"
