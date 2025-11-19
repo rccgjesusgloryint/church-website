@@ -38,6 +38,7 @@ export default function GalleryTopRow({
                         alt={image.name || "Gallery image"}
                         width={1500}
                         height={1200}
+                        unoptimized
                         className="object-contain"
                         priority={index === 0} // give first a little boost
                       />
@@ -55,10 +56,8 @@ export default function GalleryTopRow({
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 1024px) 50vw, 33vw"
-                      priority={index === 0}
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchPriority={index === 0 ? "high" : "auto"}
-                      decoding="async"
+                      priority
+                      unoptimized
                       placeholder="blur"
                       blurDataURL={shimmerDataURL()}
                       onError={(e) => {

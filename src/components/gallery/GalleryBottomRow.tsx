@@ -38,6 +38,7 @@ export default function GalleryBottomRow({
                         alt={image.name || "Gallery image"}
                         width={1500}
                         height={1200}
+                        unoptimized
                         className="object-contain"
                       />
                     </CustomModal>
@@ -53,14 +54,9 @@ export default function GalleryBottomRow({
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 1024px) 50vw, 33vw"
-                      loading="lazy"
-                      fetchPriority="auto"
-                      decoding="async"
                       placeholder="blur"
+                      unoptimized
                       blurDataURL={shimmerDataURL()}
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = fallback;
-                      }}
                     />
                   </div>
                   <div className="invisible" style={{ aspectRatio: "4/3" }} />

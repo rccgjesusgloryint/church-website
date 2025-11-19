@@ -113,7 +113,7 @@ export function GalleryModal(props: GalleryModalProps) {
                   unoptimized
                   priority
                   sizes="(max-width: 768px) 92vw, 1200px"
-                  onLoadingComplete={() => setIsImageLoading(false)}
+                  onLoad={() => setIsImageLoading(false)}
                   // Hide until fully loaded
                   className={`object-contain transition-opacity duration-300 ${
                     isImageLoading ? "opacity-0" : "opacity-100"
