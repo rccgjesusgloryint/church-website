@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -22,19 +22,29 @@ interface GalleryModalProps {
 export const FALLBACK =
   "https://preview-church-gallery-design-kzmm4h729y5io3uypyzz.vusercontent.net/placeholder.svg";
 
-export function GalleryModal({
-  image,
-  filteredImages,
-  isOpen,
-  onClose,
-  onNext,
-  onPrevious,
-  title,
-  description,
-  subtitle,
-  date,
-}: GalleryModalProps) {
-  // keyboard nav
+export function GalleryModal(props: GalleryModalProps) {
+  const {
+    image,
+    filteredImages,
+    isOpen,
+    onClose,
+    onNext,
+    onPrevious,
+    title,
+    description,
+    subtitle,
+    date,
+  } = props;
+
+  const [isImageLoading, setIsImageLoading] = useState(true);
+
+  // Reset loading state whenever the active image changes
+  useEffect(() => {
+    if (!isOpen || !image) return;
+    setIsImageLoading(true);
+  }, [image, isOpen]);
+
+  // keyboard nav stays as you had it...
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -67,7 +77,6 @@ export function GalleryModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      {/* Give the content a real layout instead of absolute stacking */}
       <DialogContent className="w-[min(92vw,1200px)] h-[90vh] p-0 overflow-hidden bg-background">
         <div className="grid h-full grid-rows-[auto,1fr,auto]">
           {/* Header row */}
@@ -90,19 +99,30 @@ export function GalleryModal({
           <section className="row-start-2 relative">
             {/* Centered image with padding so it never touches edges */}
             <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-4">
-              <div className="relative h-full w-full">
+              <div className="relative h-full w-full bg-black">
+                {/* Pulsing placeholder */}
+                {isImageLoading && (
+                  <div className="absolute inset-0 animate-pulse bg-black" />
+                )}
+
                 <Image
+                  key={image} // force remount when image changes
                   src={image || FALLBACK}
                   alt={title || "Gallery image"}
                   fill
+                  unoptimized
                   priority
                   sizes="(max-width: 768px) 92vw, 1200px"
-                  className="object-contain"
+                  onLoadingComplete={() => setIsImageLoading(false)}
+                  // Hide until fully loaded
+                  className={`object-contain transition-opacity duration-300 ${
+                    isImageLoading ? "opacity-0" : "opacity-100"
+                  }`}
                 />
               </div>
             </div>
 
-            {/* Preload neighbors (hidden, no layout impact) */}
+            {/* OPTIONAL: remove or de-prioritize neighbor preloading */}
             {prev && (
               <Image
                 src={prev}
@@ -110,7 +130,9 @@ export function GalleryModal({
                 width={1}
                 height={1}
                 className="hidden"
-                priority
+                unoptimized
+                // remove priority to not compete with main
+                loading="lazy"
               />
             )}
             {next && (
@@ -120,11 +142,12 @@ export function GalleryModal({
                 width={1}
                 height={1}
                 className="hidden"
-                priority
+                unoptimized
+                loading="lazy"
               />
             )}
 
-            {/* Arrows stay inside the media row */}
+            {/* Navigation arrows unchanged */}
             {idx > 0 && (
               <Button
                 variant="secondary"
@@ -149,7 +172,7 @@ export function GalleryModal({
             )}
           </section>
 
-          {/* Footer row */}
+          {/* Footer row (same as before) */}
           <footer className="row-start-3 px-4 py-3 bg-card border-t border-border space-y-1">
             {title && (
               <h2 className="font-semibold text-base leading-snug text-foreground line-clamp-2">
