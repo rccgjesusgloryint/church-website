@@ -51,6 +51,7 @@ export default async function SermonPage({
             <ShareButtons
               title={sermon.sermonTitle}
               url={`${process.env.NEXT_PUBLIC_BASE_URL}/sermons/${sermon.id}`}
+              heading="Share this sermon"
             />
           </div>
         </div>

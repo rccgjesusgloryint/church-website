@@ -9,9 +9,14 @@ import { FaWhatsapp } from "react-icons/fa";
 interface ShareButtonsProps {
   title: string;
   url: string;
+  heading?: string; // Optional custom heading text
 }
 
-export function ShareButtons({ title, url }: ShareButtonsProps) {
+export function ShareButtons({ 
+  title, 
+  url, 
+  heading = "Share this" 
+}: ShareButtonsProps) {
   const handleShare = (platform: string) => {
     const encodedUrl = encodeURIComponent(url);
     const encodedTitle = encodeURIComponent(title);
@@ -25,7 +30,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
         break;
       case "whatsapp":
         window.open(
-          `whatsapp://send?text=Check out this sermon: ${encodedUrl}`,
+          `whatsapp://send?text=${encodedTitle}: ${encodedUrl}`,
           "_blank"
         );
         break;
@@ -36,11 +41,11 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
         );
         break;
       case "email":
-        window.location.href = `mailto:?subject=${encodedTitle}&body=Check out this sermon: ${encodedUrl}`;
+        window.location.href = `mailto:?subject=${encodedTitle}&body=${encodedTitle}: ${encodedUrl}`;
         break;
       case "copy":
         navigator.clipboard.writeText(url);
-        toast.success("Sermon link copied to clipboard", {});
+        toast.success("Link copied to clipboard", {});
         // toast(message: {
         //   title: "Link copied",
         //   description: "Sermon link copied to clipboard",
@@ -51,7 +56,7 @@ export function ShareButtons({ title, url }: ShareButtonsProps) {
 
   return (
     <Card className="p-6 border-border bg-card">
-      <h3 className="font-semibold text-foreground mb-4">Share this sermon</h3>
+      <h3 className="font-semibold text-foreground mb-4">{heading}</h3>
       <div className="flex flex-wrap gap-3">
         <Button
           variant="outline"

@@ -9,7 +9,21 @@ import Footer from "@/components/Footer";
 import Navbar2 from "@/components/navbar/Navbar2";
 
 export const metadata: Metadata = {
-  title: "Jesus Glory Athy - About",
+  title: "About Us | Jesus Glory Athy",
+  description:
+    "Learn about Jesus Glory Athy, our mission, vision, and the RCCG community in Athy, Ireland. Discover our history and what we believe.",
+  openGraph: {
+    title: "About Us | Jesus Glory Athy",
+    description:
+      "Learn about our mission, vision, and the RCCG community in Athy, Ireland.",
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/about`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "About Us | Jesus Glory Athy",
+    description: "Learn about our mission, vision, and community.",
+  },
 };
 
 const About = () => {

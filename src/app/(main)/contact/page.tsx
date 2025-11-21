@@ -2,6 +2,25 @@ import ContactForm from "@/components/contact/contact-form";
 import Navbar2 from "@/components/navbar/Navbar2";
 import Newsletter from "@/components/Newsletter";
 import React from "react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact Us | Jesus Glory Athy",
+  description:
+    "Get in touch with Jesus Glory Athy. Find our location, service times, and contact information. We'd love to hear from you!",
+  openGraph: {
+    title: "Contact Us | Jesus Glory Athy",
+    description:
+      "Get in touch with us. Find our location, service times, and contact information.",
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/contact`,
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact Us | Jesus Glory Athy",
+    description: "Get in touch with us. Find our location and service times.",
+  },
+};
 
 const page = () => {
   return (

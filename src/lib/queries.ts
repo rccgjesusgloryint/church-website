@@ -891,6 +891,38 @@ export const getAllImagesv2 = async () => {
   return response;
 };
 
+/**
+ * Fetches a single event gallery by ID with all associated images
+ * 
+ * This function retrieves a specific event's gallery data including:
+ * - Event name and description
+ * - Date and location information
+ * - Array of image URLs
+ * 
+ * @param eventId - The numeric ID of the event to fetch
+ * @returns Promise resolving to EventsMedia object or null if not found
+ * 
+ * @example
+ * const gallery = await getEventGalleryById(123);
+ * if (gallery) {
+ *   console.log(gallery.event); // "Easter Celebration"
+ *   console.log(gallery.images.length); // 15
+ * }
+ */
+export const getEventGalleryById = async (
+  eventId: number
+): Promise<EventMedia | null> => {
+  try {
+    const response = await prisma.eventMedia.findUnique({
+      where: { id: eventId },
+    });
+    return response;
+  } catch (error) {
+    console.error("Error fetching event gallery:", error);
+    return null;
+  }
+};
+
 export const reportFeedback = async (form: FeedbackNoId) => {
   try {
     return await prisma.feedback.create({

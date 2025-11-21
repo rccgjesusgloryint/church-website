@@ -2,14 +2,15 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
 import { EventsMedia } from "@/lib/types";
+import { generateGalleryUrl } from "@/lib/utils/slugify";
 
 interface GalleryGridProps {
   visibleCount: number;
-  events: EventsMedia[]; // ← NEW: pass EventMedia[]
-  onEventClick: (eventName: string) => void; // ← renamed for clarity
+  events: EventsMedia[];
 }
 
 const PREVIEW_FALLBACK =
@@ -32,11 +33,7 @@ const shimmer = (w: number, h: number) =>
     </svg>`
   ).toString("base64")}`;
 
-export function GalleryGrid({
-  events,
-  onEventClick,
-  visibleCount,
-}: GalleryGridProps) {
+export function GalleryGrid({ events, visibleCount }: GalleryGridProps) {
   const [loaded, setLoaded] = useState<Set<string>>(new Set());
   const [errored, setErrored] = useState<Set<string>>(new Set());
 
@@ -50,6 +47,7 @@ export function GalleryGrid({
         event: ev.event,
         date: isNaN(dateObj.getTime()) ? null : dateObj,
         cover,
+        eventId: ev.id,
       };
     });
   }, [events, visibleCount]);
@@ -63,65 +61,67 @@ export function GalleryGrid({
           const isErrored = errored.has(item.id);
 
           const src = isErrored ? PREVIEW_FALLBACK : item.cover;
+          const galleryUrl = generateGalleryUrl(
+            item.event,
+            Number(item.eventId)
+          );
 
           return (
-            <Card
-              key={item.id}
-              className="break-inside-avoid cursor-pointer group hover:shadow-lg transition-all duration-300 overflow-hidden"
-              onClick={() => onEventClick(item.event)}
-            >
-              <div className="relative">
-                {/* Aspect ratio wrapper */}
-                <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
-                  {!isLoaded && (
-                    <div className="absolute inset-0 bg-muted animate-pulse" />
-                  )}
+            <Link href={galleryUrl} key={item.id}>
+              <Card className="break-inside-avoid cursor-pointer group hover:shadow-lg transition-all duration-300 overflow-hidden">
+                <div className="relative">
+                  {/* Aspect ratio wrapper */}
+                  <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
+                    {!isLoaded && (
+                      <div className="absolute inset-0 bg-muted animate-pulse" />
+                    )}
 
-                  <Image
-                    src={src}
-                    alt={item.event}
-                    fill
-                    className={`object-cover transition-transform duration-300 group-hover:scale-105 ${
-                      isLoaded ? "opacity-100" : "opacity-0"
-                    }`}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                    priority={isAboveFold}
-                    loading={isAboveFold ? "eager" : "lazy"}
-                    fetchPriority={isAboveFold ? "high" : "auto"}
-                    decoding="async"
-                    placeholder="blur"
-                    blurDataURL={shimmer(16, 12)}
-                    onLoadingComplete={() =>
-                      setLoaded((prev) => new Set(prev).add(item.id))
-                    }
-                    onError={() =>
-                      setErrored((prev) => new Set(prev).add(item.id))
-                    }
-                  />
-                </div>
+                    <Image
+                      src={src}
+                      alt={item.event}
+                      fill
+                      className={`object-cover transition-transform duration-300 group-hover:scale-105 ${
+                        isLoaded ? "opacity-100" : "opacity-0"
+                      }`}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                      priority={isAboveFold}
+                      loading={isAboveFold ? "eager" : "lazy"}
+                      fetchPriority={isAboveFold ? "high" : "auto"}
+                      decoding="async"
+                      placeholder="blur"
+                      blurDataURL={shimmer(16, 12)}
+                      onLoadingComplete={() =>
+                        setLoaded((prev) => new Set(prev).add(item.id))
+                      }
+                      onError={() =>
+                        setErrored((prev) => new Set(prev).add(item.id))
+                      }
+                    />
+                  </div>
 
-                {/* Meta */}
-                <div className="p-4">
-                  <h3 className="font-semibold text-sm mb-2 text-balance">
-                    {item.event}
-                  </h3>
-                  <div className="space-y-1 text-xs text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-3 w-3" />
-                      <span>
-                        {item.date
-                          ? item.date.toLocaleDateString(undefined, {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            })
-                          : ""}
-                      </span>
+                  {/* Meta */}
+                  <div className="p-4">
+                    <h3 className="font-semibold text-sm mb-2 text-balance">
+                      {item.event}
+                    </h3>
+                    <div className="space-y-1 text-xs text-muted-foreground">
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        <span>
+                          {item.date
+                            ? item.date.toLocaleDateString(undefined, {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                              })
+                            : ""}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Card>
+              </Card>
+            </Link>
           );
         })}
       </div>
