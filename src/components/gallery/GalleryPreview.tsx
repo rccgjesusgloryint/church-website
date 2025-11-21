@@ -65,14 +65,6 @@ export default function GalleryPreview() {
 
       {/* Mobile */}
       <MobileView images={images ?? []} isLoading={isLoading} />
-
-      {/* Mobile "View all" CTA */}
-      <Link href="/gallery" className="sm:hidden">
-        <div className="flex flex-row items-center gap-3 justify-end pr-12 cursor-pointer absolute right-5 bottom-60 sm:bottom-3">
-          <h2>VIEW ALL</h2>
-          <FaArrowRight className="text-secondary-foreground" />
-        </div>
-      </Link>
     </section>
   );
 }

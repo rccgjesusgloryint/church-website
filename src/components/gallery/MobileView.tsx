@@ -34,12 +34,14 @@ const MobileView = ({ images, isLoading }: Props) => {
             images.map((image) => {
               return (
                 <CarouselItem key={image.id}>
-                  <Image
-                    src={image.link}
-                    alt={image.name}
-                    width={500}
-                    height={500}
-                  />
+                  <Link href={"/gallery"}>
+                    <Image
+                      src={image.link}
+                      alt={image.name}
+                      width={500}
+                      height={500}
+                    />
+                  </Link>
                 </CarouselItem>
               );
             })}

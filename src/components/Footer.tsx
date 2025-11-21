@@ -75,10 +75,10 @@ const Footer = () => {
               <IoMapOutline color="black" size={20} />
               <p>RCCG Jesus Glory Intl, Athy, Kildare, R14 PV38</p>
             </div>
-            <div className="flex flex-row mb-8 gap-[10px] cursor-pointer">
+            {/* <div className="flex flex-row mb-8 gap-[10px] cursor-pointer">
               <FaPhoneAlt color="black" size={20} />
               <p>+ 999 999 999</p>
-            </div>
+            </div> */}
             <div className="flex flex-row mb-8 gap-[13px] cursor-pointer">
               <IoMailOutline color="black" size={20} />
               <p>{process.env.NEXT_PUBLIC_EMAIL_ADDRESS}</p>

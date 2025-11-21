@@ -16,6 +16,7 @@ import Link from "next/link";
 import { Role } from "@prisma/client";
 import { ModeToggle } from "@/components/toggle-mode";
 import { useNavbarAuth } from "@/hooks/useNavbarAuth";
+import AuthButton2 from "../AuthButton2";
 
 const MobileViewNavbar2 = () => {
   const { admin } = useNavbarAuth();
@@ -30,8 +31,8 @@ const MobileViewNavbar2 = () => {
           className=""
         />
       </SheetTrigger>
-      <div className="absolute right-5 top-8">
-        <ModeToggle />
+      <div className="absolute right-3 top-5">
+        <AuthButton2 />
       </div>
       <div className="flex items-center justify-center">
         <Link href="/" className="cursor-pointer">
