@@ -61,6 +61,26 @@ export function getLastSundayOfTheMonthNumber(
   return lastSundayDate;
 }
 
+export function getLastSundayOfTheMonthFull(
+  year: number,
+  month: number
+): string {
+  if (month < 0 || month > 11) {
+    throw new Error("Month must be between 0 (January) and 11 (December).");
+  }
+
+  const lastDay = new Date(year, month + 1, 0); // last day of the month
+  const dayOfWeek = lastDay.getDay(); // 0 = Sunday
+  const lastSundayDate = lastDay.getDate() - dayOfWeek;
+
+  const lastSunday = new Date(year, month, lastSundayDate);
+  return lastSunday.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 export const getCatImages = (category: string, fullArray: GetAllImages[]) => {
   const temp = [] as GetAllImages[];
   fullArray.map((image) => {

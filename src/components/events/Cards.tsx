@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 
 type CardProps = {
   events: EventType;
+  lastSundayFull: string;
+  lastSunday: string[];
 };
 
-const Cards = ({ events }: CardProps) => {
+const Cards = ({ events, lastSundayFull, lastSunday }: CardProps) => {
   const router = useRouter();
 
   const handleNavigation = (id: number) => {
@@ -42,7 +44,12 @@ const Cards = ({ events }: CardProps) => {
             </div>
           ) : (
             <div className="absolute bg-primary flex flex-wrap justify-center items-center content-center top-[-45px] rounded-[50%] w-[90px] h-[90px] pt-[8px] text-primary-foreground drop-shadow-custom">
-              <MdEventRepeat size={40} />
+              <>
+                <p className="text-[28px] text-center w-full mb-[3px] leading-6">
+                  {lastSunday[1]}
+                </p>
+                <p className="text-base mb-[10px]">{lastSunday[0]}</p>
+              </>
             </div>
           )}
 
@@ -67,7 +74,7 @@ const Cards = ({ events }: CardProps) => {
                   </div>
                 </span>
               ) : (
-                <p>Monthly</p>
+                <p>{lastSundayFull}</p>
               )}
             </div>
             <div className="pt-[20px]">

@@ -97,7 +97,7 @@ const AdminPage = () => {
         Admin Page
       </h1>
       <Tabs defaultValue="media" className="w-full h-auto">
-        <TabsList className="flex overflow-x-scroll">
+        <TabsList className="flex">
           <TabsTrigger value="media">Media</TabsTrigger>
           <TabsTrigger value="events">Events</TabsTrigger>
           {isOwner && (

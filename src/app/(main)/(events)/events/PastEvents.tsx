@@ -16,9 +16,10 @@ type Props = {
   pastEvents: EventType;
   isLoading: boolean;
   lastSunday: string[];
+  lastSundayFull: string;
 };
 
-export const PastEvents = ({ pastEvents, isLoading, lastSunday }: Props) => {
+export const PastEvents = ({ pastEvents, isLoading, lastSunday, lastSundayFull }: Props) => {
   const router = useRouter();
 
   const handleNavigation = (id: number) => {
@@ -81,7 +82,7 @@ export const PastEvents = ({ pastEvents, isLoading, lastSunday }: Props) => {
                     </div>
                     <div className="font-bold text-base pl-10">
                       {event.monthly ? (
-                        <div>End of the Month</div>
+                        <div>{lastSundayFull}</div>
                       ) : (
                         <>
                           <div>

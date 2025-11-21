@@ -2,6 +2,10 @@
 
 import { getAllEvents } from "@/lib/queries";
 import { EventType } from "@/lib/types";
+import {
+  getLastSundayOfTheMonthFull,
+  getLastSundayOfTheMonth,
+} from "@/lib/actions";
 
 import React from "react";
 
@@ -28,6 +32,15 @@ const EventsPreview = () => {
     "December",
   ];
   const month = months[today.getMonth()];
+
+  const lastSunday = getLastSundayOfTheMonth(
+    today.getFullYear(),
+    today.getMonth()
+  );
+  const lastSundayFull = getLastSundayOfTheMonthFull(
+    today.getFullYear(),
+    today.getMonth()
+  );
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -59,7 +72,7 @@ const EventsPreview = () => {
     <section className="h-auto flex items-center overflow-hidden w-screen">
       <div className="bg-secondary w-full h-full flex xl:flex-nowrap flex-wrap items-center justify-center px-5">
         <EventsIntro />
-        <EventCards isLoading={isLoading} events={events} />
+        <EventCards isLoading={isLoading} events={events} lastSundayFull={lastSundayFull} lastSunday={lastSunday} />
         <div className="hidden absolute bottom-20 right-[450px] 3xl:flex gap-1.5">
           <div className="bg-black w-[15px] h-[15px] rounded-[50%] cursor-pointer"></div>
           <div className="bg-gray-500 w-[15px] h-[15px] rounded-[50%] cursor-pointer"></div>

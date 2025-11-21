@@ -10,12 +10,16 @@ import { useRouter } from "next/navigation";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
-import { getLastSundayOfTheMonth } from "@/lib/actions";
+import {
+  getLastSundayOfTheMonth,
+  getLastSundayOfTheMonthNumber,
+} from "@/lib/actions";
 import Loader from "@/components/Loader";
 
 interface EventCardsProps {
   isLoading: boolean;
   monthlyEvents: EventType;
+  lastSundayFull: string;
   lastSunday: string[];
 }
 
@@ -23,8 +27,14 @@ export const MonthlyEvents = ({
   isLoading,
   monthlyEvents,
   lastSunday,
+  lastSundayFull,
 }: EventCardsProps) => {
   const router = useRouter();
+  let d = new Date();
+  const lastSundayNum = getLastSundayOfTheMonthNumber(
+    d.getFullYear(),
+    d.getMonth()
+  );
 
   const handleNavigation = (id: number) => {
     router.push(`/events/${id}`);
@@ -86,7 +96,9 @@ export const MonthlyEvents = ({
                     </div>
                     <div className="font-bold text-base pl-10">
                       {event.monthly ? (
-                        <div>End of the Month</div>
+                        <>
+                          <div>{lastSundayFull}</div>
+                        </>
                       ) : (
                         <>
                           <div>

@@ -12,7 +12,10 @@ import { EventType } from "@/lib/types";
 import { UpcomingEventCards } from "./UpcomingEvents";
 import { PastEvents } from "./PastEvents";
 import { MonthlyEvents } from "../MonthlyEvents";
-import { getLastSundayOfTheMonth } from "@/lib/actions";
+import {
+  getLastSundayOfTheMonth,
+  getLastSundayOfTheMonthFull,
+} from "@/lib/actions";
 import Navbar2 from "@/components/navbar/Navbar2";
 import Footer from "@/components/Footer";
 
@@ -53,6 +56,10 @@ const Events = () => {
 
   let d = new Date();
   const lastSunday = getLastSundayOfTheMonth(d.getFullYear(), d.getMonth());
+  const lastSundayFull = getLastSundayOfTheMonthFull(
+    d.getFullYear(),
+    d.getMonth()
+  );
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -105,6 +112,7 @@ const Events = () => {
           isLoading={isLoading}
           events={upcomingEvents}
           lastSunday={lastSunday}
+          lastSundayFull={lastSundayFull}
         />
       </section>
       <section className="h-auto w-full relative">
@@ -112,12 +120,14 @@ const Events = () => {
           pastEvents={pastEvents}
           isLoading={isLoading}
           lastSunday={lastSunday}
+          lastSundayFull={lastSundayFull}
         />
       </section>
       <section className="h-auto w-full relative">
         <MonthlyEvents
           monthlyEvents={monthlyEvents}
           isLoading={isLoading}
+          lastSundayFull={lastSundayFull}
           lastSunday={lastSunday}
         />
       </section>

@@ -16,12 +16,14 @@ interface EventCardsProps {
   isLoading: boolean;
   events: EventType;
   lastSunday: string[];
+  lastSundayFull: string;
 }
 
 export const UpcomingEventCards = ({
   isLoading,
   events,
   lastSunday,
+  lastSundayFull,
 }: EventCardsProps) => {
   const router = useRouter();
 
@@ -87,7 +89,7 @@ export const UpcomingEventCards = ({
                     </div>
                     <div className="font-bold text-primary pl-10">
                       {event.monthly ? (
-                        <div>End of the Month</div>
+                        <div>{lastSundayFull}</div>
                       ) : (
                         <>
                           <div>
