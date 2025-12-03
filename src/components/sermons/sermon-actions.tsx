@@ -11,12 +11,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Sermon } from "@/lib/types";
-import { PDFDownloadLink } from "@react-pdf/renderer";
 import { Download, Heart, Lock, FileText } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { SermonNotesPdf } from "../admin/components/SermonNotesPdf";
+import html2pdf from "html2pdf.js";
 
 interface SermonActionsProps {
   sermon: Sermon;
@@ -29,6 +28,7 @@ export function SermonActions({ sermon }: SermonActionsProps) {
     data?.user ? true : false
   );
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [downloadingIndex, setDownloadingIndex] = useState<number | null>(null);
 
   const handleResourceClick = () => {
     if (data?.user == undefined) {
@@ -53,15 +53,41 @@ export function SermonActions({ sermon }: SermonActionsProps) {
     setDialogOpen(true);
   };
 
-  const handleDownloadResource = (resource: string, index: number) => {
-    // Download logic handled by parent/backend
-    // toast({
-    //   title: "Downloading Resource",
-    //   description: `Downloading resource ${index + 1}...`,
-    // });
-    toast("Downloading Resource...");
-    // Add your download function here
-    console.log("[v0] Downloading resource:", resource);
+  const handleDownloadPdf = async (htmlContent: string, index: number) => {
+    try {
+      setDownloadingIndex(index);
+
+      // Create a temporary container for the HTML content
+      const container = document.createElement("div");
+      container.innerHTML = htmlContent;
+
+      // Apply styling to the container for better PDF rendering
+      container.style.padding = "20px";
+      container.style.fontFamily = "Arial, sans-serif";
+      container.style.fontSize = "12px";
+      container.style.lineHeight = "1.6";
+      container.style.color = "#000";
+      container.style.backgroundColor = "#fff";
+
+      // Configure html2pdf options
+      const options = {
+        margin: [10, 10, 10, 10],
+        filename: `${sermon.sermonTitle}-resource_file-${index + 1}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+      };
+
+      // Generate and download the PDF
+      await html2pdf().set(options).from(container).save();
+
+      toast.success("PDF downloaded successfully!");
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      toast.error("Failed to generate PDF. Please try again.");
+    } finally {
+      setDownloadingIndex(null);
+    }
   };
 
   const hasResources =
@@ -112,26 +138,24 @@ export function SermonActions({ sermon }: SermonActionsProps) {
                         </p> */}
                       </div>
                     </div>
-                    {/* <Button
+                    <Button
                       size="sm"
                       variant="ghost"
-                      onClick={() => handleDownloadResource(resource, index)}
+                      onClick={() => handleDownloadPdf(resource, index)}
+                      disabled={downloadingIndex === index}
                       className="shrink-0 ml-2"
-                    > */}
-                    <PDFDownloadLink
-                      document={
-                        <SermonNotesPdf title={""} articleHtml={resource} />
-                      }
-                      fileName={`${sermon.sermonTitle}-resource_file-${
-                        index + 1
-                      }.pdf`}
                     >
-                      <Download className="h-4 w-4" />
+                      {downloadingIndex === index ? (
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                      ) : (
+                        <Download className="h-4 w-4" />
+                      )}
                       <span className="sr-only">
-                        Download Resource {index + 1}
+                        {downloadingIndex === index
+                          ? "Generating PDF..."
+                          : `Download Resource ${index + 1}`}
                       </span>
-                    </PDFDownloadLink>
-                    {/* </Button> */}
+                    </Button>
                   </div>
                 ))
               ) : (
