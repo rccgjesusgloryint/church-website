@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { getAllSermons } from "@/lib/queries";
 import { Sermon } from "@/lib/types";
+import { SermonSkeleton } from "@/components/sermons/sermon-skeleton";
 
 export default function SermonsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -75,80 +76,86 @@ export default function SermonsPage() {
           </div>
         </div>
 
-        {filteredSermons.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredSermons.map((sermon) => (
-              <Link
-                key={sermon.id}
-                href={`/sermons/${sermon.id}`}
-                className="group block"
-              >
-                <div className="relative h-full overflow-hidden rounded-lg border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1">
-                  <div className="relative aspect-video overflow-hidden bg-muted">
-                    <Image
-                      src={sermon.thumbnail || "/placeholder.svg"}
-                      alt={sermon.sermonTitle}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="mt-8 space-y-6">
+          {isLoading ? (
+            <SermonSkeleton />
+          ) : filteredSermons.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredSermons.map((sermon) => (
+                <Link
+                  key={sermon.id}
+                  href={`/sermons/${sermon.id}`}
+                  className="group block"
+                >
+                  <div className="relative h-full overflow-hidden rounded-lg border bg-card shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1">
+                    <div className="relative aspect-video overflow-hidden bg-muted">
+                      <Image
+                        src={sermon.thumbnail || "/placeholder.svg"}
+                        alt={sermon.sermonTitle}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    {/* <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-md bg-black/80 text-white text-xs font-medium">
+                      {/* <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2 py-1 rounded-md bg-black/80 text-white text-xs font-medium">
                       <Clock className="size-3" />
                       {sermon.duration}
                     </div> */}
-                  </div>
-
-                  <div className="p-5">
-                    <h3 className="font-semibold text-lg leading-tight line-clamp-2 mb-3 text-balance group-hover:text-primary transition-colors">
-                      {sermon.sermonTitle}
-                    </h3>
-
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {sermon.tags.slice(0, 2).map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="secondary"
-                          className="text-xs"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                      {sermon.tags.length > 2 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{sermon.tags.length - 2}
-                        </Badge>
-                      )}
                     </div>
 
-                    <div className="flex flex-col gap-2 pt-4 border-t text-sm text-muted-foreground">
-                      <div className="flex items-center gap-1.5">
-                        <User className="size-3.5" />
-                        <span className="font-medium">{sermon.speaker}</span>
+                    <div className="p-5">
+                      <h3 className="font-semibold text-lg leading-tight line-clamp-2 mb-3 text-balance group-hover:text-primary transition-colors">
+                        {sermon.sermonTitle}
+                      </h3>
+
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {sermon.tags.slice(0, 2).map((tag) => (
+                          <Badge
+                            key={tag}
+                            variant="secondary"
+                            className="text-xs"
+                          >
+                            {tag}
+                          </Badge>
+                        ))}
+                        {sermon.tags.length > 2 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{sermon.tags.length - 2}
+                          </Badge>
+                        )}
                       </div>
-                      <div className="flex items-center justify-between">
+
+                      <div className="flex flex-col gap-2 pt-4 border-t text-sm text-muted-foreground">
                         <div className="flex items-center gap-1.5">
-                          <Calendar className="size-3.5" />
-                          <span>{formatDate(sermon.createdAt!)}</span>
+                          <User className="size-3.5" />
+                          <span className="font-medium">{sermon.speaker}</span>
                         </div>
-                        <div className="flex items-center gap-1.5">
-                          <Heart className="size-3.5" />
-                          <span>{sermon.likes}</span>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5">
+                            <Calendar className="size-3.5" />
+                            <span>{formatDate(sermon.createdAt!)}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Heart className="size-3.5" />
+                            <span>{sermon.likes}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground text-lg">
-              No sermons found matching your search.
-            </p>
-          </div>
-        )}
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground text-lg">
+                {searchQuery
+                  ? "No sermons found matching your search."
+                  : "No sermons available yet."}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
