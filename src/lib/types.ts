@@ -221,16 +221,6 @@ export type EventMediaNoId = {
   updatedAt?: Date;
 };
 
-export type FeedbackNoId = {
-  id?: number;
-  name: string;
-  email?: string;
-  category?: string;
-  message: string;
-  feedbackFrom?: string;
-  createdAt?: Date;
-};
-
 type YTThumb = {
   url: string;
   width: number;

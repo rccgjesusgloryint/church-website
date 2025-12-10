@@ -9,7 +9,6 @@ import {
   DbImage,
   EventMediaNoId,
   EventsType,
-  FeedbackNoId,
   NewsletterEmail,
   Sermon,
   UploadMultipleFiles,
@@ -19,7 +18,7 @@ import { Resend } from "resend";
 import { auth } from "@/auth";
 import { prisma } from "./db";
 
-import { Blog, EventMedia, Feedback, Image, Media, Role } from "@prisma/client";
+import { Blog, EventMedia, Image, Media, Role } from "@prisma/client";
 import { C } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 import { shuffle } from "./actions";
 import { syncYouTubeDb } from "./syncYouTubeDb";
@@ -893,15 +892,15 @@ export const getAllImagesv2 = async () => {
 
 /**
  * Fetches a single event gallery by ID with all associated images
- * 
+ *
  * This function retrieves a specific event's gallery data including:
  * - Event name and description
  * - Date and location information
  * - Array of image URLs
- * 
+ *
  * @param eventId - The numeric ID of the event to fetch
  * @returns Promise resolving to EventsMedia object or null if not found
- * 
+ *
  * @example
  * const gallery = await getEventGalleryById(123);
  * if (gallery) {
@@ -920,32 +919,5 @@ export const getEventGalleryById = async (
   } catch (error) {
     console.error("Error fetching event gallery:", error);
     return null;
-  }
-};
-
-export const reportFeedback = async (form: FeedbackNoId) => {
-  try {
-    return await prisma.feedback.create({
-      data: {
-        name: form.name ?? null,
-        email: form.email ?? null,
-        category: form.category ?? null,
-        message: form.message,
-        feedbackFrom: form.feedbackFrom ?? null,
-      },
-    });
-  } catch (err) {
-    console.error("Error: ", err);
-    throw err;
-  }
-};
-
-export const getAllReports = async () => {
-  try {
-    const response = await prisma.feedback.findMany({});
-    return response;
-  } catch (error) {
-    console.error(error);
-    throw error;
   }
 };
