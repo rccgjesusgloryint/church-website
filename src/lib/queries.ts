@@ -9,8 +9,10 @@ import {
   DbImage,
   EventMediaNoId,
   EventsType,
+  GetTranscriptOptions,
   NewsletterEmail,
   Sermon,
+  TranscriptResponse,
   UploadMultipleFiles,
 } from "./types";
 
@@ -22,6 +24,7 @@ import { Blog, EventMedia, Image, Media, Role } from "@prisma/client";
 import { C } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 import { shuffle } from "./actions";
 import { syncYouTubeDb } from "./syncYouTubeDb";
+import { GoogleGenAI } from "@google/genai";
 
 export const allUsers = async () => {
   const res = await prisma.user.findMany({});
@@ -920,4 +923,197 @@ export const getEventGalleryById = async (
     console.error("Error fetching event gallery:", error);
     return null;
   }
+};
+
+const TRANSCRIPT_API_KEY = process.env.TRANSCRIPT_API_KEY;
+const TRANSCRIPT_API_URL = process.env.TRANSCRIPT_API_URL;
+
+async function getSermonTranscript(
+  videoUrl: string,
+  options: GetTranscriptOptions
+): Promise<TranscriptResponse | null> {
+  const {
+    format = "text",
+    includeTimestamp = true,
+    sendMetadata = false,
+  } = options;
+
+  const params = new URLSearchParams({
+    video_url: videoUrl,
+    format,
+    include_timestamp: includeTimestamp.toString(),
+    send_metadata: sendMetadata.toString(),
+  });
+
+  try {
+    const response = await fetch(
+      `${TRANSCRIPT_API_URL}/youtube/transcript?${params}`,
+      {
+        headers: {
+          Authorization: `Bearer ${TRANSCRIPT_API_KEY}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching transcript:", error);
+    throw error;
+  }
+}
+
+export const automateSermonAIFeatures = async (
+  videoUrl: string,
+  videoId: string
+) => {
+  const sermon = await prisma.sermon.findUnique({
+    where: { videoUrl: videoUrl },
+  });
+
+  if (!sermon) {
+    throw new Error("Sermon not found");
+  }
+
+  const sermonId = sermon.id;
+  const transcript = await getSermonTranscript(videoUrl, {
+    format: "text",
+    includeTimestamp: true,
+    sendMetadata: false,
+  });
+
+  if (!transcript) {
+    throw new Error("Transcript not found");
+  }
+
+  const aiSummary = await generateSermonSummary(transcript.transcript);
+  const aiBreakdown = await generateAISermonBreakdown(
+    transcript.transcript,
+    videoId
+  );
+
+  if (!aiSummary || !aiBreakdown) {
+    throw new Error("AI summary or breakdown not found");
+  }
+
+  try {
+    await prisma.sermon.update({
+      where: { id: sermonId },
+      data: {
+        summary: aiSummary,
+        aiBreakdown: aiBreakdown,
+      },
+    });
+  } catch (error) {
+    console.error("Error updating sermon:", error);
+    throw error;
+  }
+};
+
+export const generateSermonSummary = async (
+  transcript: string
+): Promise<string> => {
+  // The client gets the API key from the environment variable `GEMINI_API_KEY`.
+  const ai = new GoogleGenAI({});
+  const modelPrompt = `Summarize the provided sermon transcript into a concise overview capturing the sermon's main message. Do not include the detailed sections such as Core Concepts, Breakthrough Ideas, Key Connections, or Actionable Advice. Return the summary formatted as a clear, well-organized markdown HTML block similar to this example:
+
+<div><h3>Sermon Summary</h3>
+<p>[Insert concise summary here]</p>
+</div>
+
+ONLY return the completed markdown HTML summary as specified, NOTHING ELSE!
+
+Transcript: ${transcript}
+`;
+  const aiSummary = await ai.models.generateContent({
+    model: "gemini-2.5-flash-lite",
+    config: {
+      thinkingConfig: {
+        thinkingBudget: -1,
+      },
+    },
+    contents: modelPrompt,
+  });
+
+  if (!aiSummary.text) {
+    throw new Error("Error generating AI summary");
+  }
+
+  return aiSummary.text;
+};
+
+export const generateAISermonBreakdown = async (
+  videoId: string,
+  transcript: string
+): Promise<string> => {
+  // The client gets the API key from the environment variable `GEMINI_API_KEY`.
+  const ai = new GoogleGenAI({});
+  const modelPrompt = `
+You will be provided with a sermon transcript with a YouTube video ID associated with the sermon content. Your task is to create a detailed, organized breakdown of the sermon structured into the following key sections:
+
+- **Summary:** Provide a concise overview capturing the sermon’s main message.
+
+- **Core Concepts:** Identify and explain the fundamental ideas presented throughout the sermon.
+
+- **Breakthrough Ideas:** Highlight any novel or transformative insights shared.
+
+- **Key Connections:** Describe how different points or themes interconnect during the sermon.
+
+- **Actionable Advice:** Extract practical guidance or clear steps the audience can apply in their lives.
+
+For each key topic, section, or important point, include clickable timestamps formatted as markdown links following this pattern:
+
+'[HH:MM:SS](https://www.youtube.com/watch?v=[VIDEO_ID]&t=[timestamp_in_seconds])'
+
+Here, replace '[VIDEO_ID]' with the actual YouTube video ID provided, and '[timestamp_in_seconds]' with the corresponding time in seconds from the start of the video.
+
+This will allow viewers to easily revisit the relevant moments in the sermon.
+
+The final output must be a clear, well-organized markdown text breakdown containing HTML structure as shown below, with embedded timestamp links referencing specific sections of the video, making it easy to follow and review key points.
+
+
+# Output Format
+
+Return the breakdown formatted exactly like this example template:
+
+<div><h3>Detailed Breakdown</h3>
+<h4>Introduction (0:00 - 5:00)</h4>
+<p>The sermon opens with a personal testimony about facing uncertainty and finding God's peace.</p>
+<h4>Main Points</h4>
+<ol>
+<li><strong>Trust in God's Plan</strong> - Even when we don't understand, God is working for our good (Romans 8:28)</li>
+<li><strong>Biblical Examples</strong> - Abraham, Moses, and David all faced uncertainty but remained faithful</li>
+<li><strong>Practical Applications</strong> - Daily prayer, reading scripture, and fellowship with other believers</li>
+</ol>
+<h4>Conclusion (45:00 - 50:00)</h4>
+<p>A call to action encouraging the congregation to commit to daily faith practices.</p>
+</div>
+
+Include all sections as appropriate and embed timestamp links referencing the video segments as you explain each topic.
+
+ONLY return the completed markdown HTML breakdown as specified, NOTHING ELSE!
+
+Transcript: ${transcript}
+Video ID: ${videoId}
+`;
+  const aiSummary = await ai.models.generateContent({
+    model: "gemini-2.5-flash-lite",
+    config: {
+      thinkingConfig: {
+        thinkingBudget: -1,
+      },
+    },
+    contents: modelPrompt,
+  });
+
+  if (!aiSummary.text) {
+    throw new Error("Error generating AI summary");
+  }
+
+  return aiSummary.text;
 };

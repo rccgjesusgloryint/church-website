@@ -62,6 +62,9 @@ export const syncYouTubeDb = async (): Promise<void> => {
       return;
     }
 
+    // TODO: Execute AI Features automations
+
+    // STEP 5: Store new sermons
     await Promise.all(sermonsToAdd.map((s) => createSermon(s)));
 
     console.log(`✅ Synced ${sermonsToAdd.length} new sermons from YouTube.`);

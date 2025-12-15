@@ -266,3 +266,15 @@ export type YOUTUBE_playlistItem = {
     privacyStatus: string;
   };
 };
+
+export type GetTranscriptOptions = {
+  format: "text" | "json";
+  includeTimestamp: boolean;
+  sendMetadata: boolean;
+};
+
+export type TranscriptResponse = {
+  video_id: string;
+  language: string;
+  transcript: string;
+};
