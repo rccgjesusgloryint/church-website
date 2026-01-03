@@ -29,7 +29,7 @@ export const navContent = [
   },
   {
     label: "Admin",
-    link: "https://admin.jesusgloryintl.com",
+    link: "https://admin.jesusgloryintl.com/dashboard",
   },
   {
     label: "Contact",
