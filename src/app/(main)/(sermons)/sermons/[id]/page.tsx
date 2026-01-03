@@ -1,4 +1,4 @@
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 import { SermonActions } from "@/components/sermons/sermon-actions";
 import { SermonHeader } from "@/components/sermons/sermon-header";
 import { SermonPageClient } from "@/components/sermons/sermon-page-client";
@@ -15,7 +15,7 @@ export default async function SermonPage({
 
   return (
     <>
-      <Navbar2 />
+      <Navbar />
       <div className="min-h-screen bg-background">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           {/* Header Section */}

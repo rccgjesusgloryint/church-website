@@ -16,7 +16,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { FALLBACK } from "../gallery/GalleryModal";
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 import Loader from "@/components/Loader";
 import Footer from "@/components/Footer";
 
@@ -60,7 +60,7 @@ const Blogs = () => {
 
   return (
     <>
-      <Navbar2 />
+      <Navbar />
       <div className="h-screen w-full">
         {isLoading ? (
           <div className="h-screen flex items-center justify-center">

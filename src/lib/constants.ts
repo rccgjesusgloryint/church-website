@@ -28,6 +28,10 @@ export const navContent = [
     link: "/sermons",
   },
   {
+    label: "Roadmap",
+    link: "/roadmap",
+  },
+  {
     label: "Admin",
     link: "https://admin.jesusgloryintl.com/dashboard",
   },

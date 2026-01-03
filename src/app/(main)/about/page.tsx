@@ -6,7 +6,7 @@ import { Metadata } from "next";
 import Title from "./Title";
 import Newsletter from "@/components/Newsletter";
 import Footer from "@/components/Footer";
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 
 export const metadata: Metadata = {
   title: "About Us | Jesus Glory Athy",
@@ -30,7 +30,7 @@ const About = () => {
   return (
     <>
       <section className="h-screen bg-about-bg bg-cover">
-        <Navbar2 />
+        <Navbar />
         <div className="h-full flex justify-center">
           <Title />
         </div>

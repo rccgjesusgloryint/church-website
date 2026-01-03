@@ -8,7 +8,7 @@ import { ScrollTrigger } from "gsap/all";
 import { Blog } from "@prisma/client";
 import { findUser, getBlogWithId } from "@/lib/queries";
 import DOMPurify from "dompurify"; // Import DOMPurify for sanitization
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 
 type BlogProps = {
   params: {
@@ -50,7 +50,7 @@ const Blogs = ({ params }: BlogProps) => {
     <>
       {/* Hero Section */}
       <section className="h-screen bg-about-bg bg-cover">
-        <Navbar2 />
+        <Navbar />
         <div className="h-full flex justify-center" ref={useTitle}>
           <div className="flex flex-col items-center justify-center text-white">
             <span className="bg-primary/50 w-auto h-auto rounded flex items-center justify-center p-3 text-center">

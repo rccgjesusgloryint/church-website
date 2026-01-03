@@ -16,7 +16,7 @@ import {
   getLastSundayOfTheMonth,
   getLastSundayOfTheMonthFull,
 } from "@/lib/actions";
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/Footer";
 
 const Events = () => {
@@ -98,7 +98,7 @@ const Events = () => {
   return (
     <>
       <section className="h-screen bg-about-bg bg-cover">
-        <Navbar2 />
+        <Navbar />
         <div className="h-full flex justify-center" ref={useTitle}>
           <div className="flex items-center justify-center">
             <h1 className="text-white font-bold sm:text-[80px] text-[35px]">

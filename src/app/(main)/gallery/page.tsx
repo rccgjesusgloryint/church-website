@@ -3,7 +3,7 @@ import React from "react";
 import { Metadata } from "next";
 import GalleryComponent from "./GalleryComponent";
 import ComingSoon from "@/components/comingsoon";
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 
 export const metadata: Metadata = {
   title: "Photo Gallery | Jesus Glory Athy",
@@ -19,14 +19,15 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Photo Gallery | Jesus Glory Athy",
-    description: "Browse our photo gallery featuring events and community moments.",
+    description:
+      "Browse our photo gallery featuring events and community moments.",
   },
 };
 
 const Gallery = () => {
   return (
     <>
-      <Navbar2 />
+      <Navbar />
       <GalleryComponent />
       {/* <ComingSoon /> */}
     </>

@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 import { getEventGalleryById } from "@/lib/queries";
 import { Metadata } from "next";
 import { EventGalleryClient } from "./EventGalleryClient";
@@ -54,7 +54,7 @@ async function EventGalleryContent({ eventId }: { eventId: number }) {
 
   return (
     <>
-      <Navbar2 />
+      <Navbar />
       <EventGalleryClient event={event} galleryUrl={galleryUrl} />
     </>
   );

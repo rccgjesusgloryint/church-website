@@ -6,7 +6,7 @@ import React from "react";
 import { MapPin, Users } from "lucide-react";
 import { ImageCard } from ".";
 import { Breadcrumb } from "@/components/ui/breadcrumb";
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 
 type Props = {
   params: { id: number };
@@ -65,7 +65,7 @@ const Page = ({ params }: Props) => {
 
   return (
     <>
-      <Navbar2 />
+      <Navbar />
       <main className="min-h-screen bg-background">
         <div className="max-w-5xl mx-auto px-6 py-12">
           <div className="space-y-12">

@@ -1,5 +1,5 @@
 import ContactForm from "@/components/contact/contact-form";
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 import Newsletter from "@/components/Newsletter";
 import React from "react";
 import { Metadata } from "next";
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 const page = () => {
   return (
     <section>
-      <Navbar2 />
+      <Navbar />
       <div className="h-[470px] bg-about-bg bg-cover flex items-center justify-center">
         <h1 className="text-white font-bold sm:text-[80px] text-[35px]">
           CONTACT US

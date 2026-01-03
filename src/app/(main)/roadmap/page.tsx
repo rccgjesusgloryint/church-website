@@ -2,7 +2,7 @@ import { auth } from "@/../../auth";
 import { redirect } from "next/navigation";
 import { getRoadmapItems, getRoadmapStats, RoadmapStats } from "@/lib/linear";
 import InfiniteScrollRoadmap from "@/components/roadmap/InfiniteScrollRoadmap";
-import Navbar2 from "@/components/navbar/Navbar2";
+import Navbar from "@/components/navbar/Navbar";
 import Footer from "@/components/Footer";
 import { RoadmapItem } from "@/lib/types";
 
@@ -50,7 +50,7 @@ export default async function RoadmapPage() {
 
   return (
     <>
-      <Navbar2 />
+      <Navbar />
       <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-950 dark:to-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
           {/* Hero Section */}
