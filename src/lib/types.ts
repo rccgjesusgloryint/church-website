@@ -285,3 +285,24 @@ export type TranscriptResponse = {
   language: string;
   transcript: string;
 };
+
+export type RoadmapItem = {
+  id: string;
+  title: string;
+  description: string | null;
+  status: RoadmapStatus;
+  priority: number;
+  labels: string[];
+  targetDate: string | null;
+  createdAt: string;
+  updatedAt: string;
+  upvotes: number;
+  downvotes: number;
+  userVote: "up" | "down" | null;
+};
+
+export type RoadmapStatus =
+  | "planned"
+  | "in_progress"
+  | "completed"
+  | "cancelled";
