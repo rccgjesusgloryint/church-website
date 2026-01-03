@@ -24,6 +24,13 @@ export function SermonHeader({ sermon }: SermonHeaderProps) {
             })}
           </time>
         </div>
+        {sermon.updatedBy?.name && (
+          <div className="flex items-center gap-2">
+            <span className="text-xs italic text-muted-foreground border-l pl-3">
+              Last updated by {sermon.updatedBy.name}
+            </span>
+          </div>
+        )}
       </div>
 
       <h1 className="text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl text-balance">

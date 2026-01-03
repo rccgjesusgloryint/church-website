@@ -17,7 +17,9 @@ type BlogProps = {
 };
 
 const Blogs = ({ params }: BlogProps) => {
-  const [blog, setBlog] = React.useState<Blog | null>(null);
+  const [blog, setBlog] = React.useState<
+    (Blog & { updatedBy?: { name: string | null } | null }) | null
+  >(null);
   const [author, setAuthor] = React.useState<string | null>(null);
   const useTitle = React.useRef<HTMLDivElement | null>(null);
 
@@ -59,7 +61,12 @@ const Blogs = ({ params }: BlogProps) => {
               <span className="text-[1rem] font-medium">
                 {blog?.createdAt.toDateString().slice(3)}
               </span>
-              {/* <span className="text-[1rem] font-medium">by {author}</span> */}
+              <span className="text-[1rem] font-medium">by {author}</span>
+              {blog?.updatedBy?.name && (
+                <span className="text-[0.8rem] font-light italic mt-1">
+                  Last updated by {blog.updatedBy.name}
+                </span>
+              )}
             </div>
           </div>
         </div>

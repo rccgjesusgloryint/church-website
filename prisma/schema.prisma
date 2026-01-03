@@ -11,7 +11,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  // directUrl = env("DIRECT_URL")
 }
 
 enum Role {
@@ -40,6 +40,8 @@ model User {
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  updatedSermons Sermon[] @relation("SermonUpdatedBy")
+  updatedBlogs   Blog[]   @relation("BlogUpdatedBy")
 }
  
 model Account {
@@ -138,6 +140,8 @@ model Sermon {
   hasNotes        Boolean   @default(false)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+  updatedById     String?
+  updatedBy       User?     @relation("SermonUpdatedBy", fields: [updatedById], references: [id])
 }
 
 model Comment {
@@ -159,6 +163,8 @@ model Blog {
   category            String
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
+  updatedById         String?
+  updatedBy           User?             @relation("BlogUpdatedBy", fields: [updatedById], references: [id])
 }
 
 model Blog_Series{

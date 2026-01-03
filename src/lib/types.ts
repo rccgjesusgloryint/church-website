@@ -117,6 +117,7 @@ export type CreateSermon = {
   videoUrl: string;
   sermonTitle: string;
   thumbnail: string;
+  videoTranscript?: string;
   tags?: string[];
   createdAt?: Date;
   updatedAt?: Date;
@@ -146,7 +147,7 @@ export type Sermon = {
   sermonTitle: string;
   tags: string[];
   aiBreakdown: string;
-  videoTranscript: string;
+  videoTranscript?: string;
   summary: string;
   hasNotes: boolean;
   speaker: string;
@@ -156,6 +157,9 @@ export type Sermon = {
   comments?: Comment[];
   createdAt?: Date;
   updatedAt?: Date;
+  updatedBy?: {
+    name: string | null;
+  } | null;
 };
 
 export type Tags = Tag[];
@@ -178,6 +182,9 @@ export type BlogType = {
   category: string;
   createdAt?: Date;
   updatedAt?: Date;
+  updatedBy?: {
+    name: string | null;
+  } | null;
 };
 
 export type ContactFormType = {

@@ -40,7 +40,7 @@ export const syncYouTubeDb = async (): Promise<void> => {
             item.snippet.title.includes("Sermon")) &&
           !sermonTitles.has(item.snippet.title)
       )
-      .map((item) => {
+      .map(async (item) => {
         const s = item.snippet;
         const t = s.thumbnails ?? ({} as any);
         const thumbUrl =
@@ -65,7 +65,7 @@ export const syncYouTubeDb = async (): Promise<void> => {
     // TODO: Execute AI Features automations
 
     // STEP 5: Store new sermons
-    await Promise.all(sermonsToAdd.map((s) => createSermon(s)));
+    await Promise.all(sermonsToAdd.map(async (s) => createSermon(await s)));
 
     console.log(`✅ Synced ${sermonsToAdd.length} new sermons from YouTube.`);
   } catch (err) {
