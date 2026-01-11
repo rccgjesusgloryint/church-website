@@ -162,6 +162,14 @@ export type Sermon = {
   } | null;
 };
 
+export type PaginatedSermonsResult = {
+  sermons: Sermon[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+  pageSize: number;
+};
+
 export type Tags = Tag[];
 
 export type EventTrack = {

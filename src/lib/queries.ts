@@ -11,6 +11,7 @@ import {
   EventsType,
   GetTranscriptOptions,
   NewsletterEmail,
+  PaginatedSermonsResult,
   Sermon,
   TranscriptResponse,
   UploadMultipleFiles,
@@ -642,6 +643,56 @@ export const getAllSermons = async (): Promise<Sermon[]> => {
 };
 export const getAllSermonsInServer = async (): Promise<Sermon[]> => {
   return prisma.sermon.findMany({});
+};
+
+export const getPaginatedSermons = async (
+  page: number = 1,
+  pageSize: number = 9,
+  search?: string
+): Promise<PaginatedSermonsResult> => {
+  await syncYouTubeDb();
+
+  const skip = (page - 1) * pageSize;
+
+  // Build where clause for search
+  const whereClause = search
+    ? {
+        OR: [
+          { sermonTitle: { contains: search, mode: "insensitive" as const } },
+          { tags: { hasSome: [search] } },
+        ],
+      }
+    : {};
+
+  // Get total count for pagination
+  const totalCount = await prisma.sermon.count({
+    where: whereClause,
+  });
+
+  // Get paginated sermons
+  const sermons = await prisma.sermon.findMany({
+    where: whereClause,
+    orderBy: { createdAt: "desc" },
+    skip,
+    take: pageSize,
+    include: {
+      updatedBy: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  const totalPages = Math.ceil(totalCount / pageSize);
+
+  return {
+    sermons: sermons as Sermon[],
+    totalCount,
+    totalPages,
+    currentPage: page,
+    pageSize,
+  };
 };
 
 export const getSermonById = async (id: number): Promise<Sermon> => {
