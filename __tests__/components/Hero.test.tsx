@@ -14,7 +14,7 @@ vi.mock("next-auth", async () => {
         email: "test@example.com",
       },
       status: "authenticated",
-      member: "ADMIN",
+      member: "ADMIN_GENERAL",
     }),
   };
 });

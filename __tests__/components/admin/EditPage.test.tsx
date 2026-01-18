@@ -3,7 +3,15 @@ import { render, screen } from "@testing-library/react";
 import { vi } from "vitest";
 import EditPage from "../../../src/components/admin/EditPage";
 import { BlogType, EventType } from "@/lib/types";
-import { User } from "@prisma/client";
+import { User, Role } from "@prisma/client";
+
+// Helper for testing admin role checks
+const isAdminRole = (role: Role | undefined | null): boolean => {
+  if (!role) return false;
+  return ["ADMIN_GENERAL", "ADMIN_MODERATE", "ADMIN_FULL", "OWNER"].includes(
+    role,
+  );
+};
 
 // Mock next-auth
 vi.mock("next-auth", async () => {
@@ -17,7 +25,7 @@ vi.mock("next-auth", async () => {
         email: "test@example.com",
       },
       status: "authenticated",
-      member: "ADMIN",
+      member: "ADMIN_GENERAL",
     }),
   };
 });
@@ -79,7 +87,7 @@ describe("EditPage", () => {
         handleEventEdit={vi.fn()}
         refresh={false}
         setRefresh={vi.fn()}
-      />
+      />,
     );
 
     const loadingComponent = screen.getByText("Loading...");
@@ -115,11 +123,11 @@ describe("EditPage", () => {
         handleEventEdit={vi.fn()}
         refresh={false}
         setRefresh={vi.fn()}
-      />
+      />,
     );
 
     const errorComponent = screen.getByText(
-      "Error: Error getting users blogs!"
+      "Error: Error getting users blogs!",
     );
 
     expect(errorComponent).toBeDefined();
@@ -150,7 +158,7 @@ describe("EditPage", () => {
         handleEventEdit={vi.fn()}
         refresh={false}
         setRefresh={vi.fn()}
-      />
+      />,
     );
 
     const editPage = screen.getByText("Edit Event");
@@ -167,7 +175,7 @@ describe("EditPage", () => {
         email: "",
         emailVerified: null,
         image: null,
-        member: "ADMIN",
+        member: "ADMIN_GENERAL",
         createdAt: new Date(),
         updatedAt: new Date(),
       },
@@ -179,7 +187,7 @@ describe("EditPage", () => {
 
     const mock = mockValues(true);
 
-    const blogsToShow = mock.currentUser?.member === "ADMIN";
+    const blogsToShow = isAdminRole(mock.currentUser?.member);
 
     expect(blogsToShow).toBe(true);
   });
@@ -205,7 +213,7 @@ describe("EditPage", () => {
 
     const mock = mockValues(true);
 
-    const blogsToShow = mock.currentUser?.member === "ADMIN";
+    const blogsToShow = isAdminRole(mock.currentUser?.member);
 
     expect(blogsToShow).toBe(false);
   });
@@ -235,7 +243,7 @@ describe("EditPage", () => {
         handleEventEdit={vi.fn()}
         refresh={false}
         setRefresh={vi.fn()}
-      />
+      />,
     );
 
     const editBlog = screen.getByText("Edit Blog");

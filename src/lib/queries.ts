@@ -24,6 +24,7 @@ import { prisma } from "./db";
 import { Blog, EventMedia, Image, Media, Role } from "@prisma/client";
 import { C } from "vitest/dist/chunks/reporters.d.BFLkQcL6.js";
 import { shuffle } from "./actions";
+import { isAdminRole } from "./utils";
 import { syncYouTubeDb } from "./syncYouTubeDb";
 import { GoogleGenAI } from "@google/genai";
 
@@ -52,7 +53,7 @@ export const isAdmin = async () => {
     where: { id: session.user?.id },
   });
 
-  if (res?.member === "ADMIN" || res?.member === "OWNER") {
+  if (isAdminRole(res?.member)) {
     return true;
   } else {
     return false;
@@ -136,7 +137,7 @@ export const getAuthUserDetails = async () => {
 // };
 
 export const getRandomImages = async (
-  amount: number
+  amount: number,
 ): Promise<CarosoulImageType[]> => {
   const takeImages = 60; // tune
   const takeEventSets = 3; // tune
@@ -176,8 +177,8 @@ export const getRandomImages = async (
     new Map(
       [...fromImage, ...fromEventMedia]
         .filter((r) => r.url && r.url.trim() !== "")
-        .map((r) => [r.url as string, r]) // key: url
-    ).values()
+        .map((r) => [r.url as string, r]), // key: url
+    ).values(),
   );
 
   const randomized = shuffle(deduped).slice(0, amount);
@@ -502,7 +503,7 @@ export const sendContactEmail = async ({
 // };
 
 export const sendBulkNewsletterEmail = async (
-  newsletterEmails: NewsletterEmail
+  newsletterEmails: NewsletterEmail,
 ) => {
   const resend = new Resend(process.env.PROD_RESEND_API_KEY);
 
@@ -568,7 +569,7 @@ export const sendBulkNewsletterEmail = async (
         "User is not autherised, must have 'Owner' credentials to send newsletters",
     });
     throw new Error(
-      "User is not autherised, must have 'Owner' credentials to send newsletters"
+      "User is not autherised, must have 'Owner' credentials to send newsletters",
     );
   }
 
@@ -648,7 +649,7 @@ export const getAllSermonsInServer = async (): Promise<Sermon[]> => {
 export const getPaginatedSermons = async (
   page: number = 1,
   pageSize: number = 9,
-  search?: string
+  search?: string,
 ): Promise<PaginatedSermonsResult> => {
   await syncYouTubeDb();
 
@@ -840,7 +841,13 @@ export const getAllUsers = async () => {
 
 export const updateUsersRole = async (
   userId: string,
-  role: "ADMIN" | "MEMBER" | "OWNER" | "MINISTER"
+  role:
+    | "ADMIN_GENERAL"
+    | "ADMIN_MODERATE"
+    | "ADMIN_FULL"
+    | "MEMBER"
+    | "OWNER"
+    | "MINISTER",
 ) => {
   try {
     await prisma.user.update({
@@ -1007,7 +1014,7 @@ export const getAllImagesv2 = async () => {
  * }
  */
 export const getEventGalleryById = async (
-  eventId: number
+  eventId: number,
 ): Promise<EventMedia | null> => {
   try {
     const response = await prisma.eventMedia.findUnique({
