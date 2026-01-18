@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { RoadmapItem } from "@/lib/types";
 import { getRoadmapItems } from "@/lib/linear";
 import RoadmapTimeline from "./RoadmapTimeline";
-import Loader from "@/components/Loader";
+import RoadmapCardSkeleton from "./RoadmapCardSkeleton";
 
 interface InfiniteScrollRoadmapProps {
   initialItems: RoadmapItem[];
@@ -54,7 +54,7 @@ export default function InfiniteScrollRoadmap({
       const result = await getRoadmapItems(
         userId ?? undefined,
         endCursorRef.current,
-        10
+        10,
       );
       setItems((prev) => [...prev, ...result.items]);
       setHasNextPage(result.hasNextPage);
@@ -80,7 +80,7 @@ export default function InfiniteScrollRoadmap({
           loadMore();
         }
       },
-      { threshold: 0.1, rootMargin: "100px" }
+      { threshold: 0.1, rootMargin: "100px" },
     );
 
     observer.observe(element);
@@ -95,12 +95,16 @@ export default function InfiniteScrollRoadmap({
       <RoadmapTimeline items={items} isSignedIn={isSignedIn} userId={userId} />
 
       {/* Load more trigger */}
-      <div ref={loadMoreRef} className="py-8 flex justify-center">
+      <div ref={loadMoreRef} className="py-8 flex flex-col items-center gap-4">
         {isLoading && (
-          <div className="flex items-center gap-2 text-gray-500">
-            <Loader />
-            <span>Loading more...</span>
-          </div>
+          <>
+            <div className="w-full pl-8">
+              <RoadmapCardSkeleton />
+            </div>
+            <span className="text-sm text-gray-500 dark:text-gray-400">
+              Loading more...
+            </span>
+          </>
         )}
         {!hasNextPage && items.length > 0 && (
           <p className="text-gray-400 dark:text-gray-500 text-sm">

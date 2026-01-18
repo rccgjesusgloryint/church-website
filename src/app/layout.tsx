@@ -13,6 +13,7 @@ import LiveStreamButton from "@/components/LiveStreamButton";
 import { ThemeProvider } from "@/components/theme-provider";
 import { getLastSundayOfTheMonth } from "@/lib/actions";
 import FeedbackComponent from "@/components/feedback/page";
+import RoadmapToastProvider from "@/components/roadmap/RoadmapToastProvider";
 
 // Configure DM Sans font with the desired weights
 const dmSans = DM_Sans({
@@ -62,6 +63,7 @@ export default async function RootLayout({
           <AuthProvider session={session as any}>
             <ModalProvider>{children}</ModalProvider>
             <FeedbackComponent />
+            <RoadmapToastProvider />
             <LiveStreamButton
               channelUrl={
                 "https://www.youtube.com/@rccgjesusgloryinternationa5350/live"

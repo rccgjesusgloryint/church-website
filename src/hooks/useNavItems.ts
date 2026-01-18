@@ -8,6 +8,7 @@ import { navContent } from "@/lib/constants";
 type NavItem = {
   label: string;
   link: string;
+  external?: boolean;
 };
 
 /**

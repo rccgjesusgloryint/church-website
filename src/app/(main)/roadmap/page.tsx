@@ -83,14 +83,6 @@ export default async function RoadmapPage() {
                   Planned
                 </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-                  {stats.completed}
-                </div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">
-                  Completed
-                </div>
-              </div>
             </div>
           )}
 

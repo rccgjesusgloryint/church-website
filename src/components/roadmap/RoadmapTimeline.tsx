@@ -2,6 +2,8 @@
 
 import { RoadmapItem, RoadmapStatus } from "@/lib/types";
 import RoadmapCard from "./RoadmapCard";
+import { HiLightBulb, HiExternalLink } from "react-icons/hi";
+import Link from "next/link";
 
 interface RoadmapTimelineProps {
   items: RoadmapItem[];
@@ -14,6 +16,7 @@ type Section = {
   title: string;
   description: string;
   emptyMessage: string;
+  showFeedbackLink?: boolean;
 };
 
 const sections: Section[] = [
@@ -28,12 +31,7 @@ const sections: Section[] = [
     title: "📋 Planned",
     description: "Upcoming features on our roadmap",
     emptyMessage: "No planned features at the moment",
-  },
-  {
-    status: ["completed"],
-    title: "✅ Completed",
-    description: "Recently shipped features",
-    emptyMessage: "No completed features yet",
+    showFeedbackLink: true,
   },
 ];
 
@@ -65,9 +63,23 @@ export default function RoadmapTimeline({
           <div key={section.title} className="relative">
             {/* Section Header */}
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                {section.title}
-              </h2>
+              <div className="flex flex-wrap items-center gap-3 mb-1">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {section.title}
+                </h2>
+                {section.showFeedbackLink && (
+                  <Link
+                    href="https://feedback.jesusgloryintl.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/30 hover:bg-amber-200 dark:hover:bg-amber-900/50 rounded-full transition-colors"
+                  >
+                    <HiLightBulb className="w-4 h-4" />
+                    <span>Share your ideas</span>
+                    <HiExternalLink className="w-3.5 h-3.5" />
+                  </Link>
+                )}
+              </div>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {section.description}
               </p>

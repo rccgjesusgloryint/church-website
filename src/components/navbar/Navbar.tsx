@@ -64,18 +64,30 @@ const Navbar = ({ variant = "standard" }: NavbarProps) => {
 
           {/* Desktop navigation */}
           <div className="hidden sm:flex flex-row font-normal gap-7 justify-center items-center cursor-pointer h-full pt-11 mb-[10rem]">
-            {navItems.map(({ label, link }) => (
-              <Link
-                href={link}
-                key={label}
-                className={`
-                  hover:text-primary duration-200
-                  ${isActiveLink(link) ? "text-primary font-semibold" : ""}
-                `}
-              >
-                {label}
-              </Link>
-            ))}
+            {navItems.map(({ label, link, external }) =>
+              external ? (
+                <a
+                  href={link}
+                  key={label}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary duration-200"
+                >
+                  {label}
+                </a>
+              ) : (
+                <Link
+                  href={link}
+                  key={label}
+                  className={`
+                    hover:text-primary duration-200
+                    ${isActiveLink(link) ? "text-primary font-semibold" : ""}
+                  `}
+                >
+                  {label}
+                </Link>
+              ),
+            )}
             <ModeToggle />
             <AuthButton variant="minimal" />
           </div>
@@ -120,18 +132,30 @@ const Navbar = ({ variant = "standard" }: NavbarProps) => {
 
       {/* Desktop navigation links */}
       <div className="hidden md:flex flex-row gap-9 justify-center items-center w-full 2xl:flex-wrap relative mr-10">
-        {navItems.map(({ label, link }) => (
-          <Link
-            href={link}
-            key={label}
-            className={`
-              hover:text-primary duration-200
-              ${isActiveLink(link) ? "text-primary font-semibold" : ""}
-            `}
-          >
-            {label}
-          </Link>
-        ))}
+        {navItems.map(({ label, link, external }) =>
+          external ? (
+            <a
+              href={link}
+              key={label}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary duration-200"
+            >
+              {label}
+            </a>
+          ) : (
+            <Link
+              href={link}
+              key={label}
+              className={`
+                hover:text-primary duration-200
+                ${isActiveLink(link) ? "text-primary font-semibold" : ""}
+              `}
+            >
+              {label}
+            </Link>
+          ),
+        )}
       </div>
     </div>
   );

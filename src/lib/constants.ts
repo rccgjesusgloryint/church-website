@@ -34,6 +34,7 @@ export const navContent = [
   {
     label: "Admin",
     link: "https://admin.jesusgloryintl.com/dashboard",
+    external: true,
   },
   {
     label: "Contact",

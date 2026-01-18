@@ -80,19 +80,34 @@ const MobileNav = ({ variant = "standard" }: MobileNavProps) => {
             {/* Navigation links */}
             <div className="flex w-full h-full items-center justify-start pl-11">
               <div className="flex flex-col gap-8 flex-wrap mt-10 w-full">
-                {navItems.map(({ label, link }) => (
-                  <Link
-                    href={link}
-                    key={label}
-                    className={`
-                      active:bg-primary/10 bg-none w-full flex justify-start items-center 
-                      pl-4 rounded-sm transition ease-in text-xl
-                      ${isActiveLink(link) ? "text-primary font-semibold" : ""}
-                    `}
-                  >
-                    {label}
-                  </Link>
-                ))}
+                {navItems.map(({ label, link, external }) =>
+                  external ? (
+                    <a
+                      href={link}
+                      key={label}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`
+                        active:bg-primary/10 bg-none w-full flex justify-start items-center 
+                        pl-4 rounded-sm transition ease-in text-xl
+                      `}
+                    >
+                      {label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link}
+                      key={label}
+                      className={`
+                        active:bg-primary/10 bg-none w-full flex justify-start items-center 
+                        pl-4 rounded-sm transition ease-in text-xl
+                        ${isActiveLink(link) ? "text-primary font-semibold" : ""}
+                      `}
+                    >
+                      {label}
+                    </Link>
+                  ),
+                )}
               </div>
             </div>
           </SheetDescription>
